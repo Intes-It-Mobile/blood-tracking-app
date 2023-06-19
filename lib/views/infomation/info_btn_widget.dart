@@ -15,6 +15,7 @@ class InfoButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     String? getTitle(String? value) {
       return AppLocalizations.of(context)!.getTranslate('${value}');
     }

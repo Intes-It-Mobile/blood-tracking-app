@@ -20,6 +20,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
 
 class _RecordInfoSliderItemWidgetState
     extends State<RecordInfoSliderItemWidget> {
+
   Color? SttTextColor(String? value) {
     switch (value) {
       case 'normal':
