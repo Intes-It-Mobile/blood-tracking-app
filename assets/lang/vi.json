@@ -14,7 +14,7 @@
     "year": "year",
     "normal":"Normal",
     "diabetes":"Diabetes",
-    "pre_diabetes":"Pred-diabetes",
+    "pre_diabetes":"Pre-diabetes",
     "low":"Low",
     "new_record":"New Record",
     "chart":"Chart",
@@ -62,6 +62,18 @@
 
     "date_and_time":"Date & Time",
     "condition":"Condition",
-    "sugar amount":"Sugar Amount",
-    "Edit target range (mmol/L)":"Edit target range (mmol/L)"
+
+    "Edit target range (mmol/L)":"Edit target range (mmol/L)",
+    "sugar_amount":"Sugar Amount",
+
+    "before_exercise":"Before exercise",
+    "before_meal":"Before a meal",
+    "fasting":"Fasting",
+    "after_meal_1h":"After a meal (1h)",
+    "after_meal_2h":"After a meal (2h)",
+    "after_exercise":"After exercise",
+    "asleep":"Asleep",
+
+    "errow_sugar_input_text":"Please enter correct value between 18-630 mg/dL",
+    "save_record":"Save Record"
 }
