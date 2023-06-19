@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/views/history/record_history.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/infomation/information_detail_screen.dart';
 import 'package:blood_sugar_tracking/views/new_record/new_record_screen.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String abt_us = '/abt_us';
   static const String new_record = '/new_record';
   static const String intro = '/splash_intro';
+  static const String history = "/record_history";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -25,6 +27,7 @@ class Routes {
     abt_us: (context) => AboutUsScreen(),
     new_record: (context) => NewRecordScreen(),
     intro: (context) => IntroScreen(),
+    history: (context) => RecordHistory(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

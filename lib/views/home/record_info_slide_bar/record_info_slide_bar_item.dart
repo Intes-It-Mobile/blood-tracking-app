@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,10 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
   RecordInfoSliderItemWidget({super.key, required this.status});
 
   @override
-  State<RecordInfoSliderItemWidget> createState() =>
-      _RecordInfoSliderItemWidgetState();
+  State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
 }
 
-class _RecordInfoSliderItemWidgetState
-    extends State<RecordInfoSliderItemWidget> {
+class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget> {
   Color? SttTextColor(String? value) {
     switch (value) {
       case 'normal':
@@ -69,9 +68,15 @@ class _RecordInfoSliderItemWidgetState
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 15),
-                child: SvgPicture.asset(Assets.iconEdit),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: 15),
+                  child: SvgPicture.asset(
+                    Assets.iconEdit,
+                    width: 18,
+                    height: 18,
+                  ),
+                ),
               )
             ],
           ),
@@ -93,13 +98,10 @@ class _RecordInfoSliderItemWidgetState
           Container(
             child: Row(
               children: [
-                Text("Status : ",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: Colors.black)),
+                Text("Status : ", style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black)),
                 Text(
                   "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
-                  style: AppTheme.statusTxt
-                      .copyWith(color: SttTextColor(widget.status)),
+                  style: AppTheme.statusTxt.copyWith(color: SttTextColor(widget.status)),
                 ),
               ],
             ),
