@@ -64,5 +64,7 @@
     "date_and_time":"Date & Time",
     "condition":"Condition",
     "sugar amount":"Sugar Amount",
-    "Edit target range (mmol/L)":"Edit target range (mmol/L)"
+    "edit_target_range":"Edit target range (mmol/L)",
+    "record_remind":"Record remind",
+    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor."
 }
