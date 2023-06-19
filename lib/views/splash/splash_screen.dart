@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 backgroundColor: AppColors.AppColor4,
                 animation: true,
                 animationDuration: 2250,
-                lineHeight: 17,
+                lineHeight: 12,
                 percent: 1,
                 // value: ,
               ),
