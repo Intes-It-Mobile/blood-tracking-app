@@ -59,21 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.home,
                             'A',
                             0,
-                            AppLocalizations.of(context)!
-                                .getTranslate('home_page_nav'),
+                            AppLocalizations.of(context)!.getTranslate('home_page_nav'),
                           ),
+                          _buildNavItem(Icons.business, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
                           _buildNavItem(
-                              Icons.business,
-                              'B',
-                              1,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('info_nav')),
-                          _buildNavItem(
-                              Icons.school,
-                              'C',
-                              2,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('setting_nav')),
+                              Icons.school, 'C', 2, AppLocalizations.of(context)!.getTranslate('setting_nav')),
                         ],
                       ),
                       // Container(width: double.infinity,height: 50,color: Colors.blue,)
@@ -87,10 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: 0,
               child: hasAds
                   ? Container(
-                      width: screenWidth,
-                      height: 87,
-                      color: AppColors.AppColor2,
-                      child: Image.asset(Assets.adsBanner))
+                      width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
                   : Container(
                       width: screenWidth,
                       height: 35,

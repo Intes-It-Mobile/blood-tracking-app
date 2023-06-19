@@ -55,9 +55,9 @@ class _RecordHistoryState extends State<RecordHistory> {
       ),
       body: Container(
         margin: EdgeInsets.only(top: 16),
-        padding: EdgeInsets.only(left: 36, right: 26),
+        padding: EdgeInsets.only(left: 26, right: 16),
         child: GridView.count(
-          childAspectRatio: 1.5,        
+          childAspectRatio: 1.5,
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: List.generate(

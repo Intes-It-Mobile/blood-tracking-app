@@ -68,15 +68,9 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: SvgPicture.asset(
-                    Assets.iconEdit,
-                    width: 18,
-                    height: 18,
-                  ),
-                ),
+              Container(
+                margin: EdgeInsets.only(left: 15),
+                child: SvgPicture.asset(Assets.iconEdit),
               )
             ],
           ),
