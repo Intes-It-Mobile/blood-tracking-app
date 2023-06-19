@@ -5,8 +5,7 @@ class Assets {
   static const String diabetes_1 = "assets/images/diabetes_1.png";
   static const String diabetes_2 = "assets/images/diabetes_2.png";
   static const String forehead = "assets/images/forehead.png";
-  static const String gestational_diabetes =
-      "assets/images/gestational_diabetes.png";
+  static const String gestational_diabetes = "assets/images/gestational_diabetes.png";
   static const String high_temperature = "assets/images/high_temperature.png";
   static const String infomation = "assets/images/infomation.png";
   static const String low_energy = "assets/images/low_energy.png";
@@ -15,6 +14,11 @@ class Assets {
   static const String prevention = "assets/images/prevention.png";
   static const String infomative = "assets/images/informative.png";
   static const String settings = "assets/images/settings.png";
+  static const String splash = "assets/images/splash.png";
+  static const String intro1 = "assets/images/intro1.png";
+  static const String intro2 = "assets/images/intro2.png";
+  static const String intro3 = "assets/images/intro3.png";
+
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";
   static const String iconHistory = "assets/icons/ic_history.svg";
@@ -35,5 +39,7 @@ class Assets {
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";
   static const String iconHomeNav = "assets/icons/ic_home_nav.svg";
   
+  static const String iconSplash = "assets/icons/ic_splash_logo.svg";
+
   Assets._();
 }
