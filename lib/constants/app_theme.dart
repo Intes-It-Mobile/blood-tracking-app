@@ -86,4 +86,12 @@ class AppTheme {
     fontSize: 12,
     fontFamily: FontFamily.roboto,
   );
+  static final TextStyle TextIntroline16Text = TextStyle(
+    color: AppColors.AppColor4,
+    fontWeight: FontWeight.w800,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: 16,
+    fontFamily: FontFamily.roboto,
+  );
 }

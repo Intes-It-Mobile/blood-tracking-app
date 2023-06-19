@@ -1,5 +1,6 @@
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
+import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -29,12 +30,10 @@ class MyApp extends StatelessWidget {
           Locale('vi', ''),
           Locale('fr', ''),
         ],
-        localeResolutionCallback:
-            (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                deviceLocale != null &&
-                        ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
-                    ? deviceLocale
-                    : supportedLocales.first,
+        localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+            deviceLocale != null && ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+                ? deviceLocale
+                : supportedLocales.first,
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -54,7 +53,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomeScreen(),
+        home: SplashScreen(),
       ),
     );
   }
