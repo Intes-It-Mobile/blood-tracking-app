@@ -53,13 +53,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
-              decoration: BoxDecoration(
-                  color: AppColors.mainBgColor,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: SvgPicture.asset(Assets.iconInfoBook),
+            InkWell(
+              onTap: (){
+                Navigator.of(context).pushNamed(Routes.edit_range);
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
+                decoration: BoxDecoration(
+                    color: AppColors.mainBgColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: SvgPicture.asset(Assets.iconInfoBook),
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 5),

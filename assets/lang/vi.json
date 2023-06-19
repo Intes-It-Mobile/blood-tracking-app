@@ -62,5 +62,6 @@
 
     "date_and_time":"Date & Time",
     "condition":"Condition",
-    "sugar amount":"Sugar Amount"
+    "sugar amount":"Sugar Amount",
+    "Edit target range (mmol/L)":"Edit target range (mmol/L)"
 }
