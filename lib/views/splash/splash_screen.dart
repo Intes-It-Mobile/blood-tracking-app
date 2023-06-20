@@ -7,6 +7,8 @@ import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../../routes.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,10 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
   nextPage() async {
     await Future.delayed(const Duration(seconds: 2), () {
       shareLocal.getBools("isFirst") == true
-          ? Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()))
-          : Navigator.push(
-              context, MaterialPageRoute(builder: (context) => IntroScreen()));
+          ? Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.home,
+              (route) => false,
+            )
+          : Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.intro,
+              (route) => false,
+            );
     });
   }
 
