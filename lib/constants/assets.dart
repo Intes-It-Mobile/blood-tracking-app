@@ -29,6 +29,7 @@ class Assets {
   static const String iconX = "assets/icons/ic_x.svg";
   static const String iconEditRange = "assets/icons/ic_edit_pen.svg";
   static const String iconDelete = "assets/icons/ic_delete.svg";
+  static const String iconEditRecord = "assets/icons/ic_edit_record.svg";
 
   Assets._();
 }

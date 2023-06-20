@@ -27,7 +27,7 @@ class Routes {
     abt_us: (context) => AboutUsScreen(),
     new_record: (context) => NewRecordScreen(),
     edit_range: (context) => EditRangeScreens(),
-    record_remind: (context) => RecordRemindScreens(),
+    record_remind: (context) => RecordRemindScreens(onToggled: (bool isToggled) {  },),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
