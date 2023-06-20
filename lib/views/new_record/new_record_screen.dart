@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
+
 
 class NewRecordScreen extends StatefulWidget {
   NewRecordScreen({
@@ -23,23 +26,42 @@ class NewRecordScreen extends StatefulWidget {
 }
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
+  FocusNode focusNode = FocusNode();
   DateTime selectedDateTime = DateTime.now();
+  DateTime timeNow = DateTime.now();
   SugarInfoStore? sugarInfoStore;
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
+ 
 
-  void _showDatePicker() {
+  void _showDatePickerDay() {
     DatePicker.showDatePicker(
-      dateFormat: "yyyy/MM/dd HH:mm",
+      dateFormat: "yyyy/MM/dd",
       context,
-      onConfirm: (DateTime date, List<int> index) {
+      onConfirm: (DateTime day, List<int> index) {
         setState(() {
-          selectedDate = date;
+          selectedDate = day;
+          print("Date: ${selectedDate}");
+          sugarInfoStore!.setchoosedDayTime(day);
         });
       },
       locale: DateTimePickerLocale.en_us,
-    
+    );
+  }
+
+  void _showDatePickerHour() {
+    DatePicker.showDatePicker(
+      dateFormat: "HH:mm",
+      context,
+      onConfirm: (DateTime hour, List<int> index) {
+        setState(() {
+          selectedDate = hour;
+          print("Date: ${selectedDate}");
+          sugarInfoStore!.setchoosedDayHour(hour);
+        });
+      },
+      locale: DateTimePickerLocale.en_us,
     );
   }
 
@@ -51,6 +73,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setStatusLevel("low");
       isFirst == false;
     }
+  }
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
   }
 
   @override
@@ -108,9 +138,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       color: AppColors.AppColor4),
                 ),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  _showDatePicker();
+                  _showDatePickerDay();
                 },
                 child: Container(
                   child: Row(
@@ -127,22 +157,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           children: [
                             Container(
                               child: Text(
-                                "2023",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 35),
-                              child: Text(
-                                "05",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                "17",
+                                sugarInfoStore!.choosedDayTimeStr != null
+                                    ? sugarInfoStore!.choosedDayTimeStr!
+                                    : sugarInfoStore!.stringTimeDayNow,
                                 style: AppTheme.appBodyTextStyle
                                     .copyWith(color: Colors.black),
                               ),
@@ -150,38 +167,31 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                        decoration: BoxDecoration(
-                            color: AppColors.AppColor3,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              child: Text(
-                                "10",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerHour();
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Text(
+                                  sugarInfoStore!.choosedDayHourStr != null
+                                      ? sugarInfoStore!.choosedDayHourStr!
+                                      : sugarInfoStore!.stringTimeHourNow,
+                                  style: AppTheme.appBodyTextStyle
+                                      .copyWith(color: Colors.black),
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                ":",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                "5",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -252,6 +262,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               Container(
                                 width: 165,
                                 child: TextField(
+                                  focusNode: focusNode,
                                   onChanged: (value) {
                                     sugarInfoStore!.setInputSugarAmount(
                                         int.parse(value) * 1.0);
@@ -300,9 +311,15 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       : SizedBox(),
                   Center(
                     child: ButtonWidget(
+                      enable: sugarInfoStore!.btnStatus,
                       margin: EdgeInsets.symmetric(vertical: 8),
                       mainAxisSizeMin: true,
-                      onTap: () {},
+                      onTap: () {
+                        sugarInfoStore!.saveRecord();
+                        setState(() {
+                          Navigator.of(context).pushNamed(Routes.home);
+                        });
+                      },
                       btnColor: AppColors.AppColor4,
                       btnText: "save_record",
                     ),
@@ -329,7 +346,6 @@ class StatusWidget extends StatefulWidget {
 class _StatusWidgetState extends State<StatusWidget> {
   SugarInfoStore? sugarInfoStore;
 
-  @override
   @override
   void initState() {
     // TODO: implement initState
@@ -615,6 +631,51 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             ),
         ],
       ),
+    );
+  }
+}
+
+class MyDateTimePicker extends StatefulWidget {
+  @override
+  _MyDateTimePickerState createState() => _MyDateTimePickerState();
+}
+
+class _MyDateTimePickerState extends State<MyDateTimePicker> {
+  DateTime? selectedDateTime;
+
+  void _showDateTimePicker() {
+    DatePicker.showDatePicker(
+      context,
+      pickerMode: DateTimePickerMode.datetime,
+      initialDateTime: selectedDateTime ?? DateTime.now(),
+      onConfirm: (dateTime, List<int> selectedIndex) {
+        setState(() {
+          selectedDateTime = dateTime;
+          print("DateTime:${dateTime}");
+        });
+      },
+      dateFormat: 'yyyy/MM/dd HH:mm',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: _showDateTimePicker,
+          child: Container(
+            child: Text('Chọn ngày giờ'),
+          ),
+        ),
+        SizedBox(height: 16),
+        Text(
+          selectedDateTime != null
+              ? 'Ngày giờ đã chọn: ${DateFormat('yyyy/MM/dd HH:mm').format(selectedDateTime!)}'
+              : 'Chưa chọn ngày giờ',
+        ),
+      ],
     );
   }
 }

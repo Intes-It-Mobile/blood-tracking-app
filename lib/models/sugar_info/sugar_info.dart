@@ -47,25 +47,49 @@ class SugarAmount {
 }
 
 class ListRecord {
-  List<Record>? listRecord;
+ List<SugarRecord>? listRecord;
 
   ListRecord({this.listRecord});
 
-  ListRecord.fromJson(Map<String, dynamic> json) {
-    listRecord = json['list_record'];
+  factory ListRecord.fromJson(Map<String, dynamic> json) {
+    return ListRecord(
+      listRecord: json['list_record'] != null
+          ? List<SugarRecord>.from(
+              json['list_record'].map((x) => SugarRecord.fromJson(x)))
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'list_record': listRecord != null
+          ? listRecord!.map((x) => x.toJson()).toList()
+          : null,
+    };
   }
 }
 
-class Record {
+class SugarRecord {
   String? status;
-  int? sugarAmount;
-  int? dateTime;
+  double? sugarAmount;
+  String? dayTime;
+  String? hourTime;
 
-  Record({this.status, this.sugarAmount, this.dateTime});
+  SugarRecord({this.status, this.sugarAmount, this.dayTime, this.hourTime});
 
-  Record.fromJson(Map<String, dynamic> json) {
+  SugarRecord.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    sugarAmount = json['min_value'];
-    dateTime = json['max_value'];
+    sugarAmount = json['sugar_amount'];
+    dayTime = json['day_time'];
+    hourTime = json['hour_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['sugar_amount'] = this.sugarAmount;
+    data['day_time'] = this.dayTime;
+    data['hour_time'] = this.hourTime;
+    return data;
   }
 }
