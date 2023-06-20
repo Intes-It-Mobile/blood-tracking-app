@@ -85,7 +85,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       margin: const EdgeInsets.only(left: 5, right: 5, top: 15),
-                      height: MediaQuery.of(context).size.height * 0.11,
+                      height: MediaQuery.of(context).size.height * 0.12,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),

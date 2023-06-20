@@ -30,7 +30,7 @@ class Assets {
   static const String iconArrowInfoBtn = "assets/icons/ic_arrow_info_btn.svg";
   static const String iconBack = "assets/icons/ic_back.svg";
   static const String iconInfoBook = "assets/icons/ic_info_book.svg";
-  static const String iconSwapUnit = "assets/icons/ic_swap_unit.svg";
+  static const String iconSwapUnit = "assets/icons/ic_mmol.svg";
   static const String iconX = "assets/icons/ic_x.svg";
   static const String iconEditRange = "assets/icons/ic_edit_pen.svg";
   static const String iconDelete = "assets/icons/ic_delete.svg";

@@ -33,26 +33,33 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           height: screenHeight * 0.24384236453,
           color: AppColors.AppColor2,
         ),
-        Container(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TopWidgetHomeContent(),
-              AverageInfoSlideBarWidget(),
-              ChartWidget(),
-              RecordInfoSlideBarWidget(),
-              ButtonWidget(
-                mainAxisSizeMin: true,
-                btnText: "new_record",
-                btnColor: AppColors.AppColor4,
-                suffixIconPath: Assets.iconEditBtn,
-                onTap: (){
-                  Navigator.of(context).pushNamed(Routes.new_record);
-                },
-              )
-            ],
-          ),
-        )),
+        Column(
+          children: [
+            const TopWidgetHomeContent(),
+            const AverageInfoSlideBarWidget(),
+            Expanded(
+              child: SingleChildScrollView(
+                primary: true,
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    const ChartWidget(),
+                    const RecordInfoSlideBarWidget(),
+                    ButtonWidget(
+                      mainAxisSizeMin: true,
+                      btnText: "new_record",
+                      btnColor: AppColors.AppColor4,
+                      suffixIconPath: Assets.iconEditBtn,
+                      onTap: () {
+                        Navigator.of(context).pushNamed(Routes.new_record);
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

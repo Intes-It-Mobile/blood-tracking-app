@@ -3,7 +3,7 @@
     "home_page_nav":"Homepage",
     "info_nav":"Infomation",
     "setting_nav":"Settings",
-    "app_name":"Blood Sugar Tracking",
+    "app_name":"Blood Sugar\nTracking",
     "default_txt": "Default",
     "recent_txt": "Recent",
     "average_txt": "Average",
@@ -68,7 +68,7 @@
     "edit_target_range":"Edit target range (mmol/L)",
     "record_remind":"Record remind",
     "new_alarm":"New alarm",
-    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor.",
+    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If you want a more accurate blood data range, please consult you doctor.",
     "Edit target range (mmol/L)":"Edit target range (mmol/L)",
 
 

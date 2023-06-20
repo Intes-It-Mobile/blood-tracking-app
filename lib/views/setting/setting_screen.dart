@@ -44,7 +44,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     height: 44,
                   )),
                   Container(
-                    margin: EdgeInsets.only(left: 17),
+                    margin: const EdgeInsets.only(left: 17),
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('setting')}",
                       style: AppTheme.Headline20Text,
@@ -58,9 +58,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.edit_range);
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
+                decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: SvgPicture.asset(Assets.iconInfoBook),
@@ -71,16 +71,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.record_remind);
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: SvgPicture.asset(Assets.iconAlarm),
               ),
             ),
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 5),
                 child: SvgPicture.asset(Assets.iconSwapUnit))
           ],
         ),
@@ -89,7 +89,7 @@ class _SettingScreenState extends State<SettingScreen> {
         scrollDirection: Axis.vertical,
         child: Center(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 19),
+            padding: const EdgeInsets.symmetric(horizontal: 19),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
