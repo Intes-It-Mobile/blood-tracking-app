@@ -17,7 +17,7 @@ class _AverageInfoSlideBarWidgetState extends State<AverageInfoSlideBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.symmetric(vertical: 15,),
-      margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
+      margin: const EdgeInsets.fromLTRB(15, 20, 15, 15),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
