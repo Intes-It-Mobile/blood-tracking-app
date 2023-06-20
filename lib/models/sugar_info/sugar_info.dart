@@ -1,4 +1,3 @@
-
 class SugarInfo {
   List<Conditions>? conditions;
 
@@ -12,8 +11,6 @@ class SugarInfo {
       });
     }
   }
-
-
 }
 
 class Conditions {
@@ -33,8 +30,6 @@ class Conditions {
       });
     }
   }
-
-
 }
 
 class SugarAmount {
@@ -49,6 +44,20 @@ class SugarAmount {
     minValue = json['min_value'];
     maxValue = json['max_value'];
   }
+}
 
-  
+
+
+class Record {
+  String? status;
+  int? sugarAmount;
+  int? dateTime;
+
+  Record({this.status, this.sugarAmount, this.dateTime});
+
+  Record.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    sugarAmount = json['min_value'];
+    dateTime = json['max_value'];
+  }
 }
