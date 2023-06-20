@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
@@ -22,9 +23,26 @@ class NewRecordScreen extends StatefulWidget {
 }
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
+  DateTime selectedDateTime = DateTime.now();
   SugarInfoStore? sugarInfoStore;
   bool? isFirst = true;
   String? type;
+  DateTime? selectedDate;
+
+  void _showDatePicker() {
+    DatePicker.showDatePicker(
+      dateFormat: "yyyy/MM/dd HH:mm",
+      context,
+      onConfirm: (DateTime date, List<int> index) {
+        setState(() {
+          selectedDate = date;
+        });
+      },
+      locale: DateTimePickerLocale.en_us,
+    
+    );
+  }
+
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -90,79 +108,84 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       color: AppColors.AppColor4),
                 ),
               ),
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 30),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Text(
-                              "2023",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+              InkWell(
+                onTap: () {
+                  _showDatePicker();
+                },
+                child: Container(
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 30),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              child: Text(
+                                "2023",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 35),
-                            child: Text(
-                              "05",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 35),
+                              child: Text(
+                                "05",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Text(
-                              "17",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+                            Container(
+                              child: Text(
+                                "17",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Text(
-                              "10",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              child: Text(
+                                "10",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              ":",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                ":",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Text(
-                              "5",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+                            Container(
+                              child: Text(
+                                "5",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Column(

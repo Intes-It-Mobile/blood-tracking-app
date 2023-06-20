@@ -46,7 +46,15 @@ class SugarAmount {
   }
 }
 
+class ListRecord {
+  List<Record>? listRecord;
 
+  ListRecord({this.listRecord});
+
+  ListRecord.fromJson(Map<String, dynamic> json) {
+    listRecord = json['list_record'];
+  }
+}
 
 class Record {
   String? status;
