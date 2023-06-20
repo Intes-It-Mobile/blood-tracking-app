@@ -31,6 +31,9 @@ class Assets {
   static const String iconInfoBook = "assets/icons/ic_info_book.svg";
   static const String iconSwapUnit = "assets/icons/ic_swap_unit.svg";
   static const String iconX = "assets/icons/ic_x.svg";
+  static const String iconEditRange = "assets/icons/ic_edit_pen.svg";
+  static const String iconDelete = "assets/icons/ic_delete.svg";
+  static const String iconEditRecord = "assets/icons/ic_edit_record.svg";
   static const String icon = "assets/icons/ic_up_arrow.svg";
   static const String iconUpArrow = "assets/icons/ic_up_arrow.svg";
   static const String iconDownArrow = "assets/icons/ic_down_arrow.svg";
@@ -38,7 +41,7 @@ class Assets {
   static const String iconSettingsNav = "assets/icons/ic_settings_nav.svg";
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";
   static const String iconHomeNav = "assets/icons/ic_home_nav.svg";
-  
+
   static const String iconSplash = "assets/icons/ic_splash_logo.svg";
 
   Assets._();
