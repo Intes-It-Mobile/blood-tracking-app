@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Scaffold(
             // extendBodyBehindAppBar: true,
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(),
             backgroundColor: Colors.white,
 
@@ -47,8 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
               child: BottomAppBarCum(
-
-                 elevation: 0,
                 surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
