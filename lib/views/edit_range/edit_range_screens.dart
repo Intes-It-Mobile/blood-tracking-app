@@ -79,73 +79,104 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     color: index.isEven || index == 0
                         ? AppColors.AppColor3
                         : Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 16),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                editTargetRange[index].name,
-                                style: AppTheme.hintText.copyWith(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800),
-                              ),
-                              const Spacer(),
-                              SvgPicture.asset(Assets.iconEditRange),
-                              const SizedBox(
-                                width: 24,
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${AppLocalizations.of(context)!.getTranslate('low')}",
-                                        style: AppTheme.hintText.copyWith(
-                                            fontSize: 12,
-                                            color: AppColors.LowStt,
-                                            fontWeight: FontWeight.w700),
-                                        // Hiển thị dấu chấm ba khi có tràn
-                                        maxLines: 2,
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('<' +
-                                          '${editTargetRange[index].min.toString()}'),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
+                    padding: const EdgeInsets.only(top: 12,left: 16),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              editTargetRange[index].name,
+                              style: AppTheme.hintText.copyWith(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(Assets.iconEditRange),
+                            const SizedBox(
+                              width: 24,
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${AppLocalizations.of(context)!.getTranslate('normal')}",
+                                      "${AppLocalizations.of(context)!.getTranslate('low')}",
                                       style: AppTheme.hintText.copyWith(
                                           fontSize: 12,
-                                          color: AppColors.NormalStt,
+                                          color: AppColors.LowStt,
+                                          fontWeight: FontWeight.w700),
+                                      // Hiển thị dấu chấm ba khi có tràn
+                                      maxLines: 2,
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('<' +
+                                        '${editTargetRange[index].min.toString()}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('normal')}",
+                                    style: AppTheme.hintText.copyWith(
+                                        fontSize: 12,
+                                        color: AppColors.NormalStt,
+                                        fontWeight: FontWeight.w700),
+                                    // Hiển thị dấu chấm ba khi có tràn
+                                    maxLines: 2,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('${editTargetRange[index].min.toString()}' +
+                                      '~' +
+                                      '${editTargetRange[index].max.toString()}'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 23,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
+                                      style: AppTheme.hintText.copyWith(
+                                          fontSize: 12,
+                                          color: AppColors.PreDiaStt,
                                           fontWeight: FontWeight.w700),
                                       // Hiển thị dấu chấm ba khi có tràn
                                       maxLines: 2,
@@ -159,69 +190,33 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-                                        style: AppTheme.hintText.copyWith(
-                                            fontSize: 12,
-                                            color: AppColors.PreDiaStt,
-                                            fontWeight: FontWeight.w700),
-                                        // Hiển thị dấu chấm ba khi có tràn
-                                        maxLines: 2,
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('${editTargetRange[index].min.toString()}' +
-                                          '~' +
-                                          '${editTargetRange[index].max.toString()}'),
-                                    ],
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
+                                    style: AppTheme.hintText.copyWith(
+                                        fontSize: 12,
+                                        color: AppColors.DiabetesStt,
+                                        fontWeight: FontWeight.w700),
+                                    // Hiển thị dấu chấm ba khi có tràn
+                                    maxLines: 2,
                                   ),
-                                ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('>=' +
+                                      '${editTargetRange[index].max.toString()}'),
+                                ],
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
-                                      style: AppTheme.hintText.copyWith(
-                                          fontSize: 12,
-                                          color: AppColors.DiabetesStt,
-                                          fontWeight: FontWeight.w700),
-                                      // Hiển thị dấu chấm ba khi có tràn
-                                      maxLines: 2,
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('>=' +
-                                        '${editTargetRange[index].max.toString()}'),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   );
                 }),

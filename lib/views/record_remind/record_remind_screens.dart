@@ -71,7 +71,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       ),
       body: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 5,
+            top: 20,
             right: 10,
             left: 10,
             bottom: MediaQuery.of(context).padding.bottom +

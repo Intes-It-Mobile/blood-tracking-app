@@ -1,5 +1,6 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../constants/assets.dart';
@@ -48,13 +49,20 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
-                        padding: EdgeInsets.all(6),
-                        child: SvgPicture.asset(
-                          Assets.iconAlarm,
-                          height: 20,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.record_remind);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.mainBgColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          padding: EdgeInsets.all(6),
+                          child: SvgPicture.asset(
+                            Assets.iconAlarm,
+                            height: 20,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -66,7 +74,9 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
+                              color: AppColors.mainBgColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
                           padding: EdgeInsets.fromLTRB(5.5, 8, 7, 8),
                           child: SvgPicture.asset(
                             Assets.iconHistory,
@@ -91,7 +101,8 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                       Container(
                         margin: EdgeInsets.only(right: 20),
                         child: Text(
-                          AppLocalizations.of(context)!.getTranslate('default_txt'),
+                          AppLocalizations.of(context)!
+                              .getTranslate('default_txt'),
                           style: TextStyle(color: AppColors.AppColor4),
                         ),
                       ),
