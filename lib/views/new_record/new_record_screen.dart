@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../controllers/stores/sugar_info_store.dart';
+import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 
@@ -19,14 +22,18 @@ class NewRecordScreen extends StatefulWidget {
 }
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
+  SugarInfoStore? sugarInfoStore;
+
   String? type;
   @override
-  void didChangeDependencies() {}
+  void didChangeDependencies() {
+     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(        
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
@@ -38,6 +45,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
@@ -160,7 +168,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           color: AppColors.AppColor4),
                     ),
                   ),
-                  DropDownWidget(),
+                  DropDownWidget(listConditions: sugarInfoStore!.listRootConditions),
                 ],
               ),
               Column(
@@ -366,14 +374,17 @@ class _StatusWidgetState extends State<StatusWidget> {
 }
 
 class DropDownWidget extends StatefulWidget {
-  const DropDownWidget({super.key});
+  List<Conditions>? listConditions;
+  DropDownWidget({super.key, required this.listConditions});
 
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
-  String selectedType = 'default_txt';
+  String? selectedTitle = 'default_txt';
+  int?   selectedId = 0;
+
   List<String> types = [
     'default_txt',
     'before_exercise',
@@ -410,7 +421,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${getTitle(selectedType)}",
+                    "${getTitle(selectedTitle)}",
                     style: AppTheme.appBodyTextStyle.copyWith(
                         fontWeight: FontWeight.w700, color: Colors.black),
                   ),
@@ -440,20 +451,23 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                       isAlwaysShown: true,
                       child: ListView(
                         // physics: BouncingScrollPhysics(),
-                        children: types.map((String type) {
+                        children: widget.listConditions!.map((Conditions condition) {
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedType = type;
+                                selectedTitle = condition.name;
+                                selectedId = condition.id;
                                 showDropdown = false;
+                                print(selectedTitle);
+                                print(selectedId);
                               });
                             },
                             child: Container(
                               color: Colors.transparent,
                               child: DropdownMenuItem<String>(
-                                value: type,
+                                value: selectedTitle,
                                 child: Text(
-                                  "${getTitle(type)}",
+                                  "${getTitle(condition.name)}",
                                   style: AppTheme.appBodyTextStyle
                                       .copyWith(color: Colors.white),
                                 ),
