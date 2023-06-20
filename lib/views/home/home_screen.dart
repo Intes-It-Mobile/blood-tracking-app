@@ -142,7 +142,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: Column(
                 children: [
-                  SvgPicture.asset(icon),
+                  SvgPicture.asset(
+                    icon,
+                    color: iconColor,
+                  ),
                   Text(
                     "${text}",
                     style: TextStyle(color: textColor),
