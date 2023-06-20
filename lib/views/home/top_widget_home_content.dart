@@ -19,7 +19,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 25, 15, 0),
       child: Column(
         children: [
           Row(
@@ -90,8 +90,8 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     height: 10,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       ),
@@ -99,11 +99,14 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     ),
                     child: Row(children: [
                       Container(
-                        margin: EdgeInsets.only(right: 20),
+                        margin: const EdgeInsets.only(right: 20),
                         child: Text(
                           AppLocalizations.of(context)!
                               .getTranslate('default_txt'),
-                          style: TextStyle(color: AppColors.AppColor4),
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              color: AppColors.AppColor4,
+                              fontWeight: FontWeight.w800),
                         ),
                       ),
                       SvgPicture.asset(Assets.iconType)

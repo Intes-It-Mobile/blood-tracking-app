@@ -4,5 +4,6 @@ class FontFamily {
 
 
   static String roboto = "Roboto";
- 
+  static String IBMPlexSans = "IBMPlexSans";
+
 }

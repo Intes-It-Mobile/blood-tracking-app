@@ -85,7 +85,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       margin: const EdgeInsets.only(left: 5, right: 5, top: 15),
-                      height: 80,
+                      height: MediaQuery.of(context).size.height * 0.11,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -115,7 +115,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                 child: Column(
                                   children: [
                                     const SizedBox(
-                                      height: 5,
+                                      height: 8,
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -128,7 +128,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 15,
+                                      height: 18,
                                     ),
                                     Align(
                                       alignment: Alignment.centerRight,
@@ -142,8 +142,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                           widget.onToggled(isToggled);
                                         },
                                         child: AnimatedContainer(
-                                          height: size,
-                                          width: 70,
+                                          height: 34,
+                                          width: 58,
                                           padding: EdgeInsets.all(innerPadding),
                                           alignment: isToggled
                                               ? Alignment.centerLeft
@@ -159,8 +159,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                                 : AppColors.AppColor2,
                                           ),
                                           child: Container(
-                                            width: 40,
-                                            height: size - innerPadding * 2,
+                                            width: size,
+                                            height: size,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(100),

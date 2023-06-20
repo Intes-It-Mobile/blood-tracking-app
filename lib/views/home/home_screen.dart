@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 
+import '../../widgets/customs_bottom_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
 import 'home_screen_content.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool hasAds = false;
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -33,23 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Scaffold(
             // extendBodyBehindAppBar: true,
+            resizeToAvoidBottomInset: false,
             appBar: CustomAppBar(),
             backgroundColor: Colors.white,
+
             body: Container(
               // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Center(
-                child: _buildPageContent(),
-              ),
+              child: _buildPageContent(),
             ),
             bottomNavigationBar: Container(
+              color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
-              child: BottomAppBar(
-                shadowColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                color: Colors.white,
+              child: BottomAppBarCum(
+
+                 elevation: 0,
+                surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
-                  // color: Colors.amber,
+                  color: Colors.transparent,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
     EdgeInsets margin;
 
     // Align button A to the left edge of the screen
-    margin = EdgeInsets.only(left: 2.0, right: 1.0);
+    margin = const EdgeInsets.only(left: 2.0, right: 1.0);
 
     if (index == 1) {
       margin = EdgeInsets.fromLTRB(2, isSelected ? 0 : 10, 2, 0);
@@ -138,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: btnColor,
               borderRadius: borderRadius,
             ),
-            padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
             child: Center(
               child: Column(
                 children: [
@@ -148,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     "${text}",
-                    style: TextStyle(color: textColor),
+                    style: TextStyle(
+                        color: textColor, fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -180,10 +184,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         // Status bar color
         statusBarColor: AppColors.AppColor2,
-
         // Status bar brightness (optional)`
         statusBarIconBrightness: Brightness.light, // For Android (dark icons)
         statusBarBrightness: Brightness.light, // For iOS (dark icons)
