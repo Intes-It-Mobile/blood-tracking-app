@@ -110,6 +110,14 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: "IBMPlexSans",
+    fontFamily: FontFamily.ibm,
+  );
+  static final TextIntro2line16Text = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w500,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontFamily: FontFamily.ibm,
   );
 }

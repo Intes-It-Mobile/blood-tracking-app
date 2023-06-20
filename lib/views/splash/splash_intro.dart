@@ -140,7 +140,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: Text(
                             indexPage == 2 ? 'Homepage' : 'Next step',
                             textAlign: TextAlign.center,
-                            style: AppTheme.Headline16Text,
+                            style: AppTheme.TextIntro2line16Text,
                           ),
                         ),
                       ),
