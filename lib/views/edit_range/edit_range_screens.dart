@@ -53,7 +53,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     ),
                     Expanded(
                       child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('edit_target_range')}",
+                        "${AppLocalizations.of(context)!.getTranslate('Edit target range (mmol/L)')}",
                         style: AppTheme.Headline20Text,
                         overflow: TextOverflow
                             .ellipsis, // Hiển thị dấu chấm ba khi có tràn
@@ -74,7 +74,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                 itemCount: editTargetRange.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: MediaQuery.of(context).size.height * 0.24,
                     width: double.infinity,
                     color: index.isEven || index == 0
                         ? AppColors.AppColor3
@@ -99,7 +99,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -158,7 +158,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                           ],
                         ),
                         const SizedBox(
-                          height: 23,
+                          height: 19,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -228,7 +228,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('notification')}",
                 style: AppTheme.hintText
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400,fontSize: 12),
                 textAlign: TextAlign.justify,
                 maxLines: 3,
               ),

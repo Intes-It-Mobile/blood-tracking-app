@@ -43,7 +43,8 @@ class _RecordHistoryState extends State<RecordHistory> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_history')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow
+                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -54,14 +55,14 @@ class _RecordHistoryState extends State<RecordHistory> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 16),
-        padding: EdgeInsets.only(left: 26, right: 16),
+        // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+        margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
         child: GridView.count(
           childAspectRatio: 1.5,
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: List.generate(
-            15,
+            15, 
             (index) => RecordInfoSliderItemWidget(
               status: 'normal',
             ),

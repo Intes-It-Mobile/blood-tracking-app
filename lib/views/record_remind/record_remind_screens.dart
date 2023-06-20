@@ -181,8 +181,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   }),
             ),
             Container(
-              height: 36,
-              width: 133,
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.32,
               decoration: BoxDecoration(
                   color: AppColors.AppColor2,
                   borderRadius: BorderRadius.circular(5)),

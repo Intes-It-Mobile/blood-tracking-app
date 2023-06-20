@@ -50,3 +50,19 @@ class SizeConfig {
     // print('screen Width: $_screenWidth');
   }
 }
+class TextSizeConfig {
+  static double? scaleFactor;
+  static double referenceScreenHeight = 812; // Chiều cao màn hình mẫu
+  static double referenceFontSize = 16; // Kích thước chữ mẫu
+
+  static void init(BuildContext context) {
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    scaleFactor = screenHeight / referenceScreenHeight;
+  }
+
+  static double getAdjustedFontSize(double fontSize) {
+    print(fontSize * scaleFactor!);
+    return fontSize * scaleFactor!;
+  }
+}
