@@ -103,9 +103,9 @@ class AppTheme {
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
   );
-  
-  static final TextStyle TextIntroline16Text = TextStyle(
-    color: AppColors.AppColor4,
+
+  static final TextIntroline16Text = TextStyle(
+    color: Colors.white,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
