@@ -23,17 +23,22 @@ class NewRecordScreen extends StatefulWidget {
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
   SugarInfoStore? sugarInfoStore;
-
+  bool? isFirst = true;
   String? type;
   @override
   void didChangeDependencies() {
-     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (isFirst == true) {
+      sugarInfoStore!.setChooseCondition(0);
+      sugarInfoStore!.setStatusLevel("low");
+      isFirst == false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(        
+      appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
@@ -45,7 +50,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
+                      print(sugarInfoStore!
+                          .rootSugarInfo!.conditions!.first.name);
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
@@ -89,7 +95,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(right: 30),
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                       decoration: BoxDecoration(
                           color: AppColors.AppColor3,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -122,7 +129,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                       decoration: BoxDecoration(
                           color: AppColors.AppColor3,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -168,7 +176,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           color: AppColors.AppColor4),
                     ),
                   ),
-                  DropDownWidget(listConditions: sugarInfoStore!.listRootConditions),
+                  sugarInfoStore!.listRootConditions != null
+                      ? DropDownWidget(
+                          listConditions: sugarInfoStore!.listRootConditions,
+                        )
+                      : Container(),
                 ],
               ),
               Column(
@@ -217,6 +229,23 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               Container(
                                 width: 165,
                                 child: TextField(
+                                  onChanged: (value) {
+                                    sugarInfoStore!.setInputSugarAmount(
+                                        int.parse(value) * 1.0);
+                                    sugarInfoStore!
+                                        .checkValidateSugarAmountInput(
+                                            int.parse(value) * 1.0);
+                                    print(value);
+                                  },
+                                  textAlign: TextAlign.center,
+                                  onSubmitted: (value) {
+                                    sugarInfoStore!.setInputSugarAmount(
+                                        int.parse(value) * 1.0);
+                                    sugarInfoStore!
+                                        .checkValidateSugarAmountInput(
+                                            int.parse(value) * 1.0);
+                                    print(value);
+                                  },
                                   keyboardType: TextInputType.number,
                                   style: AppTheme.sugarInputText,
                                 ),
@@ -235,15 +264,17 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 11),
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
-                        style: AppTheme.errorText,
-                      ),
-                    ),
-                  ),
+                  sugarInfoStore!.legalInput == false
+                      ? Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 11),
+                            child: Text(
+                              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
+                              style: AppTheme.errorText,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                   Center(
                     child: ButtonWidget(
                       margin: EdgeInsets.symmetric(vertical: 8),
@@ -264,13 +295,79 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 }
 
 class StatusWidget extends StatefulWidget {
-  const StatusWidget({super.key});
+  StatusWidget({
+    super.key,
+  });
 
   @override
   State<StatusWidget> createState() => _StatusWidgetState();
 }
 
 class _StatusWidgetState extends State<StatusWidget> {
+  SugarInfoStore? sugarInfoStore;
+
+  @override
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
+    super.didChangeDependencies();
+  }
+
+  Widget getLevelText(int level) {
+    switch (level) {
+      case 0:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('low')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 1:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('normal')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 2:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 3:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+
+      default:
+        throw RangeError("");
+    }
+  }
+
+  Color getLevelTextColor(int level) {
+    switch (level) {
+      case 0:
+        return AppColors.LowStt;
+      case 1:
+        return AppColors.NormalStt;
+      case 2:
+        return AppColors.PreDiaStt;
+      case 3:
+        return AppColors.DiabetesStt;
+
+      default:
+        throw RangeError("");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -289,12 +386,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 0
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -311,12 +410,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 1
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -333,12 +434,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 2
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -355,19 +458,18 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 3
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
-        Text(
-          "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: AppColors.PreDiaStt),
-        ),
+        getLevelText(sugarInfoStore!.statusLevel!),
       ],
     );
   }
@@ -375,6 +477,7 @@ class _StatusWidgetState extends State<StatusWidget> {
 
 class DropDownWidget extends StatefulWidget {
   List<Conditions>? listConditions;
+
   DropDownWidget({super.key, required this.listConditions});
 
   @override
@@ -382,9 +485,9 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
+  SugarInfoStore? sugarInfoStore;
   String? selectedTitle = 'default_txt';
-  int?   selectedId = 0;
-
+  int? selectedId = 0;
   List<String> types = [
     'default_txt',
     'before_exercise',
@@ -398,6 +501,12 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   bool showDropdown = false;
   String? getTitle(String? value) {
     return AppLocalizations.of(context)!.getTranslate('${value}');
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
   }
 
   @override
@@ -451,15 +560,15 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                       isAlwaysShown: true,
                       child: ListView(
                         // physics: BouncingScrollPhysics(),
-                        children: widget.listConditions!.map((Conditions condition) {
+                        children:
+                            widget.listConditions!.map((Conditions condition) {
                           return GestureDetector(
                             onTap: () {
                               setState(() {
                                 selectedTitle = condition.name;
                                 selectedId = condition.id;
                                 showDropdown = false;
-                                print(selectedTitle);
-                                print(selectedId);
+                                sugarInfoStore!.setChooseCondition(selectedId!);
                               });
                             },
                             child: Container(

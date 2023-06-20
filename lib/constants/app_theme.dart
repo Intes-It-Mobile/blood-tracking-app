@@ -24,7 +24,7 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle appBodyTextStyle36 = TextStyle(
     color: AppColors.AppColor4,
@@ -32,7 +32,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(36),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle timeText = TextStyle(
     color: Colors.black,
@@ -40,7 +40,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(10),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle statusTxt = TextStyle(
@@ -49,7 +49,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle BtnText = TextStyle(
@@ -58,7 +58,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle Headline16Text = TextStyle(
     color: Colors.white,
@@ -66,7 +66,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle Headline20Text = TextStyle(
@@ -75,7 +75,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle hintText = TextStyle(
@@ -84,7 +84,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle sugarInputText = TextStyle(
@@ -92,8 +92,8 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontSize:TextSizeConfig.getAdjustedFontSize(16),
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle errorText = TextStyle(
@@ -110,14 +110,6 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.ibm,
-  );
-  static final TextIntro2line16Text = TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.w500,
-    decoration: TextDecoration.none,
-    // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.ibm,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 }

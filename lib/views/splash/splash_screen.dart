@@ -88,6 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
       prefs.setBool('json_loaded', true);
       setState(() {
         data = SugarInfo.fromJson(jsonDecode(jsonData));
+         sugarInfoStore!.getRootSugarInfo(data);
       });
     } else {
       getDataFromSharedPreferences();

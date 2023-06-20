@@ -83,11 +83,11 @@ class InfoButtonWidget extends StatelessWidget {
         Navigator.of(context).pushNamed(Routes.detail_info,arguments: {"type":title});
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 6),
-        padding: EdgeInsets.fromLTRB(15, 11, 20, 11),
+        margin: const EdgeInsets.symmetric(vertical: 6),
+        padding: const EdgeInsets.fromLTRB(21, 11, 18, 11),
         decoration: BoxDecoration(
             color: getBtnColor(title),
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: [
             Expanded(
@@ -97,7 +97,7 @@ class InfoButtonWidget extends StatelessWidget {
                     "${getImagePath(title)}",
                     height: 42,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Flexible(
@@ -108,7 +108,7 @@ class InfoButtonWidget extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 65,
             ),
             SvgPicture.asset(Assets.iconArrowInfoBtn)

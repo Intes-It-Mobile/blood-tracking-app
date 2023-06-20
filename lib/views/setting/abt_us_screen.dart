@@ -61,16 +61,16 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           child: Column(children: [
             Center(
               child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 15),
                   height: 78,
                   child: Image.asset(
-                    Assets.blood_test,
+                    Assets.about_us,
                     fit: BoxFit.fitHeight,
                   )),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(AppLocalizations.of(context)!.getTranslate('about_us_content')),
             )
           ]),

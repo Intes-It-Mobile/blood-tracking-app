@@ -24,7 +24,7 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10),
+      margin: EdgeInsets.only(right: 10,top: 20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),

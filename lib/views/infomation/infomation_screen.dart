@@ -32,10 +32,10 @@ class _InfomationScreenState extends State<InfomationScreen> {
               height: 44,
             )),
             Container(
-                margin: EdgeInsets.only(left: 17),
+                margin: const EdgeInsets.only(left: 17),
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('infor')}",
-                  style: AppTheme.Headline20Text,
+                  style: AppTheme.Headline20Text.copyWith(letterSpacing: 2.0,),
                 )),
           ],
         ),

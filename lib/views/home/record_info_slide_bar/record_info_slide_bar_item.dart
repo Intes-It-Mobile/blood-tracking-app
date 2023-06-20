@@ -21,6 +21,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
 
 class _RecordInfoSliderItemWidgetState
     extends State<RecordInfoSliderItemWidget> {
+
         String? date = "2023/06/15";
   String? time = "15:58";
   Color? SttTextColor(String? value) {
