@@ -82,6 +82,8 @@
     "asleep":"Asleep",
 
     "errow_sugar_input_text":"Please enter correct value between 18-630 mg/dL",
-    "save_record":"Save Record"
+    "save_record":"Save Record",
+    "version":" version",
+    "1.0.0":" 1.0.0"
 
 }
