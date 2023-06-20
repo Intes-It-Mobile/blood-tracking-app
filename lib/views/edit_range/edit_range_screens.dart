@@ -44,7 +44,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                         Navigator.of(context).pop();
                       },
                       child: Container(
-                        margin: EdgeInsets.only(right: 12),
+                        margin: const EdgeInsets.only(right: 12),
                         child: SvgPicture.asset(
                           Assets.iconBack,
                           height: 44,
@@ -66,26 +66,36 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
             ),
           ),
         ),
-        body: Stack(
+        body: Column(
           children: [
-            ListView.builder(
-                primary: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: editTargetRange.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
-                    width: double.infinity,
-                    color: index.isEven || index == 0
-                        ? AppColors.AppColor3
-                        : Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 16),
+            Container(
+              padding: const EdgeInsets.all(8),
+              height: MediaQuery.of(context).size.height * 0.086,
+              width: double.infinity,
+              color: AppColors.AppColor4,
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('notification')}",
+                style: AppTheme.hintText
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400,fontSize: 12),
+                textAlign: TextAlign.justify,
+                maxLines: 3,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  primary: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: editTargetRange.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.24,
+                      width: double.infinity,
+                      color: index.isEven || index == 0
+                          ? AppColors.AppColor3
+                          : Colors.white,
+                      padding: const EdgeInsets.only(top: 12,left: 16),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 16,
-                          ),
                           Row(
                             children: [
                               Text(
@@ -103,7 +113,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                             ],
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 15,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -162,7 +172,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                             ],
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 19,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -222,22 +232,10 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                           ),
                         ],
                       ),
-                    ),
-                  );
-                }),
-            Container(
-              padding: const EdgeInsets.all(8),
-              height: 72,
-              width: double.infinity,
-              color: AppColors.AppColor4,
-              child: Text(
-                "${AppLocalizations.of(context)!.getTranslate('notification')}",
-                style: AppTheme.hintText
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
-                textAlign: TextAlign.justify,
-                maxLines: 3,
-              ),
-            )
+                    );
+                  }),
+            ),
+
           ],
         ));
   }

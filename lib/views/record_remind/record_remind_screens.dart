@@ -72,7 +72,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       ),
       body: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 5,
+            top: 20,
             right: 10,
             left: 10,
             bottom: MediaQuery.of(context).padding.bottom +
@@ -182,8 +182,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   }),
             ),
             Container(
-              height: 36,
-              width: 133,
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.32,
               decoration: BoxDecoration(
                   color: AppColors.AppColor2,
                   borderRadius: BorderRadius.circular(5)),
