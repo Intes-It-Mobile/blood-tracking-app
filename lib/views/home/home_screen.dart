@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 
@@ -56,20 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _buildNavItem(
-                            Icons.home,
+                            Assets.iconHomeNav,
                             'A',
                             0,
                             AppLocalizations.of(context)!
                                 .getTranslate('home_page_nav'),
                           ),
                           _buildNavItem(
-                              Icons.business,
+                              Assets.iconInfoNav,
                               'B',
                               1,
                               AppLocalizations.of(context)!
                                   .getTranslate('info_nav')),
                           _buildNavItem(
-                              Icons.school,
+                              Assets.iconSettingsNav,
                               'C',
                               2,
                               AppLocalizations.of(context)!
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index, String text) {
+  Widget _buildNavItem(String icon, String label, int index, String text) {
     final bool isSelected = _currentIndex == index;
     final double scale = isSelected ? 1.15 : 1.0;
 
@@ -141,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: Column(
                 children: [
-                  Icon(
+                  SvgPicture.asset(
                     icon,
                     color: iconColor,
                   ),

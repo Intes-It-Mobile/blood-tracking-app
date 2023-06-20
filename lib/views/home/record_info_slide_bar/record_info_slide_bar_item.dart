@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
 class _RecordInfoSliderItemWidgetState
     extends State<RecordInfoSliderItemWidget> {
 
+        String? date = "2023/06/15";
+  String? time = "15:58";
   Color? SttTextColor(String? value) {
     switch (value) {
       case 'normal':
@@ -38,8 +41,10 @@ class _RecordInfoSliderItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+    return Container( 
+      width: (MediaQuery.of(context).size.width/375)*144,
+      // padding: EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+      padding: EdgeInsets.fromLTRB(7, 5, 9, 5),
       margin: EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -47,7 +52,8 @@ class _RecordInfoSliderItemWidgetState
           ),
           color: AppColors.AppColor3),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -55,18 +61,7 @@ class _RecordInfoSliderItemWidgetState
               Container(
                 child: Row(
                   children: [
-                    Container(
-                        margin: EdgeInsets.only(right: 7),
-                        child: Text(
-                          "2023/06/15",
-                          style: AppTheme.timeText,
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(right: 7),
-                        child: Text(
-                          "15:58",
-                          style: AppTheme.timeText,
-                        )),
+                    Text("${date}   ${time}",maxLines: 1,overflow: TextOverflow.ellipsis,style: AppTheme.timeText,)
                   ],
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class TopWidgetHomeContent extends StatefulWidget {
@@ -29,10 +30,13 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     Container(
                       child: SvgPicture.asset(Assets.iconRedCross),
                     ),
-                    SizedBox(width: 15,),
+                    SizedBox(
+                      width: 15,
+                    ),
                     Flexible(
                       child: Text(
-                        AppLocalizations.of(context)!.getTranslate('app_name'),style: AppTheme.Headline20Text,
+                        AppLocalizations.of(context)!.getTranslate('app_name'),
+                        style: AppTheme.Headline20Text,
                         overflow: TextOverflow.visible,
                       ),
                     ),
@@ -46,8 +50,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: AppColors.mainBgColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                            color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
                         padding: EdgeInsets.all(6),
                         child: SvgPicture.asset(
                           Assets.iconAlarm,
@@ -57,14 +60,18 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                       SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.mainBgColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        padding: EdgeInsets.fromLTRB(5.5, 8, 7, 8),
-                        child: SvgPicture.asset(
-                          Assets.iconHistory,
-                          height: 16,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.history);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
+                          padding: EdgeInsets.fromLTRB(5.5, 8, 7, 8),
+                          child: SvgPicture.asset(
+                            Assets.iconHistory,
+                            height: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -84,8 +91,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                       Container(
                         margin: EdgeInsets.only(right: 20),
                         child: Text(
-                          AppLocalizations.of(context)!
-                              .getTranslate('default_txt'),
+                          AppLocalizations.of(context)!.getTranslate('default_txt'),
                           style: TextStyle(color: AppColors.AppColor4),
                         ),
                       ),

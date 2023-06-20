@@ -14,7 +14,7 @@
     "year": "year",
     "normal": "Normal",
     "diabetes": "Diabetes",
-    "pre_diabetes": "Pred-diabetes",
+    "pre_diabetes": "Pre-diabetes",
     "low": "Low",           
     "new_record": "New Record",
     "chart": "Chart",
@@ -37,6 +37,7 @@
     "about_us":"About us",
     "share_app":"Share this app",
     "send_feedback":"Send feedback",
+    "record_history":"Record history",
 
     "bls_do_asw":"<p><strong>What is blood sugar?</strong></p> <p>Blood sugar, or glucose, is the main sugar found in your blood. It comes from the food you eat, and is your body&apos;s main source of energy. Your blood carries glucose to all of your body&apos;s cells to use for energy.</p> <p><strong>How can I check my blood sugar? &nbsp;</strong></p> <p>Use a blood sugar meter (also called a glucometer) or a continuous glucose monitor (CGM) to check your blood sugar. A blood sugar meter measures the amount of sugar in a small sample of blood, usually from your fingertip. A CGM uses a sensor inserted under the skin to measure your blood sugar every few minutes. If you use a CGM, you&apos;ll still need to test daily with a blood sugar meter to make sure your CGM readings are accurate.</p> <p><strong>When should I check my blood sugar?</strong></p> <p>How often you check your blood sugar depends on the type of diabetes you have and if you take any diabetes medicines. Typical times to check your blood sugar include:&nbsp;</p> <ul> <li> <p>When you first wake up, before you eat or drink anything.</p> </li> <li> <p>Before a meal.</p> </li> <li> <p>Two hours after a meal.</p> </li> <li> <p>At bedtime.</p> </li> </ul>",
     "bls_low_what_asw": "<p><strong>What causes low blood sugar?</strong></p> <p>Low blood sugar (also called hypoglycemia) has many causes, including missing a meal, taking too much insulin, taking other diabetes medicines, exercising more than normal, and drinking alcohol. Blood sugar below 70 mg/dL is considered low. Signs of low blood sugar are different for everyone. Common symptoms include:</p> <ul> <li> <p>Shaking.</p> </li> <li> <p>Sweating.</p> </li> <li> <p>Nervousness or anxiety.</p> </li> <li> <p>Irritability or confusion.</p> </li> <li> <p>Dizziness.</p> </li> <li> <p>Hunger</p> </li> </ul> <p><strong>How can I treat low blood sugar?</strong></p> <p>Carry supplies for treating low blood sugar with you. If you feel shaky, sweaty, or very hungry or have other symptoms, check your blood sugar. Even if you don&apos;t have symptoms but think you may have low blood sugar, check it. If your blood sugar is lower than 70 mg / dL , do one of the following immediately .&nbsp;</p> <ul> <li> <p>Take four glucose tablets.</p> </li> <li> <p>Drink four ounces of fruit juice.</p> </li> <li> <p>Drink four ounces of regular soda, not diet soda.</p> </li> <li> <p>Eat four pieces of hard candy.</p> </li> </ul> <p>Wait for 15 minutes and then check your blood sugar again. Do one of the above treatments again until your blood sugar is 70 mg/dL or above and eat a snack if your next meal is an hour or more away.</p>",
@@ -66,5 +67,22 @@
     "sugar amount":"Sugar Amount",
     "edit_target_range":"Edit target range (mmol/L)",
     "record_remind":"Record_remind",
-    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor."
+    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor.",
+    "new_alarm":"New alarm",
+    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor.",
+
+    "Edit target range (mmol/L)":"Edit target range (mmol/L)",
+    "sugar_amount":"Sugar Amount",
+
+    "before_exercise":"Before exercise",
+    "before_meal":"Before a meal",
+    "fasting":"Fasting",
+    "after_meal_1h":"After a meal (1h)",
+    "after_meal_2h":"After a meal (2h)",
+    "after_exercise":"After exercise",
+    "asleep":"Asleep",
+
+    "errow_sugar_input_text":"Please enter correct value between 18-630 mg/dL",
+    "save_record":"Save Record"
+
 }
