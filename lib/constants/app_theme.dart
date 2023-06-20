@@ -86,4 +86,30 @@ class AppTheme {
     fontSize: 12,
     fontFamily: FontFamily.roboto,
   );
+
+  static final TextStyle sugarInputText = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: 50,
+    fontFamily: FontFamily.roboto,
+  );
+
+  static final TextStyle errorText = TextStyle(
+    color: Colors.red,
+    fontWeight: FontWeight.w500,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: 12,
+  );
+  
+  static final TextStyle TextIntroline16Text = TextStyle(
+    color: AppColors.AppColor4,
+    fontWeight: FontWeight.w800,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: 16,
+    fontFamily: FontFamily.roboto,
+  );
 }

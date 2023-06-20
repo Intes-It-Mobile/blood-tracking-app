@@ -12,13 +12,15 @@ class ButtonWidget extends StatefulWidget {
   String? suffixIconPath;
   bool? mainAxisSizeMin = false;
   VoidCallback? onTap;
+  EdgeInsetsGeometry? margin = EdgeInsetsDirectional.only(top: 20);
   ButtonWidget(
       {super.key,
       this.btnColor,
       this.onTap,
       this.btnText,
       this.suffixIconPath,
-      this.mainAxisSizeMin});
+      this.mainAxisSizeMin,
+      this.margin});
 
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -32,7 +34,9 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       splashColor: Colors.transparent,
       onTap: widget.onTap,
       child: Container(
-        margin: EdgeInsetsDirectional.only(top: 20),
+        margin: widget.margin != null
+            ? widget.margin
+            : EdgeInsetsDirectional.only(top: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(5),
