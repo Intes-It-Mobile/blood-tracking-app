@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sliding_switch/sliding_switch.dart';
 
 import 'package:get/get.dart';
 import '../../constants/app_theme.dart';
