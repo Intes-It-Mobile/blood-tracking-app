@@ -44,6 +44,7 @@ class _IntroScreenState extends State<IntroScreen> {
         children: [
           Expanded(
             child: Stack(
+              alignment: Alignment.topRight,
               children: [
                 PageView.builder(
                     itemCount: intro.length,
@@ -58,6 +59,35 @@ class _IntroScreenState extends State<IntroScreen> {
                     itemBuilder: (_, index) {
                       return buildPage(intro[index]["img"]);
                     }),
+                indexPage == 2
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          shareLocal.putBools("isFirst", true);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.home,
+                            (route) => false,
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 16, top: MediaQuery.of(context).viewPadding.top + 5),
+                          width: 120,
+                          height: 36,
+                          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: Text(
+                            'Skip all',
+                            textAlign: TextAlign.center,
+                            style: AppTheme.TextIntroline16Text,
+                          ),
+                        ),
+                      ),
                 Container(
                   margin: EdgeInsets.only(bottom: 48, right: 16),
                   child: Column(
@@ -71,7 +101,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           controller: _pageController,
                           count: 3,
                           effect: SlideEffect(
-                              radius: 5,
+                              radius: 2,
                               paintStyle: PaintingStyle.stroke,
                               strokeWidth: 1,
                               activeDotColor: AppColors.AppColor4,
@@ -80,66 +110,39 @@ class _IntroScreenState extends State<IntroScreen> {
                               dotWidth: 18),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          indexPage == 2
-                              ? Container()
-                              : GestureDetector(
-                                  onTap: () {
-                                    shareLocal.putBools("isFirst", true);
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      Routes.home,
-                                      (route) => false,
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                        color: AppColors.AppColor4,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Skip all',
-                                      textAlign: TextAlign.center,
-                                      style: AppTheme.TextIntroline16Text,
-                                    ),
-                                  ),
-                                ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (indexPage == 2) {
-                                shareLocal.putBools("isFirst", true);
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  Routes.home,
-                                  (route) => false,
-                                );
-                              }
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 100),
-                                curve: Curves.bounceIn,
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(left: 17),
-                              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: AppColors.AppColor4,
-                              ),
-                              child: Text(
-                                indexPage == 2 ? 'Homepage' : 'Next step',
-                                textAlign: TextAlign.center,
-                                style: AppTheme.Headline16Text,
-                              ),
-                            ),
+                      GestureDetector(
+                        onTap: () async {
+                          if (indexPage == 2) {
+                            shareLocal.putBools("isFirst", true);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.home,
+                              (route) => false,
+                            );
+                          }
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 100),
+                            curve: Curves.bounceIn,
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 36,
+                          margin: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                              AppColors.AppColor4,
+                              AppColors.AppColor2,
+                            ]),
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                        ],
+                          child: Text(
+                            indexPage == 2 ? 'Homepage' : 'Next step',
+                            textAlign: TextAlign.center,
+                            style: AppTheme.Headline16Text,
+                          ),
+                        ),
                       ),
                     ],
                   ),

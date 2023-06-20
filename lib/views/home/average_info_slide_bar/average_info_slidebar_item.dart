@@ -30,7 +30,7 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
             Radius.circular(5),
           ),
           color: AppColors.AppColor3),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12), 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
