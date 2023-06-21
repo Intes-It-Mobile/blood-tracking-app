@@ -101,7 +101,14 @@
     "keep":"Keep",
 
     "you_have_not_record":"You have not created any record yet",
-    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?"
+    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
+   
+    "stay":"Stay",
+    "exit":"Exit",
+
+    "skip_all":"Skip all",
+    "next_step":"Next step",
+    "homepage":"Homepage"
 
 
 }
