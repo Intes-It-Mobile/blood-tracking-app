@@ -100,7 +100,11 @@
     "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
    
     "stay":"Stay",
-    "exit":"Exit"
+    "exit":"Exit",
+
+    "skip_all":"Skip all",
+    "next_step":"Next step",
+    "homepage":"Homepage"
 
 
 
