@@ -24,18 +24,20 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10,top: 20),
-      decoration: BoxDecoration(
+      height: MediaQuery.of(context).size.height * 0.12,
+      width: MediaQuery.of(context).size.width * 0.39,
+      margin: const EdgeInsets.only(right: 10,top: 20),
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
           color: AppColors.AppColor3),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12), 
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 15),
+            margin: const EdgeInsets.only(bottom: 15),
             child: Text(
               widget.hasType == true
                   ? "${AppLocalizations.of(context)!.getTranslate('${widget.title}')} (${AppLocalizations.of(context)!.getTranslate('${widget.typeAverage}')})"

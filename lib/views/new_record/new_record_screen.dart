@@ -90,38 +90,36 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
-        title: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      print(sugarInfoStore!
-                          .rootSugarInfo!.conditions!.first.name);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(right: 12),
-                      child: SvgPicture.asset(
-                        Assets.iconBack,
-                        height: 44,
-                      ),
+        title: Column(
+          children: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    print(sugarInfoStore!
+                        .rootSugarInfo!.conditions!.first.name);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: SvgPicture.asset(
+                      Assets.iconBack,
+                      height: 44,
                     ),
                   ),
-                  Expanded(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('new_record')}",
-                      style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                      maxLines: 2,
-                    ),
+                ),
+                Expanded(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.getTranslate('new_record')}",
+                    style: AppTheme.Headline20Text,
+                    overflow: TextOverflow
+                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                    maxLines: 2,
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
       body: Container(

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
@@ -211,10 +213,19 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
   Future<String?> _showDiaLog(BuildContext context) {
+     DateTime _dateTime = DateTime.now();
     return showDialog<String>(
+
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        actions: <Widget>[
+
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        content: SizedBox(
+          height: 200.0,
+          child:
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,7 +244,19 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(),
+                    child: SizedBox(
+                      height: 50,
+                      width: 100,
+                      // child: CupertinoDatePicker(
+                      //   initialDateTime: _dateTime,
+                      //   mode: CupertinoDatePickerMode.date,
+                      //   onDateTimeChanged: (dateTime){
+                      //     setState(() {
+                      //       _dateTime = dateTime;
+                      //     });
+                      //   },
+                      // ),
+                    ),
                   ),
                   Expanded(
                     flex: 1,
@@ -337,16 +360,16 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   ),
                 ],
               ),
-
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.30,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.31,
                     decoration: BoxDecoration(
-                      color: AppColors.AppColor3,
-                      borderRadius: BorderRadius.circular(5)
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)
                     ),
                     child: Center(
                       child: Text("${AppLocalizations.of(context)!.getTranslate('cancel')}",
@@ -356,14 +379,14 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                             color: AppColors.AppColor2),),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.30,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.31,
                     decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
+                        color: AppColors.AppColor2,
                         borderRadius: BorderRadius.circular(5)
                     ),
                     child: Center(
@@ -377,11 +400,12 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                 ],
               )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
+
 
 }
 
