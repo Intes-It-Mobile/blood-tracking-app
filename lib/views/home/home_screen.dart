@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Scaffold(
             // extendBodyBehindAppBar: true,
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(),
             backgroundColor: Colors.white,
 
@@ -47,8 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
               child: BottomAppBarCum(
-
-                 elevation: 0,
                 surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
@@ -97,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Image.asset(Assets.adsBanner))
                   : Container(
                       width: screenWidth,
-                      height: 35,
+                      height: 39,
                       color: AppColors.AppColor2,
                     ))
         ],
@@ -125,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Color iconColor = isSelected ? AppColors.mainBgColor : AppColors.AppColor2;
     Color btnColor = isSelected ? AppColors.AppColor2 : AppColors.AppColor3;
 
-    borderRadius = BorderRadius.only(
+    borderRadius = const BorderRadius.only(
       topLeft: Radius.circular(8.0),
       topRight: Radius.circular(8.0),
     );
@@ -188,8 +186,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         // Status bar color
         statusBarColor: AppColors.AppColor2,
         // Status bar brightness (optional)`
-        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
-        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.dark, // For iOS (dark icons)
       ),
 
       // Các thuộc tính khác của AppBar

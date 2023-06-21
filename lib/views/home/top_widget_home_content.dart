@@ -31,7 +31,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     Container(
                       child: SvgPicture.asset(Assets.iconRedCross),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Flexible(
@@ -54,18 +54,18 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                           Navigator.of(context).pushNamed(Routes.record_remind);
                         },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: AppColors.mainBgColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           child: SvgPicture.asset(
                             Assets.iconAlarm,
                             height: 20,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
@@ -73,11 +73,11 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                           Navigator.of(context).pushNamed(Routes.history);
                         },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: AppColors.mainBgColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
-                          padding: EdgeInsets.fromLTRB(5.5, 8, 7, 8),
+                          padding: const EdgeInsets.fromLTRB(5.5, 8, 7, 8),
                           child: SvgPicture.asset(
                             Assets.iconHistory,
                             height: 16,
@@ -86,7 +86,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(

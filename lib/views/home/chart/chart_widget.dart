@@ -20,7 +20,7 @@ class _ChartWidgetState extends State<ChartWidget> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           AppLocalizations.of(context)!.getTranslate('chart'),
-          style: AppTheme.BtnText.copyWith(color: AppColors.AppColor2),
+          style: AppTheme.BtnText.copyWith(color: AppColors.AppColor2,fontWeight: FontWeight.w800),
         ),
         SizedBox(
           height: 10,
