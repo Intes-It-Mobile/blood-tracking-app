@@ -74,8 +74,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
             top: 20,
             right: 10,
             left: 10,
-            bottom: MediaQuery.of(context).padding.bottom +
-                Get.height * 0.09),
+            bottom: MediaQuery.of(context).padding.bottom + Get.height * 0.09),
         child: Column(
           children: [
             Expanded(
@@ -120,7 +119,12 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        SvgPicture.asset(Assets.iconEditRecord),
+                                        InkWell(
+                                            onTap: () {
+                                              _showDiaLog(context);
+                                            },
+                                            child: SvgPicture.asset(
+                                                Assets.iconEditRecord)),
                                         const SizedBox(
                                           width: 8,
                                         ),
@@ -134,11 +138,13 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                       alignment: Alignment.centerRight,
                                       child: GestureDetector(
                                         onTap: () {
-                                          setState(() => isToggled = !isToggled);
+                                          setState(
+                                              () => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
                                         onPanEnd: (b) {
-                                          setState(() => isToggled = !isToggled);
+                                          setState(
+                                              () => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
                                         child: AnimatedContainer(
@@ -189,7 +195,10 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
               child: Center(
                   child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                style: AppTheme.hintText.copyWith(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white),
+                style: AppTheme.hintText.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
               )),
             )
           ],
@@ -197,6 +206,182 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       ),
     );
   }
+
+
+
+  Future<String?> _showDiaLog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        actions: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "${AppLocalizations.of(context)!.getTranslate('set_alarm')}",
+                  style: AppTheme.hintText.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.AppColor4),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("${AppLocalizations.of(context)!.getTranslate('sound')}",
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),),
+                        GestureDetector(
+                          onTap: () {
+                            setState(
+                                    () => isToggled = !isToggled);
+                            widget.onToggled(isToggled);
+                          },
+                          onPanEnd: (b) {
+                            setState(
+                                    () => isToggled = !isToggled);
+                            widget.onToggled(isToggled);
+                          },
+                          child: AnimatedContainer(
+                            height: 34,
+                            width: 58,
+                            padding: EdgeInsets.all(innerPadding),
+                            alignment: isToggled
+                                ? Alignment.centerLeft
+                                : Alignment.centerRight,
+                            duration:
+                            const Duration(milliseconds: 400),
+                            curve: Curves.easeOut,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.circular(50),
+                              color: isToggled
+                                  ? AppColors.AppColor1
+                                  : AppColors.AppColor2,
+                            ),
+                            child: Container(
+                              width: size,
+                              height: size,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(100),
+                                color: isToggled
+                                    ? Colors.white
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text("${AppLocalizations.of(context)!.getTranslate('vibrate')}",
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),),
+                        GestureDetector(
+                          onTap: () {
+                            setState(
+                                    () => isToggled = !isToggled);
+                            widget.onToggled(isToggled);
+                          },
+                          onPanEnd: (b) {
+                            setState(
+                                    () => isToggled = !isToggled);
+                            widget.onToggled(isToggled);
+                          },
+                          child: AnimatedContainer(
+                            height: 34,
+                            width: 58,
+                            padding: EdgeInsets.all(innerPadding),
+                            alignment: isToggled
+                                ? Alignment.centerLeft
+                                : Alignment.centerRight,
+                            duration:
+                            const Duration(milliseconds: 400),
+                            curve: Curves.easeOut,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.circular(50),
+                              color: isToggled
+                                  ? AppColors.AppColor1
+                                  : AppColors.AppColor2,
+                            ),
+                            child: Container(
+                              width: size,
+                              height: size,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(100),
+                                color: isToggled
+                                    ? Colors.white
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.30,
+                    decoration: BoxDecoration(
+                      color: AppColors.AppColor3,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Center(
+                      child: Text("${AppLocalizations.of(context)!.getTranslate('cancel')}",
+                        style: AppTheme.hintText.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.AppColor2),),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.30,
+                    decoration: BoxDecoration(
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Center(
+                      child: Text("${AppLocalizations.of(context)!.getTranslate('set')}",
+                        style: AppTheme.hintText.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
 }
 
 class RecordRemind {
@@ -205,3 +390,5 @@ class RecordRemind {
 
   RecordRemind({required this.hour, required this.minute});
 }
+
+
