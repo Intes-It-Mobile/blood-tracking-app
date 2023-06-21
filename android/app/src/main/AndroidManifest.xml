@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="blood_sugar_tracking"
+        android:label="Blood Sugar Tracking"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

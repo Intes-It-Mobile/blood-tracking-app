@@ -3,6 +3,7 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,7 +23,8 @@ class _InfomationScreenState extends State<InfomationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+      //  toolbarHeight: 80,
+        surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.AppColor2,
         title: Row(
           children: [
@@ -32,17 +34,21 @@ class _InfomationScreenState extends State<InfomationScreen> {
               height: 44,
             )),
             Container(
-                margin: EdgeInsets.only(left: 17),
+                margin: const EdgeInsets.only(left: 17),
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('infor')}",
-                  style: AppTheme.Headline20Text,
+                  style: AppTheme.Headline20Text.copyWith(letterSpacing: 2.0,),
                 )),
           ],
         ),
       ),
       body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        height: double.infinity,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
+            primary: true,
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

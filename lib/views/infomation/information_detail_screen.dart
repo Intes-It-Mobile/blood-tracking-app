@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
@@ -34,6 +35,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
@@ -83,8 +85,8 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                   )),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Html(
                 data: """
                       ${getContent(type)}
@@ -92,10 +94,10 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                 style: {
                   'p': Style(
                       textAlign:
-                          TextAlign.justify), // Áp dụng một style cho thẻ <p>
+                          TextAlign.justify,fontFamily: FontFamily.IBMPlexSans), // Áp dụng một style cho thẻ <p>
                   'strong': Style(
                       fontWeight:
-                          FontWeight.bold), // Áp dụng một style cho thẻ <strong>
+                          FontWeight.bold,fontFamily: FontFamily.IBMPlexSans), // Áp dụng một style cho thẻ <strong>
                 },
               ),
             )

@@ -1,11 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'package:blood_sugar_tracking/constants/app_theme.dart';
+import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
-import 'package:blood_sugar_tracking/constants/colors.dart';
-
+import '../../widgets/customs_bottom_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
 import 'home_screen_content.dart';
@@ -19,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool hasAds = false;
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -33,23 +37,24 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Scaffold(
             // extendBodyBehindAppBar: true,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(),
             backgroundColor: Colors.white,
-            body: Container(
-              // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Center(
+            body: WillPopScope(
+              onWillPop: _onWillPop,
+              child: Container(
+                // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: _buildPageContent(),
               ),
             ),
             bottomNavigationBar: Container(
+              color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
-              child: BottomAppBar(
-                shadowColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                color: Colors.white,
+              child: BottomAppBarCum(
+                surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
-                  // color: Colors.amber,
+                  color: Colors.transparent,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -60,21 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Assets.iconHomeNav,
                             'A',
                             0,
-                            AppLocalizations.of(context)!
-                                .getTranslate('home_page_nav'),
+                            AppLocalizations.of(context)!.getTranslate('home_page_nav'),
                           ),
                           _buildNavItem(
-                              Assets.iconInfoNav,
-                              'B',
-                              1,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('info_nav')),
-                          _buildNavItem(
-                              Assets.iconSettingsNav,
-                              'C',
-                              2,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('setting_nav')),
+                              Assets.iconInfoNav, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
+                          _buildNavItem(Assets.iconSettingsNav, 'C', 2,
+                              AppLocalizations.of(context)!.getTranslate('setting_nav')),
                         ],
                       ),
                       // Container(width: double.infinity,height: 50,color: Colors.blue,)
@@ -88,13 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: 0,
               child: hasAds
                   ? Container(
-                      width: screenWidth,
-                      height: 87,
-                      color: AppColors.AppColor2,
-                      child: Image.asset(Assets.adsBanner))
+                      width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
                   : Container(
                       width: screenWidth,
-                      height: 35,
+                      height: 39,
                       color: AppColors.AppColor2,
                     ))
         ],
@@ -109,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
     EdgeInsets margin;
 
     // Align button A to the left edge of the screen
-    margin = EdgeInsets.only(left: 2.0, right: 1.0);
+    margin = const EdgeInsets.only(left: 2.0, right: 1.0);
 
     if (index == 1) {
       margin = EdgeInsets.fromLTRB(2, isSelected ? 0 : 10, 2, 0);
@@ -122,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Color iconColor = isSelected ? AppColors.mainBgColor : AppColors.AppColor2;
     Color btnColor = isSelected ? AppColors.AppColor2 : AppColors.AppColor3;
 
-    borderRadius = BorderRadius.only(
+    borderRadius = const BorderRadius.only(
       topLeft: Radius.circular(8.0),
       topRight: Radius.circular(8.0),
     );
@@ -138,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: btnColor,
               borderRadius: borderRadius,
             ),
-            padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
             child: Center(
               child: Column(
                 children: [
@@ -148,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     "${text}",
-                    style: TextStyle(color: textColor),
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -171,6 +164,73 @@ class _HomeScreenState extends State<HomeScreen> {
         return Container();
     }
   }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  content: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 42),
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('wanna_exit')}",
+                            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(true),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric( vertical: 9),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  child: Center(
+                                    child: Text(
+                                      "${AppLocalizations.of(context)!.getTranslate('exit')}",
+                                      style: AppTheme.statusTxt
+                                          .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(false),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 9),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  child: Center(
+                                    child: Text(
+                                      "${AppLocalizations.of(context)!.getTranslate('stay')}",
+                                      style:
+                                          AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ))) ??
+        _onWillPop;
+  }
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -180,13 +240,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         // Status bar color
         statusBarColor: AppColors.AppColor2,
-
         // Status bar brightness (optional)`
-        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
-        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: Brightness.dark, // For iOS (dark icons)
       ),
 
       // Các thuộc tính khác của AppBar

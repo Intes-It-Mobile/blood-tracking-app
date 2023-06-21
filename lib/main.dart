@@ -1,9 +1,11 @@
+import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -25,9 +27,11 @@ class MyApp extends StatelessWidget {
     TextSizeConfig.init(context);
     return Center(
       child: MultiProvider(
-        providers: [  Provider<SugarInfoStore>(
-          create: (_) => SugarInfoStore(),
-        ),],
+        providers: [
+          Provider<SugarInfoStore>(
+            create: (_) => SugarInfoStore(),
+          ),
+        ],
         child: MaterialApp(
           routes: Routes.routes,
           debugShowCheckedModeBanner: false,
@@ -61,7 +65,7 @@ class MyApp extends StatelessWidget {
             //
             // This works for code too, not just values: Most code changes can be
             // tested with just a hot reload.
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
           home: SplashScreen(),
