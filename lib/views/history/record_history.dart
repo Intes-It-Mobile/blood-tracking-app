@@ -76,7 +76,7 @@ class _RecordHistoryState extends State<RecordHistory> {
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: buildHistoryRecord(),
-        ):Container()//Trường hợp chưa có record,
+        ):Container()//Trường hợp chưa có,
       ),
     );
   }
@@ -84,6 +84,7 @@ class _RecordHistoryState extends State<RecordHistory> {
   List<Widget> buildHistoryRecord() {
     return sugarInfoStore!.listRecord!.map((e) {
       return RecordInfoSliderItemWidget(
+        id:e.id,
         status: e.status,
         dayTime: e.dayTime,
         hourTime: e.hourTime,

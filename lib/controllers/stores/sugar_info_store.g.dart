@@ -423,11 +423,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic saveRecord() {
+  dynamic saveNewRecord() {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.saveRecord');
+        name: '_SugarInfoStoreBase.saveNewRecord');
     try {
-      return super.saveRecord();
+      return super.saveNewRecord();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
