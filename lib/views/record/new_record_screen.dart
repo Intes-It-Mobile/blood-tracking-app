@@ -171,8 +171,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         },
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                          decoration: BoxDecoration(
+                              const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                          decoration: const BoxDecoration(
                               color: AppColors.AppColor3,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
@@ -200,7 +200,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('condition')}",
                       style: AppTheme.Headline16Text.copyWith(
@@ -226,8 +226,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
                       color: AppColors.AppColor3,
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
@@ -243,7 +243,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             Container(
                               child: Row(children: [
                                 SvgPicture.asset(Assets.iconEditPen),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 SvgPicture.asset(Assets.iconSwapUnit)
