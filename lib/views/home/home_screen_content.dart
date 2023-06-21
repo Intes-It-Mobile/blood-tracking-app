@@ -31,23 +31,25 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-              width: screenWidth,
-              height: screenHeight * 0.24384236453,
-              color: AppColors.AppColor2,
-              margin: const EdgeInsets.only(bottom: 20),
-              padding: const EdgeInsets.only(top: 10),
-              child: const TopWidgetHomeContent(),
-            ),
-            const Positioned(
-              left: 0.0,
-              right: 0.0,
-              bottom: -25,
-              child: AverageInfoSlideBarWidget(),
-            ),
-          ],
+        Container(
+          height: MediaQuery.of(context).size.height * 0.32,
+          child: Stack(
+            children: [
+              Container(
+                width: screenWidth,
+                height: screenHeight * 0.24384236453,
+                color: AppColors.AppColor2,
+                padding: const EdgeInsets.only(top: 20),
+                child: const TopWidgetHomeContent(),
+              ),
+              const Positioned(
+                left: 0.0,
+                right: 0.0,
+                bottom: 20,
+                child: AverageInfoSlideBarWidget(),
+              ),
+            ],
+          ),
         ),
         Expanded(
           child: SingleChildScrollView(
