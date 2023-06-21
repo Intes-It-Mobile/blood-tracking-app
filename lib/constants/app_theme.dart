@@ -6,11 +6,13 @@ import 'font_family.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.white,
-    // Các thuộc tính khác của theme
-    // ...
-  );
+      primaryColor: Color(0xFF0F1049),
+      scaffoldBackgroundColor: Colors.white,
+      fontFamily: FontFamily.IBMPlexSans,
+      //this changes the colour
+      hintColor: Colors.grey,
+     
+     );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.black,
@@ -24,7 +26,7 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle appBodyTextStyle36 = TextStyle(
     color: AppColors.AppColor4,
@@ -32,7 +34,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(36),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle timeText = TextStyle(
     color: Colors.black,
@@ -40,7 +42,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(10),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle statusTxt = TextStyle(
@@ -49,7 +51,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle BtnText = TextStyle(
@@ -58,7 +60,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle Headline16Text = TextStyle(
     color: Colors.white,
@@ -66,7 +68,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle Headline20Text = TextStyle(
@@ -75,7 +77,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle hintText = TextStyle(
@@ -84,7 +86,7 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle sugarInputText = TextStyle(
@@ -92,8 +94,8 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize:TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontFamily: FontFamily.IBMPlexSans,
   );
 
   static final TextStyle errorText = TextStyle(
@@ -103,13 +105,13 @@ class AppTheme {
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
   );
-  
-  static final TextStyle TextIntroline16Text = TextStyle(
-    color: AppColors.AppColor4,
+
+  static final TextIntroline16Text = TextStyle(
+    color: Colors.white,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
-    fontFamily: FontFamily.roboto,
+    fontFamily: FontFamily.IBMPlexSans,
   );
 }

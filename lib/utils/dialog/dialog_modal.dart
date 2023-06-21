@@ -22,14 +22,14 @@ class _DialogFeedbackState extends State<DialogFeedback> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
-      iconPadding: EdgeInsets.only(right: 20),
-      shape: RoundedRectangleBorder(
+      iconPadding: const EdgeInsets.only(right: 20),
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10.0),
         ),
       ),
       alignment: Alignment.bottomCenter,
-      insetPadding: EdgeInsets.only(bottom: 0.0),
+      insetPadding: const EdgeInsets.only(bottom: 0.0),
       title: Stack(
         children: [
           Center(
@@ -47,7 +47,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
                 Navigator.of(context).pop();
               },
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: SvgPicture.asset(
                   Assets.iconX,
                   color: AppColors.AppColor4,
@@ -58,93 +58,89 @@ class _DialogFeedbackState extends State<DialogFeedback> {
           )
         ],
       ),
-      content: Container(
-        child: Container(
-          child: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Container(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('email_if_have')}",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: AppColors.AppColor4),
-                  ),
-                ),
+      content: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            child: Container(
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('email_if_have')}",
+                style: AppTheme.appBodyTextStyle
+                    .copyWith(color: AppColors.AppColor4),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.AppColor4),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText:
-                          "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
-                      hintStyle: AppTheme.hintText,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13)),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Container(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn')}",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: AppColors.AppColor4),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.AppColor4),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText:
-                          "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
-                      hintStyle: AppTheme.hintText,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 185)),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Center(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('feedback_help')}",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: AppColors.AppColor4),
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.AppColor2,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('feedback_send')}",
-                    style: AppTheme.BtnText,
-                  ),
-                ),
-              )
-            ]),
+            ),
           ),
-        ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.AppColor4),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  hintText:
+                      "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
+                  hintStyle: AppTheme.hintText,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            child: Container(
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn')}",
+                style: AppTheme.appBodyTextStyle
+                    .copyWith(color: AppColors.AppColor4),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.AppColor4),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: TextFormField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                  hintText:
+                      "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
+                  hintStyle: AppTheme.hintText,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 185)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            child: Center(
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('feedback_help')}",
+                style: AppTheme.appBodyTextStyle
+                    .copyWith(color: AppColors.AppColor4),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.AppColor2,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('feedback_send')}",
+                style: AppTheme.BtnText,
+              ),
+            ),
+          )
+        ]),
       ),
       actions: [],
     );

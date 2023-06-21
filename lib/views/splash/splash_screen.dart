@@ -54,10 +54,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void didChangeDependencies() {
-     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore!.getListRecords();
     super.didChangeDependencies();
   }
-
 
   Future<String> getJson() {
     return rootBundle.loadString(jsonPath);
@@ -89,6 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
       prefs.setBool('json_loaded', true);
       setState(() {
         data = SugarInfo.fromJson(jsonDecode(jsonData));
+         sugarInfoStore!.getRootSugarInfo(data);
       });
     } else {
       getDataFromSharedPreferences();
@@ -97,7 +98,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -105,9 +105,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Assets.splash), fit: BoxFit.cover)),
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.splash), fit: BoxFit.cover)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

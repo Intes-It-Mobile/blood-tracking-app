@@ -1,5 +1,6 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../constants/assets.dart';
@@ -18,7 +19,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 25, 15, 0),
       child: Column(
         children: [
           Row(
@@ -30,7 +31,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     Container(
                       child: SvgPicture.asset(Assets.iconRedCross),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Flexible(
@@ -48,16 +49,23 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
-                        padding: EdgeInsets.all(6),
-                        child: SvgPicture.asset(
-                          Assets.iconAlarm,
-                          height: 20,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.record_remind);
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              color: AppColors.mainBgColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          padding: const EdgeInsets.all(6),
+                          child: SvgPicture.asset(
+                            Assets.iconAlarm,
+                            height: 20,
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
@@ -65,9 +73,11 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                           Navigator.of(context).pushNamed(Routes.history);
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColors.mainBgColor, borderRadius: BorderRadius.all(Radius.circular(5))),
-                          padding: EdgeInsets.fromLTRB(5.5, 8, 7, 8),
+                          decoration: const BoxDecoration(
+                              color: AppColors.mainBgColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          padding: const EdgeInsets.fromLTRB(5.5, 8, 7, 8),
                           child: SvgPicture.asset(
                             Assets.iconHistory,
                             height: 16,
@@ -76,12 +86,12 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       ),
@@ -89,10 +99,14 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     ),
                     child: Row(children: [
                       Container(
-                        margin: EdgeInsets.only(right: 20),
+                        margin: const EdgeInsets.only(right: 20),
                         child: Text(
-                          AppLocalizations.of(context)!.getTranslate('default_txt'),
-                          style: TextStyle(color: AppColors.AppColor4),
+                          AppLocalizations.of(context)!
+                              .getTranslate('default_txt'),
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              color: AppColors.AppColor4,
+                              fontWeight: FontWeight.w800),
                         ),
                       ),
                       SvgPicture.asset(Assets.iconType)
