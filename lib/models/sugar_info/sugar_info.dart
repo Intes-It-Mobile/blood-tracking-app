@@ -47,6 +47,7 @@ class SugarAmount {
 }
 
 class ListRecord {
+ 
  List<SugarRecord>? listRecord;
 
   ListRecord({this.listRecord});
@@ -70,13 +71,14 @@ class ListRecord {
 }
 
 class SugarRecord {
+  int? conditionId;
   int? id;
   String? status;
   double? sugarAmount;
   String? dayTime;
   String? hourTime;
 
-  SugarRecord({this.status, this.sugarAmount, this.dayTime, this.hourTime,this.id});
+  SugarRecord({this.status, this.sugarAmount, this.dayTime, this.hourTime,this.id,this.conditionId});
 
   SugarRecord.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -84,6 +86,7 @@ class SugarRecord {
     dayTime = json['day_time'];
     hourTime = json['hour_time'];
     id = json['id'];
+    conditionId = json['condition_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -93,6 +96,7 @@ class SugarRecord {
     data['day_time'] = this.dayTime;
     data['hour_time'] = this.hourTime;
     data['id'] = this.id;
+    data['condition_id'] = this.conditionId;
     return data;
   }
 }
