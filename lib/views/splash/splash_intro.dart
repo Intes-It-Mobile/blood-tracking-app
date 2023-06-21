@@ -7,6 +7,7 @@ import 'package:blood_sugar_tracking/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/share_local.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -76,7 +77,7 @@ class _IntroScreenState extends State<IntroScreen> {
                               strokeWidth: 1,
                               activeDotColor: AppColors.AppColor4,
                               dotColor: AppColors.AppColor4,
-                              dotHeight: 8, 
+                              dotHeight: 8,
                               dotWidth: 18),
                         ),
                       ),
@@ -99,13 +100,14 @@ class _IntroScreenState extends State<IntroScreen> {
                                     height: 36,
                                     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                                     decoration: BoxDecoration(
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(5),
                                       border: Border.all(
                                         color: AppColors.AppColor2,
                                       ),
                                     ),
                                     child: Text(
-                                      'Skip all',
+                                      "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
                                       textAlign: TextAlign.center,
                                       style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
                                     ),
@@ -140,7 +142,9 @@ class _IntroScreenState extends State<IntroScreen> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Text(
-                                indexPage == 2 ? 'Homepage' : 'Next step',
+                                indexPage == 2
+                                    ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
+                                    : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
                                 textAlign: TextAlign.center,
                                 style: AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w500),
                               ),
