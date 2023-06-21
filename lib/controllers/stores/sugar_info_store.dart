@@ -139,13 +139,16 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   ListRecord? listRecords;
 
+  DateTime now = DateTime.now();
+
   @observable
   bool? isListRecordsLoading = true;
 
   static final String ListRecordsKey = 'listRecord';
   @action
-  saveRecord() {
+  saveNewRecord() {
     listRecord!.add(SugarRecord(
+        id: now.millisecondsSinceEpoch,
         dayTime: choosedDayTimeStr,
         hourTime: choosedDayHourStr,
         status: currentStatus,
@@ -162,7 +165,6 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   Future<ListRecord?> getListRecords() async {
-    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('myObjectKey');
 
@@ -180,10 +182,23 @@ abstract class _SugarInfoStoreBase with Store {
       print("abcd");
     }
   }
-  
+
   Future deleteData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
-  // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
-}
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
+    // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
+  }
+
+  @observable
+  SugarRecord? editingRecord;
+
+  @action
+  setEditingRecord(SugarRecord record) {
+    editingRecord = record;
+  }
+
+  @action
+  deleteRecord(int? id) {
+    listRecord!.removeWhere((e) => e.id == id);
+  }
 }

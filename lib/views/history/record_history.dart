@@ -94,6 +94,7 @@ class _RecordHistoryState extends State<RecordHistory> {
   List<Widget> buildHistoryRecord() {
     return sugarInfoStore!.listRecord!.map((e) {
       return RecordInfoSliderItemWidget(
+        id:e.id,
         status: e.status,
         dayTime: e.dayTime,
         hourTime: e.hourTime,

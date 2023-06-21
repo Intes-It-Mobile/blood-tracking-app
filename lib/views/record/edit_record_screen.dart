@@ -15,16 +15,16 @@ import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 
-class NewRecordScreen extends StatefulWidget {
-  NewRecordScreen({
+class EditRecordScreen extends StatefulWidget {
+  EditRecordScreen({
     super.key,
   });
 
   @override
-  State<NewRecordScreen> createState() => _NewRecordScreenState();
+  State<EditRecordScreen> createState() => _EditRecordScreenState();
 }
 
-class _NewRecordScreenState extends State<NewRecordScreen> {
+class _EditRecordScreenState extends State<EditRecordScreen> {
   FocusNode focusNode = FocusNode();
   DateTime selectedDateTime = DateTime.now();
   DateTime timeNow = DateTime.now();
@@ -32,6 +32,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
+  int? recordId;
 
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
@@ -65,6 +66,12 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   @override
   void didChangeDependencies() {
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
+
+    if (arguments != null) {
+      recordId = arguments['record_id'];
+    }
+    print("record_id: ${recordId}");
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     if (isFirst == true) {
       sugarInfoStore!.setChooseCondition(0);
@@ -109,13 +116,34 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('new_record')}",
+                      "${AppLocalizations.of(context)!.getTranslate('edit_record')}",
                       style: AppTheme.Headline20Text,
                       overflow: TextOverflow
                           .ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      _showDiaLog(context);
+                      // sugarInfoStore!.deleteRecord(recordId);
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //   context,
+                      //   Routes.home,
+                      //   (route) => false,
+                      // );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: AppColors.mainBgColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: SvgPicture.asset(Assets.iconDelete),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -308,18 +336,18 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         )
                       : SizedBox(),
                   GestureDetector(
-                    onLongPress: () {
-                      sugarInfoStore!.deleteData();
-                    },
+                    // onTap: () {
+
+                    //   // sugarInfoStore!.deleteData();
+                    // },
                     child: Center(
                       child: ButtonWidget(
                         enable: sugarInfoStore!.btnStatus,
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
-                          sugarInfoStore!.saveRecord();
+                          sugarInfoStore!.saveNewRecord();
                           setState(() {
-                            // Navigator.of(context).pushNamed(Routes.home);
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               Routes.home,
@@ -339,6 +367,32 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         ),
       ),
     );
+  }
+
+  Future<String?> _showDiaLog(BuildContext context) {
+    return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              // backgroundColor: AppColors.mainBgColor,
+              actions: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    // color: AppColors.mainBgColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.getTranslate('delete_record_alert')}",
+                        style: AppTheme.Headline16Text,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ));
   }
 }
 

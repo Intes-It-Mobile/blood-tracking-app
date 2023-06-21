@@ -89,5 +89,10 @@
     "sound":"Sound",
     "vibrate":"Vibrate",
     "cancel":"Cancel",
-    "set":"Set"
+    "set":"Set",
+        
+    "edit_record": "Edit record",
+    "delete_record_alert":"Do you really want to delete this record?"
+
+
 }
