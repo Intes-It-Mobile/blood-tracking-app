@@ -43,8 +43,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_history')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),

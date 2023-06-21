@@ -15,14 +15,11 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
   RecordInfoSliderItemWidget({super.key, required this.status});
 
   @override
-  State<RecordInfoSliderItemWidget> createState() =>
-      _RecordInfoSliderItemWidgetState();
+  State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
 }
 
-class _RecordInfoSliderItemWidgetState
-    extends State<RecordInfoSliderItemWidget> {
-
-        String? date = "2023/06/15";
+class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget> {
+  String? date = "2023/06/15";
   String? time = "15:58";
   Color? SttTextColor(String? value) {
     switch (value) {
@@ -41,9 +38,7 @@ class _RecordInfoSliderItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Container( 
-      width: (MediaQuery.of(context).size.width/375)*144,
-      // padding: EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+    return Container(
       padding: EdgeInsets.fromLTRB(7, 5, 9, 5),
       margin: EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
@@ -61,7 +56,12 @@ class _RecordInfoSliderItemWidgetState
               Container(
                 child: Row(
                   children: [
-                    Text("${date}   ${time}",maxLines: 1,overflow: TextOverflow.ellipsis,style: AppTheme.timeText,)
+                    Text(
+                      "${date}   ${time}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTheme.timeText,
+                    )
                   ],
                 ),
               ),
@@ -89,13 +89,10 @@ class _RecordInfoSliderItemWidgetState
           Container(
             child: Row(
               children: [
-                Text("Status : ",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: Colors.black)),
+                Text("Status : ", style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black)),
                 Text(
                   "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
-                  style: AppTheme.statusTxt
-                      .copyWith(color: SttTextColor(widget.status)),
+                  style: AppTheme.statusTxt.copyWith(color: SttTextColor(widget.status)),
                 ),
               ],
             ),
