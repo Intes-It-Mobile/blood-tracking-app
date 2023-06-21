@@ -27,9 +27,11 @@ class MyApp extends StatelessWidget {
     TextSizeConfig.init(context);
     return Center(
       child: MultiProvider(
-        providers: [  Provider<SugarInfoStore>(
-          create: (_) => SugarInfoStore(),
-        ),],
+        providers: [
+          Provider<SugarInfoStore>(
+            create: (_) => SugarInfoStore(),
+          ),
+        ],
         child: MaterialApp(
           routes: Routes.routes,
           debugShowCheckedModeBanner: false,

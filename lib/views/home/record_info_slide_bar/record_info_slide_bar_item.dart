@@ -20,8 +20,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
   RecordInfoSliderItemWidget({super.key, required this.status,this.dayTime,this.hourTime,this.sugarAmount,this.id});
 
   @override
-  State<RecordInfoSliderItemWidget> createState() =>
-      _RecordInfoSliderItemWidgetState();
+  State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
 }
 
 class _RecordInfoSliderItemWidgetState

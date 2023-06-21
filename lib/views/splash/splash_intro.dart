@@ -76,7 +76,7 @@ class _IntroScreenState extends State<IntroScreen> {
                               strokeWidth: 1,
                               activeDotColor: AppColors.AppColor4,
                               dotColor: AppColors.AppColor4,
-                              dotHeight: 8,
+                              dotHeight: 8, 
                               dotWidth: 18),
                         ),
                       ),

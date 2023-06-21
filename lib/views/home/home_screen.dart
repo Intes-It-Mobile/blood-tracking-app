@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'package:blood_sugar_tracking/constants/app_theme.dart';
+import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
-import 'package:blood_sugar_tracking/constants/colors.dart';
-
 import '../../widgets/customs_bottom_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
@@ -38,10 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
             resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(),
             backgroundColor: Colors.white,
-
-            body: Container(
-              // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: _buildPageContent(),
+            body: WillPopScope(
+              onWillPop: _onWillPop,
+              child: Container(
+                // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: _buildPageContent(),
+              ),
             ),
             bottomNavigationBar: Container(
               color: Colors.transparent,
@@ -61,21 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Assets.iconHomeNav,
                             'A',
                             0,
-                            AppLocalizations.of(context)!
-                                .getTranslate('home_page_nav'),
+                            AppLocalizations.of(context)!.getTranslate('home_page_nav'),
                           ),
                           _buildNavItem(
-                              Assets.iconInfoNav,
-                              'B',
-                              1,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('info_nav')),
-                          _buildNavItem(
-                              Assets.iconSettingsNav,
-                              'C',
-                              2,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('setting_nav')),
+                              Assets.iconInfoNav, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
+                          _buildNavItem(Assets.iconSettingsNav, 'C', 2,
+                              AppLocalizations.of(context)!.getTranslate('setting_nav')),
                         ],
                       ),
                       // Container(width: double.infinity,height: 50,color: Colors.blue,)
@@ -89,10 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: 0,
               child: hasAds
                   ? Container(
-                      width: screenWidth,
-                      height: 87,
-                      color: AppColors.AppColor2,
-                      child: Image.asset(Assets.adsBanner))
+                      width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
                   : Container(
                       width: screenWidth,
                       height: 39,
@@ -149,8 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     "${text}",
-                    style: TextStyle(
-                        color: textColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -172,6 +163,75 @@ class _HomeScreenState extends State<HomeScreen> {
       default:
         return Container();
     }
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  content: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 42),
+                          child: Text(
+                            "Do you really want to exit Blood Sugar Tracking?",
+                            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(true),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
+                                  width: 144,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  child: Text(
+                                    "Exit",
+                                    style: AppTheme.statusTxt
+                                        .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(false),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
+                                  width: 144,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  child: Text(
+                                    "Stay",
+                                    style: AppTheme.statusTxt.copyWith(
+                                        color: Colors.white,
+                                        fontFamily: FontFamily.IBMPlexSans,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ))) ??
+        _onWillPop;
   }
 }
 

@@ -54,8 +54,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_history')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -65,19 +64,30 @@ class _RecordHistoryState extends State<RecordHistory> {
           ),
         ),
       ),
-      body: 
-      Container(
-        // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-        margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
-        child: 
-        sugarInfoStore!.listRecord!=null && sugarInfoStore!.listRecord!.isNotEmpty?
-        GridView.count(
-          childAspectRatio: 1.5,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: buildHistoryRecord(),
-        ):Container()//Trường hợp chưa có,
-      ),
+      body: Container(
+          width: MediaQuery.of(context).size.width,
+          // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+          margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
+          child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
+              ? GridView.count(
+                  childAspectRatio: 1.5,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: buildHistoryRecord(),
+                )
+              : Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(Assets.history_mpt, width: 146, height: 146),
+                      SizedBox(height: 30),
+                      Text('You have not created any record yet',
+                          style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                ) //Trường hợp chưa có record,
+          ),
     );
   }
 
