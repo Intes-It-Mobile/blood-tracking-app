@@ -16,7 +16,9 @@ import 'average_info_slide_bar/average_info_slidebar.dart';
 import 'chart/chart_widget.dart';
 
 class HomeScreenContent extends StatefulWidget {
-  const HomeScreenContent({super.key});
+  const HomeScreenContent({
+    super.key,
+  });
 
   @override
   State<HomeScreenContent> createState() => _HomeScreenContentState();
@@ -27,40 +29,49 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    return Stack(
-      alignment: Alignment.topCenter,
+    return Column(
       children: [
-        Container(
-          width: screenWidth,
-          height: screenHeight * 0.24384236453,
-          color: AppColors.AppColor2,
-        ),
-        Column(
+        Stack(
           children: [
-            const TopWidgetHomeContent(),
-            const AverageInfoSlideBarWidget(),
-            Expanded(
-              child: SingleChildScrollView(
-                primary: true,
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    const ChartWidget(),
-                    RecordInfoSlideBarWidget(),
-                    ButtonWidget(
-                      mainAxisSizeMin: true,
-                      btnText: "new_record",
-                      btnColor: AppColors.AppColor4,
-                      suffixIconPath: Assets.iconEditBtn,
-                      onTap: () {
-                        Navigator.of(context).pushNamed(Routes.new_record);
-                      },
-                    )
-                  ],
-                ),
-              ),
+            Container(
+              width: screenWidth,
+              height: screenHeight * 0.24384236453,
+              color: AppColors.AppColor2,
+              margin: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(top: 10),
+              child: const TopWidgetHomeContent(),
+            ),
+            const Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: -25,
+              child: AverageInfoSlideBarWidget(),
             ),
           ],
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            primary: true,
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const ChartWidget(),
+                RecordInfoSlideBarWidget(),
+                const SizedBox(
+                  height: 5,
+                ),
+                ButtonWidget(
+                  mainAxisSizeMin: true,
+                  btnText: "new_record",
+                  btnColor: AppColors.AppColor4,
+                  suffixIconPath: Assets.iconEditBtn,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.new_record);
+                  },
+                )
+              ],
+            ),
+          ),
         ),
       ],
     );
