@@ -309,19 +309,24 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           ),
                         )
                       : SizedBox(),
-                  Center(
-                    child: ButtonWidget(
-                      enable: sugarInfoStore!.btnStatus,
-                      margin: EdgeInsets.symmetric(vertical: 8),
-                      mainAxisSizeMin: true,
-                      onTap: () {
-                        sugarInfoStore!.saveRecord();
-                        setState(() {
-                          Navigator.of(context).pushNamed(Routes.home);
-                        });
-                      },
-                      btnColor: AppColors.AppColor4,
-                      btnText: "save_record",
+                  GestureDetector(
+                    onLongPress:(){
+                       sugarInfoStore!.deleteData();
+                    },
+                    child: Center(
+                      child: ButtonWidget(
+                        enable: sugarInfoStore!.btnStatus,
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        mainAxisSizeMin: true,
+                        onTap: () {
+                          sugarInfoStore!.saveRecord();
+                          setState(() {
+                            Navigator.of(context).pushNamed(Routes.home);
+                          });
+                        },
+                        btnColor: AppColors.AppColor4,
+                        btnText: "save_record",
+                      ),
                     ),
                   ),
                 ],

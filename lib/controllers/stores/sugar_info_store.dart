@@ -92,15 +92,16 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @observable
-  String? choosedDayTimeStr=DateFormat('yyyy/MM/dd').format(DateTime.now());
+  String? choosedDayTimeStr = DateFormat('yyyy/MM/dd').format(DateTime.now());
 
   @observable
   String? choosedDayHourStr = DateFormat('HH:mm').format(DateTime.now());
   @observable
-  String? choosedDayTimeStrDisplay=DateFormat('yyyy/MM/dd').format(DateTime.now());
+  String? choosedDayTimeStrDisplay =
+      DateFormat('yyyy/MM/dd').format(DateTime.now());
 
   @observable
-  String? choosedDayHourStrDisplay= DateFormat('HH:mm').format(DateTime.now());
+  String? choosedDayHourStrDisplay = DateFormat('HH:mm').format(DateTime.now());
 
   @observable
   bool? isChoosedDayHourStrDisplay = false;
@@ -161,6 +162,7 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   Future<ListRecord?> getListRecords() async {
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('myObjectKey');
 
@@ -175,6 +177,13 @@ abstract class _SugarInfoStoreBase with Store {
       print("Load from sharedpref: ${listRecords!.listRecord!.first.dayTime}");
     } else {
       isListRecordsLoading = false;
+      print("abcd");
     }
   }
+  
+  Future deleteData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
+  // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
+}
 }
