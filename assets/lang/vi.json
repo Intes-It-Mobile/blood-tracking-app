@@ -3,7 +3,7 @@
     "home_page_nav": "Homepage",
     "info_nav": "Infomation",
     "setting_nav": "Settings",
-    "app_name": "Blood Sugar\nTracking",
+    "app_name": "Blood Sugar Tracking",
     "default_txt": "Default",
     "recent_txt": "Recent",
     "average_txt": "Average",
@@ -93,15 +93,18 @@
         
     "edit_record": "Edit record",
     "delete_record_alert":"Do you really want to delete this record?",
-    "you_have_not_record":"You have not created any record yet",
-    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
-   
     "stay":"Stay",
     "exit":"Exit",
 
     "skip_all":"Skip all",
     "next_step":"Next step",
-    "homepage":"Homepage"
+    "homepage":"Homepage",
 
+    "delete":"Delete",
+    "keep":"Keep",
+    "you_have_not_record":"You have not created any record yet",
+    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?"
+   
+ 
 
 }

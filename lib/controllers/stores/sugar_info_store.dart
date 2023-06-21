@@ -146,14 +146,16 @@ abstract class _SugarInfoStoreBase with Store {
 
   static final String ListRecordsKey = 'listRecord';
   @action
-  saveNewRecord() {
+  saveNewRecord(int id) {
     listRecord!.add(SugarRecord(
-        id: now.millisecondsSinceEpoch,
+        id:id,
         dayTime: choosedDayTimeStr,
         hourTime: choosedDayHourStr,
         status: currentStatus,
         sugarAmount: currentSugarAmount));
     listRecords = ListRecord(listRecord: listRecord);
+    choosedDayTimeStr =null;
+    choosedDayHourStr =null;
     saveListRecord(listRecords);
   }
 

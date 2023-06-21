@@ -192,13 +192,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(true),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
+                                  padding: EdgeInsets.symmetric( vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
-                                  child: Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                    style: AppTheme.statusTxt
-                                        .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                  child: Center(
+                                    child: Text(
+                                      "${AppLocalizations.of(context)!.getTranslate('exit')}",
+                                      style: AppTheme.statusTxt
+                                          .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -208,13 +210,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(false),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
+                                  padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
-                                  child: Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('stay')}",
-                                    style:
-                                        AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                  child: Center(
+                                    child: Text(
+                                      "${AppLocalizations.of(context)!.getTranslate('stay')}",
+                                      style:
+                                          AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
                               ),

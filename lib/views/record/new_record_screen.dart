@@ -32,9 +32,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
-
+  int? id = (DateTime.now()).millisecondsSinceEpoch;
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
+      initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "yyyy/MM/dd",
       context,
       onConfirm: (DateTime day, List<int> index) {
@@ -50,6 +51,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
+      initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
@@ -88,38 +90,36 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
-        title: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      print(sugarInfoStore!
-                          .rootSugarInfo!.conditions!.first.name);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(right: 12),
-                      child: SvgPicture.asset(
-                        Assets.iconBack,
-                        height: 44,
-                      ),
+        title: Column(
+          children: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    print(sugarInfoStore!
+                        .rootSugarInfo!.conditions!.first.name);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: SvgPicture.asset(
+                      Assets.iconBack,
+                      height: 44,
                     ),
                   ),
-                  Expanded(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('new_record')}",
-                      style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                      maxLines: 2,
-                    ),
+                ),
+                Expanded(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.getTranslate('new_record')}",
+                    style: AppTheme.Headline20Text,
+                    overflow: TextOverflow
+                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                    maxLines: 2,
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
       body: Container(
@@ -157,7 +157,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               child: Text(
                                 sugarInfoStore!.choosedDayTimeStr != null
                                     ? sugarInfoStore!.choosedDayTimeStr!
-                                    : sugarInfoStore!.stringTimeDayNow,
+                                    : DateFormat('yyyy     MM     dd').format(DateTime.now()),
                                 style: AppTheme.appBodyTextStyle
                                     .copyWith(color: Colors.black),
                               ),
@@ -183,7 +183,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                 child: Text(
                                   sugarInfoStore!.choosedDayHourStr != null
                                       ? sugarInfoStore!.choosedDayHourStr!
-                                      : sugarInfoStore!.stringTimeHourNow,
+                                      : DateFormat('HH:mm').format(DateTime.now()),
                                   style: AppTheme.appBodyTextStyle
                                       .copyWith(color: Colors.black),
                                 ),
@@ -317,7 +317,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
-                          sugarInfoStore!.saveNewRecord();
+                          sugarInfoStore!.saveNewRecord(id!);
                           setState(() {
                             Navigator.pushNamedAndRemoveUntil(
                               context,
