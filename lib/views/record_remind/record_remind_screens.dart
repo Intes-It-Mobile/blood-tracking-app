@@ -149,35 +149,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                               () => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
-                                        child: AnimatedContainer(
-                                          height: 34,
-                                          width: 58,
-                                          padding: EdgeInsets.all(innerPadding),
-                                          alignment: isToggled
-                                              ? Alignment.centerLeft
-                                              : Alignment.centerRight,
-                                          duration:
-                                              const Duration(milliseconds: 400),
-                                          curve: Curves.easeOut,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            color: isToggled
-                                                ? AppColors.AppColor1
-                                                : AppColors.AppColor2,
-                                          ),
-                                          child: Container(
-                                            width: size,
-                                            height: size,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              color: isToggled
-                                                  ? Colors.white
-                                                  : Colors.white,
-                                            ),
-                                          ),
-                                        ),
+                                        child: _onClickToggle(context)
                                       ),
                                     ),
                                   ],
@@ -212,10 +184,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   Future<String?> _showDiaLog(BuildContext context) {
     DateTime dateTime = DateTime.now();
 
-
     Widget hourMinute12H() {
       return TimePickerSpinner(
-
         itemHeight: 30,
         highlightedTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,color: Colors.black),
         normalTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,color: Colors.black.withOpacity(0.5)),
@@ -231,6 +201,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16) ,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0))),
         backgroundColor: Colors.white,
@@ -285,30 +256,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                             setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
-                          child: AnimatedContainer(
-                            height: 34,
-                            width: 58,
-                            padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeOut,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: isToggled
-                                  ? AppColors.AppColor1
-                                  : AppColors.AppColor2,
-                            ),
-                            child: Container(
-                              width: size,
-                              height: size,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: isToggled ? Colors.white : Colors.white,
-                              ),
-                            ),
-                          ),
+                          child: _onClickToggle(context),
                         ),
                         const SizedBox(
                           height: 20,
@@ -332,30 +280,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                             setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
-                          child: AnimatedContainer(
-                            height: 34,
-                            width: 58,
-                            padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeOut,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: isToggled
-                                  ? AppColors.AppColor1
-                                  : AppColors.AppColor2,
-                            ),
-                            child: Container(
-                              width: size,
-                              height: size,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: isToggled ? Colors.white : Colors.white,
-                              ),
-                            ),
-                          ),
+                          child: _onClickToggle(context),
                         ),
                       ],
                     ),
@@ -364,40 +289,48 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
               ),
               const Spacer(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('cancel')}",
-                        style: AppTheme.hintText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.AppColor2),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        height: 35,
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('cancel')}",
+                            style: AppTheme.hintText.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.AppColor2),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor2,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('set')}",
-                        style: AppTheme.hintText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          "${AppLocalizations.of(context)!.getTranslate('set')}",
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
@@ -405,6 +338,38 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _onClickToggle(BuildContext context){
+    return AnimatedContainer(
+      height: 34,
+      width: 58,
+      padding: EdgeInsets.all(innerPadding),
+      alignment: isToggled
+          ? Alignment.centerLeft
+          : Alignment.centerRight,
+      duration:
+      const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+      decoration: BoxDecoration(
+        borderRadius:
+        BorderRadius.circular(50),
+        color: isToggled
+            ? AppColors.AppColor1
+            : AppColors.AppColor2,
+      ),
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          borderRadius:
+          BorderRadius.circular(100),
+          color: isToggled
+              ? Colors.white
+              : Colors.white,
         ),
       ),
     );
