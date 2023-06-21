@@ -15,7 +15,6 @@ import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 
-
 class NewRecordScreen extends StatefulWidget {
   NewRecordScreen({
     super.key,
@@ -33,7 +32,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
- 
 
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
@@ -310,8 +308,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         )
                       : SizedBox(),
                   GestureDetector(
-                    onLongPress:(){
-                       sugarInfoStore!.deleteData();
+                    onLongPress: () {
+                      sugarInfoStore!.deleteData();
                     },
                     child: Center(
                       child: ButtonWidget(
@@ -321,7 +319,12 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         onTap: () {
                           sugarInfoStore!.saveRecord();
                           setState(() {
-                            Navigator.of(context).pushNamed(Routes.home);
+                            // Navigator.of(context).pushNamed(Routes.home);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.home,
+                              (route) => false,
+                            );
                           });
                         },
                         btnColor: AppColors.AppColor4,
