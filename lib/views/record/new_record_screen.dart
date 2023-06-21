@@ -29,10 +29,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   DateTime selectedDateTime = DateTime.now();
   DateTime timeNow = DateTime.now();
   SugarInfoStore? sugarInfoStore;
+
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
   int? id = (DateTime.now()).millisecondsSinceEpoch;
+
+  TextEditingController? _controller;
+
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
       initialDateTime: selectedDateTime ?? DateTime.now(),
@@ -69,14 +73,20 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     if (isFirst == true) {
+      sugarInfoStore!.setchoosedDayHour(timeNow!);
+      sugarInfoStore!.setchoosedDayTime(timeNow!);
       sugarInfoStore!.setChooseCondition(0);
       sugarInfoStore!.setStatusLevel("low");
+      sugarInfoStore!.setInputSugarAmount(18);
+
       isFirst == false;
     }
   }
 
   @override
   void initState() {
+    _controller = TextEditingController(text: '18');
+
     focusNode.addListener(() {
       setState(() {});
     });
@@ -268,6 +278,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                 Container(
                                   width: 165,
                                   child: TextField(
+                                    controller: _controller,
                                     focusNode: focusNode,
                                     onChanged: (value) {
                                       sugarInfoStore!.setInputSugarAmount(
@@ -334,6 +345,18 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         btnText: "save_record",
                       ),
                     ),
+                    GestureDetector
+                    (
+                      onTap: (){
+                        sugarInfoStore!.deleteData();
+                      },
+                      child: Center(
+                          child: Container(
+                        width: 20,
+                        height: 20,
+                        color: Colors.amber,
+                      )),
+                    )
                   ],
                 ),
               ],

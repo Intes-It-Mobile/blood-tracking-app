@@ -358,6 +358,70 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$editedDayTimeAtom =
+      Atom(name: '_SugarInfoStoreBase.editedDayTime', context: context);
+
+  @override
+  String? get editedDayTime {
+    _$editedDayTimeAtom.reportRead();
+    return super.editedDayTime;
+  }
+
+  @override
+  set editedDayTime(String? value) {
+    _$editedDayTimeAtom.reportWrite(value, super.editedDayTime, () {
+      super.editedDayTime = value;
+    });
+  }
+
+  late final _$editedHourTimeAtom =
+      Atom(name: '_SugarInfoStoreBase.editedHourTime', context: context);
+
+  @override
+  String? get editedHourTime {
+    _$editedHourTimeAtom.reportRead();
+    return super.editedHourTime;
+  }
+
+  @override
+  set editedHourTime(String? value) {
+    _$editedHourTimeAtom.reportWrite(value, super.editedHourTime, () {
+      super.editedHourTime = value;
+    });
+  }
+
+  late final _$editedStatusAtom =
+      Atom(name: '_SugarInfoStoreBase.editedStatus', context: context);
+
+  @override
+  String? get editedStatus {
+    _$editedStatusAtom.reportRead();
+    return super.editedStatus;
+  }
+
+  @override
+  set editedStatus(String? value) {
+    _$editedStatusAtom.reportWrite(value, super.editedStatus, () {
+      super.editedStatus = value;
+    });
+  }
+
+  late final _$editedSugarAmountAtom =
+      Atom(name: '_SugarInfoStoreBase.editedSugarAmount', context: context);
+
+  @override
+  double? get editedSugarAmount {
+    _$editedSugarAmountAtom.reportRead();
+    return super.editedSugarAmount;
+  }
+
+  @override
+  set editedSugarAmount(double? value) {
+    _$editedSugarAmountAtom.reportWrite(value, super.editedSugarAmount, () {
+      super.editedSugarAmount = value;
+    });
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -450,11 +514,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setEditingRecord(SugarRecord record) {
+  dynamic setEditingRecord(int? id) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setEditingRecord');
     try {
-      return super.setEditingRecord(record);
+      return super.setEditingRecord(id);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -466,6 +530,50 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.deleteRecord');
     try {
       return super.deleteRecord(id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditedDayTime(DateTime dayTime) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setEditedDayTime');
+    try {
+      return super.setEditedDayTime(dayTime);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditedHourTime(DateTime hourTime) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setEditedHourTime');
+    try {
+      return super.setEditedHourTime(hourTime);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditedStatus(String editedStatus) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setEditedStatus');
+    try {
+      return super.setEditedStatus(editedStatus);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditedSugarAmount(double editedSugarAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setEditedSugarAmount');
+    try {
+      return super.setEditedSugarAmount(editedSugarAmount);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -495,6 +603,10 @@ listRecord: ${listRecord},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
 editingRecord: ${editingRecord},
+editedDayTime: ${editedDayTime},
+editedHourTime: ${editedHourTime},
+editedStatus: ${editedStatus},
+editedSugarAmount: ${editedSugarAmount},
 btnStatus: ${btnStatus}
     ''';
   }

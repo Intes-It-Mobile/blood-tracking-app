@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<SugarInfoStore>(
             create: (_) => SugarInfoStore(),
+          ),
+          Provider<EditRecordStore>(
+            create: (_) => EditRecordStore(),
           ),
         ],
         child: MaterialApp(
