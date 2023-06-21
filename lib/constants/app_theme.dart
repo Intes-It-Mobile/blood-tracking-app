@@ -6,11 +6,13 @@ import 'font_family.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.white,
-    // Các thuộc tính khác của theme
-    // ...
-  );
+      primaryColor: Color(0xFF0F1049),
+      scaffoldBackgroundColor: Colors.white,
+      fontFamily: FontFamily.IBMPlexSans,
+      //this changes the colour
+      hintColor: Colors.grey,
+     
+     );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.black,
@@ -92,7 +94,7 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize:TextSizeConfig.getAdjustedFontSize(16),
+    fontSize: TextSizeConfig.getAdjustedFontSize(16),
     fontFamily: FontFamily.IBMPlexSans,
   );
 

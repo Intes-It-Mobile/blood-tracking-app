@@ -89,5 +89,19 @@
     "sound":"Sound",
     "vibrate":"Vibrate",
     "cancel":"Cancel",
-    "set":"Set"
+    "set":"Set",
+        
+    "edit_record": "Edit record",
+    "delete_record_alert":"Do you really want to delete this record?",
+    "stay":"Stay",
+    "exit":"Exit",
+    "delete":"Delete",
+    "keep":"Keep",
+    "you_have_not_record":"You have not created any record yet",
+    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?"
+
+
+
+
+
 }

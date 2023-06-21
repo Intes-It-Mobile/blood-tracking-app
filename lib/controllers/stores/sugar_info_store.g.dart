@@ -342,6 +342,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$editingRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.editingRecord', context: context);
+
+  @override
+  SugarRecord? get editingRecord {
+    _$editingRecordAtom.reportRead();
+    return super.editingRecord;
+  }
+
+  @override
+  set editingRecord(SugarRecord? value) {
+    _$editingRecordAtom.reportWrite(value, super.editingRecord, () {
+      super.editingRecord = value;
+    });
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -423,11 +439,33 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic saveRecord() {
+  dynamic saveNewRecord(int id) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.saveRecord');
+        name: '_SugarInfoStoreBase.saveNewRecord');
     try {
-      return super.saveRecord();
+      return super.saveNewRecord(id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditingRecord(SugarRecord record) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setEditingRecord');
+    try {
+      return super.setEditingRecord(record);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic deleteRecord(int? id) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.deleteRecord');
+    try {
+      return super.deleteRecord(id);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -456,6 +494,7 @@ stringTimeHourNow: ${stringTimeHourNow},
 listRecord: ${listRecord},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
+editingRecord: ${editingRecord},
 btnStatus: ${btnStatus}
     ''';
   }
