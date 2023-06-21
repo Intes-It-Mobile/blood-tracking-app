@@ -339,16 +339,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         enable: sugarInfoStore!.btnStatus,
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
-                        onTap: () {
-                          sugarInfoStore!.saveNewRecord();
-                          setState(() {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              Routes.home,
-                              (route) => false,
-                            );
-                          });
-                        },
+                        onTap: () {},
                         btnColor: AppColors.AppColor4,
                         btnText: "save_record",
                       ),
@@ -407,7 +398,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       BorderRadius.all(Radius.circular(5))),
                               child: Center(
                                 child: Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('delete')}"),
+                                  "${AppLocalizations.of(context)!.getTranslate('delete')}",
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.AppColor2),
+                                ),
                               ),
                             ),
                           ),
@@ -430,6 +424,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               child: Center(
                                 child: Text(
                                   "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.mainBgColor)
                                 ),
                               ),
                             ),

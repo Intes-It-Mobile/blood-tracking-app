@@ -32,9 +32,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
-
+  int? id = (DateTime.now()).millisecondsSinceEpoch;
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
+      initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "yyyy/MM/dd",
       context,
       onConfirm: (DateTime day, List<int> index) {
@@ -50,6 +51,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
+      initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
@@ -157,7 +159,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               child: Text(
                                 sugarInfoStore!.choosedDayTimeStr != null
                                     ? sugarInfoStore!.choosedDayTimeStr!
-                                    : sugarInfoStore!.stringTimeDayNow,
+                                    : DateFormat('yyyy     MM     dd').format(DateTime.now()),
                                 style: AppTheme.appBodyTextStyle
                                     .copyWith(color: Colors.black),
                               ),
@@ -183,7 +185,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                 child: Text(
                                   sugarInfoStore!.choosedDayHourStr != null
                                       ? sugarInfoStore!.choosedDayHourStr!
-                                      : sugarInfoStore!.stringTimeHourNow,
+                                      : DateFormat('HH:mm').format(DateTime.now()),
                                   style: AppTheme.appBodyTextStyle
                                       .copyWith(color: Colors.black),
                                 ),
@@ -317,7 +319,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
-                          sugarInfoStore!.saveNewRecord();
+                          sugarInfoStore!.saveNewRecord(id!);
                           setState(() {
                             Navigator.pushNamedAndRemoveUntil(
                               context,
