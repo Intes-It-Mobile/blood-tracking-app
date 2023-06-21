@@ -192,15 +192,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(true),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
-                                  width: 144,
-                                  height: 36,
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
-                                  child: Text(
-                                    "Exit",
-                                    style: AppTheme.statusTxt
-                                        .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                  child: Center(
+                                    child: Text(
+                                      "Exit",
+                                      style: AppTheme.statusTxt
+                                          .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -210,17 +210,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(false),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 58, vertical: 9),
-                                  width: 144,
-                                  height: 36,
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                                  // width: 144,
+                                  // height: 36,
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
-                                  child: Text(
-                                    "Stay",
-                                    style: AppTheme.statusTxt.copyWith(
-                                        color: Colors.white,
-                                        fontFamily: FontFamily.IBMPlexSans,
-                                        fontWeight: FontWeight.w600),
+                                  child: Center(
+                                    child: Text(
+                                      "Stay",
+                                      style: AppTheme.statusTxt.copyWith(
+                                          color: Colors.white,
+                                          fontFamily: FontFamily.IBMPlexSans,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
                               ),

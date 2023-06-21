@@ -126,12 +126,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                   GestureDetector(
                     onTap: () {
                       _showDiaLog(context);
-                      // sugarInfoStore!.deleteRecord(recordId);
-                      // Navigator.pushNamedAndRemoveUntil(
-                      //   context,
-                      //   Routes.home,
-                      //   (route) => false,
-                      // );
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
@@ -369,29 +363,83 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     );
   }
 
-  Future<String?> _showDiaLog(BuildContext context) {
-    return showDialog<String>(
+  _showDiaLog(BuildContext context) {
+    return showDialog(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-              // backgroundColor: AppColors.mainBgColor,
-              actions: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    // color: AppColors.mainBgColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
+        builder: (context) => AlertDialog(
+              insetPadding: EdgeInsets.symmetric(horizontal: 8),
+              elevation: 0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              content: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 42),
+                      child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('delete_record_alert')}",
-                        style: AppTheme.Headline16Text,
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        style: AppTheme.Headline16Text.copyWith(
+                            fontWeight: FontWeight.w500, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 32),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              sugarInfoStore!.deleteRecord(recordId);
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                Routes.home,
+                                (route) => false,
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor3,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('delete')}"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              // width: 144,
+                              // height: 36,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor2,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ));
   }
 }

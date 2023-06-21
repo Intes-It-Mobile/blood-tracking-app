@@ -92,7 +92,11 @@
     "set":"Set",
         
     "edit_record": "Edit record",
-    "delete_record_alert":"Do you really want to delete this record?"
+    "delete_record_alert":"Do you really want to delete this record?",
+    "stay":"Stay",
+    "exit":"Exit",
+    "delete":"Delete",
+    "keep":"Keep"
 
 
 }
