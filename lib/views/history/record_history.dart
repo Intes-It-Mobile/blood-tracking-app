@@ -82,7 +82,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                     children: [
                       Image.asset(Assets.history_mpt, width: 146, height: 146),
                       SizedBox(height: 30),
-                      Text('You have not created any record yet',
+                      Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
                           style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700)),
                     ],
                   ),

@@ -94,7 +94,14 @@
     
     "edit_record": "Edit record",
 
-    "delete_record_alert":"Do you really want to delete this record?"
+    "delete_record_alert":"Do you really want to delete this record?",
+
+    "you_have_not_record":"You have not created any record yet",
+    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
+   
+    "stay":"Stay",
+    "exit":"Exit"
+
 
 
 }
