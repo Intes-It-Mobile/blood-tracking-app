@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 42),
                           child: Text(
-                            "Do you really want to exit Blood Sugar Tracking?",
+                            "${AppLocalizations.of(context)!.getTranslate('wanna_exit')}",
                             style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
@@ -192,12 +192,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(true),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                                  padding: EdgeInsets.symmetric( vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
-                                      "Exit",
+                                      "${AppLocalizations.of(context)!.getTranslate('exit')}",
                                       style: AppTheme.statusTxt
                                           .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
                                     ),
@@ -210,18 +210,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(false),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-                                  // width: 144,
-                                  // height: 36,
+                                  padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
-                                      "Stay",
-                                      style: AppTheme.statusTxt.copyWith(
-                                          color: Colors.white,
-                                          fontFamily: FontFamily.IBMPlexSans,
-                                          fontWeight: FontWeight.w600),
+                                      "${AppLocalizations.of(context)!.getTranslate('stay')}",
+                                      style:
+                                          AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ),
