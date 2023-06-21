@@ -3,7 +3,9 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/stores/sugar_info_store.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../home/record_info_slide_bar/record_info_slide_bar_item.dart';
 
@@ -15,10 +17,19 @@ class RecordHistory extends StatefulWidget {
 }
 
 class _RecordHistoryState extends State<RecordHistory> {
+  SugarInfoStore? sugarInfoStore;
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
@@ -54,20 +65,40 @@ class _RecordHistoryState extends State<RecordHistory> {
         ),
       ),
       body: Container(
-        // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-        margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
-        child: GridView.count(
-          childAspectRatio: 1.5,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: List.generate(
-            15, 
-            (index) => RecordInfoSliderItemWidget(
-              status: 'normal',
-            ),
+          width: MediaQuery.of(context).size.width,
+          // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+          margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
+          child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
+              ? GridView.count(
+                  childAspectRatio: 1.5,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: buildHistoryRecord(),
+                )
+              : Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(Assets.history_mpt, width: 146, height: 146),
+                      SizedBox(height: 30),
+                      Text('You have not created any record yet',
+                          style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                ) //Trường hợp chưa có record,
           ),
-        ),
-      ),
     );
+  }
+
+  List<Widget> buildHistoryRecord() {
+    return sugarInfoStore!.listRecord!.map((e) {
+      return RecordInfoSliderItemWidget(
+        status: e.status,
+        dayTime: e.dayTime,
+        hourTime: e.hourTime,
+        sugarAmount: e.sugarAmount,
+      );
+    }).toList();
   }
 }

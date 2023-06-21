@@ -10,9 +10,11 @@ import '../../../constants/colors.dart';
 import '../../../utils/locale/appLocalizations.dart';
 
 class RecordInfoSliderItemWidget extends StatefulWidget {
-  String? status;
-
-  RecordInfoSliderItemWidget({super.key, required this.status});
+  String? status= "default_txt";
+  String? dayTime="";
+  String? hourTime="";
+  double? sugarAmount=0.0;
+  RecordInfoSliderItemWidget({super.key, required this.status,this.dayTime,this.hourTime,this.sugarAmount});
 
   @override
   State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
@@ -56,12 +58,7 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
               Container(
                 child: Row(
                   children: [
-                    Text(
-                      "${date}   ${time}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTheme.timeText,
-                    )
+                    Text("${widget.dayTime}   ${widget.hourTime}",maxLines: 1,overflow: TextOverflow.ellipsis,style: AppTheme.timeText,)
                   ],
                 ),
               ),
@@ -78,7 +75,7 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
               children: [
                 Container(
                   child: Text(
-                    "4.0",
+                    "${widget.sugarAmount}",
                     style: AppTheme.appBodyTextStyle36,
                   ),
                 ),
