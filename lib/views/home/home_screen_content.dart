@@ -1,9 +1,11 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/controllers/stores/sugar_info_store.dart';
 import 'package:blood_sugar_tracking/views/home/record_info_slide_bar/record_info_slide_bar.dart';
 import 'package:blood_sugar_tracking/views/home/top_widget_home_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/assets.dart';
@@ -44,7 +46,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                 child: Column(
                   children: [
                     const ChartWidget(),
-                    const RecordInfoSlideBarWidget(),
+                    RecordInfoSlideBarWidget(),
                     ButtonWidget(
                       mainAxisSizeMin: true,
                       btnText: "new_record",

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
@@ -9,8 +11,10 @@ import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
+
 
 class NewRecordScreen extends StatefulWidget {
   NewRecordScreen({
@@ -22,18 +26,67 @@ class NewRecordScreen extends StatefulWidget {
 }
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
+  FocusNode focusNode = FocusNode();
+  DateTime selectedDateTime = DateTime.now();
+  DateTime timeNow = DateTime.now();
   SugarInfoStore? sugarInfoStore;
-
+  bool? isFirst = true;
   String? type;
+  DateTime? selectedDate;
+ 
+
+  void _showDatePickerDay() {
+    DatePicker.showDatePicker(
+      dateFormat: "yyyy/MM/dd",
+      context,
+      onConfirm: (DateTime day, List<int> index) {
+        setState(() {
+          selectedDate = day;
+          print("Date: ${selectedDate}");
+          sugarInfoStore!.setchoosedDayTime(day);
+        });
+      },
+      locale: DateTimePickerLocale.en_us,
+    );
+  }
+
+  void _showDatePickerHour() {
+    DatePicker.showDatePicker(
+      dateFormat: "HH:mm",
+      context,
+      onConfirm: (DateTime hour, List<int> index) {
+        setState(() {
+          selectedDate = hour;
+          print("Date: ${selectedDate}");
+          sugarInfoStore!.setchoosedDayHour(hour);
+        });
+      },
+      locale: DateTimePickerLocale.en_us,
+    );
+  }
+
   @override
   void didChangeDependencies() {
-     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (isFirst == true) {
+      sugarInfoStore!.setChooseCondition(0);
+      sugarInfoStore!.setStatusLevel("low");
+      isFirst == false;
+    }
+  }
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(        
+      appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
@@ -45,7 +98,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
+                      print(sugarInfoStore!
+                          .rootSugarInfo!.conditions!.first.name);
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
@@ -84,77 +138,64 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       color: AppColors.AppColor4),
                 ),
               ),
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 30),
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Text(
-                              "2023",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
+              GestureDetector(
+                onTap: () {
+                  _showDatePickerDay();
+                },
+                child: Container(
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 30),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              child: Text(
+                                sugarInfoStore!.choosedDayTimeStr != null
+                                    ? sugarInfoStore!.choosedDayTimeStr!
+                                    : sugarInfoStore!.stringTimeDayNow,
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 35),
-                            child: Text(
-                              "05",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "17",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Text(
-                              "10",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerHour();
+                        },
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Text(
+                                  sugarInfoStore!.choosedDayHourStr != null
+                                      ? sugarInfoStore!.choosedDayHourStr!
+                                      : sugarInfoStore!.stringTimeHourNow,
+                                  style: AppTheme.appBodyTextStyle
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ),
+                            ],
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              ":",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "5",
-                              style: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Column(
@@ -168,7 +209,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           color: AppColors.AppColor4),
                     ),
                   ),
-                  DropDownWidget(listConditions: sugarInfoStore!.listRootConditions),
+                  sugarInfoStore!.listRootConditions != null
+                      ? DropDownWidget(
+                          listConditions: sugarInfoStore!.listRootConditions,
+                        )
+                      : Container(),
                 ],
               ),
               Column(
@@ -217,6 +262,24 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               Container(
                                 width: 165,
                                 child: TextField(
+                                  focusNode: focusNode,
+                                  onChanged: (value) {
+                                    sugarInfoStore!.setInputSugarAmount(
+                                        int.parse(value) * 1.0);
+                                    sugarInfoStore!
+                                        .checkValidateSugarAmountInput(
+                                            int.parse(value) * 1.0);
+                                    print(value);
+                                  },
+                                  textAlign: TextAlign.center,
+                                  onSubmitted: (value) {
+                                    sugarInfoStore!.setInputSugarAmount(
+                                        int.parse(value) * 1.0);
+                                    sugarInfoStore!
+                                        .checkValidateSugarAmountInput(
+                                            int.parse(value) * 1.0);
+                                    print(value);
+                                  },
                                   keyboardType: TextInputType.number,
                                   style: AppTheme.sugarInputText,
                                 ),
@@ -235,22 +298,35 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 11),
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
-                        style: AppTheme.errorText,
+                  sugarInfoStore!.legalInput == false
+                      ? Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 11),
+                            child: Text(
+                              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
+                              style: AppTheme.errorText,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  GestureDetector(
+                    onLongPress:(){
+                       sugarInfoStore!.deleteData();
+                    },
+                    child: Center(
+                      child: ButtonWidget(
+                        enable: sugarInfoStore!.btnStatus,
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        mainAxisSizeMin: true,
+                        onTap: () {
+                          sugarInfoStore!.saveRecord();
+                          setState(() {
+                            Navigator.of(context).pushNamed(Routes.home);
+                          });
+                        },
+                        btnColor: AppColors.AppColor4,
+                        btnText: "save_record",
                       ),
-                    ),
-                  ),
-                  Center(
-                    child: ButtonWidget(
-                      margin: EdgeInsets.symmetric(vertical: 8),
-                      mainAxisSizeMin: true,
-                      onTap: () {},
-                      btnColor: AppColors.AppColor4,
-                      btnText: "save_record",
                     ),
                   ),
                 ],
@@ -264,13 +340,78 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 }
 
 class StatusWidget extends StatefulWidget {
-  const StatusWidget({super.key});
+  StatusWidget({
+    super.key,
+  });
 
   @override
   State<StatusWidget> createState() => _StatusWidgetState();
 }
 
 class _StatusWidgetState extends State<StatusWidget> {
+  SugarInfoStore? sugarInfoStore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
+    super.didChangeDependencies();
+  }
+
+  Widget getLevelText(int level) {
+    switch (level) {
+      case 0:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('low')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 1:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('normal')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 2:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+      case 3:
+        return Text(
+          "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
+        );
+
+      default:
+        throw RangeError("");
+    }
+  }
+
+  Color getLevelTextColor(int level) {
+    switch (level) {
+      case 0:
+        return AppColors.LowStt;
+      case 1:
+        return AppColors.NormalStt;
+      case 2:
+        return AppColors.PreDiaStt;
+      case 3:
+        return AppColors.DiabetesStt;
+
+      default:
+        throw RangeError("");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -289,12 +430,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 0
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -311,12 +454,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 1
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -333,12 +478,14 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 2
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -355,19 +502,18 @@ class _StatusWidgetState extends State<StatusWidget> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              Container(
-                child: SvgPicture.asset(
-                  Assets.iconUpArrow,
-                  // height: 6,
-                ),
-              )
+              sugarInfoStore!.statusLevel == 3
+                  ? Container(
+                      child: SvgPicture.asset(
+                        Assets.iconUpArrow,
+                        // height: 6,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),
-        Text(
-          "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: AppColors.PreDiaStt),
-        ),
+        getLevelText(sugarInfoStore!.statusLevel!),
       ],
     );
   }
@@ -375,6 +521,7 @@ class _StatusWidgetState extends State<StatusWidget> {
 
 class DropDownWidget extends StatefulWidget {
   List<Conditions>? listConditions;
+
   DropDownWidget({super.key, required this.listConditions});
 
   @override
@@ -382,9 +529,9 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
+  SugarInfoStore? sugarInfoStore;
   String? selectedTitle = 'default_txt';
-  int?   selectedId = 0;
-
+  int? selectedId = 0;
   List<String> types = [
     'default_txt',
     'before_exercise',
@@ -398,6 +545,12 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   bool showDropdown = false;
   String? getTitle(String? value) {
     return AppLocalizations.of(context)!.getTranslate('${value}');
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
   }
 
   @override
@@ -451,15 +604,15 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                       isAlwaysShown: true,
                       child: ListView(
                         // physics: BouncingScrollPhysics(),
-                        children: widget.listConditions!.map((Conditions condition) {
+                        children:
+                            widget.listConditions!.map((Conditions condition) {
                           return GestureDetector(
                             onTap: () {
                               setState(() {
                                 selectedTitle = condition.name;
                                 selectedId = condition.id;
                                 showDropdown = false;
-                                print(selectedTitle);
-                                print(selectedId);
+                                sugarInfoStore!.setChooseCondition(selectedId!);
                               });
                             },
                             child: Container(
@@ -483,6 +636,51 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             ),
         ],
       ),
+    );
+  }
+}
+
+class MyDateTimePicker extends StatefulWidget {
+  @override
+  _MyDateTimePickerState createState() => _MyDateTimePickerState();
+}
+
+class _MyDateTimePickerState extends State<MyDateTimePicker> {
+  DateTime? selectedDateTime;
+
+  void _showDateTimePicker() {
+    DatePicker.showDatePicker(
+      context,
+      pickerMode: DateTimePickerMode.datetime,
+      initialDateTime: selectedDateTime ?? DateTime.now(),
+      onConfirm: (dateTime, List<int> selectedIndex) {
+        setState(() {
+          selectedDateTime = dateTime;
+          print("DateTime:${dateTime}");
+        });
+      },
+      dateFormat: 'yyyy/MM/dd HH:mm',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: _showDateTimePicker,
+          child: Container(
+            child: Text('Chọn ngày giờ'),
+          ),
+        ),
+        SizedBox(height: 16),
+        Text(
+          selectedDateTime != null
+              ? 'Ngày giờ đã chọn: ${DateFormat('yyyy/MM/dd HH:mm').format(selectedDateTime!)}'
+              : 'Chưa chọn ngày giờ',
+        ),
+      ],
     );
   }
 }

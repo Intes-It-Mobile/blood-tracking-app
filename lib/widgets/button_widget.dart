@@ -11,6 +11,7 @@ class ButtonWidget extends StatefulWidget {
   String? btnText = "";
   String? suffixIconPath;
   bool? mainAxisSizeMin = false;
+  bool? enable=false;
   VoidCallback? onTap;
   EdgeInsetsGeometry? margin = EdgeInsetsDirectional.only(top: 20);
   ButtonWidget(
@@ -20,7 +21,7 @@ class ButtonWidget extends StatefulWidget {
       this.btnText,
       this.suffixIconPath,
       this.mainAxisSizeMin,
-      this.margin});
+      this.margin,this.enable});
 
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -32,7 +33,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      onTap: widget.onTap,
+      onTap: widget.enable!=null? (widget.enable==true? widget.onTap:(){}):widget.onTap,
       child: Container(
         margin: widget.margin != null
             ? widget.margin
@@ -41,7 +42,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             borderRadius: BorderRadius.all(
               Radius.circular(5),
             ),
-            color: widget.btnColor),
+            color: widget.enable!=null?(widget.enable==true? widget.btnColor:Colors.grey):widget.btnColor),
         padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
