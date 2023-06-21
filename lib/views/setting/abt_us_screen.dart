@@ -32,7 +32,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       Navigator.of(context).pop();
                     },
                     child: Container(
-                      margin: EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconX,
                         height: 24,
@@ -73,26 +73,26 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             child: Text(AppLocalizations.of(context)!
                 .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),),
           ),
-          Spacer(),
+          const Spacer(),
           RichText(
             text: TextSpan(
               children: [
-                TextSpan(text: AppLocalizations.of(context)!
-                    .getTranslate('app_name'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,fontSize: 12, color: AppColors.AppColor2),),
+                TextSpan(text: '${AppLocalizations.of(context)!
+                    .getTranslate('app_name')}', style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,fontSize: 12, color: AppColors.AppColor2),),
                 TextSpan(
-                  text: AppLocalizations.of(context)!
-                      .getTranslate('version'),
+                  text: '${AppLocalizations.of(context)!
+                      .getTranslate('version')}',
                   style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),
                 ),
                 TextSpan(
-                  text: AppLocalizations.of(context)!
-                      .getTranslate('1.0.0'),
+                  text: '${AppLocalizations.of(context)!
+                      .getTranslate('1.0.0')}',
                   style: AppTheme.hintText.copyWith(fontWeight: FontWeight.bold,fontSize: 12, color: Colors.black),
                 )
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           )
         ]),

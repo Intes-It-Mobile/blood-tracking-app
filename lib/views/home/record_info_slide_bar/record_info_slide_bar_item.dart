@@ -45,76 +45,77 @@ class _RecordInfoSliderItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-                  Navigator.of(context).pushNamed(Routes.edit_record,arguments: {
-                    "record_id":widget.id
-                  });
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: (){
+            Navigator.of(context).pushNamed(Routes.edit_record,arguments: {
+              "record_id":widget.id
+            });
 
-                },
-      child: Container( 
-        width: (MediaQuery.of(context).size.width/375)*144,
-        // padding: EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-        padding: EdgeInsets.fromLTRB(7, 5, 9, 5),
-        margin: EdgeInsets.only(right: 12),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(5),
-            ),
-            color: AppColors.AppColor3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+          },
+          child: Container(
+            width: (MediaQuery.of(context).size.width / 350) * 144,
+            // padding: EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+            padding: EdgeInsets.fromLTRB(7, 5, 9, 5),
+            margin: EdgeInsets.only(right: 12),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+                color: AppColors.AppColor3),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  child: Text(
+                    "${widget.dayTime}   ${widget.hourTime}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTheme.timeText,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 7),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("${widget.dayTime}   ${widget.hourTime}",maxLines: 1,overflow: TextOverflow.ellipsis,style: AppTheme.timeText,)
+                      Container(
+                        child: Text(
+                          "${widget.sugarAmount}",
+                          style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
+                        ),
+                      ),
+                      Text("mmol/L", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(),
-                  margin: EdgeInsets.only(left: 15),
-                  child: SvgPicture.asset(Assets.iconEdit),
+                  child: Row(
+                    children: [
+                      Text("Status : ",
+                          style: AppTheme.appBodyTextStyle
+                              .copyWith(color: Colors.black)),
+                      Text(
+                        "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
+                        style: AppTheme.statusTxt
+                            .copyWith(color: SttTextColor(widget.status)),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 7),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    child: Text(
-                      "${widget.sugarAmount}",
-                      style: AppTheme.appBodyTextStyle36,
-                    ),
-                  ),
-                  Text("mmol/L", style: AppTheme.appBodyTextStyle),
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                children: [
-                  Text("Status : ",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                  Text(
-                    "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
-                    style: AppTheme.statusTxt
-                        .copyWith(color: SttTextColor(widget.status)),
-                  ),
-                ],
-              ),
-            )
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          top: 8,
+          right: 20,
+          child: SvgPicture.asset(Assets.iconEdit),
+        ),
+      ],
     );
   }
 }
