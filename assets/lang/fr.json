@@ -106,7 +106,11 @@
     
     "intro1":"Fast data entry and smart statistics",
     "intro2":"Flexible changing unit Changing range standard",
-    "intro3":"Remind you to enter your record"
+    "intro3":"Remind you to enter your record",
+
+    "replace": "Replace",
+    "add": "Add",
+    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?"
 
 
 }
