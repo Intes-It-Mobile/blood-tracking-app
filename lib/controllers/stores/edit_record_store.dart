@@ -60,7 +60,7 @@ abstract class _EditRecordStoreBase with Store {
   setEditInputSugarAmount(double inputAmount) {
     currentEditStatus = editChooseCondition!.sugarAmount!
         .where((e) =>
-            e.minValue! * 1.0 < inputAmount && inputAmount < e.maxValue! * 1.0)
+            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
         .first
         .status;
     editingSugarAmount = inputAmount;
@@ -86,14 +86,14 @@ abstract class _EditRecordStoreBase with Store {
   }
   @action
   setEditedDayTime(DateTime dayTime) {
-    editingDayTimeStr = DateFormat('yyyy/MM/dd').format(dayTime);
     editingDayTime = dayTime;
+    editingDayTimeStr = DateFormat('yyyy/MM/dd').format(dayTime);
   }
 
   @action
   setEditedHourTime(DateTime hourTime) {
-    editingHourTimeStr = DateFormat('HH:mm').format(hourTime);
     editingHourTime= hourTime;
+    editingHourTimeStr = DateFormat('HH:mm').format(hourTime);
   }
 
 }

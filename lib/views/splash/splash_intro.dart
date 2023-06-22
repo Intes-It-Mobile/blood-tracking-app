@@ -57,7 +57,12 @@ class _IntroScreenState extends State<IntroScreen> {
                       });
                     },
                     itemBuilder: (_, index) {
-                      return buildPage(intro[index]["img"]);
+                      return buildPage(
+                        intro[index]["img"],
+                        intro[index]["text"],
+                        intro[index]["introImg"],
+                        intro[index]["introImg1"],
+                      );
                     }),
                 Container(
                   margin: EdgeInsets.only(bottom: 48, right: 16),
@@ -163,17 +168,62 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  buildPage(String image) {
+  buildPage(String image, String textIntro, String introImage, String introImage1) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          indexPage == 1
+              ? Container(
+                  padding: EdgeInsets.symmetric(horizontal: 33),
+                  margin: EdgeInsets.only(bottom: 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset(introImage),
+                      SizedBox(height: 54),
+                      Image.asset(
+                        introImage1,
+                        width: 213,
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(),
+          Container(
+              padding: EdgeInsets.only(left: 16, right: 180),
+              margin: EdgeInsets.only(bottom: 125),
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate(textIntro)}",
+                style: AppTheme.TextIntroline16Text,
+              )),
+        ],
+      ),
     );
   }
 
   List<Map<String, dynamic>> intro = [
-    {"img": Assets.intro1},
-    {"img": Assets.intro2},
-    {"img": Assets.intro3},
+    {
+      "img": Assets.intro1,
+      "text": "intro1",
+      "introImg": "",
+      "introImg1": "",
+    },
+    {
+      "img": Assets.intro2,
+      "text": "intro2",
+      "introImg": Assets.intro_img,
+      "introImg1": Assets.intro_img1,
+    },
+    {
+      "img": Assets.intro3,
+      "text": "intro3",
+      "introImg": "",
+      "introImg1": "",
+    },
   ];
 }

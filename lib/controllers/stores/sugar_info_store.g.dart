@@ -9,14 +9,6 @@ part of 'sugar_info_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
-  Computed<dynamic>? _$btnStatusComputed;
-
-  @override
-  dynamic get btnStatus =>
-      (_$btnStatusComputed ??= Computed<dynamic>(() => super.btnStatus,
-              name: '_SugarInfoStoreBase.btnStatus'))
-          .value;
-
   late final _$abcAtom =
       Atom(name: '_SugarInfoStoreBase.abc', context: context);
 
@@ -97,22 +89,6 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
-  late final _$statusLevelAtom =
-      Atom(name: '_SugarInfoStoreBase.statusLevel', context: context);
-
-  @override
-  int? get statusLevel {
-    _$statusLevelAtom.reportRead();
-    return super.statusLevel;
-  }
-
-  @override
-  set statusLevel(int? value) {
-    _$statusLevelAtom.reportWrite(value, super.statusLevel, () {
-      super.statusLevel = value;
-    });
-  }
-
   late final _$currentSugarAmountAtom =
       Atom(name: '_SugarInfoStoreBase.currentSugarAmount', context: context);
 
@@ -126,6 +102,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   set currentSugarAmount(double? value) {
     _$currentSugarAmountAtom.reportWrite(value, super.currentSugarAmount, () {
       super.currentSugarAmount = value;
+    });
+  }
+
+  late final _$statusLevelAtom =
+      Atom(name: '_SugarInfoStoreBase.statusLevel', context: context);
+
+  @override
+  int? get statusLevel {
+    _$statusLevelAtom.reportRead();
+    return super.statusLevel;
+  }
+
+  @override
+  set statusLevel(int? value) {
+    _$statusLevelAtom.reportWrite(value, super.statusLevel, () {
+      super.statusLevel = value;
     });
   }
 
@@ -309,6 +301,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$listRecordArrangedByTimeAtom = Atom(
+      name: '_SugarInfoStoreBase.listRecordArrangedByTime', context: context);
+
+  @override
+  List<SugarRecord>? get listRecordArrangedByTime {
+    _$listRecordArrangedByTimeAtom.reportRead();
+    return super.listRecordArrangedByTime;
+  }
+
+  @override
+  set listRecordArrangedByTime(List<SugarRecord>? value) {
+    _$listRecordArrangedByTimeAtom
+        .reportWrite(value, super.listRecordArrangedByTime, () {
+      super.listRecordArrangedByTime = value;
+    });
+  }
+
   late final _$listRecordsAtom =
       Atom(name: '_SugarInfoStoreBase.listRecords', context: context);
 
@@ -339,6 +348,54 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     _$isListRecordsLoadingAtom.reportWrite(value, super.isListRecordsLoading,
         () {
       super.isListRecordsLoading = value;
+    });
+  }
+
+  late final _$successSaveRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.successSaveRecord', context: context);
+
+  @override
+  bool? get successSaveRecord {
+    _$successSaveRecordAtom.reportRead();
+    return super.successSaveRecord;
+  }
+
+  @override
+  set successSaveRecord(bool? value) {
+    _$successSaveRecordAtom.reportWrite(value, super.successSaveRecord, () {
+      super.successSaveRecord = value;
+    });
+  }
+
+  late final _$canSaveNewRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.canSaveNewRecord', context: context);
+
+  @override
+  bool? get canSaveNewRecord {
+    _$canSaveNewRecordAtom.reportRead();
+    return super.canSaveNewRecord;
+  }
+
+  @override
+  set canSaveNewRecord(bool? value) {
+    _$canSaveNewRecordAtom.reportWrite(value, super.canSaveNewRecord, () {
+      super.canSaveNewRecord = value;
+    });
+  }
+
+  late final _$errorTextAtom =
+      Atom(name: '_SugarInfoStoreBase.errorText', context: context);
+
+  @override
+  String? get errorText {
+    _$errorTextAtom.reportRead();
+    return super.errorText;
+  }
+
+  @override
+  set errorText(String? value) {
+    _$errorTextAtom.reportWrite(value, super.errorText, () {
+      super.errorText = value;
     });
   }
 
@@ -503,11 +560,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic saveNewRecord(int id) {
+  dynamic saveNewRecord(int id, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.saveNewRecord');
     try {
-      return super.saveNewRecord(id);
+      return super.saveNewRecord(id, context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic checkValidateNewRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkValidateNewRecord');
+    try {
+      return super.checkValidateNewRecord();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -580,6 +648,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic editRecord(int editItemId, SugarRecord editedRecord) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.editRecord');
+    try {
+      return super.editRecord(editItemId, editedRecord);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 abc: ${abc},
@@ -587,8 +666,8 @@ rootSugarInfo: ${rootSugarInfo},
 listRootConditions: ${listRootConditions},
 currentStatus: ${currentStatus},
 chooseCondition: ${chooseCondition},
-statusLevel: ${statusLevel},
 currentSugarAmount: ${currentSugarAmount},
+statusLevel: ${statusLevel},
 legalInput: ${legalInput},
 choosedDayTimeStr: ${choosedDayTimeStr},
 choosedDayHourStr: ${choosedDayHourStr},
@@ -600,14 +679,17 @@ dateTimeNow: ${dateTimeNow},
 stringTimeDayNow: ${stringTimeDayNow},
 stringTimeHourNow: ${stringTimeHourNow},
 listRecord: ${listRecord},
+listRecordArrangedByTime: ${listRecordArrangedByTime},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
+successSaveRecord: ${successSaveRecord},
+canSaveNewRecord: ${canSaveNewRecord},
+errorText: ${errorText},
 editingRecord: ${editingRecord},
 editedDayTime: ${editedDayTime},
 editedHourTime: ${editedHourTime},
 editedStatus: ${editedStatus},
-editedSugarAmount: ${editedSugarAmount},
-btnStatus: ${btnStatus}
+editedSugarAmount: ${editedSugarAmount}
     ''';
   }
 }

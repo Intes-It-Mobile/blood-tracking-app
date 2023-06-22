@@ -4,9 +4,11 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../controllers/stores/sugar_info_store.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class EditRangeScreens extends StatefulWidget {
@@ -17,6 +19,8 @@ class EditRangeScreens extends StatefulWidget {
 }
 
 class _EditRangeScreensState extends State<EditRangeScreens> {
+
+  SugarInfoStore? sugarInfoStore;
   List<EditTargetRange> editTargetRange = [
     EditTargetRange(name: 'Default', max: 7.0, min: 4.0),
     EditTargetRange(name: 'Before exercise', max: 8.5, min: 4.0),
@@ -26,6 +30,13 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
     EditTargetRange(name: 'After exercise', max: 7.0, min: 4.0),
     EditTargetRange(name: 'Asleep', max: 8.0, min: 4.5),
   ];
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true); 
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,12 @@
 import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
+import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
-import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +14,22 @@ import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var initializationSettingsAndroid = AndroidInitializationSettings('codex_logo');
+  var initializationSettingsIOS = IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {});
+  var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  });
   shareLocal = await ShareLocal.getInstance();
   runApp(const MyApp());
 }
@@ -31,6 +46,10 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<SugarInfoStore>(
             create: (_) => SugarInfoStore(),
+          ),
+          ChangeNotifierProvider<MenuInfo>(
+            create: (context) => MenuInfo(MenuType.alarm),
+            child:  const SplashScreen(),
           ),
           Provider<EditRecordStore>(
             create: (_) => EditRecordStore(),
@@ -55,6 +74,8 @@ class MyApp extends StatelessWidget {
                   ? deviceLocale
                   : supportedLocales.first,
           theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,
           ),
           home: SplashScreen(),

@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
               child: BottomAppBarCum(
+                color: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
@@ -199,26 +200,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                      style: AppTheme.statusTxt
-                                          .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                      style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 23),
                             Expanded(
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(false),
                                 child: Container(
+                                  // margin: EdgeInsets.only(left: 23),
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('stay')}",
-                                      style:
-                                          AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                      style: AppTheme.TextIntroline16Text,
                                     ),
                                   ),
                                 ),

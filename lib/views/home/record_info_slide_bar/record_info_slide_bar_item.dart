@@ -12,19 +12,18 @@ import '../../../routes.dart';
 import '../../../utils/locale/appLocalizations.dart';
 
 class RecordInfoSliderItemWidget extends StatefulWidget {
-  String? status= "default_txt";
-  String? dayTime="";
-  String? hourTime="";
-  double? sugarAmount=0.0;
-  int? id=0;
-  RecordInfoSliderItemWidget({super.key, required this.status,this.dayTime,this.hourTime,this.sugarAmount,this.id});
+  String? status = "default_txt";
+  String? dayTime = "";
+  String? hourTime = "";
+  double? sugarAmount = 0.0;
+  int? id = 0;
+  RecordInfoSliderItemWidget({super.key, required this.status, this.dayTime, this.hourTime, this.sugarAmount, this.id});
 
   @override
   State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
 }
 
-class _RecordInfoSliderItemWidgetState
-    extends State<RecordInfoSliderItemWidget> {
+class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget> {
   SugarRecord? editRecord;
   String? date = "2023/06/15";
   String? time = "15:58";
@@ -48,11 +47,8 @@ class _RecordInfoSliderItemWidgetState
     return Stack(
       children: [
         GestureDetector(
-          onTap: (){
-            Navigator.of(context).pushNamed(Routes.edit_record,arguments: {
-              "record_id":widget.id
-            });
-
+          onTap: () {
+            Navigator.of(context).pushNamed(Routes.edit_record, arguments: {"record_id": widget.id});
           },
           child: Container(
             width: (MediaQuery.of(context).size.width / 350) * 144,
@@ -88,22 +84,18 @@ class _RecordInfoSliderItemWidgetState
                           style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
                         ),
                       ),
-                      Text("mmol/L", style: AppTheme.appBodyTextStyle),
+                      Text("mg/L", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),
                 Container(
                   child: Row(
                     children: [
-                      Text("Status : ",
-                          style: AppTheme.appBodyTextStyle
-                              .copyWith(color: Colors.black)),
+                      Text("Status : ", style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black)),
                       Text(
                         "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
                         // "abd",
-                        style: AppTheme.statusTxt
-                            .copyWith(color: SttTextColor(widget.status)
-                            ),
+                        style: AppTheme.statusTxt.copyWith(color: SttTextColor(widget.status)),
                       ),
                     ],
                   ),

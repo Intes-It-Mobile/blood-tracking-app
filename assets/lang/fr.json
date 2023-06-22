@@ -100,10 +100,17 @@
     "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
 
 
-
     "skip_all":"Skip all",
     "next_step":"Next step",
-    "homepage":"Homepage"
+    "homepage":"Homepage",
+    
+    "intro1":"Fast data entry and smart statistics",
+    "intro2":"Flexible changing unit Changing range standard",
+    "intro3":"Remind you to enter your record",
+
+    "replace": "Replace",
+    "add": "Add",
+    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?"
 
 
 }
