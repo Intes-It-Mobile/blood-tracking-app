@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
       prefs.setBool('json_loaded', true);
       setState(() {
         data = SugarInfo.fromJson(jsonDecode(jsonData));
-         sugarInfoStore!.getRootSugarInfo(data);
+        sugarInfoStore!.getRootSugarInfo(data);
       });
     } else {
       getDataFromSharedPreferences();
@@ -106,23 +106,19 @@ class _SplashScreenState extends State<SplashScreen> {
         width: width,
         height: height,
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.splash), fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 76, top: 680),
-              width: 301,
-              child: LinearPercentIndicator(
-                progressColor: AppColors.AppColor3,
-                backgroundColor: AppColors.AppColor4,
-                animation: true,
-                animationDuration: 2250,
-                lineHeight: 12,
-                percent: 1,
-                // value: ,
-              ),
-            )
-          ],
+        child: Container(
+          alignment: Alignment.bottomCenter ,
+          padding: EdgeInsets.symmetric(horizontal: 37),
+          margin: EdgeInsets.only(bottom: 76),
+          child: LinearPercentIndicator(
+            progressColor: AppColors.AppColor3,
+            backgroundColor: AppColors.AppColor4,
+            animation: true,
+            animationDuration: 2250,
+            lineHeight: 12,
+            percent: 1,
+            // value: ,
+          ),
         ),
       ),
     );

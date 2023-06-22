@@ -83,7 +83,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                       Image.asset(Assets.history_mpt, width: 146, height: 146),
                       SizedBox(height: 30),
                       Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
-                          style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700)),
+                          style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700, fontSize: 16 )),
                     ],
                   ),
                 ) //Trường hợp chưa có record,
@@ -94,7 +94,7 @@ class _RecordHistoryState extends State<RecordHistory> {
   List<Widget> buildHistoryRecord() {
     return sugarInfoStore!.listRecord!.map((e) {
       return RecordInfoSliderItemWidget(
-        id:e.id,
+        id: e.id,
         status: e.status,
         dayTime: e.dayTime,
         hourTime: e.hourTime,

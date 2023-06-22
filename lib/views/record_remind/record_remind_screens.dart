@@ -61,8 +61,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -74,10 +73,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       ),
       body: Padding(
         padding: EdgeInsets.only(
-            top: 20,
-            right: 10,
-            left: 10,
-            bottom: MediaQuery.of(context).padding.bottom + Get.height * 0.09),
+            top: 20, right: 10, left: 10, bottom: MediaQuery.of(context).padding.bottom + Get.height * 0.09),
         child: Column(
           children: [
             Expanded(
@@ -103,10 +99,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                 '${recordRemind[index].hour}' +
                                     ' : ' +
                                     '${recordRemind[index].minute.toString().padLeft(2, '0')}',
-                                style: AppTheme.hintText.copyWith(
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.AppColor4),
+                                style: AppTheme.hintText
+                                    .copyWith(fontSize: 36, fontWeight: FontWeight.w700, color: AppColors.AppColor4),
                               ),
                             ),
                           ),
@@ -126,8 +120,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                             onTap: () {
                                               _showDiaLog(context);
                                             },
-                                            child: SvgPicture.asset(
-                                                Assets.iconEditRecord)),
+                                            child: SvgPicture.asset(Assets.iconEditRecord)),
                                         const SizedBox(
                                           width: 8,
                                         ),
@@ -141,41 +134,30 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                       alignment: Alignment.centerRight,
                                       child: GestureDetector(
                                         onTap: () {
-                                          setState(
-                                              () => isToggled = !isToggled);
+                                          setState(() => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
                                         onPanEnd: (b) {
-                                          setState(
-                                              () => isToggled = !isToggled);
+                                          setState(() => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
                                         child: AnimatedContainer(
                                           height: 34,
                                           width: 58,
                                           padding: EdgeInsets.all(innerPadding),
-                                          alignment: isToggled
-                                              ? Alignment.centerLeft
-                                              : Alignment.centerRight,
-                                          duration:
-                                              const Duration(milliseconds: 400),
+                                          alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
+                                          duration: const Duration(milliseconds: 400),
                                           curve: Curves.easeOut,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            color: isToggled
-                                                ? AppColors.AppColor1
-                                                : AppColors.AppColor2,
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
                                           ),
                                           child: Container(
                                             width: size,
                                             height: size,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              color: isToggled
-                                                  ? Colors.white
-                                                  : Colors.white,
+                                              borderRadius: BorderRadius.circular(100),
+                                              color: isToggled ? Colors.white : Colors.white,
                                             ),
                                           ),
                                         ),
@@ -192,16 +174,11 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
             Container(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.32,
-              decoration: BoxDecoration(
-                  color: AppColors.AppColor2,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: AppColors.AppColor2, borderRadius: BorderRadius.circular(5)),
               child: Center(
                   child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                style: AppTheme.hintText.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                style: AppTheme.hintText.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
               )),
             )
           ],
@@ -210,23 +187,17 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-
-
   Future<String?> _showDiaLog(BuildContext context) {
-     DateTime _dateTime = DateTime.now();
+    DateTime _dateTime = DateTime.now();
     return showDialog<String>(
-
       context: context,
       builder: (BuildContext context) => AlertDialog(
-
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         content: SizedBox(
           height: 200.0,
-          child:
-          Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -234,10 +205,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('set_alarm')}",
-                  style: AppTheme.hintText.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.AppColor4),
+                  style:
+                      AppTheme.hintText.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.AppColor4),
                 ),
               ),
               Row(
@@ -263,94 +232,72 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("${AppLocalizations.of(context)!.getTranslate('sound')}",
-                          style: AppTheme.hintText.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),),
+                        Text(
+                          "${AppLocalizations.of(context)!.getTranslate('sound')}",
+                          style: AppTheme.hintText
+                              .copyWith(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
+                        ),
                         GestureDetector(
                           onTap: () {
-                            setState(
-                                    () => isToggled = !isToggled);
+                            setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
                           onPanEnd: (b) {
-                            setState(
-                                    () => isToggled = !isToggled);
+                            setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
                           child: AnimatedContainer(
                             height: 34,
                             width: 58,
                             padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            duration:
-                            const Duration(milliseconds: 400),
+                            alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
+                            duration: const Duration(milliseconds: 400),
                             curve: Curves.easeOut,
                             decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(50),
-                              color: isToggled
-                                  ? AppColors.AppColor1
-                                  : AppColors.AppColor2,
+                              borderRadius: BorderRadius.circular(50),
+                              color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
                             ),
                             child: Container(
                               width: size,
                               height: size,
                               decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.circular(100),
-                                color: isToggled
-                                    ? Colors.white
-                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                color: isToggled ? Colors.white : Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        Text("${AppLocalizations.of(context)!.getTranslate('vibrate')}",
-                          style: AppTheme.hintText.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),),
+                        Text(
+                          "${AppLocalizations.of(context)!.getTranslate('vibrate')}",
+                          style: AppTheme.hintText
+                              .copyWith(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
+                        ),
                         GestureDetector(
                           onTap: () {
-                            setState(
-                                    () => isToggled = !isToggled);
+                            setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
                           onPanEnd: (b) {
-                            setState(
-                                    () => isToggled = !isToggled);
+                            setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
                           child: AnimatedContainer(
                             height: 34,
                             width: 58,
                             padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            duration:
-                            const Duration(milliseconds: 400),
+                            alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
+                            duration: const Duration(milliseconds: 400),
                             curve: Curves.easeOut,
                             decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(50),
-                              color: isToggled
-                                  ? AppColors.AppColor1
-                                  : AppColors.AppColor2,
+                              borderRadius: BorderRadius.circular(50),
+                              color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
                             ),
                             child: Container(
                               width: size,
                               height: size,
                               decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.circular(100),
-                                color: isToggled
-                                    ? Colors.white
-                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                color: isToggled ? Colors.white : Colors.white,
                               ),
                             ),
                           ),
@@ -367,16 +314,13 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)
-                    ),
+                    decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                     child: Center(
-                      child: Text("${AppLocalizations.of(context)!.getTranslate('cancel')}",
-                        style: AppTheme.hintText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.AppColor2),),
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('cancel')}",
+                        style: AppTheme.hintText
+                            .copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.AppColor2),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -385,16 +329,13 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor2,
-                        borderRadius: BorderRadius.circular(5)
-                    ),
+                    decoration: BoxDecoration(color: AppColors.AppColor2, borderRadius: BorderRadius.circular(5)),
                     child: Center(
-                      child: Text("${AppLocalizations.of(context)!.getTranslate('set')}",
-                        style: AppTheme.hintText.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),),
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('set')}",
+                        style:
+                            AppTheme.hintText.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
