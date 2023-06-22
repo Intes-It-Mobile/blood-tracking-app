@@ -26,11 +26,10 @@ abstract class _SugarInfoStoreBase with Store {
   Conditions? chooseCondition;
 
   @observable
-  int? statusLevel = 0;
-
-  @observable
   double? currentSugarAmount = 0.0;
 
+  @observable
+  int? statusLevel = 0;
   @action
   getRootSugarInfo(SugarInfo? fromSharepref) {
     rootSugarInfo = fromSharepref;
@@ -54,6 +53,7 @@ abstract class _SugarInfoStoreBase with Store {
         .first
         .status;
     currentSugarAmount = inputAmount;
+    checkValidateSugarAmountInput(inputAmount);
     if (currentStatus != null) {
       setStatusLevel(currentStatus);
     }
@@ -69,7 +69,7 @@ abstract class _SugarInfoStoreBase with Store {
         return statusLevel = 0;
       case 'normal':
         return statusLevel = 1;
-      case 'pre-diabetes':
+      case 'pre_diabetes':
         return statusLevel = 2;
       case 'diabetes':
         return statusLevel = 3;
@@ -148,14 +148,15 @@ abstract class _SugarInfoStoreBase with Store {
   @action
   saveNewRecord(int id) {
     listRecord!.add(SugarRecord(
-        id:id,
+        id: id,
         dayTime: choosedDayTimeStr,
         hourTime: choosedDayHourStr,
         status: currentStatus,
-        sugarAmount: currentSugarAmount));
+        sugarAmount: currentSugarAmount,
+        conditionId: chooseCondition!.id));
     listRecords = ListRecord(listRecord: listRecord);
-    choosedDayTimeStr =null;
-    choosedDayHourStr =null;
+    choosedDayTimeStr = null;
+    choosedDayHourStr = null;
     saveListRecord(listRecords);
   }
 
@@ -195,12 +196,58 @@ abstract class _SugarInfoStoreBase with Store {
   SugarRecord? editingRecord;
 
   @action
-  setEditingRecord(SugarRecord record) {
-    editingRecord = record;
+  setEditingRecord(int? id) {
+    editingRecord = listRecord!.where((e) => e.id == id).toList().first;
   }
 
   @action
   deleteRecord(int? id) {
     listRecord!.removeWhere((e) => e.id == id);
+    saveListRecord(ListRecord(listRecord: listRecord));
+  }
+
+  @observable
+  String? editedDayTime;
+  @observable
+  String? editedHourTime;
+  @observable
+  String? editedStatus;
+  @observable
+  double? editedSugarAmount;
+
+  @action
+  setEditedDayTime(DateTime dayTime) {
+    editedDayTime = DateFormat('yyyy/MM/dd').format(dayTime);
+  }
+
+  @action
+  setEditedHourTime(DateTime hourTime) {
+    editedHourTime = DateFormat('HH:mm').format(hourTime);
+  }
+
+  @action
+  setEditedStatus(String editedStatus) {
+    editedStatus = editedStatus;
+  }
+
+  @action
+  setEditedSugarAmount(double editedSugarAmount) {
+    editedSugarAmount = editedSugarAmount;
+  }
+
+  @action
+  editRecord(int editItemId, SugarRecord editedRecord) {
+    listRecord!.firstWhere((e) => e.id == editItemId).dayTime =
+        editedRecord.dayTime;
+    listRecord!.firstWhere((e) => e.id == editItemId).hourTime =
+        editedRecord.hourTime;
+    listRecord!.firstWhere((e) => e.id == editItemId).conditionId =
+        editedRecord.conditionId;
+    listRecord!.firstWhere((e) => e.id == editItemId).id = editedRecord.id;
+    listRecord!.firstWhere((e) => e.id == editItemId).sugarAmount =
+        editedRecord.sugarAmount;
+    listRecord!.firstWhere((e) => e.id == editItemId).status =
+        editedRecord.status;
+    saveListRecord(listRecords);
   }
 }

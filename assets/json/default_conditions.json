@@ -13,7 +13,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -36,7 +36,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -59,7 +59,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -82,7 +82,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -105,7 +105,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -128,7 +128,7 @@
             "min_value":72,
             "max_value":99
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },
@@ -151,7 +151,7 @@
             "min_value":72,
             "max_value":140
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":140,
             "max_value":153
           },
@@ -174,7 +174,7 @@
             "min_value":72,
             "max_value":85
           },
-          {"status":"pre-diabetes",
+          {"status":"pre_diabetes",
             "min_value":99,
             "max_value":126
           },

@@ -68,7 +68,6 @@
     "record_remind":"Record remind",
     "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor.",
     "new_alarm":"New alarm",
-    "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If you want a more accurate blood data range, please consult you doctor.",
 
     "Edit target range (mmol/L)":"Edit target range (mmol/L)",
     "sugar_amount":"Sugar Amount",
@@ -103,7 +102,11 @@
     "delete":"Delete",
     "keep":"Keep",
     "you_have_not_record":"You have not created any record yet",
-    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?"
+    "wanna_exit":"Do you really want to exit Blood Sugar Tracking?",
+
+    "intro1":"Fast data entry and smart statistics",
+    "intro2":"Flexible changing unit Changing range standard",
+    "intro3":"Remind you to enter your record"
    
  
 
