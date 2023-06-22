@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.transparent,
               margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
               child: BottomAppBarCum(
+                color: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 child: Container(
