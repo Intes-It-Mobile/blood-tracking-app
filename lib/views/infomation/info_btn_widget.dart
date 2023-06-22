@@ -98,8 +98,7 @@ class InfoButtonWidget extends StatelessWidget {
                     width: 10,
                   ),
                   Flexible(
-                    child: Text("${getTitle(title)}",
-                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16)),
+                    child: Text("${getTitle(title)}", style: AppTheme.TextInfomation14Text  ),
                   ),
                 ],
               ),

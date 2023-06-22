@@ -113,4 +113,13 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
     fontFamily: FontFamily.IBMPlexSans,
   );
+
+  static final TextInfomation14Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(14),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
 }
