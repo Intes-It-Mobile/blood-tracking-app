@@ -15,7 +15,6 @@ class InfoButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String? getTitle(String? value) {
       return AppLocalizations.of(context)!.getTranslate('${value}');
     }
@@ -80,14 +79,12 @@ class InfoButtonWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.detail_info,arguments: {"type":title});
+        Navigator.of(context).pushNamed(Routes.detail_info, arguments: {"type": title});
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6),
         padding: const EdgeInsets.fromLTRB(21, 11, 18, 11),
-        decoration: BoxDecoration(
-            color: getBtnColor(title),
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        decoration: BoxDecoration(color: getBtnColor(title), borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: [
             Expanded(
@@ -102,8 +99,7 @@ class InfoButtonWidget extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text("${getTitle(title)}",
-                        style: AppTheme.appBodyTextStyle
-                            .copyWith(color: Colors.black)),
+                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16)),
                   ),
                 ],
               ),

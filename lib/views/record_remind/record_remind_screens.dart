@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
@@ -141,26 +140,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                           setState(() => isToggled = !isToggled);
                                           widget.onToggled(isToggled);
                                         },
-                                        child: AnimatedContainer(
-                                          height: 34,
-                                          width: 58,
-                                          padding: EdgeInsets.all(innerPadding),
-                                          alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
-                                          duration: const Duration(milliseconds: 400),
-                                          curve: Curves.easeOut,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
-                                          ),
-                                          child: Container(
-                                            width: size,
-                                            height: size,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(100),
-                                              color: isToggled ? Colors.white : Colors.white,
-                                            ),
-                                          ),
-                                        ),
+                                        child: _onClickToggle(context)
                                       ),
                                     ),
                                   ],
@@ -188,15 +168,32 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   }
 
   Future<String?> _showDiaLog(BuildContext context) {
-    DateTime _dateTime = DateTime.now();
+    DateTime dateTime = DateTime.now();
+
+    Widget hourMinute12H() {
+      return TimePickerSpinner(
+        itemHeight: 30,
+        highlightedTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,color: Colors.black),
+        normalTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,color: Colors.black.withOpacity(0.5)),
+        is24HourMode: true,
+        onTimeChange: (time) {
+          setState(() {
+            dateTime = time;
+          });
+        },
+      );
+    }
+
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16) ,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0))),
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         content: SizedBox(
-          height: 200.0,
+          height: MediaQuery.of(context).size.height * 0.27,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,17 +211,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   Expanded(
                     flex: 1,
                     child: SizedBox(
-                      height: 50,
+                      height: 100,
                       width: 100,
-                      // child: CupertinoDatePicker(
-                      //   initialDateTime: _dateTime,
-                      //   mode: CupertinoDatePickerMode.date,
-                      //   onDateTimeChanged: (dateTime){
-                      //     setState(() {
-                      //       _dateTime = dateTime;
-                      //     });
-                      //   },
-                      // ),
+                      child: Center(child: hourMinute12H()),
                     ),
                   ),
                   Expanded(
@@ -234,8 +223,13 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       children: [
                         Text(
                           "${AppLocalizations.of(context)!.getTranslate('sound')}",
-                          style: AppTheme.hintText
-                              .copyWith(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -246,31 +240,20 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                             setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
-                          child: AnimatedContainer(
-                            height: 34,
-                            width: 58,
-                            padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeOut,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
-                            ),
-                            child: Container(
-                              width: size,
-                              height: size,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: isToggled ? Colors.white : Colors.white,
-                              ),
-                            ),
-                          ),
+                          child: _onClickToggle(context),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                         Text(
                           "${AppLocalizations.of(context)!.getTranslate('vibrate')}",
-                          style: AppTheme.hintText
-                              .copyWith(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -281,26 +264,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                             setState(() => isToggled = !isToggled);
                             widget.onToggled(isToggled);
                           },
-                          child: AnimatedContainer(
-                            height: 34,
-                            width: 58,
-                            padding: EdgeInsets.all(innerPadding),
-                            alignment: isToggled ? Alignment.centerLeft : Alignment.centerRight,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeOut,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: isToggled ? AppColors.AppColor1 : AppColors.AppColor2,
-                            ),
-                            child: Container(
-                              width: size,
-                              height: size,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: isToggled ? Colors.white : Colors.white,
-                              ),
-                            ),
-                          ),
+                          child: _onClickToggle(context),
                         ),
                       ],
                     ),
@@ -309,32 +273,48 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
               ),
               const Spacer(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('cancel')}",
-                        style: AppTheme.hintText
-                            .copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.AppColor2),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        height: 35,
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('cancel')}",
+                            style: AppTheme.hintText.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.AppColor2),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.31,
-                    decoration: BoxDecoration(color: AppColors.AppColor2, borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('set')}",
-                        style:
-                            AppTheme.hintText.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          "${AppLocalizations.of(context)!.getTranslate('set')}",
+                          style: AppTheme.hintText.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
@@ -347,7 +327,37 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-
+  Widget _onClickToggle(BuildContext context){
+    return AnimatedContainer(
+      height: 34,
+      width: 58,
+      padding: EdgeInsets.all(innerPadding),
+      alignment: isToggled
+          ? Alignment.centerLeft
+          : Alignment.centerRight,
+      duration:
+      const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+      decoration: BoxDecoration(
+        borderRadius:
+        BorderRadius.circular(50),
+        color: isToggled
+            ? AppColors.AppColor1
+            : AppColors.AppColor2,
+      ),
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          borderRadius:
+          BorderRadius.circular(100),
+          color: isToggled
+              ? Colors.white
+              : Colors.white,
+        ),
+      ),
+    );
+  }
 }
 
 class RecordRemind {
@@ -356,5 +366,3 @@ class RecordRemind {
 
   RecordRemind({required this.hour, required this.minute});
 }
-
-

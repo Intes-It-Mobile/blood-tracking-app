@@ -83,7 +83,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                       Image.asset(Assets.history_mpt, width: 146, height: 146),
                       SizedBox(height: 30),
                       Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
-                          style: AppTheme.statusTxt.copyWith(fontWeight: FontWeight.w700, fontSize: 16 )),
+                          style: AppTheme.sugarInputText.copyWith(fontWeight: FontWeight.w700 )),
                     ],
                   ),
                 ) //Trường hợp chưa có record,
