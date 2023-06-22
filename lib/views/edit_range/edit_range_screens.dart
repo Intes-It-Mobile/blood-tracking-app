@@ -33,7 +33,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void didChangeDependencies() {
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true); 
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
