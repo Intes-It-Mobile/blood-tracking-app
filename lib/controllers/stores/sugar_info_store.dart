@@ -51,7 +51,7 @@ abstract class _SugarInfoStoreBase with Store {
   setInputSugarAmount(double inputAmount) {
     currentStatus = chooseCondition!.sugarAmount!
         .where((e) =>
-            e.minValue! * 1.0 < inputAmount && inputAmount < e.maxValue! * 1.0)
+            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
         .first
         .status;
     currentSugarAmount = inputAmount;

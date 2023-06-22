@@ -60,7 +60,7 @@ abstract class _EditRecordStoreBase with Store {
   setEditInputSugarAmount(double inputAmount) {
     currentEditStatus = editChooseCondition!.sugarAmount!
         .where((e) =>
-            e.minValue! * 1.0 < inputAmount && inputAmount < e.maxValue! * 1.0)
+            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
         .first
         .status;
     editingSugarAmount = inputAmount;
