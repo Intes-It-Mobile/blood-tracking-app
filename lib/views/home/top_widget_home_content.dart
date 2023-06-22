@@ -19,7 +19,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 7, 15, 0),
       child: Column(
         children: [
           Row(

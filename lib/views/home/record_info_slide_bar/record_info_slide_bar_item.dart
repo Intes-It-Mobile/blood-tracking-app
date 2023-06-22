@@ -88,7 +88,7 @@ class _RecordInfoSliderItemWidgetState
                           style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
                         ),
                       ),
-                      Text("mmol/L", style: AppTheme.appBodyTextStyle),
+                      Text("mg/L", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),

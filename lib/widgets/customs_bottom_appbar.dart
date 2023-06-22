@@ -264,7 +264,7 @@ class _BottomAppBarClipper extends CustomClipper<Path> {
 class _BottomAppBarDefaultsM2 extends BottomAppBarTheme {
   const _BottomAppBarDefaultsM2(this.context)
       : super(
-    elevation: 8.0,
+    elevation: 0.0,
   );
 
   final BuildContext context;
@@ -291,7 +291,7 @@ class _BottomAppBarDefaultsM2 extends BottomAppBarTheme {
 class _BottomAppBarDefaultsM3 extends BottomAppBarTheme {
   _BottomAppBarDefaultsM3(this.context)
       : super(
-    elevation: 3.0,
+    elevation: 0.0,
     height: 80.0,
     shape: const AutomaticNotchedShape(RoundedRectangleBorder()),
   );
