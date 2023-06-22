@@ -107,12 +107,9 @@ class _SplashScreenState extends State<SplashScreen> {
         height: height,
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.splash), fit: BoxFit.cover)),
         child: Container(
+          alignment: Alignment.bottomCenter ,
           padding: EdgeInsets.symmetric(horizontal: 37),
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(
-            bottom: 76,
-          ),
-          width: 301,
+          margin: EdgeInsets.only(bottom: 76),
           child: LinearPercentIndicator(
             progressColor: AppColors.AppColor3,
             backgroundColor: AppColors.AppColor4,
