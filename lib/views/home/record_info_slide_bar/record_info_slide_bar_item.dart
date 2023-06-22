@@ -39,7 +39,7 @@ class _RecordInfoSliderItemWidgetState
       case 'low':
         return AppColors.LowStt;
       default:
-        throw RangeError("");
+        return AppColors.LowStt;
     }
   }
 
@@ -100,8 +100,10 @@ class _RecordInfoSliderItemWidgetState
                               .copyWith(color: Colors.black)),
                       Text(
                         "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
+                        // "abd",
                         style: AppTheme.statusTxt
-                            .copyWith(color: SttTextColor(widget.status)),
+                            .copyWith(color: SttTextColor(widget.status)
+                            ),
                       ),
                     ],
                   ),
