@@ -69,6 +69,72 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     );
   }
 
+  void showQuestionAdd() async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        content: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text(
+                  "${AppLocalizations.of(context)!.getTranslate('add_new_record')}",
+                  style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).pop(true),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('replace')}",
+                            style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 23),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => sugarInfoStore!.saveNewRecord(id!, context),
+                      child: Container(
+                        // margin: EdgeInsets.only(left: 23),
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('add')}",
+                            style: AppTheme.TextIntroline16Text,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -116,8 +182,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
-                    print(
-                        sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
+                    print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
                   },
                   child: Container(
                     margin: const EdgeInsets.only(right: 12),
@@ -131,8 +196,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('new_record')}",
                     style: AppTheme.Headline20Text,
-                    overflow: TextOverflow
-                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                    overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                     maxLines: 2,
                   ),
                 ),
@@ -156,8 +220,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   margin: EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('date_and_time')}",
-                    style: AppTheme.Headline16Text.copyWith(
-                        color: AppColors.AppColor4),
+                    style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
                   ),
                 ),
                 GestureDetector(
@@ -169,12 +232,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(right: 30),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                           decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
+                              color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -182,10 +242,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                 child: Text(
                                   sugarInfoStore!.choosedDayTimeStr != null
                                       ? sugarInfoStore!.choosedDayTimeStr!
-                                      : DateFormat('yyyy     MM     dd')
-                                          .format(DateTime.now()),
+                                      : DateFormat('yyyy     MM     dd').format(DateTime.now()),
                                   style: AppTheme.appBodyTextStyle
-                                      .copyWith(color: Colors.black),
+                                      .copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ],
@@ -196,12 +255,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             _showDatePickerHour();
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 9),
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                             decoration: BoxDecoration(
-                                color: AppColors.AppColor3,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                                color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -209,10 +265,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                   child: Text(
                                     sugarInfoStore!.choosedDayHourStr != null
                                         ? sugarInfoStore!.choosedDayHourStr!
-                                        : DateFormat('HH:mm')
-                                            .format(DateTime.now()),
+                                        : DateFormat('HH:mm').format(DateTime.now()),
                                     style: AppTheme.appBodyTextStyle
-                                        .copyWith(color: Colors.black),
+                                        .copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ],
@@ -230,8 +285,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       margin: EdgeInsets.symmetric(vertical: 8),
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('condition')}",
-                        style: AppTheme.Headline16Text.copyWith(
-                            color: AppColors.AppColor4),
+                        style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
                       ),
                     ),
                     sugarInfoStore!.listRootConditions != null
@@ -248,8 +302,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       margin: EdgeInsets.symmetric(vertical: 8),
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('sugar_amount')}",
-                        style: AppTheme.Headline16Text.copyWith(
-                            color: AppColors.AppColor4),
+                        style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
                       ),
                     ),
                     Container(
@@ -305,20 +358,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                           controller: _controller,
                                           focusNode: focusNode,
                                           onChanged: (value) {
-                                            sugarInfoStore!.setInputSugarAmount(
-                                                int.parse(value) * 1.0);
-                                            sugarInfoStore!
-                                                .checkValidateSugarAmountInput(
-                                                    int.parse(value) * 1.0);
+                                            sugarInfoStore!.setInputSugarAmount(int.parse(value) * 1.0);
+                                            sugarInfoStore!.checkValidateSugarAmountInput(int.parse(value) * 1.0);
                                             print("onchange: ${value}");
                                           },
                                           textAlign: TextAlign.center,
                                           onSubmitted: (value) {
-                                            sugarInfoStore!.setInputSugarAmount(
-                                                int.parse(value) * 1.0);
-                                            sugarInfoStore!
-                                                .checkValidateSugarAmountInput(
-                                                    int.parse(value) * 1.0);
+                                            sugarInfoStore!.setInputSugarAmount(int.parse(value) * 1.0);
+                                            sugarInfoStore!.checkValidateSugarAmountInput(int.parse(value) * 1.0);
                                             print(value);
                                           },
                                           keyboardType: TextInputType.number,
@@ -330,24 +377,20 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                       ),
                                       Text(
                                         "mg/dL",
-                                        style: AppTheme.appBodyTextStyle
-                                            .copyWith(color: Colors.black),
+                                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                    margin: EdgeInsets.only(left: 19),
-                                    child:
-                                        SvgPicture.asset(Assets.iconSwapUnit))
+                                    margin: EdgeInsets.only(left: 19), child: SvgPicture.asset(Assets.iconSwapUnit))
                               ],
                             ),
                           )
                         ],
                       ),
                     ),
-                    sugarInfoStore!.errorText != null &&
-                            sugarInfoStore!.errorText != ""
+                    sugarInfoStore!.errorText != null && sugarInfoStore!.errorText != ""
                         ? Center(
                             child: Container(
                               margin: EdgeInsets.symmetric(vertical: 11),
@@ -363,7 +406,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
-                          sugarInfoStore!.saveNewRecord(id!, context);
+                          showQuestionAdd();
                         },
                         btnColor: AppColors.AppColor4,
                         btnText: "save_record",
@@ -425,26 +468,22 @@ class _StatusWidgetState extends State<StatusWidget> {
       case 0:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('low')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
         );
       case 1:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('normal')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
         );
       case 2:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
         );
       case 3:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
         );
 
       default:
@@ -570,7 +609,6 @@ class _StatusWidgetState extends State<StatusWidget> {
           ),
         ),
         getLevelText(sugarInfoStore!.statusLevel!),
-        
         Expanded(
           child: Center(
             child: Text(
@@ -632,24 +670,19 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-            decoration: BoxDecoration(
-                color: AppColors.AppColor3,
-                borderRadius: BorderRadius.all(Radius.circular(5))),
+            decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "${getTitle(selectedTitle)}",
-                  style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black),
+                  style: AppTheme.appBodyTextStyle.copyWith(fontWeight: FontWeight.w700, color: Colors.black),
                 ),
                 SizedBox(
                   width: 100,
                 ),
-                showDropdown
-                    ? SvgPicture.asset(Assets.iconUpArrow)
-                    : SvgPicture.asset(Assets.iconDownArrow),
+                showDropdown ? SvgPicture.asset(Assets.iconUpArrow) : SvgPicture.asset(Assets.iconDownArrow),
               ],
             ),
           ),
@@ -673,8 +706,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                     isAlwaysShown: true,
                     child: ListView(
                       // physics: BouncingScrollPhysics(),
-                      children:
-                          widget.listConditions!.map((Conditions condition) {
+                      children: widget.listConditions!.map((Conditions condition) {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -690,8 +722,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               value: selectedTitle,
                               child: Text(
                                 "${getTitle(condition.name)}",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white),
+                                style: AppTheme.appBodyTextStyle.copyWith(color: Colors.white),
                               ),
                             ),
                           ),

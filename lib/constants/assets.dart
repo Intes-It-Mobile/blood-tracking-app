@@ -20,6 +20,8 @@ class Assets {
   static const String intro3 = "assets/images/intro3.png";
   static const String about_us = "assets/images/img_about_us.png";
   static const String history_mpt = "assets/images/have_not_history.png";
+  static const String intro_img = "assets/images/intro2_color.png";
+  static const String intro_img1 = "assets/images/intro2_mol.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";
