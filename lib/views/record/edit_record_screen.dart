@@ -74,6 +74,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               .parse(sugarInfoStore!.editingRecord!.hourTime!);
           editRecordStore!.editingSugarAmount =
               sugarInfoStore!.editingRecord!.sugarAmount;
+          editRecordStore!.setEditedDayTime(editRecordStore!.editingDayTime!);
+          editRecordStore!.setEditedHourTime(editRecordStore!.editingHourTime!);
           editRecordStore!
               .setEditChooseCondition(editRecordStore!.conditionId!);
           editRecordStore!
@@ -295,67 +297,86 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                      child: StatusWidget(
-                                    editRecordStore: editRecordStore,
-                                  )),
-                                  Container(
-                                    child: Row(children: [
-                                      SvgPicture.asset(Assets.iconEditPen),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      SvgPicture.asset(Assets.iconSwapUnit)
-                                    ]),
-                                  )
-                                ],
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                    color: AppColors.mainBgColor),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                        child: StatusWidget(
+                                      editRecordStore: editRecordStore,
+                                    )),
+                                    Container(
+                                      child:
+                                          SvgPicture.asset(Assets.iconEditPen),
+                                    )
+                                  ],
+                                ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(bottom: 15),
+                                margin: EdgeInsets.only(bottom: 5),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
-                                      width: 165,
-                                      child: TextField(
-                                        controller: controller,
-                                        focusNode: focusNode,
-                                        onChanged: (value) {
-                                          editRecordStore!
-                                              .setEditInputSugarAmount(
-                                                  int.parse(value) * 1.0);
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            width: 165,
+                                            child: TextField(
+                                              controller: controller,
+                                              focusNode: focusNode,
+                                              onChanged: (value) {
+                                                editRecordStore!
+                                                    .setEditInputSugarAmount(
+                                                        int.parse(value) * 1.0);
 
-                                          sugarInfoStore!
-                                              .checkValidateSugarAmountInput(
-                                                  int.parse(value) * 1.0);
-                                          print(value);
-                                        },
-                                        textAlign: TextAlign.center,
-                                        onSubmitted: (value) {
-                                          editRecordStore!
-                                              .setEditInputSugarAmount(
-                                                  int.parse(value) * 1.0);
-                                          sugarInfoStore!
-                                              .checkValidateSugarAmountInput(
-                                                  int.parse(value) * 1.0);
-                                          print(value);
-                                        },
-                                        keyboardType: TextInputType.number,
-                                        style: AppTheme.sugarInputText,
+                                                sugarInfoStore!
+                                                    .checkValidateSugarAmountInput(
+                                                        int.parse(value) * 1.0);
+                                                print(value);
+                                              },
+                                              textAlign: TextAlign.center,
+                                              onSubmitted: (value) {
+                                                editRecordStore!
+                                                    .setEditInputSugarAmount(
+                                                        int.parse(value) * 1.0);
+                                                sugarInfoStore!
+                                                    .checkValidateSugarAmountInput(
+                                                        int.parse(value) * 1.0);
+                                                print(value);
+                                              },
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              style: AppTheme.sugarInputText,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 25,
+                                          ),
+                                          Text(
+                                            "mg/dL",
+                                            style: AppTheme.appBodyTextStyle
+                                                .copyWith(color: Colors.black),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 25,
+                                      width: 15,
                                     ),
-                                    Text(
-                                      "mg/dL",
-                                      style: AppTheme.appBodyTextStyle
-                                          .copyWith(color: Colors.black),
-                                    )
+                                    Container(
+                                        child: SvgPicture.asset(
+                                            Assets.iconSwapUnit))
                                   ],
                                 ),
                               )
@@ -554,6 +575,10 @@ class _StatusWidgetState extends State<StatusWidget> {
     }
   }
 
+  String? getAmountValue(int? level) {
+    return "${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue} ~ ${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue}";
+  }
+
   Color getLevelTextColor(int level) {
     switch (level) {
       case 0:
@@ -672,6 +697,14 @@ class _StatusWidgetState extends State<StatusWidget> {
           ),
         ),
         getLevelText(widget.editRecordStore!.editStatusLevel!),
+        Expanded(
+          child: Center(
+            child: Text(
+              "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
+              style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -721,88 +754,90 @@ class _DropDownWidgetState extends State<DropDownWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                showDropdown = !showDropdown;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-              decoration: BoxDecoration(
-                  color: AppColors.AppColor3,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${getTitle(selectedTitle)}",
-                    style: AppTheme.appBodyTextStyle.copyWith(
-                        fontWeight: FontWeight.w700, color: Colors.black),
-                  ),
-                  Icon(showDropdown
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down),
-                ],
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              showDropdown = !showDropdown;
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+            decoration: BoxDecoration(
+                color: AppColors.AppColor3,
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "${getTitle(selectedTitle)}",
+                  style: AppTheme.appBodyTextStyle.copyWith(
+                      fontWeight: FontWeight.w700, color: Colors.black),
+                ),
+                SizedBox(
+                  width: 100,
+                ),
+                showDropdown
+                    ? SvgPicture.asset(Assets.iconUpArrow)
+                    : SvgPicture.asset(Assets.iconDownArrow),
+              ],
             ),
           ),
-          if (showDropdown)
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 4),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.AppColor2,
-                // border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: DropdownButtonHideUnderline(
+        ),
+        if (showDropdown)
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.AppColor2,
+              // border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: Container(
+                height: 220, // Chiều cao tối đa của danh sách
                 child: Container(
-                  height: 220, // Chiều cao tối đa của danh sách
-                  child: Container(
-                    color: AppColors.AppColor2,
-                    child: Scrollbar(
-                      isAlwaysShown: true,
-                      child: ListView(
-                        // physics: BouncingScrollPhysics(),
-                        children:
-                            widget.listConditions!.map((Conditions condition) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedTitle = condition.name;
-                                selectedId = condition.id;
-                                showDropdown = false;
-                                widget.editRecordStore!
-                                    .setEditChooseCondition(selectedId!);
-                              });
-                            },
-                            child: Container(
-                              color: Colors.transparent,
-                              child: DropdownMenuItem<String>(
-                                value: selectedTitle,
-                                child: Text(
-                                  "${getTitle(condition.name)}",
-                                  style: AppTheme.appBodyTextStyle
-                                      .copyWith(color: Colors.white),
-                                ),
+                  color: AppColors.AppColor2,
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    child: ListView(
+                      // physics: BouncingScrollPhysics(),
+                      children:
+                          widget.listConditions!.map((Conditions condition) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedTitle = condition.name;
+                              selectedId = condition.id;
+                              showDropdown = false;
+                              widget.editRecordStore!
+                                  .setEditChooseCondition(selectedId!);
+                            });
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            child: DropdownMenuItem<String>(
+                              value: selectedTitle,
+                              child: Text(
+                                "${getTitle(condition.name)}",
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.white),
                               ),
                             ),
-                          );
-                        }).toList(),
-                      ),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ),
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

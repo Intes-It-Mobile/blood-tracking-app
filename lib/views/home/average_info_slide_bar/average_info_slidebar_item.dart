@@ -9,11 +9,12 @@ class AverageInfoSlideBarItemWidget extends StatefulWidget {
   String? typeAverage = "";
   String? title = "";
   bool? hasType = false;
+  double? number=0;
   AverageInfoSlideBarItemWidget(
       {super.key,
       this.typeAverage,
       required this.hasType,
-      required this.title});
+      required this.title,required this.number});
 
   @override
   State<AverageInfoSlideBarItemWidget> createState() =>
@@ -24,8 +25,8 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.12,
-      width: MediaQuery.of(context).size.width * 0.39,
+      // height: MediaQuery.of(context).size.height * 0.12,
+      // width: MediaQuery.of(context).size.width * 0.39,
       margin: const EdgeInsets.only(right: 10,top: 20),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -51,11 +52,11 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
               children: [
                 Container(
                   child: Text(
-                    "4.0",
+                    "${widget.number}",
                     style: AppTheme.appBodyTextStyle36,
                   ),
                 ),
-                Text("mmol/L", style: AppTheme.appBodyTextStyle),
+                Text("mg/dL", style: AppTheme.appBodyTextStyle),
               ],
             ),
           )

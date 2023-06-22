@@ -94,7 +94,7 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontSize: TextSizeConfig.getAdjustedFontSize(32),
     fontFamily: FontFamily.IBMPlexSans,
   );
 

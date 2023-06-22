@@ -86,14 +86,14 @@ abstract class _EditRecordStoreBase with Store {
   }
   @action
   setEditedDayTime(DateTime dayTime) {
-    editingDayTimeStr = DateFormat('yyyy/MM/dd').format(dayTime);
     editingDayTime = dayTime;
+    editingDayTimeStr = DateFormat('yyyy/MM/dd').format(dayTime);
   }
 
   @action
   setEditedHourTime(DateTime hourTime) {
-    editingHourTimeStr = DateFormat('HH:mm').format(hourTime);
     editingHourTime= hourTime;
+    editingHourTimeStr = DateFormat('HH:mm').format(hourTime);
   }
 
 }

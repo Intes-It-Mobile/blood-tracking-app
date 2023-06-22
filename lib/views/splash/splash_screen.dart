@@ -112,7 +112,6 @@ class _SplashScreenState extends State<SplashScreen> {
           margin: EdgeInsets.only(
             bottom: 76,
           ),
-          width: 301,
           child: LinearPercentIndicator(
             progressColor: AppColors.AppColor3,
             backgroundColor: AppColors.AppColor4,
