@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
 import '../../routes.dart';
@@ -25,6 +26,22 @@ class HomeScreenContent extends StatefulWidget {
 }
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
+  SugarInfoStore? sugarInfoStore;
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
+    // TODO: implement didChangeDependencies
+    // sugarInfoStore!.setListRecordArrangedByTime();
+    sugarInfoStore!.setListRecordArrangedByTime();
+    if (sugarInfoStore!.listRecord != null &&
+        sugarInfoStore!.listRecord!.isNotEmpty) {
+      sugarInfoStore!.getAverageNumber();
+    }
+
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;

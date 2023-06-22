@@ -105,9 +105,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.splash), fit: BoxFit.cover)),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Assets.splash), fit: BoxFit.cover)),
         child: Container(
-          alignment: Alignment.bottomCenter ,
+          alignment: Alignment.bottomCenter,
           padding: EdgeInsets.symmetric(horizontal: 37),
           margin: EdgeInsets.only(bottom: 76),
           child: LinearPercentIndicator(

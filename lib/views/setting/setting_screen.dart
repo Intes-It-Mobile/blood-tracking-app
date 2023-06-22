@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../controllers/stores/sugar_info_store.dart';
 import '../../routes.dart';
 import '../../utils/dialog/dialog_modal.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -20,6 +22,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  SugarInfoStore? sugarInfoStore;
   Future<void> share() async {
     await FlutterShare.share(
       title: 'Blood Sugar Tracking',
@@ -27,6 +30,11 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
+@override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,6 +134,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     btnColor: AppColors.AppColor2,
                     btnText: "send_feedback",
                   ),
+                  GestureDetector( onTap: (){
+                    sugarInfoStore!.deleteData();
+                  },child: Container(width: 20,height: 20,color: Colors.amber,))
                 ]),
           ),
         ),

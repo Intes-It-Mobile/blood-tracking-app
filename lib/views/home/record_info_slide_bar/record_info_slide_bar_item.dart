@@ -92,7 +92,7 @@ class _RecordInfoSliderItemWidgetState
                     ],
                   ),
                 ),
-                Container(
+                Container( 
                   child: Row(
                     children: [
                       Text("Status : ",
