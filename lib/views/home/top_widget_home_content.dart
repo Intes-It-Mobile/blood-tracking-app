@@ -30,12 +30,12 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                   children: [
                     Container(
                       child: SvgPicture.asset(Assets.iconRedCross),
-                    ),
+                    ), 
                     const SizedBox(
                       width: 15,
                     ),
                     Flexible(
-                      child: Text(
+                      child: Text( 
                         AppLocalizations.of(context)!.getTranslate('app_name'),
                         style: AppTheme.Headline20Text,
                         overflow: TextOverflow.visible,

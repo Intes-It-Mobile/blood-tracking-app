@@ -6,13 +6,12 @@ import 'font_family.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-      primaryColor: Color(0xFF0F1049),
-      scaffoldBackgroundColor: Colors.white,
-      fontFamily: FontFamily.IBMPlexSans,
-      //this changes the colour
-      hintColor: Colors.grey,
-     
-     );
+    primaryColor: Color(0xFF0F1049),
+    scaffoldBackgroundColor: Colors.white,
+    fontFamily: FontFamily.IBMPlexSans,
+    //this changes the colour
+    hintColor: Colors.grey,
+  );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.black,
@@ -76,7 +75,7 @@ class AppTheme {
     fontWeight: FontWeight.w800,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontSize: TextSizeConfig.getAdjustedFontSize(20),
     fontFamily: FontFamily.IBMPlexSans,
   );
 
@@ -94,7 +93,7 @@ class AppTheme {
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontSize: TextSizeConfig.getAdjustedFontSize(32),
     fontFamily: FontFamily.IBMPlexSans,
   );
 
@@ -112,6 +111,15 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(16),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
+
+  static final TextInfomation14Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(14),
     fontFamily: FontFamily.IBMPlexSans,
   );
 }

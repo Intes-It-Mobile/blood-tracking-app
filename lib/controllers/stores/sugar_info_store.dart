@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/sugar_info/sugar_info.dart';
+import '../../routes.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -26,11 +28,10 @@ abstract class _SugarInfoStoreBase with Store {
   Conditions? chooseCondition;
 
   @observable
-  int? statusLevel = 0;
-
-  @observable
   double? currentSugarAmount = 0.0;
 
+  @observable
+  int? statusLevel = 0;
   @action
   getRootSugarInfo(SugarInfo? fromSharepref) {
     rootSugarInfo = fromSharepref;
@@ -50,17 +51,15 @@ abstract class _SugarInfoStoreBase with Store {
   setInputSugarAmount(double inputAmount) {
     currentStatus = chooseCondition!.sugarAmount!
         .where((e) =>
-            e.minValue! * 1.0 < inputAmount && inputAmount < e.maxValue! * 1.0)
+            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
         .first
         .status;
     currentSugarAmount = inputAmount;
+    checkValidateSugarAmountInput(inputAmount);
     if (currentStatus != null) {
       setStatusLevel(currentStatus);
     }
   }
-
-  @computed
-  get btnStatus => currentSugarAmount != null && legalInput == true;
 
   @action
   setStatusLevel(String? currentStatus) {
@@ -69,7 +68,7 @@ abstract class _SugarInfoStoreBase with Store {
         return statusLevel = 0;
       case 'normal':
         return statusLevel = 1;
-      case 'pre-diabetes':
+      case 'pre_diabetes':
         return statusLevel = 2;
       case 'diabetes':
         return statusLevel = 3;
@@ -137,6 +136,9 @@ abstract class _SugarInfoStoreBase with Store {
   List<SugarRecord>? listRecord = [];
 
   @observable
+  List<SugarRecord>? listRecordArrangedByTime = [];
+
+  @observable
   ListRecord? listRecords;
 
   DateTime now = DateTime.now();
@@ -144,19 +146,70 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? isListRecordsLoading = true;
 
+  @observable
+  bool? successSaveRecord = false;
+
   static final String ListRecordsKey = 'listRecord';
   @action
-  saveNewRecord(int id) {
-    listRecord!.add(SugarRecord(
-        id:id,
-        dayTime: choosedDayTimeStr,
-        hourTime: choosedDayHourStr,
-        status: currentStatus,
-        sugarAmount: currentSugarAmount));
-    listRecords = ListRecord(listRecord: listRecord);
-    choosedDayTimeStr =null;
-    choosedDayHourStr =null;
-    saveListRecord(listRecords);
+  saveNewRecord(int id, BuildContext context) {
+    checkValidateNewRecord();
+    if (errorText == "" || errorText == null) {
+      listRecord!.add(SugarRecord(
+          id: id,
+          dayTime: choosedDayTimeStr,
+          hourTime: choosedDayHourStr,
+          status: currentStatus,
+          sugarAmount: currentSugarAmount,
+          conditionId: chooseCondition!.id));
+      listRecords = ListRecord(listRecord: listRecord);
+      choosedDayTimeStr = null;
+      choosedDayHourStr = null;
+      listRecordArrangedByTime = listRecord;
+      saveListRecord(listRecords);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.home,
+        (route) => false,
+      );
+      successSaveRecord = true;
+      errorText = "";
+      if (listRecordArrangedByTime!.length > 0) {
+        listRecordArrangedByTime!.sort((b, a) =>
+            (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+                .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+        getAverageNumber();
+      }
+    }
+    successSaveRecord = false;
+  }
+
+  @action
+  setListRecordArrangedByTime() {
+    listRecordArrangedByTime = listRecord;
+    listRecordArrangedByTime!.sort((b, a) =>
+        (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+            .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+  }
+
+  @observable
+  bool? canSaveNewRecord = false;
+  @observable
+  String? errorText;
+
+  @action
+  checkValidateNewRecord() {
+    if (choosedDayTimeStr != null &&
+        choosedDayHourStr != null &&
+        currentStatus != null &&
+        currentStatus != "" &&
+        currentSugarAmount != null &&
+        chooseCondition!.id != null) {
+      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+        errorText = "errow_sugar_input_text";
+      } else {
+        errorText = "";
+      }
+    }
   }
 
   static Future<void> saveListRecord(ListRecord? listRecords) async {
@@ -195,12 +248,141 @@ abstract class _SugarInfoStoreBase with Store {
   SugarRecord? editingRecord;
 
   @action
-  setEditingRecord(SugarRecord record) {
-    editingRecord = record;
+  setEditingRecord(int? id) {
+    editingRecord = listRecord!.where((e) => e.id == id).toList().first;
   }
 
   @action
   deleteRecord(int? id) {
     listRecord!.removeWhere((e) => e.id == id);
+    saveListRecord(ListRecord(listRecord: listRecord));
+  }
+
+  @observable
+  String? editedDayTime;
+  @observable
+  String? editedHourTime;
+  @observable
+  String? editedStatus;
+  @observable
+  double? editedSugarAmount;
+
+  @action
+  setEditedDayTime(DateTime dayTime) {
+    editedDayTime = DateFormat('yyyy/MM/dd').format(dayTime);
+  }
+
+  @action
+  setEditedHourTime(DateTime hourTime) {
+    editedHourTime = DateFormat('HH:mm').format(hourTime);
+  }
+
+  @action
+  setEditedStatus(String editedStatus) {
+    editedStatus = editedStatus;
+  }
+
+  @action
+  setEditedSugarAmount(double editedSugarAmount) {
+    editedSugarAmount = editedSugarAmount;
+  }
+
+  @action
+  editRecord(int editItemId, SugarRecord editedRecord) {
+    listRecord!.firstWhere((e) => e.id == editItemId).dayTime =
+        editedRecord.dayTime;
+    listRecord!.firstWhere((e) => e.id == editItemId).hourTime =
+        editedRecord.hourTime;
+    listRecord!.firstWhere((e) => e.id == editItemId).conditionId =
+        editedRecord.conditionId;
+    listRecord!.firstWhere((e) => e.id == editItemId).id = editedRecord.id;
+    listRecord!.firstWhere((e) => e.id == editItemId).sugarAmount =
+        editedRecord.sugarAmount;
+    listRecord!.firstWhere((e) => e.id == editItemId).status =
+        editedRecord.status;
+    saveListRecord(listRecords);
+  }
+
+  @observable
+  double? recentNumber = 0;
+  @observable
+  double? threeDaysNumber = 0;
+  @observable
+  double? weekNumber = 0;
+  @observable
+  double? monthNumber = 0;
+  @observable
+  double? yearNumber = 0;
+  @observable
+  double? allNumber = 0;
+
+  @action
+  getAverageNumber() {
+    recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
+    // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
+    List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
+        .where((e) =>
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isAfter(now.subtract(Duration(days: 3))) &&
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isBefore(now.add(Duration(days: 1))))
+        .toList();
+    List<SugarRecord>? listweekNumber = listRecordArrangedByTime!
+        .where((e) =>
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isAfter(now.subtract(Duration(days: 7))) &&
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isBefore(now.add(Duration(days: 1))))
+        .toList();
+    List<SugarRecord>? listMonthNumber = listRecordArrangedByTime!
+        .where((e) =>
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isAfter(now.subtract(Duration(days: 30))) &&
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isBefore(now.add(Duration(days: 1))))
+        .toList();
+    List<SugarRecord>? listYearNumber = listRecordArrangedByTime!
+        .where((e) =>
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isAfter(now.subtract(Duration(days: 365))) &&
+            DateFormat('yyyy/MM/dd')
+                .parse(e.dayTime!)
+                .isBefore(now.add(Duration(days: 1))))
+        .toList();
+
+    threeDaysNumber = double.parse((listThreeDaysNumber.fold(0.0,
+                (previousValue, item) => previousValue + item.sugarAmount!) /
+            listThreeDaysNumber.length)
+        .toStringAsFixed(1));
+
+    // threeDaysNumber = listThreeDaysNumber.fold(
+    //         0.0, (previousValue, item) => previousValue + item.sugarAmount!) /
+    //     listThreeDaysNumber.length;
+    weekNumber = roundedResult(listweekNumber);
+    monthNumber = roundedResult(listMonthNumber);
+    yearNumber = roundedResult(listYearNumber);
+    allNumber = roundedResult(listRecordArrangedByTime);
+
+    print("recentNumber:${recentNumber}");
+    print("threeDaysNumber:${threeDaysNumber}");
+    print("weekNumber:${weekNumber}");
+    print("monthNumber:${monthNumber}");
+    print("yearNumber:${yearNumber}");
+    print("allNumber:${allNumber}");
+  }
+
+  @action
+  double roundedResult(List<SugarRecord>? listNumber) {
+    return double.parse((listNumber!.fold(0.0,
+                (previousValue, item) => previousValue + item.sugarAmount!) /
+            listNumber.length)
+        .toStringAsFixed(1));
   }
 }

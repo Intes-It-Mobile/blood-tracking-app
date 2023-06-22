@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
 import '../../widgets/customs_bottom_appbar.dart';
+import '../../widgets/widget_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
 import 'home_screen_content.dart';
@@ -193,32 +194,31 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(true),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric( vertical: 9),
+                                  padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                      style: AppTheme.statusTxt
-                                          .copyWith(color: AppColors.AppColor2, fontWeight: FontWeight.w600),
+                                      style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 23),
                             Expanded(
                               child: GestureDetector(
                                 onTap: () => Navigator.of(context).pop(false),
                                 child: Container(
+                                  // margin: EdgeInsets.only(left: 23),
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
                                       color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('stay')}",
-                                      style:
-                                          AppTheme.statusTxt.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                      style: AppTheme.TextIntroline16Text,
                                     ),
                                   ),
                                 ),
@@ -240,16 +240,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        // Status bar color
-        statusBarColor: AppColors.AppColor2,
-        // Status bar brightness (optional)`
-        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-        statusBarBrightness: Brightness.dark, // For iOS (dark icons)
-      ),
-
-      // Các thuộc tính khác của AppBar
-    );
+    return WidgetAppBar();
+    //   AppBar(
+    //   systemOverlayStyle: const SystemUiOverlayStyle(
+    //     // Status bar color
+    //     statusBarColor: AppColors.AppColor2,
+    //     // Status bar brightness (optional)`
+    //     statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+    //     statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+    //   ),
+    //
+    //   // Các thuộc tính khác của AppBar
+    // );
   }
 }
