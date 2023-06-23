@@ -84,7 +84,7 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
                           style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
                         ),
                       ),
-                      Text("mg/L", style: AppTheme.appBodyTextStyle),
+                      Text("mg/dL", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),
