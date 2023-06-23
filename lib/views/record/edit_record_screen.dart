@@ -371,12 +371,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Container(
-                                        child: SvgPicture.asset(
-                                            Assets.iconSwapUnit))
+                                    // SizedBox(
+                                    //   width: 15,
+                                    // ),
+                                    // Container(
+                                    //     child: SvgPicture.asset(
+                                    //         Assets.iconSwapUnit))
                                   ],
                                 ),
                               )

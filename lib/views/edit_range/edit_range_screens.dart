@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class EditRangeScreens extends StatefulWidget {
@@ -19,9 +20,8 @@ class EditRangeScreens extends StatefulWidget {
 }
 
 class _EditRangeScreensState extends State<EditRangeScreens> {
-
   SugarInfoStore? sugarInfoStore;
-  
+  List<Conditions>? listRootConditions;
   List<EditTargetRange> editTargetRange = [
     EditTargetRange(name: 'Default', max: 7.0, min: 4.0),
     EditTargetRange(name: 'Before exercise', max: 8.5, min: 4.0),
@@ -34,8 +34,8 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void didChangeDependencies() {
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true); 
-
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    listRootConditions = sugarInfoStore!.listRootConditions;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -89,8 +89,10 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               color: AppColors.AppColor4,
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('notification')}",
-                style: AppTheme.hintText
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400,fontSize: 12),
+                style: AppTheme.hintText.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
                 textAlign: TextAlign.justify,
                 maxLines: 3,
               ),
@@ -107,7 +109,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                       color: index.isEven || index == 0
                           ? AppColors.AppColor3
                           : Colors.white,
-                      padding: const EdgeInsets.only(top: 12,left: 16),
+                      padding: const EdgeInsets.only(top: 12, left: 16),
                       child: Column(
                         children: [
                           Row(
@@ -249,7 +251,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     );
                   }),
             ),
-
           ],
         ));
   }

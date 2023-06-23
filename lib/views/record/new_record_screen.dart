@@ -416,10 +416,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                    margin: EdgeInsets.only(left: 19),
-                                    child:
-                                        SvgPicture.asset(Assets.iconSwapUnit))
+                                // Container(
+                                //     margin: EdgeInsets.only(left: 19),
+                                //     child:
+                                //         SvgPicture.asset(Assets.iconSwapUnit))
                               ],
                             ),
                           )

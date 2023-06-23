@@ -87,9 +87,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: SvgPicture.asset(Assets.iconAlarm),
               ),
             ),
-            Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: SvgPicture.asset(Assets.iconSwapUnit))
+            // Container(
+            //     margin: const EdgeInsets.symmetric(horizontal: 5),
+            //     child: SvgPicture.asset(Assets.iconSwapUnit))
           ],
         ),
       ),
