@@ -1,5 +1,5 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../constants/app_theme.dart';
 import '../../../constants/colors.dart';
@@ -9,25 +9,27 @@ class AverageInfoSlideBarItemWidget extends StatefulWidget {
   String? typeAverage = "";
   String? title = "";
   bool? hasType = false;
-  double? number=0;
+  double? number = 0;
   AverageInfoSlideBarItemWidget(
       {super.key,
       this.typeAverage,
       required this.hasType,
-      required this.title,required this.number});
+      required this.title,
+      required this.number});
 
   @override
   State<AverageInfoSlideBarItemWidget> createState() =>
       _AverageInfoSlideBarItemWidgetState();
 }
 
-class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemWidget> {
+class _AverageInfoSlideBarItemWidgetState
+    extends State<AverageInfoSlideBarItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
       // height: MediaQuery.of(context).size.height * 0.12,
       // width: MediaQuery.of(context).size.width * 0.39,
-      margin: const EdgeInsets.only(right: 10,top: 20),
+      margin: const EdgeInsets.only(right: 10, top: 20),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
@@ -51,10 +53,12 @@ class _AverageInfoSlideBarItemWidgetState extends State<AverageInfoSlideBarItemW
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  child: Text(
-                    "${widget.number}",
-                    style: AppTheme.appBodyTextStyle36,
-                  ),
+                  child: Observer(builder: (_) {
+                    return Text(
+                      "${widget.number}",
+                      style: AppTheme.appBodyTextStyle36,
+                    );
+                  }),
                 ),
                 Text("mg/dL", style: AppTheme.appBodyTextStyle),
               ],

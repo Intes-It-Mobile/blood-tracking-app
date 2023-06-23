@@ -27,6 +27,7 @@ class HomeScreenContent extends StatefulWidget {
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
   SugarInfoStore? sugarInfoStore;
+  bool? isFirst = true;
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -38,7 +39,10 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         sugarInfoStore!.listRecord!.isNotEmpty) {
       sugarInfoStore!.getAverageNumber();
     }
-
+    if (isFirst = true) {
+      sugarInfoStore!.setConditionFilterId("default_txt");
+      isFirst = false;
+    }
     super.didChangeDependencies();
   }
 
@@ -48,25 +52,34 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.32,
-          child: Stack(
-            children: [
-              Container(
-                width: screenWidth,
-                height: screenHeight * 0.24384236453,
-                color: AppColors.AppColor2,
+        Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.32,
+              child: Stack(
+                children: [
+                  Container(
+                    width: screenWidth,
+                    height: screenHeight * 0.24384236453,
+                    color: AppColors.AppColor2,
+                    padding: const EdgeInsets.only(top: 20),
+                    // child: const TopWidgetHomeContent(),
+                  ),
+                  Positioned(
+                    left: 0.0,
+                    right: 0.0,
+                    bottom: 20,
+                    child: sugarInfoStore!.recentNumber != null
+                        ? AverageInfoSlideBarWidget()
+                        : Container(),
+                  ),
+                ],
+              ),
+            ),
+            Container(
                 padding: const EdgeInsets.only(top: 20),
-                child: const TopWidgetHomeContent(),
-              ),
-              const Positioned(
-                left: 0.0,
-                right: 0.0,
-                bottom: 20,
-                child: AverageInfoSlideBarWidget(),
-              ),
-            ],
-          ),
+                child: TopWidgetHomeContent())
+          ],
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -74,7 +87,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const ChartWidget(),
+                LineChart(),
                 RecordInfoSlideBarWidget(),
                 const SizedBox(
                   height: 5,
