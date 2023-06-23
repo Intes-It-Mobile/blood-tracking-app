@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:blood_sugar_tracking/alarm_helper.dart';
 import 'package:blood_sugar_tracking/main.dart';
 import 'package:blood_sugar_tracking/models/alarm_info/alarm_info.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
@@ -65,6 +68,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       val2 = newValue2;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +170,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                               InkWell(
                                                 onTap: () {
                                                   showDiaLogEdit(
-                                                      context, index);
+                                                      context, index,AlarmInfo());
                                                 },
                                                 child: SvgPicture.asset(
                                                     Assets.iconEditRecord),
@@ -410,7 +415,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-  Future<String?> showDiaLogEdit(BuildContext context, int index) {
+  Future<String?> showDiaLogEdit(BuildContext context, int index,AlarmInfo alarmInfo) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -514,7 +519,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          _editToDoItem(_alarmTime!, index);
+                          _editToDoItem(_alarmTime!,index);
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         child: Container(
@@ -603,22 +608,32 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       );
   }
 
+
+
   void _editToDoItem(DateTime newDate, int index) {
+    print("id: ${_currentAlarms![index].id}");
+
     setState(() {
-      _currentAlarms?[index].alarmDateTime = newDate;
+      _currentAlarms![index] = AlarmInfo(
+        alarmDateTime: newDate,
+        gradientColorIndex: _currentAlarms![index].gradientColorIndex,
+        title: _currentAlarms![index].title,
+        id: _currentAlarms![index].id
+      );
     });
-    var alarmInfo = AlarmInfo(
-      alarmDateTime: newDate,
-      title: 'alarm',
-    );
-    _alarmHelper.insertAlarm(alarmInfo);
-    if (newDate != null) {
-      scheduleAlarm(newDate, alarmInfo,
-          isRepeating: _isRepeatSelected);
-    }
+    _alarmHelper.update(_currentAlarms![index]);
+
 
     Navigator.pop(context);
   }
+
+  // static Future<void> saveListRecord(AlarmInfo? alarmInfo) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String jsonString = json.encode(alarmInfo!.toJson());
+  //   prefs.setString('myObjectKey', jsonString);
+  //   print("Save to shprf: ${alarmInfo.alarmDateTime} ");
+  // }
+
 
   void onSaveAlarm(bool _isRepeating) {
     DateTime? scheduleAlarmDateTime;

@@ -4,6 +4,7 @@ class AlarmInfo {
   DateTime? alarmDateTime;
   bool? isPending;
   int? gradientColorIndex;
+  AlarmInfo.withID(this.id,this.alarmDateTime);
 
   AlarmInfo(
       {this.id,
