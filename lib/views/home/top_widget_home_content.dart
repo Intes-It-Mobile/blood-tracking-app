@@ -1,10 +1,15 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../controllers/stores/sugar_info_store.dart';
+import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
@@ -16,6 +21,14 @@ class TopWidgetHomeContent extends StatefulWidget {
 }
 
 class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
+  SugarInfoStore? sugarInfoStore;
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,12 +43,12 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                   children: [
                     Container(
                       child: SvgPicture.asset(Assets.iconRedCross),
-                    ), 
+                    ),
                     const SizedBox(
                       width: 15,
                     ),
                     Flexible(
-                      child: Text( 
+                      child: Text(
                         AppLocalizations.of(context)!.getTranslate('app_name'),
                         style: AppTheme.Headline20Text,
                         overflow: TextOverflow.visible,
@@ -90,33 +103,134 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     height: 10,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                      color: AppColors.mainBgColor,
-                    ),
-                    child: Row(children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .getTranslate('default_txt'),
-                          style: AppTheme.hintText.copyWith(
-                              fontSize: 12,
-                              color: AppColors.AppColor4,
-                              fontWeight: FontWeight.w800),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 9),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
                         ),
+                        color: AppColors.mainBgColor,
                       ),
-                      SvgPicture.asset(Assets.iconType)
-                    ]),
-                  ),
+                      child: DropDownWidget(
+                        listConditions: sugarInfoStore!.listRootConditions,
+                      )),
                 ],
               )
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class DropDownWidget extends StatefulWidget {
+  List<Conditions>? listConditions;
+
+  DropDownWidget({super.key, required this.listConditions});
+
+  @override
+  State<DropDownWidget> createState() => _DropDownWidgetState();
+}
+
+class _DropDownWidgetState extends State<DropDownWidget> {
+  SugarInfoStore? sugarInfoStore;
+  String? selectedTitle = 'default_txt';
+  int? selectedId = 0;
+  List<String> types = [
+    'default_txt',
+    'before_exercise',
+    'before_meal',
+    'fasting',
+    'after_meal_1h',
+    "after_meal_2h",
+    "after_exercise",
+    "asleep"
+  ];
+  String? selectedValue;
+  bool showDropdown = false;
+  String? getTitle(String? value) {
+    return AppLocalizations.of(context)!.getTranslate('${value}');
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2<String>(
+        isExpanded: true,
+        hint: Row(
+          children: [
+            Expanded(
+              child: Text(
+                getTitle(sugarInfoStore!.filterConditionTitle!)!,
+                style: AppTheme.appBodyTextStyle.copyWith(
+                    fontWeight: FontWeight.w700, color: AppColors.AppColor4),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        items: widget.listConditions!
+            .map((Conditions item) => DropdownMenuItem<String>(
+                  value: item.name,
+                  child: Text(
+                    getTitle(item.name!)!,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ))
+            .toList(),
+        value: selectedValue,
+        onChanged: (String? value) {
+          setState(() {
+      
+            sugarInfoStore!.setConditionFilterId(value!);
+            // selectedValue = value;
+          });
+        },
+        buttonStyleData: ButtonStyleData(
+          height: 30,
+          width: 120,
+          // padding: const EdgeInsets.only(left: 14, right: 14),
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.circular(14),
+
+            color: AppColors.mainBgColor,
+          ),
+          elevation: 0,
+        ),
+        iconStyleData: IconStyleData(
+          icon: SvgPicture.asset(Assets.iconType),
+          iconSize: 14,
+        ),
+        dropdownStyleData: DropdownStyleData(
+          maxHeight: 200,
+          width: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.blue,
+          ),
+          offset: const Offset(-20, -15),
+          scrollbarTheme: ScrollbarThemeData(
+            radius: const Radius.circular(40),
+            thickness: MaterialStateProperty.all<double>(6),
+            thumbVisibility: MaterialStateProperty.all<bool>(true),
+          ),
+        ),
+        menuItemStyleData: const MenuItemStyleData(
+          height: 40,
+          // padding: EdgeInsets.only(left: 14, right: 14),
+        ),
       ),
     );
   }

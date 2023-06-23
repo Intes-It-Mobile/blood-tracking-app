@@ -21,6 +21,7 @@ class EditRangeScreens extends StatefulWidget {
 class _EditRangeScreensState extends State<EditRangeScreens> {
 
   SugarInfoStore? sugarInfoStore;
+  
   List<EditTargetRange> editTargetRange = [
     EditTargetRange(name: 'Default', max: 7.0, min: 4.0),
     EditTargetRange(name: 'Before exercise', max: 8.5, min: 4.0),
@@ -34,6 +35,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true); 
+
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
