@@ -479,6 +479,135 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$recentNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.recentNumber', context: context);
+
+  @override
+  double? get recentNumber {
+    _$recentNumberAtom.reportRead();
+    return super.recentNumber;
+  }
+
+  @override
+  set recentNumber(double? value) {
+    _$recentNumberAtom.reportWrite(value, super.recentNumber, () {
+      super.recentNumber = value;
+    });
+  }
+
+  late final _$threeDaysNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.threeDaysNumber', context: context);
+
+  @override
+  double? get threeDaysNumber {
+    _$threeDaysNumberAtom.reportRead();
+    return super.threeDaysNumber;
+  }
+
+  @override
+  set threeDaysNumber(double? value) {
+    _$threeDaysNumberAtom.reportWrite(value, super.threeDaysNumber, () {
+      super.threeDaysNumber = value;
+    });
+  }
+
+  late final _$weekNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.weekNumber', context: context);
+
+  @override
+  double? get weekNumber {
+    _$weekNumberAtom.reportRead();
+    return super.weekNumber;
+  }
+
+  @override
+  set weekNumber(double? value) {
+    _$weekNumberAtom.reportWrite(value, super.weekNumber, () {
+      super.weekNumber = value;
+    });
+  }
+
+  late final _$monthNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.monthNumber', context: context);
+
+  @override
+  double? get monthNumber {
+    _$monthNumberAtom.reportRead();
+    return super.monthNumber;
+  }
+
+  @override
+  set monthNumber(double? value) {
+    _$monthNumberAtom.reportWrite(value, super.monthNumber, () {
+      super.monthNumber = value;
+    });
+  }
+
+  late final _$yearNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.yearNumber', context: context);
+
+  @override
+  double? get yearNumber {
+    _$yearNumberAtom.reportRead();
+    return super.yearNumber;
+  }
+
+  @override
+  set yearNumber(double? value) {
+    _$yearNumberAtom.reportWrite(value, super.yearNumber, () {
+      super.yearNumber = value;
+    });
+  }
+
+  late final _$allNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.allNumber', context: context);
+
+  @override
+  double? get allNumber {
+    _$allNumberAtom.reportRead();
+    return super.allNumber;
+  }
+
+  @override
+  set allNumber(double? value) {
+    _$allNumberAtom.reportWrite(value, super.allNumber, () {
+      super.allNumber = value;
+    });
+  }
+
+  late final _$filterConditionIdAtom =
+      Atom(name: '_SugarInfoStoreBase.filterConditionId', context: context);
+
+  @override
+  int? get filterConditionId {
+    _$filterConditionIdAtom.reportRead();
+    return super.filterConditionId;
+  }
+
+  @override
+  set filterConditionId(int? value) {
+    _$filterConditionIdAtom.reportWrite(value, super.filterConditionId, () {
+      super.filterConditionId = value;
+    });
+  }
+
+  late final _$filterConditionTitleAtom =
+      Atom(name: '_SugarInfoStoreBase.filterConditionTitle', context: context);
+
+  @override
+  String? get filterConditionTitle {
+    _$filterConditionTitleAtom.reportRead();
+    return super.filterConditionTitle;
+  }
+
+  @override
+  set filterConditionTitle(String? value) {
+    _$filterConditionTitleAtom.reportWrite(value, super.filterConditionTitle,
+        () {
+      super.filterConditionTitle = value;
+    });
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -565,6 +694,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.saveNewRecord');
     try {
       return super.saveNewRecord(id, context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setListRecordArrangedByTime() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setListRecordArrangedByTime');
+    try {
+      return super.setListRecordArrangedByTime();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -659,6 +799,50 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic getAverageNumber() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.getAverageNumber');
+    try {
+      return super.getAverageNumber();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  double roundedResult(List<SugarRecord>? listNumber) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.roundedResult');
+    try {
+      return super.roundedResult(listNumber);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic filterListRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.filterListRecord');
+    try {
+      return super.filterListRecord();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setConditionFilterId(String? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setConditionFilterId');
+    try {
+      return super.setConditionFilterId(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 abc: ${abc},
@@ -689,7 +873,15 @@ editingRecord: ${editingRecord},
 editedDayTime: ${editedDayTime},
 editedHourTime: ${editedHourTime},
 editedStatus: ${editedStatus},
-editedSugarAmount: ${editedSugarAmount}
+editedSugarAmount: ${editedSugarAmount},
+recentNumber: ${recentNumber},
+threeDaysNumber: ${threeDaysNumber},
+weekNumber: ${weekNumber},
+monthNumber: ${monthNumber},
+yearNumber: ${yearNumber},
+allNumber: ${allNumber},
+filterConditionId: ${filterConditionId},
+filterConditionTitle: ${filterConditionTitle}
     ''';
   }
 }

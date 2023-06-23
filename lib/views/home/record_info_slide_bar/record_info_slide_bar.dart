@@ -43,7 +43,7 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
   }
 
   List<Widget> listRecordDisplay() {
-    return sugarInfoStore!.listRecord!.map((e) {
+    return sugarInfoStore!.listRecordArrangedByTime!.map((e) {
       return RecordInfoSliderItemWidget(
         id: e.id,
         status: e.status,
