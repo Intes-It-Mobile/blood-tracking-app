@@ -95,7 +95,7 @@ class _LineChartState extends State<LineChart> {
   }
 
   List<SugarChartRecord> listData() {
-    return sugarInfoStore!.listRecordArrangedByTime!.map((e) {
+    return sugarInfoStore!.listRecordArrangedByTime!.reversed.map((e) {
       return SugarChartRecord(
           time: "${e.dayTime} ${e.hourTime}", value: e.sugarAmount!.toInt());
     }).toList();
