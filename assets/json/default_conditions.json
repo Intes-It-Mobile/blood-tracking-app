@@ -1,188 +1,212 @@
 {
-    "conditions":[
-      {
-        "id":0,
-        "name":"default_txt",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":18,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":630
-          }
-        ]
-      },
-      {
-        "id":1,
-        "name":"before_exercise",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      },
-          {
-        "id":2,
-        "name":"before_meal",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      },
-          {
-        "id":3,
-        "name":"fasting",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      },
-              {
-        "id":4,
-        "name":"after_exercise",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      },
-                  {
-        "id":5,
-        "name":"asleep",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":99
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      },
-          {
-        "id":6,
-        "name":"after_meal_1h",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":140
-          },
-          {"status":"pre_diabetes",
-            "min_value":140,
-            "max_value":153
-          },
-          {"status":"diabetes",
-            "min_value":153,
-            "max_value":99999
-          }
-        ]
-      },
-          {
-        "id":7,
-        "name":"after_meal_2h",
-        "sugar_amount":
-        [
-          {"status":"low",
-            "min_value":0,
-            "max_value":72
-          },
-          {"status":"normal",
-            "min_value":72,
-            "max_value":85
-          },
-          {"status":"pre_diabetes",
-            "min_value":99,
-            "max_value":126
-          },
-          {"status":"diabetes",
-            "min_value":126,
-            "max_value":99999
-          }
-        ]
-      }
+  "conditions": [
+    {
+      "id": 0,
+      "name": "default_txt",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 18,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 630
+        }
       ]
-  }
+    },
+    {
+      "id": 1,
+      "name": "before_exercise",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "before_meal",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fasting",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "after_exercise",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "asleep",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 99
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "after_meal_1h",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 140
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 140,
+          "max_value": 153
+        },
+        {
+          "status": "diabetes",
+          "min_value": 153,
+          "max_value": 99999
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "after_meal_2h",
+      "sugar_amount": [
+        {
+          "status": "low",
+          "min_value": 0,
+          "max_value": 72
+        },
+        {
+          "status": "normal",
+          "min_value": 72,
+          "max_value": 85
+        },
+        {
+          "status": "pre_diabetes",
+          "min_value": 99,
+          "max_value": 126
+        },
+        {
+          "status": "diabetes",
+          "min_value": 126,
+          "max_value": 99999
+        }
+      ]
+    }
+  ]
+}
