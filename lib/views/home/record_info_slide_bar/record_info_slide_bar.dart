@@ -45,21 +45,21 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
                 )
               : Row(
                   children: <Widget>[
-                    Row(children: listRecordDisplay()),
+                    Row(children: listRecordDisplay().sublist(0,3)),
                     GestureDetector(
                       onTap: (){
                         Navigator.of(context).pushNamed(Routes.history);
                       },
                       child: Container(
                         height: 85,
-                        width: 20,
+                        width: 30,
                         decoration: BoxDecoration(
                           color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.circular(2),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                           child: SvgPicture.asset(
-                              'assets/icons/ic_chevron_right.svg'),
+                              'assets/icons/ic_chevron_right.svg',color: AppColors.AppColor4,),
                         ),
                       ),
                     ),
