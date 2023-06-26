@@ -45,7 +45,7 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
                 )
               : Row(
                   children: <Widget>[
-                    Row(children: listRecordDisplay()),
+                    Row(children: listRecordDisplay().sublist(0,3)),
                     GestureDetector(
                       onTap: (){
                         Navigator.of(context).pushNamed(Routes.history);

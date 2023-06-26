@@ -573,9 +573,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       'alarm_notif',
       'alarm_notif',
       channelDescription: 'Channel for Alarm notification',
-      icon: 'codex_logo',
+      icon: 'ic_logo',
       sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
-      largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
+      largeIcon: DrawableResourceAndroidBitmap('ic_logo'),
     );
 
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
@@ -652,7 +652,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     }
     Navigator.pop(context);
     loadAlarms();
-
   }
 
   void deleteAlarm(int? id) {
