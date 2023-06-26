@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -96,8 +97,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        sugarInfoStore!.setAgreeReplace(true);
-                        sugarInfoStore!.saveNewRecord(id!, context);
+                        sugarInfoStore!.replaceRecord(context);
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 9),
@@ -118,7 +118,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        sugarInfoStore!.setAgreeAddNew(true);
                         sugarInfoStore!.saveNewRecord(id!, context);
                       },
                       child: Container(
@@ -385,20 +384,18 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                           controller: _controller,
                                           focusNode: focusNode,
                                           onChanged: (value) {
+                                            sugarInfoStore!
+                                                .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
                                                 int.parse(value) * 1.0);
-                                            sugarInfoStore!
-                                                .checkValidateSugarAmountInput(
-                                                    int.parse(value) * 1.0);
                                             print("onchange: ${value}");
                                           },
                                           textAlign: TextAlign.center,
                                           onSubmitted: (value) {
+                                            sugarInfoStore!
+                                                .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
                                                 int.parse(value) * 1.0);
-                                            sugarInfoStore!
-                                                .checkValidateSugarAmountInput(
-                                                    int.parse(value) * 1.0);
                                             print(value);
                                           },
                                           keyboardType: TextInputType.number,
@@ -426,35 +423,41 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         ],
                       ),
                     ),
-                    sugarInfoStore!.errorText != null &&
-                            sugarInfoStore!.errorText != ""
-                        ? Center(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 11),
-                              child: Text(
-                                "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
-                                style: AppTheme.errorText,
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
+
+                    Text(
+                      "${sugarInfoStore!.errorText}",
+                      style: AppTheme.errorText,
+                    ),
+                    // Center(
+                    //   child: Container(
+                    //     margin: EdgeInsets.symmetric(vertical: 11),
+                    //     child: Observer(builder: (_) {
+                    //       return Text(
+                    //         "${AppLocalizations.of(context)!.getTranslate(sugarInfoStore!.errorText != null && sugarInfoStore!.errorText != "" ? sugarInfoStore!.errorText! : "")}",
+                    //         style: AppTheme.errorText,
+                    //       );
+                    //     }),
+                    //   ),
+                    // ),
                     Center(
                       child: ButtonWidget(
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
-                          sugarInfoStore!.checkDuplicate(SugarRecord(
-                              dayTime: sugarInfoStore!.choosedDayTimeStr,
-                              hourTime: sugarInfoStore!.choosedDayHourStr,
-                              status: sugarInfoStore!.currentStatus,
-                              sugarAmount: sugarInfoStore!.currentSugarAmount,
-                              conditionId:
-                                  sugarInfoStore!.chooseCondition!.id));
-                          if (sugarInfoStore!.hasExistedRecord == true) {
-                            showQuestionAdd();
-                          }
-
-                          sugarInfoStore!.saveNewRecord(id!, context);
+                          sugarInfoStore!.checkValidateNewRecord();
+                          Future.delayed(Duration(milliseconds: 200), () {
+                            if (sugarInfoStore!.errorText == null ||
+                                sugarInfoStore!.errorText == "") {
+                              sugarInfoStore!.checkDuplicate();
+                              Future.delayed(Duration(milliseconds: 300), () {
+                                if (sugarInfoStore!.hasExistedRecord == true) {
+                                  showQuestionAdd();
+                                } else {
+                                  sugarInfoStore!.saveNewRecord(id!, context);
+                                }
+                              });
+                            }
+                          });
                         },
                         btnColor: AppColors.AppColor4,
                         btnText: "save_record",

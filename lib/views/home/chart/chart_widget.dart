@@ -60,6 +60,7 @@ class _LineChartState extends State<LineChart> {
                 ),
               ),
               height: 200,
+              
               margin: EdgeInsets.all(16.0),
               child: sugarInfoStore!.listRecordArrangedByTime != null &&
                       sugarInfoStore!.listRecordArrangedByTime!.isNotEmpty
@@ -97,7 +98,7 @@ class _LineChartState extends State<LineChart> {
   List<SugarChartRecord> listData() {
     return sugarInfoStore!.listRecordArrangedByTime!.reversed.map((e) {
       return SugarChartRecord(
-          time: "${e.dayTime} ${e.hourTime}", value: e.sugarAmount!.toInt());
+          time: "${e.hourTime}\n${e.dayTime} ", value: e.sugarAmount!.toInt());
     }).toList();
   }
 }

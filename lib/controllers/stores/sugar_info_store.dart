@@ -49,15 +49,32 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   setInputSugarAmount(double inputAmount) {
-    checkValidateSugarAmountInput(inputAmount);
-    currentStatus = chooseCondition!.sugarAmount!
-        .where((e) =>
-            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
-        .first
-        .status;
-    currentSugarAmount = inputAmount;
+    // currentStatus = chooseCondition!.sugarAmount!
+    //     .where((e) =>
+    //         e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
+    //     .first
+    // .status;
+    setCurrentAmount(inputAmount);
+    setCurrentStatus(inputAmount);
     if (currentStatus != null) {
       setStatusLevel(currentStatus);
+    }
+  }
+
+  @action
+  setCurrentAmount(double inputAmount) {
+    currentSugarAmount = inputAmount;
+  }
+
+  @action
+  setCurrentStatus(double inputAmount) {
+    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+      currentStatus = chooseCondition!.sugarAmount!
+          .where((e) =>
+              e.minValue! * 1.0 <= inputAmount &&
+              inputAmount < e.maxValue! * 1.0)
+          .first
+          .status;
     }
   }
 
@@ -155,24 +172,38 @@ abstract class _SugarInfoStoreBase with Store {
   bool? hasExistedRecord = false;
 
   @action
-  checkDuplicate(SugarRecord sugarRecord) {
+  checkDuplicate() {
     hasExistedRecord = listRecord!.any((record) =>
-        record.dayTime == sugarRecord.dayTime &&
-        record.hourTime == sugarRecord.hourTime &&
-        record.conditionId == sugarRecord.conditionId &&
-        record.status == sugarRecord.status &&
-        record.sugarAmount == sugarRecord.sugarAmount);
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr &&
+        record.conditionId == chooseCondition!.id &&
+        record.status == currentStatus &&
+        record.sugarAmount == currentSugarAmount);
+    print(hasExistedRecord);
   }
 
   @action
-  replaceRecord(SugarRecord sugarRecord) {
+  replaceRecord(BuildContext context) {
     SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
-        record.dayTime == sugarRecord.dayTime &&
-        record.hourTime == sugarRecord.hourTime &&
-        record.conditionId == sugarRecord.conditionId &&
-        record.status == sugarRecord.status &&
-        record.sugarAmount == sugarRecord.sugarAmount);
-    recordUpdate = sugarRecord;
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr &&
+        record.conditionId == chooseCondition!.id &&
+        record.status == currentStatus &&
+        record.sugarAmount == currentSugarAmount);
+    {
+      recordUpdate.conditionId = chooseCondition!.id;
+      recordUpdate.dayTime = choosedDayTimeStr;
+      recordUpdate.hourTime = choosedDayHourStr;
+      recordUpdate.status = currentStatus;
+      recordUpdate.sugarAmount = currentSugarAmount;
+    }
+
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
   }
 
   @observable
@@ -190,37 +221,37 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-saveNewRecord(int id, BuildContext context) {
-    checkValidateNewRecord();
-    if (errorText == "" || errorText == null) {
-      listRecord!.add(SugarRecord(
-          id: id,
-          dayTime: choosedDayTimeStr,
-          hourTime: choosedDayHourStr,
-          status: currentStatus,
-          sugarAmount: currentSugarAmount,
-          conditionId: chooseCondition!.id));
-      listRecords = ListRecord(listRecord: listRecord);
-      choosedDayTimeStr = null;
-      choosedDayHourStr = null;
-      listRecordArrangedByTime = listRecord;
-      saveListRecord(listRecords);                         
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.home,
-        (route) => false,
-      );
-      successSaveRecord = true;
-      errorText = "";
-      if (listRecordArrangedByTime!.length > 0) {
-        listRecordArrangedByTime!.sort((b, a) =>
-            (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-                .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
-        getAverageNumber();
-      }
+  saveNewRecord(int id, BuildContext context) {
+    listRecord!.add(SugarRecord(
+        id: id,
+        dayTime: choosedDayTimeStr,
+        hourTime: choosedDayHourStr,
+        status: currentStatus,
+        sugarAmount: currentSugarAmount,
+        conditionId: chooseCondition!.id));
+    listRecords = ListRecord(listRecord: listRecord);
+    choosedDayTimeStr = null;
+    choosedDayHourStr = null;
+    listRecordArrangedByTime = listRecord;
+    setErrorText("");
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+    successSaveRecord = true;
+
+    if (listRecordArrangedByTime!.length > 0) {
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd HH:mm').parse("${a!.dayTime!} ${a!.hourTime!}"))
+              .compareTo(DateFormat('yyyy/MM/dd HH:mm').parse("${b!.dayTime!} ${b!.hourTime!}")));
+      getAverageNumber();
     }
+
     successSaveRecord = false;
   }
+
   @action
   setListRecordArrangedByTime() {
     listRecordArrangedByTime = listRecord;
@@ -232,7 +263,12 @@ saveNewRecord(int id, BuildContext context) {
   @observable
   bool? canSaveNewRecord = false;
   @observable
-  String? errorText;
+  String? errorText = "";
+  @action
+  setErrorText(String errorMessage) {
+    errorText = errorMessage;
+    print("Erorrrrrrrrrrrrrrrr:${errorText}");
+  }
 
   @action
   checkValidateNewRecord() {
@@ -242,14 +278,10 @@ saveNewRecord(int id, BuildContext context) {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (legalInput == true) {
-        if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-          errorText = "errow_sugar_input_text";
-        } else {
-          errorText = "";
-        }
+      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+        setErrorText("Please enter correct value between 18-630 mg/dL");
       } else {
-        errorText = "errow_sugar_input_text";
+        setErrorText("");
       }
     }
   }

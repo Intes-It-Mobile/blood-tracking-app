@@ -367,6 +367,54 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$hasExistedRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.hasExistedRecord', context: context);
+
+  @override
+  bool? get hasExistedRecord {
+    _$hasExistedRecordAtom.reportRead();
+    return super.hasExistedRecord;
+  }
+
+  @override
+  set hasExistedRecord(bool? value) {
+    _$hasExistedRecordAtom.reportWrite(value, super.hasExistedRecord, () {
+      super.hasExistedRecord = value;
+    });
+  }
+
+  late final _$userAgreeAddNewAtom =
+      Atom(name: '_SugarInfoStoreBase.userAgreeAddNew', context: context);
+
+  @override
+  bool? get userAgreeAddNew {
+    _$userAgreeAddNewAtom.reportRead();
+    return super.userAgreeAddNew;
+  }
+
+  @override
+  set userAgreeAddNew(bool? value) {
+    _$userAgreeAddNewAtom.reportWrite(value, super.userAgreeAddNew, () {
+      super.userAgreeAddNew = value;
+    });
+  }
+
+  late final _$userAgreeReplaceAtom =
+      Atom(name: '_SugarInfoStoreBase.userAgreeReplace', context: context);
+
+  @override
+  bool? get userAgreeReplace {
+    _$userAgreeReplaceAtom.reportRead();
+    return super.userAgreeReplace;
+  }
+
+  @override
+  set userAgreeReplace(bool? value) {
+    _$userAgreeReplaceAtom.reportWrite(value, super.userAgreeReplace, () {
+      super.userAgreeReplace = value;
+    });
+  }
+
   late final _$canSaveNewRecordAtom =
       Atom(name: '_SugarInfoStoreBase.canSaveNewRecord', context: context);
 
@@ -689,6 +737,50 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic checkDuplicate() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkDuplicate');
+    try {
+      return super.checkDuplicate();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic replaceRecord(BuildContext context) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.replaceRecord');
+    try {
+      return super.replaceRecord(context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setAgreeAddNew(bool? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setAgreeAddNew');
+    try {
+      return super.setAgreeAddNew(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setAgreeReplace(bool? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setAgreeReplace');
+    try {
+      return super.setAgreeReplace(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic saveNewRecord(int id, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.saveNewRecord');
@@ -705,6 +797,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.setListRecordArrangedByTime');
     try {
       return super.setListRecordArrangedByTime();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setErrorText(String errorText) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setErrorText');
+    try {
+      return super.setErrorText(errorText);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -867,6 +970,9 @@ listRecordArrangedByTime: ${listRecordArrangedByTime},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
 successSaveRecord: ${successSaveRecord},
+hasExistedRecord: ${hasExistedRecord},
+userAgreeAddNew: ${userAgreeAddNew},
+userAgreeReplace: ${userAgreeReplace},
 canSaveNewRecord: ${canSaveNewRecord},
 errorText: ${errorText},
 editingRecord: ${editingRecord},
