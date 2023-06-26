@@ -298,7 +298,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.27,
+            height: MediaQuery.of(context).size.height * 0.29,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,7 +431,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.27,
+            height: MediaQuery.of(context).size.height * 0.29,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
