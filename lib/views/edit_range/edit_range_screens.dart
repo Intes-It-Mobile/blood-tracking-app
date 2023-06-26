@@ -35,6 +35,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void initState() {
+    ReadJsonData();
     super.initState();
   }
 
@@ -111,102 +112,186 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               child: FutureBuilder(
                 future: ReadJsonData(),
                 builder: (context, data) {
-                  if (data.hasError) {
-                    return Center(child: Text("${data.error}"));
-                  } else if (data.hasData) {
-                    var items = data.data;
-                    return ListView.builder(
-                        itemCount: items == null ? 0 :_items.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              height: MediaQuery.of(context).size.height * 0.23,
-                              width: double.infinity,
-                              color: index.isEven || index == 0
-                                  ? AppColors.AppColor3
-                                  : Colors.white,
-
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                          '${_items[index].conditions?[index].name}'),
-                                      const Spacer(),
-                                      SvgPicture.asset('assets/icons/ic_edit_pen.svg'),
-                                      const SizedBox(
-                                        width: 20,
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
+                  return ListView.builder(
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        print('_items: ${_items.length}');
+                        return _items.length <= 8
+                            ? Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.23,
+                                width: double.infinity,
+                                color: index.isEven || index == 0
+                                    ? AppColors.AppColor3
+                                    : Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          '${AppLocalizations.of(context)!.getTranslate('${_items[index].conditions?[index].name}')}',
+                                          style: AppTheme.hintText.copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14),
+                                        ),
+                                        // const Spacer(),
+                                        // SvgPicture.asset(
+                                        //     'assets/icons/ic_edit_pen.svg'),
+                                        // const SizedBox(
+                                        //   width: 20,
+                                        // )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 30),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
                                                 Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].status}'),
-                                            Text(
-                                                '<'+'${_items[index].conditions?[index].sugarAmount?[index].minValue}'),
+                                                    '${AppLocalizations.of(context)!.getTranslate('${_items[index].conditions?[index].sugarAmount?[0].status}')}',
+                                                    style: AppTheme.hintText
+                                                        .copyWith(
+                                                            color: Color(
+                                                                0xFF0084FF),
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 12)),
+                                                Text(
+                                                    '<' +
+                                                        '${_items[index].conditions?[index].sugarAmount?[0].minValue}',
+                                                    style: AppTheme.hintText
+                                                        .copyWith(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 12)),
                                               ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].status}'),
-                                            Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].minValue}'+'~'+'${_items[index].conditions?[index].sugarAmount?[index].maxValue}'),
-                                          ],
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  '${AppLocalizations.of(context)!.getTranslate('${_items[index].conditions?[index].sugarAmount?[1].status}')}',
+                                                  style: AppTheme.hintText
+                                                      .copyWith(
+                                                          color:
+                                                              Color(0xFF0EB500),
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 12)),
+                                              Text(
+                                                  '${_items[index].conditions?[index].sugarAmount?[1].minValue}' +
+                                                      '~' +
+                                                      '${_items[index].conditions?[index].sugarAmount?[1].maxValue}',
+                                                  style: AppTheme.hintText
+                                                      .copyWith(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 12)),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20,),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].status}'),
-                                            Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].minValue}'+'~'+'${_items[index].conditions?[index].sugarAmount?[index].maxValue}'),
-                                          ],
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 30),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    '${AppLocalizations.of(context)!.getTranslate('${_items[index].conditions?[index].sugarAmount?[2].status}')}',
+                                                    style: AppTheme.hintText
+                                                        .copyWith(
+                                                            color: Color(
+                                                                0xFFFF8A00),
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 12)),
+                                                Text(
+                                                    '${_items[index].conditions?[index].sugarAmount?[2].minValue}' +
+                                                        '~' +
+                                                        '${_items[index].conditions?[index].sugarAmount?[2].maxValue}',
+                                                    style: AppTheme.hintText
+                                                        .copyWith(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 12)),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                '${_items[index].conditions?[index].sugarAmount?[index].status}'),
-                                            Text(
-                                                '>='+'${_items[index].conditions?[index].sugarAmount?[index].maxValue}'),
-                                          ],
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  '${AppLocalizations.of(context)!.getTranslate('${_items[index].conditions?[index].sugarAmount?[3].status}')}',
+                                                  style: AppTheme.hintText
+                                                      .copyWith(
+                                                          color:
+                                                              Color(0xFFB5000B),
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 12)),
+                                              Text(
+                                                  '>=' +
+                                                      '${_items[index].conditions?[index].sugarAmount?[3].maxValue}',
+                                                  style: AppTheme.hintText
+                                                      .copyWith(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 12)),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ));
-                        });
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                                      ],
+                                    ),
+                                  ],
+                                ))
+                            : const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                      });
                 },
               ),
             )
