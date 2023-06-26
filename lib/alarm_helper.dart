@@ -69,7 +69,7 @@ class AlarmHelper {
 
   Future<int> update(AlarmInfo alarmInfo) async {
     var db = await this.database;
-    var result = db.update(columnDateTime,alarmInfo.toMap() , where: '$columnId = ?',whereArgs: [alarmInfo.id]);
+    final result = await db.update(tableAlarm,alarmInfo.toMap() , where: '$columnId = ?',whereArgs: [alarmInfo.id]);
     return result;
   }
 
