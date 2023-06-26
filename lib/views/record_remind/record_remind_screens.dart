@@ -117,7 +117,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               _currentAlarms = snapshot.data;
-              print(_currentAlarms?.length);
+            //  print("List: ${_currentAlarms?.map((e) => null)}");
+              _currentAlarms?.forEach((e) => print(e.toMap()));
               return Column(
                 children: [
                   ListView.builder(
@@ -126,7 +127,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       itemCount: _currentAlarms?.length,
                       itemBuilder: (context, int index) {
                         // snapshot.data!.map<Widget>((alarm) {
-                        print(_currentAlarms?.length);
+                      //  print(_currentAlarms?.length);
+                       // print(_currentAlarms?.length);
 
                         var alarmTime = DateFormat('hh:mm aa')
                             .format(_currentAlarms![index].alarmDateTime!);
@@ -170,7 +172,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                               InkWell(
                                                 onTap: () {
                                                   showDiaLogEdit(
-                                                      context, index,AlarmInfo());
+                                                      context,_currentAlarms![index].id);
+                                                  print(_currentAlarms![index]);
+                                                 // print(_currentAlarms![index].alarmDateTime);
                                                 },
                                                 child: SvgPicture.asset(
                                                     Assets.iconEditRecord),
@@ -294,7 +298,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.27,
+            height: MediaQuery.of(context).size.height * 0.29,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,6 +392,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       child: GestureDetector(
                         onTap: () {
                           onSaveAlarm(_isRepeatSelected);
+
                         },
                         child: Container(
                           height: 35,
@@ -415,7 +420,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-  Future<String?> showDiaLogEdit(BuildContext context, int index,AlarmInfo alarmInfo) {
+  Future<String?> showDiaLogEdit(BuildContext context,  int? id,) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -426,7 +431,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.27,
+            height: MediaQuery.of(context).size.height * 0.29,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,7 +524,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          _editToDoItem(_alarmTime!,index);
+                         // print(id);
+                          _editToDoItem(id!);
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         child: Container(
@@ -610,21 +616,13 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
 
-  void _editToDoItem(DateTime newDate, int index) {
-    print("id: ${_currentAlarms![index].id}");
-
-    setState(() {
-      _currentAlarms![index] = AlarmInfo(
-        alarmDateTime: newDate,
-        gradientColorIndex: _currentAlarms![index].gradientColorIndex,
-        title: _currentAlarms![index].title,
-        id: _currentAlarms![index].id
-      );
-    });
-    _alarmHelper.update(_currentAlarms![index]);
-
-
+  Future<void> _editToDoItem(int id) async{
+    AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) => element.id == id) as AlarmInfo;
+    //print("id: ${_currentAlarms![index].id}");
+    alarmInfo.alarmDateTime = _alarmTime;
+   await _alarmHelper.update(alarmInfo);
     Navigator.pop(context);
+   loadAlarms();
   }
 
   // static Future<void> saveListRecord(AlarmInfo? alarmInfo) async {
@@ -654,6 +652,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     }
     Navigator.pop(context);
     loadAlarms();
+
   }
 
   void deleteAlarm(int? id) {

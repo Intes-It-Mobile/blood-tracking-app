@@ -371,12 +371,21 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                         ],
                                       ),
                                     ),
+<<<<<<< HEAD
                                     // SizedBox(
                                     //   width: 15,
                                     // ),
                                     // Container(
                                     //     child: SvgPicture.asset(
                                     //         Assets.iconSwapUnit))
+=======
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                        child: SvgPicture.asset(
+                                            Assets.iconSwapUnit))
+>>>>>>> 8d20a8e891f8af8a2c6ec6f3a29dccc33dec2ba6
                                   ],
                                 ),
                               )
@@ -386,18 +395,18 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         sugarInfoStore!.legalInput == false
                             ? Center(
                                 child: Container(
-                                  margin: EdgeInsets.symmetric(vertical: 11),
+                                  margin: const EdgeInsets.symmetric(vertical: 11),
                                   child: Text(
                                     "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
                                     style: AppTheme.errorText,
                                   ),
                                 ),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         Center(
                           child: ButtonWidget(
                             // enable: sugarInfoStore!.btnStatus,
-                            margin: EdgeInsets.symmetric(vertical: 8),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
                             mainAxisSizeMin: true,
                             onTap: () {
                               sugarInfoStore!.editRecord(
@@ -437,7 +446,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 8),
+              insetPadding: const EdgeInsets.symmetric(horizontal: 8),
               elevation: 0,
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -447,7 +456,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 42),
+                      padding: const EdgeInsets.symmetric(horizontal: 42),
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('delete_record_alert')}",
                         style: AppTheme.Headline16Text.copyWith(
@@ -455,7 +464,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
                     Row(
                       children: [
                         Expanded(
@@ -469,9 +478,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               );
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 9),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: AppColors.AppColor3,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
@@ -649,7 +658,7 @@ class _StatusWidgetState extends State<StatusWidget> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(right: 4),
+          margin: const EdgeInsets.only(right: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -764,8 +773,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             });
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+            decoration: const BoxDecoration(
                 color: AppColors.AppColor3,
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
@@ -777,7 +786,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                   style: AppTheme.appBodyTextStyle.copyWith(
                       fontWeight: FontWeight.w700, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 100,
                 ),
                 showDropdown
@@ -790,8 +799,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         if (showDropdown)
           Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top: 4),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.only(top: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: AppColors.AppColor2,
               // border: Border.all(color: Colors.grey),
