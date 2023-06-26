@@ -24,18 +24,6 @@ class EditRangeScreens extends StatefulWidget {
 class _EditRangeScreensState extends State<EditRangeScreens> {
   SugarInfoStore? sugarInfoStore;
   List<Conditions>? listRootConditions;
-<<<<<<< HEAD
-  List<EditTargetRange> editTargetRange = [
-    EditTargetRange(name: 'Default', max: 7.0, min: 4.0),
-    EditTargetRange(name: 'Before exercise', max: 8.5, min: 4.0),
-    EditTargetRange(name: 'Before a meal', max: 7.0, min: 4.0),
-    EditTargetRange(name: 'After a meal (1h)', max: 8.5, min: 4.0),
-    EditTargetRange(name: 'After a meal (2h)', max: 7.0, min: 4.0),
-    EditTargetRange(name: 'After exercise', max: 7.0, min: 4.0),
-    EditTargetRange(name: 'Asleep', max: 8.0, min: 4.5),
-  ];
-=======
->>>>>>> 8d20a8e891f8af8a2c6ec6f3a29dccc33dec2ba6
 
   @override
   void didChangeDependencies() {
@@ -121,73 +109,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               ),
             ),
             Expanded(
-<<<<<<< HEAD
-              child: ListView.builder(
-                  primary: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: editTargetRange.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.24,
-                      width: double.infinity,
-                      color: index.isEven || index == 0
-                          ? AppColors.AppColor3
-                          : Colors.white,
-                      padding: const EdgeInsets.only(top: 12, left: 16),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                editTargetRange[index].name,
-                                style: AppTheme.hintText.copyWith(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800),
-                              ),
-                              const Spacer(),
-                              SvgPicture.asset(Assets.iconEditRange),
-                              const SizedBox(
-                                width: 24,
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${AppLocalizations.of(context)!.getTranslate('low')}",
-                                        style: AppTheme.hintText.copyWith(
-                                            fontSize: 12,
-                                            color: AppColors.LowStt,
-                                            fontWeight: FontWeight.w700),
-                                        // Hiển thị dấu chấm ba khi có tràn
-                                        maxLines: 2,
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('<' +
-                                          '${editTargetRange[index].min.toString()}'),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-=======
               child: FutureBuilder(
                 future: ReadJsonData(),
                 builder: (context, data) {
@@ -203,7 +124,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                 color: index.isEven || index == 0
                                     ? AppColors.AppColor3
                                     : Colors.white,
->>>>>>> 8d20a8e891f8af8a2c6ec6f3a29dccc33dec2ba6
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -367,17 +287,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                       ],
                                     ),
                                   ],
-<<<<<<< HEAD
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            ),
-=======
                                 ))
                             : const Center(
                                 child: CircularProgressIndicator(),
@@ -386,7 +295,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                 },
               ),
             )
->>>>>>> 8d20a8e891f8af8a2c6ec6f3a29dccc33dec2ba6
           ],
         ));
   }

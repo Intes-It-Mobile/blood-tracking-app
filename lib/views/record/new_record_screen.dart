@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,6 +41,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
+      maxDateTime: DateTime.now(),
       initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "yyyy/MM/dd",
       context,
@@ -56,6 +58,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
+      maxDateTime: DateTime.now(),
       initialDateTime: selectedDateTime ?? DateTime.now(),
       dateFormat: "HH:mm",
       context,
@@ -118,7 +121,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        sugarInfoStore!.saveNewRecord(id!, context);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.home,
+                          (route) => false,
+                        );
                       },
                       child: Container(
                         // margin: EdgeInsets.only(left: 23),
@@ -128,7 +135,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
-                            "${AppLocalizations.of(context)!.getTranslate('add')}",
+                            "${AppLocalizations.of(context)!.getTranslate('keep')}",
                             style: AppTheme.TextIntroline16Text,
                           ),
                         ),
@@ -381,9 +388,50 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                       Container(
                                         width: 165,
                                         child: TextField(
+                                          inputFormatters: [
+                                            _DecimalLimitInputFormatter(),
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(
+                                                    r'^\d{0,3}(\.\d{0,1})?$')),
+                                          ],
+                                          // maxLengthEnforcement:
+                                          //     MaxLengthEnforcement.none,
+                                          // maxLength: 3,
                                           controller: _controller,
                                           focusNode: focusNode,
+                                          onTap: () {
+                                            final TextSelection
+                                                currentSelection =
+                                                _controller!.selection;
+                                            _controller!.value =
+                                                _controller!.value.copyWith(
+                                              selection:
+                                                  TextSelection.collapsed(
+                                                      offset: _controller!
+                                                          .text.length),
+                                              composing: TextRange.empty,
+                                            );
+                                            if (currentSelection.baseOffset <
+                                                _controller!.text.length) {
+                                              final TextSelection newSelection =
+                                                  TextSelection.collapsed(
+                                                      offset: _controller!
+                                                          .text.length);
+                                              _controller!.selection =
+                                                  newSelection;
+                                            }
+                                          },
                                           onChanged: (value) {
+                                            if (value.length > 3) {
+                                              _controller!.value =
+                                                  _controller!.value.copyWith(
+                                                text: value.substring(0, 3),
+                                                selection:
+                                                    TextSelection.collapsed(
+                                                        offset: 3),
+                                                composing: TextRange.empty,
+                                              );
+                                            }
                                             sugarInfoStore!
                                                 .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
@@ -441,6 +489,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     // ),
                     Center(
                       child: ButtonWidget(
+                        enable: sugarInfoStore!.errorText == null ||
+                                sugarInfoStore!.errorText == ""
+                            ? true
+                            : false,
                         margin: EdgeInsets.symmetric(vertical: 8),
                         mainAxisSizeMin: true,
                         onTap: () {
@@ -511,7 +563,14 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
-    return "${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue} ~ ${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue}";
+    if (sugarInfoStore!.chooseCondition!.sugarAmount!
+            .elementAt(level!)
+            .maxValue ==
+        630) {
+      return ">= ${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue}";
+    } else {
+      return "${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue} ~ ${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue}";
+    }
   }
 
   Widget getLevelText(int level) {
@@ -843,5 +902,21 @@ class _MyDateTimePickerState extends State<MyDateTimePicker> {
         ),
       ],
     );
+  }
+}
+
+class _DecimalLimitInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.contains('.') &&
+        newValue.text.substring(newValue.text.indexOf('.') + 1).length > 1) {
+      // Nếu có dấu chấm và có hơn 1 ký tự sau dấu chấm, hạn chế lại chỉ 1 ký tự
+      return TextEditingValue(
+        text: oldValue.text,
+        selection: oldValue.selection,
+      );
+    }
+    return newValue;
   }
 }

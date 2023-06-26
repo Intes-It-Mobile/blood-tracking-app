@@ -72,10 +72,11 @@ abstract class _SugarInfoStoreBase with Store {
       currentStatus = chooseCondition!.sugarAmount!
           .where((e) =>
               e.minValue! * 1.0 <= inputAmount &&
-              inputAmount < e.maxValue! * 1.0)
+              inputAmount <= e.maxValue! * 1.0)
           .first
           .status;
     }
+    print("Status: ${currentStatus}");
   }
 
   @action
@@ -177,8 +178,7 @@ abstract class _SugarInfoStoreBase with Store {
         record.dayTime == choosedDayTimeStr &&
         record.hourTime == choosedDayHourStr &&
         record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus &&
-        record.sugarAmount == currentSugarAmount);
+        record.status == currentStatus);
     print(hasExistedRecord);
   }
 
@@ -188,8 +188,8 @@ abstract class _SugarInfoStoreBase with Store {
         record.dayTime == choosedDayTimeStr &&
         record.hourTime == choosedDayHourStr &&
         record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus &&
-        record.sugarAmount == currentSugarAmount);
+        record.status == currentStatus
+        );
     {
       recordUpdate.conditionId = chooseCondition!.id;
       recordUpdate.dayTime = choosedDayTimeStr;
@@ -243,9 +243,10 @@ abstract class _SugarInfoStoreBase with Store {
     successSaveRecord = true;
 
     if (listRecordArrangedByTime!.length > 0) {
-      listRecordArrangedByTime!.sort((b, a) =>
-          (DateFormat('yyyy/MM/dd HH:mm').parse("${a!.dayTime!} ${a!.hourTime!}"))
-              .compareTo(DateFormat('yyyy/MM/dd HH:mm').parse("${b!.dayTime!} ${b!.hourTime!}")));
+      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${a!.dayTime!} ${a!.hourTime!}"))
+          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${b!.dayTime!} ${b!.hourTime!}")));
       getAverageNumber();
     }
 
@@ -490,5 +491,15 @@ abstract class _SugarInfoStoreBase with Store {
     getAverageNumber();
     print("filterConditionId: ${filterConditionId}");
     print("filterConditionTitle: ${filterConditionTitle}");
+  }
+
+  @action
+  swapUnit() {
+    for (int i = 0; i < listRecordArrangedByTime!.length; i++) {
+      if (listRecordArrangedByTime![i].sugarAmount != null) {
+        listRecordArrangedByTime![i].sugarAmount =
+            listRecordArrangedByTime![i].sugarAmount! / 18;
+      }
+    }
   }
 }
