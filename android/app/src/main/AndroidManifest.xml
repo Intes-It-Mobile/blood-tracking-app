@@ -3,6 +3,7 @@
         android:label="Blood Sugar Tracking"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
         <activity
             android:showWhenLocked="true"
             android:turnScreenOn="true"
