@@ -70,7 +70,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -616,17 +615,16 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
 
-  Future<void> _editToDoItem(int id,bool _isRepeatingEdit) async{
+  void _editToDoItem(int id,bool _isRepeatingEdit){
     DateTime? scheduleAlarmDateTime;
     AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) => element.id == id) as AlarmInfo;
-    //print("id: ${_currentAlarms![index].id}");
-    alarmInfo.alarmDateTime = _alarmTime;
-
-    if (_alarmTime!.isAfter(DateTime.now()))
+    if (_alarmTime!.isAfter(DateTime.now())){
+      alarmInfo.alarmDateTime = _alarmTime;
       scheduleAlarmDateTime = _alarmTime;
-    else
+    } else
       scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
-    await _alarmHelper.update(alarmInfo);
+
+     _alarmHelper.update(alarmInfo);
     if (scheduleAlarmDateTime != null) {
       scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
           isRepeating: _isRepeatingEdit);
