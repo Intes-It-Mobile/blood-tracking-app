@@ -525,7 +525,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       child: GestureDetector(
                         onTap: () {
                          // print(id);
-                          _editToDoItem(id!);
+                          _editToDoItem(id!,_isRepeatSelected);
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         child: Container(
@@ -616,11 +616,21 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
 
-  Future<void> _editToDoItem(int id) async{
+  Future<void> _editToDoItem(int id,bool _isRepeatingEdit) async{
+    DateTime? scheduleAlarmDateTime;
     AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) => element.id == id) as AlarmInfo;
     //print("id: ${_currentAlarms![index].id}");
     alarmInfo.alarmDateTime = _alarmTime;
-   await _alarmHelper.update(alarmInfo);
+
+    if (_alarmTime!.isAfter(DateTime.now()))
+      scheduleAlarmDateTime = _alarmTime;
+    else
+      scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
+    await _alarmHelper.update(alarmInfo);
+    if (scheduleAlarmDateTime != null) {
+      scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
+          isRepeating: _isRepeatingEdit);
+    }
     Navigator.pop(context);
    loadAlarms();
   }
