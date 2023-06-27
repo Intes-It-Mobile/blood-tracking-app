@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -386,7 +387,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         sugarInfoStore!.legalInput == false
                             ? Center(
                                 child: Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 11),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 11),
                                   child: Text(
                                     "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_text')}",
                                     style: AppTheme.errorText,
@@ -605,14 +607,16 @@ class _StatusWidgetState extends State<StatusWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.LowStt,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
+              Observer(builder: (_) {
+                return Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.LowStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                );
+              }),
               widget.editRecordStore!.editStatusLevel == 0
                   ? Container(
                       child: SvgPicture.asset(
@@ -624,78 +628,84 @@ class _StatusWidgetState extends State<StatusWidget> {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.NormalStt,
-                  borderRadius: BorderRadius.circular(5),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.NormalStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              widget.editRecordStore!.editStatusLevel == 1
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.PreDiaStt,
-                  borderRadius: BorderRadius.circular(5),
+                widget.editRecordStore!.editStatusLevel == 1
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(
+            margin: const EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.PreDiaStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              widget.editRecordStore!.editStatusLevel == 2
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.DiabetesStt,
-                  borderRadius: BorderRadius.circular(5),
+                widget.editRecordStore!.editStatusLevel == 2
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.DiabetesStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              widget.editRecordStore!.editStatusLevel == 3
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
+                widget.editRecordStore!.editStatusLevel == 3
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
         getLevelText(widget.editRecordStore!.editStatusLevel!),
         Expanded(
           child: Center(

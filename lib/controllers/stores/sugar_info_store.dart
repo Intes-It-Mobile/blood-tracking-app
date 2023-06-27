@@ -188,8 +188,7 @@ abstract class _SugarInfoStoreBase with Store {
         record.dayTime == choosedDayTimeStr &&
         record.hourTime == choosedDayHourStr &&
         record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus
-        );
+        record.status == currentStatus);
     {
       recordUpdate.conditionId = chooseCondition!.id;
       recordUpdate.dayTime = choosedDayTimeStr;
@@ -396,34 +395,37 @@ abstract class _SugarInfoStoreBase with Store {
     if (listRecordArrangedByTime != null &&
         listRecordArrangedByTime!.isNotEmpty) {
       recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
+
       // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
       List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 3))) &&
+                  .isAfter(now.subtract(Duration(days: 4))) &&
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
                   .isBefore(now.add(Duration(days: 1))))
           .toList();
+
       List<SugarRecord>? listweekNumber = listRecordArrangedByTime!
-          .where((e) =>
-              DateFormat('yyyy/MM/dd')
-                  .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 7))) &&
-              DateFormat('yyyy/MM/dd')
-                  .parse(e.dayTime!)
-                  .isBefore(now.add(Duration(days: 1))))
-          .toList();
+          .where(
+              (e) => DateFormat('yyyy/MM/dd').parse(e.dayTime!, true) != null)
+          .where((e) {
+        DateTime recordTime = DateFormat('yyyy/MM/dd').parse(e.dayTime!, true)!;
+        return recordTime.isAfter(now.subtract(Duration(days: now.weekday))) &&
+            recordTime.isBefore(now.add(Duration(days: 7 - now.weekday)));
+      }).toList();
+
       List<SugarRecord>? listMonthNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 30))) &&
+                  .isAfter(now.subtract(Duration(days: now.month))) &&
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isBefore(now.add(Duration(days: 1))))
+                  .isBefore(now.add(Duration(days: 30 - now.month))))
           .toList();
+
       List<SugarRecord>? listYearNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
@@ -433,6 +435,7 @@ abstract class _SugarInfoStoreBase with Store {
                   .parse(e.dayTime!)
                   .isBefore(now.add(Duration(days: 1))))
           .toList();
+
       threeDaysNumber = roundedResult(listThreeDaysNumber);
       weekNumber = roundedResult(listweekNumber);
       monthNumber = roundedResult(listMonthNumber);
@@ -474,21 +477,37 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   filterListRecord() {
-    listRecordArrangedByTime =
-        listRecord!.where((e) => e.conditionId == filterConditionId)!.toList();
-    listRecordArrangedByTime!.sort((b, a) =>
-        (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-            .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    if (filterConditionId != -1) {
+      listRecordArrangedByTime = listRecord!
+          .where((e) => e.conditionId == filterConditionId)!
+          .toList();
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    } else {
+      listRecordArrangedByTime = listRecord!;
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    }
   }
 
   @action
   setConditionFilterId(String? value) {
-    filterConditionId =
-        listRootConditions!.where((e) => e.name == value).first.id;
-    filterConditionTitle =
-        listRootConditions!.where((e) => e.name == value).first.name;
-    filterListRecord();
-    getAverageNumber();
+    if (value != "all") {
+      filterConditionId =
+          listRootConditions!.where((e) => e.name == value).first.id;
+      filterConditionTitle =
+          listRootConditions!.where((e) => e.name == value).first.name;
+      filterListRecord();
+      getAverageNumber();
+    } else {
+      filterConditionId = -1;
+      filterConditionTitle = "all";
+      filterListRecord();
+      getAverageNumber();
+    }
+
     print("filterConditionId: ${filterConditionId}");
     print("filterConditionTitle: ${filterConditionTitle}");
   }

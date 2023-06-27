@@ -359,7 +359,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(child: StatusWidget()),
+                                Observer(builder: (_) {
+                                  return Expanded(child: StatusWidget());
+                                }),
                                 // Text("${sugarInfoStore!.chooseCondition!.sugarAmount.}")
                                 Container(
                                   child: Row(children: [
@@ -626,103 +628,113 @@ class _StatusWidgetState extends State<StatusWidget> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.LowStt,
-                  borderRadius: BorderRadius.circular(5),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.LowStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              sugarInfoStore!.statusLevel == 0
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.NormalStt,
-                  borderRadius: BorderRadius.circular(5),
+                sugarInfoStore!.statusLevel == 0
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.NormalStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              sugarInfoStore!.statusLevel == 1
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.PreDiaStt,
-                  borderRadius: BorderRadius.circular(5),
+                sugarInfoStore!.statusLevel == 1
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.PreDiaStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              sugarInfoStore!.statusLevel == 2
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 20,
-                width: 28,
-                decoration: BoxDecoration(
-                  color: AppColors.DiabetesStt,
-                  borderRadius: BorderRadius.circular(5),
+                sugarInfoStore!.statusLevel == 2
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(
+            margin: EdgeInsets.only(right: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 20,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: AppColors.DiabetesStt,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              sugarInfoStore!.statusLevel == 3
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
-        ),
-        getLevelText(sugarInfoStore!.statusLevel!),
+                sugarInfoStore!.statusLevel == 3
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          );
+        }),
+        Observer(builder: (_) {
+          return Container(child: getLevelText(sugarInfoStore!.statusLevel!));
+        }),
         Expanded(
           child: Center(
             child: Text(
@@ -834,6 +846,11 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               selectedId = condition.id;
                               showDropdown = false;
                               sugarInfoStore!.setChooseCondition(selectedId!);
+                              // Future.delayed(const Duration(milliseconds: 200),
+                              //     () {
+                              //   sugarInfoStore!.setInputSugarAmount(
+                              //       sugarInfoStore!.currentSugarAmount!);
+                              // });
                             });
                           },
                           child: Container(

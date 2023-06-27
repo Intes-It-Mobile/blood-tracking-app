@@ -693,6 +693,28 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic setCurrentAmount(double inputAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setCurrentAmount');
+    try {
+      return super.setCurrentAmount(inputAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCurrentStatus(double inputAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setCurrentStatus');
+    try {
+      return super.setCurrentStatus(inputAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setStatusLevel(String? currentStatus) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setStatusLevel');
@@ -803,11 +825,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setErrorText(String errorText) {
+  dynamic setErrorText(String errorMessage) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setErrorText');
     try {
-      return super.setErrorText(errorText);
+      return super.setErrorText(errorMessage);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -940,6 +962,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.setConditionFilterId');
     try {
       return super.setConditionFilterId(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic swapUnit() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.swapUnit');
+    try {
+      return super.swapUnit();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }

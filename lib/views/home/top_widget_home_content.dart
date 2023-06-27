@@ -147,6 +147,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     "after_exercise",
     "asleep"
   ];
+  Conditions emptyItem = Conditions(id: -1, name: "all");
   String? selectedValue;
   bool showDropdown = false;
   String? getTitle(String? value) {
@@ -156,10 +157,21 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (widget.listConditions!.length < 9) {
+      widget.listConditions!.add(emptyItem);
+    }
     super.didChangeDependencies();
   }
 
-  @override
+  void initState() {
+    super.initState();
+
+    // List<Conditions> listConditionsAll = List.from(widget.listConditions ?? []);
+
+    // Sử dụng danh sách đã cập nhật dưới đây
+    // ...
+  }
+
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
@@ -193,7 +205,6 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         value: selectedValue,
         onChanged: (String? value) {
           setState(() {
-      
             sugarInfoStore!.setConditionFilterId(value!);
             // selectedValue = value;
           });
