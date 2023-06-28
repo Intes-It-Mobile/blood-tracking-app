@@ -70,7 +70,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -525,7 +524,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       child: GestureDetector(
                         onTap: () {
                          // print(id);
-                          _editToDoItem(id!);
+                          _editToDoItem(id!,_isRepeatSelected);
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         child: Container(
@@ -616,11 +615,20 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
 
-  Future<void> _editToDoItem(int id) async{
+  void _editToDoItem(int id,bool _isRepeatingEdit){
+    DateTime? scheduleAlarmDateTime;
     AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) => element.id == id) as AlarmInfo;
-    //print("id: ${_currentAlarms![index].id}");
-    alarmInfo.alarmDateTime = _alarmTime;
-   await _alarmHelper.update(alarmInfo);
+    if (_alarmTime!.isAfter(DateTime.now())){
+      alarmInfo.alarmDateTime = _alarmTime;
+      scheduleAlarmDateTime = _alarmTime;
+    } else
+      scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
+
+     _alarmHelper.update(alarmInfo);
+    if (scheduleAlarmDateTime != null) {
+      scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
+          isRepeating: _isRepeatingEdit);
+    }
     Navigator.pop(context);
    loadAlarms();
   }

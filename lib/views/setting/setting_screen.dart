@@ -134,9 +134,6 @@ class _SettingScreenState extends State<SettingScreen> {
                     btnColor: AppColors.AppColor2,
                     btnText: "send_feedback",
                   ),
-                  GestureDetector( onTap: (){
-                    sugarInfoStore!.deleteData();
-                  },child: Container(width: 20,height: 20,color: Colors.amber,))
                 ]),
           ),
         ),
