@@ -33,8 +33,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
   FlutterLocalNotificationsPlugin();
   DateTime? _alarmTime;
+  DateTime? _alarmTime1;
   late String _alarmTimeString;
-  bool _isRepeatSelected = true;
+  bool _isRepeatSelected = false;
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>>? _alarms;
   List<AlarmInfo>? _currentAlarms;
@@ -101,7 +102,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                   ),
                   Expanded(
                     child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
+                      "${AppLocalizations.of(context)!.getTranslate(
+                          'record_remind')}",
                       style: AppTheme.Headline20Text,
                       overflow: TextOverflow
                           .ellipsis, // Hiển thị dấu chấm ba khi có tràn
@@ -121,8 +123,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               _currentAlarms = snapshot.data;
-            //  print("List: ${_currentAlarms?.map((e) => null)}");
-              _currentAlarms?.forEach((e) => print(e.toMap()));
+              //  print("List: ${_currentAlarms?.map((e) => null)}");
+              //   _currentAlarms?.forEach((e) => print(e.toMap()));
               return Column(
                 children: [
                   ListView.builder(
@@ -130,23 +132,28 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: _currentAlarms?.length,
                       itemBuilder: (context, int index) {
-                        // snapshot.data!.map<Widget>((alarm) {
-                      //  print(_currentAlarms?.length);
-                       // print(_currentAlarms?.length);
-
                         var alarmTime = DateFormat('hh:mm')
                             .format(_currentAlarms![index].alarmDateTime!);
+                        if (_currentAlarms!.length > 0) {
+                          _currentAlarms!.sort((b, a) =>
+                              (DateFormat('yyyy/MM/dd HH:mm').parse(
+                                  "${a!.alarmDateTime}}")).compareTo(
+                                  DateFormat('yyyy/MM/dd HH:mm').parse("${b!.alarmDateTime}")));
+                        }
                         print(alarmTime);
                         return Card(
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.12,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height * 0.12,
                             //margin: const EdgeInsets.only(bottom: 32),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 4),
                             decoration: const BoxDecoration(
                               color: AppColors.AppColor3,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                              BorderRadius.all(Radius.circular(10)),
                             ),
                             child: Row(
                               children: <Widget>[
@@ -164,21 +171,23 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                     flex: 1,
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 2, right: 2),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                             children: [
                                               InkWell(
                                                 onTap: () {
                                                   showDiaLogEdit(
-                                                      context,_currentAlarms![index].id);
+                                                      context,
+                                                      _currentAlarms![index]
+                                                          .id);
                                                   print(_currentAlarms![index]);
-                                                 // print(_currentAlarms![index].alarmDateTime);
+                                                  // print(_currentAlarms![index].alarmDateTime);
                                                 },
                                                 child: SvgPicture.asset(
                                                     Assets.iconEditRecord),
@@ -203,7 +212,21 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                         ),
                                         Align(
                                           alignment: Alignment.centerRight,
-                                          child: CustomSwitchTimer(context,_currentAlarms![index].id),
+                                          child: StatefulBuilder(
+                                            builder: (context, setModalState) {
+                                              return CupertinoSwitch(
+                                                onChanged: (bool value) {
+                                                  setModalState(() {
+                                                    _isRepeatSelected = value;
+                                                  });
+                                                },
+                                                value: _isRepeatSelected,
+                                                trackColor: AppColors.AppColor1,
+                                                activeColor: AppColors
+                                                    .AppColor2,
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ],
                                     ))
@@ -219,31 +242,38 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       onPressed: () {
                         _alarmTimeString =
                             DateFormat('HH:mm').format(DateTime.now());
-                        showDiaLog(context,null);
+                        showDiaLog(context, null);
                         // scheduleAlarm();
                       },
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        width: MediaQuery.of(context).size.width * 0.32,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.05,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.32,
                         decoration: BoxDecoration(
                             color: AppColors.AppColor2,
                             borderRadius: BorderRadius.circular(5)),
                         child: Center(
                             child: Text(
-                          "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                          style: AppTheme.hintText.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white),
-                        )),
+                              "${AppLocalizations.of(context)!.getTranslate(
+                                  'new_alarm')}",
+                              style: AppTheme.hintText.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            )),
                       ),
                     )
                   else
                     const Center(
                         child: Text(
-                      'Only 5 alarms allowed!',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                          'Only 5 alarms allowed!',
+                          style: TextStyle(color: Colors.white),
+                        )),
                 ],
               );
             }
@@ -276,286 +306,305 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   }
 
 
-
-  Widget CustomSwitchTimer(BuildContext context,int? id) {
+  Widget CustomSwitchTimer(BuildContext context, int? id) {
     return StatefulBuilder(builder: (context, setModalState) {
       print("id: ${id}");
       return CupertinoSwitch(
         trackColor: AppColors.AppColor1,
         activeColor: AppColors.AppColor2,
-        value: _isRepeatSelected,
         onChanged: (value) {
           setModalState(() {
             _isRepeatSelected = value;
           });
         },
+        value: _isRepeatSelected,
       );
     });
   }
 
-  Future<String?> showDiaLog(BuildContext context,int? id) {
+  Future<String?> showDiaLog(BuildContext context, int? id) {
     return showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        content: StatefulBuilder(builder: (context, setModalState) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.29,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('set_alarm')}",
-                    style: AppTheme.hintText.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.AppColor4),
-                  ),
-                ),
-                Row(
+      builder: (BuildContext context) =>
+          AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            content: StatefulBuilder(builder: (context, setModalState) {
+              return SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.29,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Center(child: hourMinute12H()),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate(
+                            'set_alarm')}",
+                        style: AppTheme.hintText.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.AppColor4),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.getTranslate('sound')}",
-                            style: AppTheme.hintText.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Center(child: hourMinute12H()),
                           ),
-                          const SizedBox(
-                            height: 10,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "${AppLocalizations.of(context)!.getTranslate(
+                                    'sound')}",
+                                style: AppTheme.hintText.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              CustomSwitchTimer(context, id),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context)!.getTranslate(
+                                    'vibrate')}",
+                                style: AppTheme.hintText.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customSwitchDialog(val2, onChangeFuntion2),
+                            ],
                           ),
-                          CustomSwitchTimer(context,id),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "${AppLocalizations.of(context)!.getTranslate('vibrate')}",
-                            style: AppTheme.hintText.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          customSwitchDialog(val2, onChangeFuntion2),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                            child: Text(
-                              "${AppLocalizations.of(context)!.getTranslate('cancel')}",
-                              style: AppTheme.hintText.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.AppColor2),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor3,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate(
+                                      'cancel')}",
+                                  style: AppTheme.hintText.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.AppColor2),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          onSaveAlarm(_isRepeatSelected);
-                        },
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor2,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                              child: Text(
-                            "${AppLocalizations.of(context)!.getTranslate('set')}",
-                            style: AppTheme.hintText.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          )),
+                        const SizedBox(
+                          width: 10,
                         ),
-                      ),
-                    ),
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              onSaveAlarm(_isRepeatSelected);
+                              print("dateTime convert: ${savedDateString(
+                                  _alarmTimeString)}");
+                            },
+                            child: Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor2,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                  child: Text(
+                                    "${AppLocalizations.of(context)!
+                                        .getTranslate('set')}",
+                                    style: AppTheme.hintText.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
+                                  )),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          );
-        }),
-      ),
+                ),
+              );
+            }),
+          ),
     );
   }
 
-  Future<String?> showDiaLogEdit(BuildContext context,  int? id,) {
+  Future<String?> showDiaLogEdit(BuildContext context, int? id,) {
     return showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        content: StatefulBuilder(builder: (context, setModalState) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.29,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('set_alarm')}",
-                    style: AppTheme.hintText.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.AppColor4),
-                  ),
-                ),
-                Row(
+      builder: (BuildContext context) =>
+          AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            content: StatefulBuilder(builder: (context, setModalState) {
+              return SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.29,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Center(child: hourMinute12H()),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate(
+                            'set_alarm')}",
+                        style: AppTheme.hintText.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.AppColor4),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.getTranslate('sound')}",
-                            style: AppTheme.hintText.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Center(child: hourMinute12H()),
                           ),
-                          const SizedBox(
-                            height: 10,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "${AppLocalizations.of(context)!.getTranslate(
+                                    'sound')}",
+                                style: AppTheme.hintText.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              CustomSwitchTimer(context, id),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context)!.getTranslate(
+                                    'vibrate')}",
+                                style: AppTheme.hintText.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customSwitchDialog(val2, onChangeFuntion2),
+                            ],
                           ),
-                          CustomSwitchTimer(context,id),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "${AppLocalizations.of(context)!.getTranslate('vibrate')}",
-                            style: AppTheme.hintText.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          customSwitchDialog(val2, onChangeFuntion2),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                            child: Text(
-                              "${AppLocalizations.of(context)!.getTranslate('cancel')}",
-                              style: AppTheme.hintText.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.AppColor2),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor3,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate(
+                                      'cancel')}",
+                                  style: AppTheme.hintText.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.AppColor2),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                         // print(id);
-                          _editToDoItem(id!,_isRepeatSelected);
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor2,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                            child: Text(
-                              "${AppLocalizations.of(context)!.getTranslate('edit')}",
-                              style: AppTheme.hintText.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              // print(id);
+                              _editToDoItem(id!, _isRepeatSelected);
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                            child: Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor2,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate(
+                                      'edit')}",
+                                  style: AppTheme.hintText.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          );
-        }),
-      ),
+                ),
+              );
+            }),
+          ),
     );
   }
 
@@ -570,8 +619,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-  void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo,
+  void scheduleAlarm(DateTime scheduledNotificationDateTime,
+      AlarmInfo alarmInfo,
       {required bool isRepeating}) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
@@ -596,7 +645,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
         'Enter a record',
-        'Time: ${alarmInfo.alarmDateTime}',
+        'Time: ${savedDateString(_alarmTimeString)}',
         Time(
           scheduledNotificationDateTime.hour,
           scheduledNotificationDateTime.minute,
@@ -608,34 +657,35 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Enter a record',
-        'Time: ${alarmInfo.alarmDateTime}',
+        'Time: ${savedDateString(_alarmTimeString)}',
         tz.TZDateTime.from(scheduledNotificationDateTime, tz.local),
         platformChannelSpecifics,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        UILocalNotificationDateInterpretation.absoluteTime,
       );
   }
 
-  String savedDateString(String date){
+  String savedDateString(String date) {
     return date = DateFormat("hh:mm yyyy-MM-dd").format(_alarmTime!);
   }
 
-  void _editToDoItem(int id,bool _isRepeatingEdit){
+  void _editToDoItem(int id, bool _isRepeatingEdit) {
     DateTime? scheduleAlarmDateTime;
-    AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) => element.id == id) as AlarmInfo;
-    if (_alarmTime!.isAfter(DateTime.now())){
+    AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) =>
+    element.id == id) as AlarmInfo;
+    if (_alarmTime!.isAfter(DateTime.now())) {
       alarmInfo.alarmDateTime = _alarmTime;
       scheduleAlarmDateTime = _alarmTime;
     } else
       scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
-     _alarmHelper.update(alarmInfo);
+    _alarmHelper.update(alarmInfo);
     if (scheduleAlarmDateTime != null) {
       scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
           isRepeating: _isRepeatingEdit);
     }
     Navigator.pop(context);
-   loadAlarms();
+    loadAlarms();
   }
 
   // static Future<void> saveListRecord(AlarmInfo? alarmInfo) async {
@@ -644,6 +694,21 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   //   prefs.setString('myObjectKey', jsonString);
   //   print("Save to shprf: ${alarmInfo.alarmDateTime} ");
   // }
+  tz.TZDateTime _convertTime(int hour, int minutes) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduleDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minutes,
+    );
+    if (scheduleDate.isBefore(now)) {
+      scheduleDate = scheduleDate.add(const Duration(days: 1));
+    }
+    return scheduleDate;
+  }
 
   void onSaveAlarm(bool _isRepeating) {
     DateTime? scheduleAlarmDateTime;
