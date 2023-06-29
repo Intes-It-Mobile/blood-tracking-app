@@ -3,6 +3,7 @@ import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
+import 'package:blood_sugar_tracking/views/record_remind/record_remind_screens.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var initializationSettingsAndroid = AndroidInitializationSettings('ic_logo');
+  var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
