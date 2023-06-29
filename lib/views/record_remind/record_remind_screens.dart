@@ -18,6 +18,8 @@ import '../../constants/colors.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../../utils/locale/appLocalizations.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 class RecordRemindScreens extends StatefulWidget {
   final void Function(bool isToggled) onToggled;
 
@@ -28,6 +30,8 @@ class RecordRemindScreens extends StatefulWidget {
 }
 
 class _RecordRemindScreensState extends State<RecordRemindScreens> {
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+  FlutterLocalNotificationsPlugin();
   DateTime? _alarmTime;
   late String _alarmTimeString;
   bool _isRepeatSelected = true;
@@ -53,6 +57,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     _alarms = _alarmHelper.getAlarms();
     if (mounted) setState(() {});
   }
+
 
   bool val1 = true;
   bool val2 = false;
@@ -129,7 +134,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       //  print(_currentAlarms?.length);
                        // print(_currentAlarms?.length);
 
-                        var alarmTime = DateFormat('hh:mm aa')
+                        var alarmTime = DateFormat('hh:mm')
                             .format(_currentAlarms![index].alarmDateTime!);
                         print(alarmTime);
                         return Card(
@@ -198,7 +203,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                         ),
                                         Align(
                                           alignment: Alignment.centerRight,
-                                          child: CustomSwitchTimer(context),
+                                          child: CustomSwitchTimer(context,_currentAlarms![index].id),
                                         ),
                                       ],
                                     ))
@@ -214,7 +219,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       onPressed: () {
                         _alarmTimeString =
                             DateFormat('HH:mm').format(DateTime.now());
-                        showDiaLog(context);
+                        showDiaLog(context,null);
                         // scheduleAlarm();
                       },
                       child: Container(
@@ -272,8 +277,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
 
-  Widget CustomSwitchTimer(BuildContext context) {
+  Widget CustomSwitchTimer(BuildContext context,int? id) {
     return StatefulBuilder(builder: (context, setModalState) {
+      print("id: ${id}");
       return CupertinoSwitch(
         trackColor: AppColors.AppColor1,
         activeColor: AppColors.AppColor2,
@@ -287,7 +293,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     });
   }
 
-  Future<String?> showDiaLog(BuildContext context) {
+  Future<String?> showDiaLog(BuildContext context,int? id) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -337,7 +343,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           const SizedBox(
                             height: 10,
                           ),
-                          CustomSwitchTimer(context),
+                          CustomSwitchTimer(context,id),
                           const SizedBox(
                             height: 20,
                           ),
@@ -391,7 +397,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       child: GestureDetector(
                         onTap: () {
                           onSaveAlarm(_isRepeatSelected);
-
                         },
                         child: Container(
                           height: 35,
@@ -470,7 +475,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           const SizedBox(
                             height: 10,
                           ),
-                          CustomSwitchTimer(context),
+                          CustomSwitchTimer(context,id),
                           const SizedBox(
                             height: 20,
                           ),
@@ -572,9 +577,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       'alarm_notif',
       'alarm_notif',
       channelDescription: 'Channel for Alarm notification',
-      icon: 'ic_logo',
+      icon: '@mipmap/ic_launcher',
       sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
-      largeIcon: DrawableResourceAndroidBitmap('ic_logo'),
+      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
     );
 
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
@@ -587,12 +592,11 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
-
     if (isRepeating)
       await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
-        'Office',
-        alarmInfo.title,
+        'Enter a record',
+        'Time: ${alarmInfo.alarmDateTime}',
         Time(
           scheduledNotificationDateTime.hour,
           scheduledNotificationDateTime.minute,
@@ -603,8 +607,8 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     else
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'Office',
-        alarmInfo.title,
+        'Enter a record',
+        'Time: ${alarmInfo.alarmDateTime}',
         tz.TZDateTime.from(scheduledNotificationDateTime, tz.local),
         platformChannelSpecifics,
         androidAllowWhileIdle: true,
@@ -613,7 +617,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       );
   }
 
-
+  String savedDateString(String date){
+    return date = DateFormat("hh:mm yyyy-MM-dd").format(_alarmTime!);
+  }
 
   void _editToDoItem(int id,bool _isRepeatingEdit){
     DateTime? scheduleAlarmDateTime;
@@ -623,7 +629,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       scheduleAlarmDateTime = _alarmTime;
     } else
       scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
-
      _alarmHelper.update(alarmInfo);
     if (scheduleAlarmDateTime != null) {
       scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
@@ -639,7 +644,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   //   prefs.setString('myObjectKey', jsonString);
   //   print("Save to shprf: ${alarmInfo.alarmDateTime} ");
   // }
-
 
   void onSaveAlarm(bool _isRepeating) {
     DateTime? scheduleAlarmDateTime;
@@ -658,6 +662,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
           isRepeating: _isRepeating);
     }
+    print("date time: ${scheduleAlarmDateTime}");
     Navigator.pop(context);
     loadAlarms();
   }
