@@ -132,14 +132,14 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: _currentAlarms?.length,
                       itemBuilder: (context, int index) {
+                        if (_currentAlarms!.isNotEmpty) {
+                          _currentAlarms!.sort((b, a) =>
+                              (DateFormat('dd-MM-yyyy HH:mm').parse(
+                                  "${a.alarmDateTime}}")).compareTo(
+                                  DateFormat('dd-MM-yyyy HH:mm').parse("${b.alarmDateTime}")));
+                        }
                         var alarmTime = DateFormat('hh:mm')
                             .format(_currentAlarms![index].alarmDateTime!);
-                        if (_currentAlarms!.length > 0) {
-                          _currentAlarms!.sort((b, a) =>
-                              (DateFormat('yyyy/MM/dd HH:mm').parse(
-                                  "${a!.alarmDateTime}}")).compareTo(
-                                  DateFormat('yyyy/MM/dd HH:mm').parse("${b!.alarmDateTime}")));
-                        }
                         print(alarmTime);
                         return Card(
                           child: Container(
@@ -436,6 +436,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                               onSaveAlarm(_isRepeatSelected);
                               print("dateTime convert: ${savedDateString(
                                   _alarmTimeString)}");
+
                             },
                             child: Container(
                               height: 35,
