@@ -35,7 +35,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void initState() {
-   // ReadJsonData();
+    // ReadJsonData();
     super.initState();
   }
 
@@ -115,8 +115,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     print('_items: ${_items.length}');
                     return sugarInfoStore!.listRootConditions!.length <= 8
                         ? Container(
-                            height:
-                                MediaQuery.of(context).size.height * 0.23,
+                            height: MediaQuery.of(context).size.height * 0.23,
                             width: double.infinity,
                             color: index.isEven || index == 0
                                 ? AppColors.AppColor3
@@ -166,8 +165,8 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                 '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
-                                                        color: Color(
-                                                            0xFF0084FF),
+                                                        color:
+                                                            Color(0xFF0084FF),
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 12)),
@@ -193,23 +192,18 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                         children: [
                                           Text(
                                               '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].status}')}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color:
-                                                          Color(0xFF0EB500),
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 12)),
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Color(0xFF0EB500),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12)),
                                           Text(
                                               '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].minValue}' +
                                                   '~' +
                                                   '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].maxValue}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12)),
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12)),
                                         ],
                                       ),
                                     ),
@@ -234,8 +228,8 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                 '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
-                                                        color: Color(
-                                                            0xFFFF8A00),
+                                                        color:
+                                                            Color(0xFFFF8A00),
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 12)),
@@ -262,22 +256,18 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                         children: [
                                           Text(
                                               '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].status}')}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color:
-                                                          Color(0xFFB5000B),
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 12)),
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Color(0xFFB5000B),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12)),
                                           Text(
-                                              '>=' +
-                                                  '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].maxValue}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12)),
+                                            '>=' +
+                                                '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].maxValue}',
+                                            style: AppTheme.hintText.copyWith(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12),
+                                          ),
                                         ],
                                       ),
                                     ),

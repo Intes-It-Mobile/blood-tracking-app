@@ -110,7 +110,9 @@
     "edit":"Edit",
     "replace": "Replace",
     "add": "Add",
-    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?"
+    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?",
+    "mg/dL":"mg/dL",
+    "mmol/L":"mmol/dL"
 
 
 }

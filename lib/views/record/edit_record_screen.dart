@@ -38,7 +38,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   DateTime? selectedDay;
   DateTime? selectedHour;
   int? recordId;
-  TextEditingController controller = TextEditingController();
+  TextEditingController? _controller;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               .setEditChooseCondition(editRecordStore!.conditionId!);
           editRecordStore!
               .setEditInputSugarAmount(editRecordStore!.editingSugarAmount!);
-          controller.text = '${editRecordStore!.editingSugarAmount}';
+          _controller!.text = '${editRecordStore!.editingSugarAmount}';
         }
         setState(() {
           isFirst = false;
@@ -296,7 +296,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                             ),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 padding: EdgeInsets.all(8),
@@ -334,17 +334,65 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             width: 165,
                                             child: TextField(
-                                              controller: controller,
+                                              decoration: InputDecoration(
+                                                errorText: editRecordStore!
+                                                            .isButtonEnabled &&
+                                                        editRecordStore!
+                                                                .tempSugarAmountEdit !=
+                                                            null
+                                                    ? 'Please enter correct value between 18-630 mg/dL'
+                                                    : null,
+                                              ),
+                                              // maxLengthEnforcement:
+                                              //     MaxLengthEnforcement.none,
+                                              // maxLength: 3,
+                                              controller: editRecordStore!
+                                                  .sugarAmountEditControllerEdit,
                                               focusNode: focusNode,
+                                              onTap: () {
+                                                final TextSelection
+                                                    currentSelection =
+                                                    _controller!.selection;
+                                                _controller!.value =
+                                                    _controller!.value.copyWith(
+                                                  selection:
+                                                      TextSelection.collapsed(
+                                                          offset: _controller!
+                                                              .text.length),
+                                                  composing: TextRange.empty,
+                                                );
+                                                if (currentSelection
+                                                        .baseOffset <
+                                                    _controller!.text.length) {
+                                                  final TextSelection
+                                                      newSelection =
+                                                      TextSelection.collapsed(
+                                                          offset: _controller!
+                                                              .text.length);
+                                                  _controller!.selection =
+                                                      newSelection;
+                                                }
+                                              },
+                                   
                                               onChanged: (value) {
-                                                editRecordStore!
-                                                    .setEditInputSugarAmount(
-                                                        int.parse(value) * 1.0);
-
-                                                sugarInfoStore!
-                                                    .checkValidateSugarAmountInput(
-                                                        int.parse(value) * 1.0);
-                                                print(value);
+                                                if (value.length <= 5) {
+                                                  editRecordStore!
+                                                      .setEditInputSugarAmount(
+                                                          int.parse(value) *
+                                                              1.0);
+                                                } else {
+                                                  editRecordStore!
+                                                      .sugarAmountEditControllerEdit
+                                                      .value = TextEditingValue(
+                                                    text: editRecordStore!
+                                                        .sugarAmountEditControllerEdit
+                                                        .text
+                                                        .substring(0, 5),
+                                                    selection:
+                                                        TextSelection.collapsed(
+                                                            offset: 5),
+                                                  );
+                                                }
                                               },
                                               textAlign: TextAlign.center,
                                               onSubmitted: (value) {
@@ -354,7 +402,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                 sugarInfoStore!
                                                     .checkValidateSugarAmountInput(
                                                         int.parse(value) * 1.0);
-                                                print(value);
+                                                print("onsubmit: ${value}");
                                               },
                                               keyboardType:
                                                   TextInputType.number,
@@ -402,24 +450,28 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             mainAxisSizeMin: true,
                             onTap: () {
-                              sugarInfoStore!.editRecord(
-                                  recordId!,
-                                  SugarRecord(
-                                      conditionId: editRecordStore!.conditionId,
-                                      dayTime:
-                                          editRecordStore!.editingDayTimeStr!,
-                                      hourTime:
-                                          editRecordStore!.editingHourTimeStr!,
-                                      id: recordId,
-                                      status:
-                                          editRecordStore!.currentEditStatus,
-                                      sugarAmount:
-                                          editRecordStore!.editingSugarAmount));
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Routes.home,
-                                (route) => false,
-                              );
+                              if (editRecordStore!.errorText == null ||
+                                  editRecordStore!.errorText == "") {
+                                sugarInfoStore!.editRecord(
+                                    recordId!,
+                                    SugarRecord(
+                                        conditionId: editRecordStore!
+                                            .editChooseCondition!.id,
+                                        dayTime:
+                                            editRecordStore!.editingDayTimeStr!,
+                                        hourTime: editRecordStore!
+                                            .editingHourTimeStr!,
+                                        id: recordId,
+                                        status:
+                                            editRecordStore!.currentEditStatus,
+                                        sugarAmount: editRecordStore!
+                                            .editingSugarAmount));
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  Routes.home,
+                                  (route) => false,
+                                );
+                              }
                             },
                             btnColor: AppColors.AppColor4,
                             btnText: "save_record",

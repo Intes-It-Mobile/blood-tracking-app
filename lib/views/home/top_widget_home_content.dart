@@ -112,7 +112,8 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                         color: AppColors.mainBgColor,
                       ),
                       child: DropDownWidget(
-                        listConditions: sugarInfoStore!.listRootConditions,
+                        listConditions:
+                            sugarInfoStore!.listRootConditionsFilter,
                       )),
                 ],
               )
@@ -150,6 +151,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   Conditions emptyItem = Conditions(id: -1, name: "all");
   String? selectedValue;
   bool showDropdown = false;
+  List<Conditions>? listConditionsAll = [];
   String? getTitle(String? value) {
     return AppLocalizations.of(context)!.getTranslate('${value}');
   }
@@ -157,8 +159,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    if (widget.listConditions!.length < 9) {
-      widget.listConditions!.add(emptyItem);
+    listConditionsAll = List.from(
+        widget.listConditions!); // Tạo bản sao của widget.listConditions
+    if (listConditionsAll!.length < 9) {
+      listConditionsAll!.add(emptyItem);
     }
     super.didChangeDependencies();
   }
@@ -188,7 +192,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             ),
           ],
         ),
-        items: widget.listConditions!
+        items: listConditionsAll!
             .map((Conditions item) => DropdownMenuItem<String>(
                   value: item.name,
                   child: Text(

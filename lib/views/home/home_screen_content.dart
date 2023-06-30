@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
+import '../../models/chart_widget/chart_widget.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
@@ -87,7 +88,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                LineChart(),
+                // LineChart(),
+                ScrollableChart(),
                 RecordInfoSlideBarWidget(),
                 const SizedBox(
                   height: 5,

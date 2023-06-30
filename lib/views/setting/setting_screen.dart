@@ -87,9 +87,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: SvgPicture.asset(Assets.iconAlarm),
               ),
             ),
-            // Container(
-            //     margin: const EdgeInsets.symmetric(horizontal: 5),
-            //     child: SvgPicture.asset(Assets.iconSwapUnit))
+            InkWell(
+              onTap: (){
+                sugarInfoStore!.swapUnit();
+              },
+              child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  child: SvgPicture.asset(Assets.iconSwapUnit)),
+            )
           ],
         ),
       ),

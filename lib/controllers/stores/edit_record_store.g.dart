@@ -9,6 +9,21 @@ part of 'edit_record_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EditRecordStore on _EditRecordStoreBase, Store {
+  Computed<bool>? _$isButtonEnabledComputed;
+
+  @override
+  bool get isButtonEnabled =>
+      (_$isButtonEnabledComputed ??= Computed<bool>(() => super.isButtonEnabled,
+              name: '_EditRecordStoreBase.isButtonEnabled'))
+          .value;
+  Computed<bool>? _$isButtonEnabledEditComputed;
+
+  @override
+  bool get isButtonEnabledEdit => (_$isButtonEnabledEditComputed ??=
+          Computed<bool>(() => super.isButtonEnabledEdit,
+              name: '_EditRecordStoreBase.isButtonEnabledEdit'))
+      .value;
+
   late final _$editingDayTimeAtom =
       Atom(name: '_EditRecordStoreBase.editingDayTime', context: context);
 
@@ -217,6 +232,38 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
     });
   }
 
+  late final _$sugarAmountEditAtom =
+      Atom(name: '_EditRecordStoreBase.sugarAmountEdit', context: context);
+
+  @override
+  String get sugarAmountEdit {
+    _$sugarAmountEditAtom.reportRead();
+    return super.sugarAmountEdit;
+  }
+
+  @override
+  set sugarAmountEdit(String value) {
+    _$sugarAmountEditAtom.reportWrite(value, super.sugarAmountEdit, () {
+      super.sugarAmountEdit = value;
+    });
+  }
+
+  late final _$tempSugarAmountEditAtom =
+      Atom(name: '_EditRecordStoreBase.tempSugarAmountEdit', context: context);
+
+  @override
+  String? get tempSugarAmountEdit {
+    _$tempSugarAmountEditAtom.reportRead();
+    return super.tempSugarAmountEdit;
+  }
+
+  @override
+  set tempSugarAmountEdit(String? value) {
+    _$tempSugarAmountEditAtom.reportWrite(value, super.tempSugarAmountEdit, () {
+      super.tempSugarAmountEdit = value;
+    });
+  }
+
   late final _$_EditRecordStoreBaseActionController =
       ActionController(name: '_EditRecordStoreBase', context: context);
 
@@ -287,6 +334,61 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
   }
 
   @override
+  dynamic setErrorText(String errorMessage) {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.setErrorText');
+    try {
+      return super.setErrorText(errorMessage);
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic checkValidateNewRecord() {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.checkValidateNewRecord');
+    try {
+      return super.checkValidateNewRecord();
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSugarAmountEdit(String value) {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.setSugarAmountEdit');
+    try {
+      return super.setSugarAmountEdit(value);
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validateSugarAmountEdit() {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.validateSugarAmountEdit');
+    try {
+      return super.validateSugarAmountEdit();
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetSugarAmountEdit() {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.resetSugarAmountEdit');
+    try {
+      return super.resetSugarAmountEdit();
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 editingDayTime: ${editingDayTime},
@@ -301,7 +403,11 @@ editStatus: ${editStatus},
 editChooseCondition: ${editChooseCondition},
 listRootConditions: ${listRootConditions},
 rootSugarInfo: ${rootSugarInfo},
-editStatusLevel: ${editStatusLevel}
+editStatusLevel: ${editStatusLevel},
+sugarAmountEdit: ${sugarAmountEdit},
+tempSugarAmountEdit: ${tempSugarAmountEdit},
+isButtonEnabled: ${isButtonEnabled},
+isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';
   }
 }

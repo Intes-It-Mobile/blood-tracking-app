@@ -19,9 +19,6 @@ abstract class _SugarInfoStoreBase with Store {
   SugarInfo? rootSugarInfo;
 
   @observable
-  List<Conditions>? listRootConditions;
-
-  @observable
   String? currentStatus;
 
   @observable
@@ -32,10 +29,22 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   int? statusLevel = 0;
+
+  List<Conditions>? listRootConditions;
+
+  @observable
+  List<Conditions>? listRootConditionsFilter;
+
   @action
   getRootSugarInfo(SugarInfo? fromSharepref) {
     rootSugarInfo = fromSharepref;
     listRootConditions = fromSharepref!.conditions;
+    setValueToListFilter(listRootConditions);
+  }
+
+  @action
+  setValueToListFilter(List<Conditions>? list) {
+    listRootConditionsFilter = list;
   }
 
   @action
@@ -68,11 +77,12 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   setCurrentStatus(double inputAmount) {
+    //  Lớn hơn >= min, nhỏ hơn max
     if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
       currentStatus = chooseCondition!.sugarAmount!
           .where((e) =>
               e.minValue! * 1.0 <= inputAmount &&
-              inputAmount <= e.maxValue! * 1.0)
+              inputAmount < e.maxValue! * 1.0)
           .first
           .status;
     }
@@ -176,9 +186,7 @@ abstract class _SugarInfoStoreBase with Store {
   checkDuplicate() {
     hasExistedRecord = listRecord!.any((record) =>
         record.dayTime == choosedDayTimeStr &&
-        record.hourTime == choosedDayHourStr &&
-        record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus);
+        record.hourTime == choosedDayHourStr);
     print(hasExistedRecord);
   }
 
@@ -512,13 +520,104 @@ abstract class _SugarInfoStoreBase with Store {
     print("filterConditionTitle: ${filterConditionTitle}");
   }
 
+  @observable
+  bool? swapedToMol = false;
   @action
-  swapUnit() {
-    for (int i = 0; i < listRecordArrangedByTime!.length; i++) {
-      if (listRecordArrangedByTime![i].sugarAmount != null) {
-        listRecordArrangedByTime![i].sugarAmount =
-            listRecordArrangedByTime![i].sugarAmount! / 18;
+  setSwapStatus() {
+    swapedToMol = !swapedToMol!;
+  }
+
+  @action
+  multiplicationUnit() {
+    for (int i = 0; i < listRecord!.length; i++) {
+      if (listRecord![i].sugarAmount != null) {
+        listRecord![i].sugarAmount = listRecord![i].sugarAmount! * 18;
       }
     }
   }
+
+  @action
+  divisionnUnit() {
+    for (int i = 0; i < listRecord!.length; i++) {
+      if (listRecord![i].sugarAmount != null) {
+        listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
+      }
+    }
+  }
+
+  @action
+  swapUnit() {
+    if (swapedToMol == false) {
+      divisionnUnit();
+    }
+    if (swapedToMol == true) {
+      multiplicationUnit();
+    }
+    setSwapStatus();
+  }
+////////////////////////////////////////////////////////////////
+
+  final TextEditingController sugarAmountController = TextEditingController();
+  final TextEditingController sugarAmountEditController =
+      TextEditingController();
+
+  @observable
+  String sugarAmount = '80';
+
+  @observable
+  String? tempSugarAmount;
+
+  @computed
+  bool get isButtonEnabled =>
+      double.tryParse(sugarAmount) != null &&
+      double.parse(sugarAmount) >= 18 &&
+      double.parse(sugarAmount) <= 630;
+
+  @action
+  void setSugarAmount(String value) {
+    tempSugarAmount = value;
+  }
+
+  @action
+  void validateSugarAmount() {
+    if (tempSugarAmount != null) {
+      sugarAmount = tempSugarAmount!;
+    }
+  }
+
+  @action
+  void resetSugarAmount() {
+    sugarAmount = '80';
+  }
+
+  @observable
+  String sugarAmountEdit = '80';
+
+  @observable
+  String? tempSugarAmountEdit;
+
+  @computed
+  bool get isButtonEnabledEdit =>
+      double.tryParse(sugarAmountEdit) != null &&
+      double.parse(sugarAmountEdit) >= 18 &&
+      double.parse(sugarAmountEdit) <= 630;
+
+  @action
+  void setSugarAmountEdit(String value) {
+    tempSugarAmountEdit = value;
+  }
+
+  @action
+  void validateSugarAmountEdit() {
+    if (tempSugarAmountEdit != null) {
+      sugarAmountEdit = tempSugarAmountEdit!;
+    }
+  }
+
+  @action
+  void resetSugarAmountEdit() {
+    sugarAmountEdit = '80';
+  }
+  
+  ////////////////////////////////////////////////////////////
 }
