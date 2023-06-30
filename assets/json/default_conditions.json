@@ -48,7 +48,7 @@
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -74,7 +74,7 @@
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -100,7 +100,7 @@
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -126,7 +126,7 @@
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -152,7 +152,7 @@
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -178,7 +178,7 @@
         {
           "status": "diabetes",
           "min_value": 153,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     },
@@ -198,13 +198,13 @@
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
+          "min_value": 85,
           "max_value": 126
         },
         {
           "status": "diabetes",
           "min_value": 126,
-          "max_value": 99999
+          "max_value": 630
         }
       ]
     }

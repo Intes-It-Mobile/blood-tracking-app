@@ -53,12 +53,10 @@ class _AverageInfoSlideBarItemWidgetState
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  child: Observer(builder: (_) {
-                    return Text(
-                      "${widget.number}",
-                      style: AppTheme.appBodyTextStyle36,
-                    );
-                  }),
+                  child: Text(
+                    "${widget.number}",
+                    style: AppTheme.appBodyTextStyle36,
+                  ),
                 ),
                 Text("mg/dL", style: AppTheme.appBodyTextStyle),
               ],

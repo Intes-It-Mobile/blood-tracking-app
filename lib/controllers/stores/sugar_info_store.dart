@@ -49,16 +49,34 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   setInputSugarAmount(double inputAmount) {
-    checkValidateSugarAmountInput(inputAmount);
-    currentStatus = chooseCondition!.sugarAmount!
-        .where((e) =>
-            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
-        .first
-        .status;
-    currentSugarAmount = inputAmount;
+    // currentStatus = chooseCondition!.sugarAmount!
+    //     .where((e) =>
+    //         e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
+    //     .first
+    // .status;
+    setCurrentAmount(inputAmount);
+    setCurrentStatus(inputAmount);
     if (currentStatus != null) {
       setStatusLevel(currentStatus);
     }
+  }
+
+  @action
+  setCurrentAmount(double inputAmount) {
+    currentSugarAmount = inputAmount;
+  }
+
+  @action
+  setCurrentStatus(double inputAmount) {
+    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+      currentStatus = chooseCondition!.sugarAmount!
+          .where((e) =>
+              e.minValue! * 1.0 <= inputAmount &&
+              inputAmount <= e.maxValue! * 1.0)
+          .first
+          .status;
+    }
+    print("Status: ${currentStatus}");
   }
 
   @action
@@ -155,24 +173,36 @@ abstract class _SugarInfoStoreBase with Store {
   bool? hasExistedRecord = false;
 
   @action
-  checkDuplicate(SugarRecord sugarRecord) {
+  checkDuplicate() {
     hasExistedRecord = listRecord!.any((record) =>
-        record.dayTime == sugarRecord.dayTime &&
-        record.hourTime == sugarRecord.hourTime &&
-        record.conditionId == sugarRecord.conditionId &&
-        record.status == sugarRecord.status &&
-        record.sugarAmount == sugarRecord.sugarAmount);
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr &&
+        record.conditionId == chooseCondition!.id &&
+        record.status == currentStatus);
+    print(hasExistedRecord);
   }
 
   @action
-  replaceRecord(SugarRecord sugarRecord) {
+  replaceRecord(BuildContext context) {
     SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
-        record.dayTime == sugarRecord.dayTime &&
-        record.hourTime == sugarRecord.hourTime &&
-        record.conditionId == sugarRecord.conditionId &&
-        record.status == sugarRecord.status &&
-        record.sugarAmount == sugarRecord.sugarAmount);
-    recordUpdate = sugarRecord;
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr &&
+        record.conditionId == chooseCondition!.id &&
+        record.status == currentStatus);
+    {
+      recordUpdate.conditionId = chooseCondition!.id;
+      recordUpdate.dayTime = choosedDayTimeStr;
+      recordUpdate.hourTime = choosedDayHourStr;
+      recordUpdate.status = currentStatus;
+      recordUpdate.sugarAmount = currentSugarAmount;
+    }
+
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
   }
 
   @observable
@@ -190,37 +220,38 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-saveNewRecord(int id, BuildContext context) {
-    checkValidateNewRecord();
-    if (errorText == "" || errorText == null) {
-      listRecord!.add(SugarRecord(
-          id: id,
-          dayTime: choosedDayTimeStr,
-          hourTime: choosedDayHourStr,
-          status: currentStatus,
-          sugarAmount: currentSugarAmount,
-          conditionId: chooseCondition!.id));
-      listRecords = ListRecord(listRecord: listRecord);
-      choosedDayTimeStr = null;
-      choosedDayHourStr = null;
-      listRecordArrangedByTime = listRecord;
-      saveListRecord(listRecords);                         
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.home,
-        (route) => false,
-      );
-      successSaveRecord = true;
-      errorText = "";
-      if (listRecordArrangedByTime!.length > 0) {
-        listRecordArrangedByTime!.sort((b, a) =>
-            (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-                .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
-        getAverageNumber();
-      }
+  saveNewRecord(int id, BuildContext context) {
+    listRecord!.add(SugarRecord(
+        id: id,
+        dayTime: choosedDayTimeStr,
+        hourTime: choosedDayHourStr,
+        status: currentStatus,
+        sugarAmount: currentSugarAmount,
+        conditionId: chooseCondition!.id));
+    listRecords = ListRecord(listRecord: listRecord);
+    choosedDayTimeStr = null;
+    choosedDayHourStr = null;
+    listRecordArrangedByTime = listRecord;
+    setErrorText("");
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+    successSaveRecord = true;
+
+    if (listRecordArrangedByTime!.length > 0) {
+      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${a!.dayTime!} ${a!.hourTime!}"))
+          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      getAverageNumber();
     }
+
     successSaveRecord = false;
   }
+
   @action
   setListRecordArrangedByTime() {
     listRecordArrangedByTime = listRecord;
@@ -232,7 +263,12 @@ saveNewRecord(int id, BuildContext context) {
   @observable
   bool? canSaveNewRecord = false;
   @observable
-  String? errorText;
+  String? errorText = "";
+  @action
+  setErrorText(String errorMessage) {
+    errorText = errorMessage;
+    print("Erorrrrrrrrrrrrrrrr:${errorText}");
+  }
 
   @action
   checkValidateNewRecord() {
@@ -242,14 +278,10 @@ saveNewRecord(int id, BuildContext context) {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (legalInput == true) {
-        if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-          errorText = "errow_sugar_input_text";
-        } else {
-          errorText = "";
-        }
+      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+        setErrorText("Please enter correct value between 18-630 mg/dL");
       } else {
-        errorText = "errow_sugar_input_text";
+        setErrorText("");
       }
     }
   }
@@ -363,34 +395,37 @@ saveNewRecord(int id, BuildContext context) {
     if (listRecordArrangedByTime != null &&
         listRecordArrangedByTime!.isNotEmpty) {
       recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
+
       // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
       List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 3))) &&
+                  .isAfter(now.subtract(Duration(days: 4))) &&
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
                   .isBefore(now.add(Duration(days: 1))))
           .toList();
+
       List<SugarRecord>? listweekNumber = listRecordArrangedByTime!
-          .where((e) =>
-              DateFormat('yyyy/MM/dd')
-                  .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 7))) &&
-              DateFormat('yyyy/MM/dd')
-                  .parse(e.dayTime!)
-                  .isBefore(now.add(Duration(days: 1))))
-          .toList();
+          .where(
+              (e) => DateFormat('yyyy/MM/dd').parse(e.dayTime!, true) != null)
+          .where((e) {
+        DateTime recordTime = DateFormat('yyyy/MM/dd').parse(e.dayTime!, true)!;
+        return recordTime.isAfter(now.subtract(Duration(days: now.weekday))) &&
+            recordTime.isBefore(now.add(Duration(days: 7 - now.weekday)));
+      }).toList();
+
       List<SugarRecord>? listMonthNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isAfter(now.subtract(Duration(days: 30))) &&
+                  .isAfter(now.subtract(Duration(days: now.month))) &&
               DateFormat('yyyy/MM/dd')
                   .parse(e.dayTime!)
-                  .isBefore(now.add(Duration(days: 1))))
+                  .isBefore(now.add(Duration(days: 30 - now.month))))
           .toList();
+
       List<SugarRecord>? listYearNumber = listRecordArrangedByTime!
           .where((e) =>
               DateFormat('yyyy/MM/dd')
@@ -400,6 +435,7 @@ saveNewRecord(int id, BuildContext context) {
                   .parse(e.dayTime!)
                   .isBefore(now.add(Duration(days: 1))))
           .toList();
+
       threeDaysNumber = roundedResult(listThreeDaysNumber);
       weekNumber = roundedResult(listweekNumber);
       monthNumber = roundedResult(listMonthNumber);
@@ -441,22 +477,48 @@ saveNewRecord(int id, BuildContext context) {
 
   @action
   filterListRecord() {
-    listRecordArrangedByTime =
-        listRecord!.where((e) => e.conditionId == filterConditionId)!.toList();
-    listRecordArrangedByTime!.sort((b, a) =>
-        (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-            .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    if (filterConditionId != -1) {
+      listRecordArrangedByTime = listRecord!
+          .where((e) => e.conditionId == filterConditionId)!
+          .toList();
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    } else {
+      listRecordArrangedByTime = listRecord!;
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    }
   }
 
   @action
   setConditionFilterId(String? value) {
-    filterConditionId =
-        listRootConditions!.where((e) => e.name == value).first.id;
-    filterConditionTitle =
-        listRootConditions!.where((e) => e.name == value).first.name;
-    filterListRecord();
-    getAverageNumber();
+    if (value != "all") {
+      filterConditionId =
+          listRootConditions!.where((e) => e.name == value).first.id;
+      filterConditionTitle =
+          listRootConditions!.where((e) => e.name == value).first.name;
+      filterListRecord();
+      getAverageNumber();
+    } else {
+      filterConditionId = -1;
+      filterConditionTitle = "all";
+      filterListRecord();
+      getAverageNumber();
+    }
+
     print("filterConditionId: ${filterConditionId}");
     print("filterConditionTitle: ${filterConditionTitle}");
+  }
+
+  @action
+  swapUnit() {
+    for (int i = 0; i < listRecordArrangedByTime!.length; i++) {
+      if (listRecordArrangedByTime![i].sugarAmount != null) {
+        listRecordArrangedByTime![i].sugarAmount =
+            listRecordArrangedByTime![i].sugarAmount! / 18;
+      }
+    }
   }
 }
