@@ -41,6 +41,7 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
         return AppColors.LowStt;
     }
   }
+  final String name = "kieuvietthang";
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
                     children: [
                       Container(
                         child: Text(
-                          "${widget.sugarAmount}",
+                          "${widget.sugarAmount.toString().substring(0,3)}",
                           style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
                         ),
                       ),

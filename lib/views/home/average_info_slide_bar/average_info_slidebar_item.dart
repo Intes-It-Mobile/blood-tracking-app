@@ -64,7 +64,7 @@ class _AverageInfoSlideBarItemWidgetState
               children: [
                 Container(
                   child: Text(
-                    "${widget.number}",
+                    "${widget.number.toString().substring(0,3)}",
                     style: AppTheme.appBodyTextStyle36,
                   ),
                 ),
