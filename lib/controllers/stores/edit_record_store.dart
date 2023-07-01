@@ -36,7 +36,7 @@ abstract class _EditRecordStoreBase with Store {
   String? editStatus;
 
   @observable
-  Conditions? editChooseCondition;
+  Conditions?  editChooseCondition;
   @observable
   List<Conditions>? listRootConditions;
   @observable

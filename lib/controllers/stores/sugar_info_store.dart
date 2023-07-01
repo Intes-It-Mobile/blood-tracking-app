@@ -286,6 +286,9 @@ abstract class _SugarInfoStoreBase with Store {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
+          if(swapedToMol ==false){
+            
+          }
       if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
         setErrorText("Please enter correct value between 18-630 mg/dL");
       } else {
@@ -543,6 +546,11 @@ abstract class _SugarInfoStoreBase with Store {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
       }
     }
+    // for (int i = 0; i < listRootConditions!.length; i++) {
+    //   if (listRootConditions![i].sugarAmount != null) {
+    //     listRootConditions![i].sugarAmount = listRootConditions![i].sugarAmount! / 18;
+    //   }
+    // }
   }
 
   @action
@@ -618,6 +626,6 @@ abstract class _SugarInfoStoreBase with Store {
   void resetSugarAmountEdit() {
     sugarAmountEdit = '80';
   }
-  
+
   ////////////////////////////////////////////////////////////
 }

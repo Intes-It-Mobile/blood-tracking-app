@@ -108,27 +108,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                 backgroundColor: Colors.white,
                 lineBarsData: [
                   LineChartBarData(
-                      spots: [
-                        //dữ liệu (dayTime, sugarAmount)
-                        FlSpot(
-                            DateFormat('yyyy/MM/dd')
-                                .parse(listRecords[0].dayTime!)
-                                .day
-                                .toDouble(),
-                            listRecords[0].sugarAmount!.toDouble()),
-                        FlSpot(
-                            DateFormat('yyyy/MM/dd')
-                                .parse(listRecords[1].dayTime!)
-                                .day
-                                .toDouble(),
-                            listRecords[1].sugarAmount!.toDouble()),
-                        FlSpot(
-                            DateFormat('yyyy/MM/dd')
-                                .parse(listRecords[2].dayTime!)
-                                .day
-                                .toDouble(),
-                            listRecords[2].sugarAmount!.toDouble()),
-                      ],
+                      spots: listFlSpot(),
                       isCurved: true,
                       gradient: const LinearGradient(
                         colors: [
@@ -193,6 +173,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                       reservedSize: 32,
                       getTitlesWidget: (value, meta) {
                         int intValue = value.toInt();
+                        var listSugarAmountDay = new List<int>.generate(10, (i) => i + 1);
                         if (intValue >= 0 && intValue < bottomTitles.length) {
                           return Text(
                             bottomTitles[intValue],
@@ -213,5 +194,14 @@ class _ScrollableChartState extends State<ScrollableChart> {
         ),
       ),
     );
+  }
+
+  List<FlSpot> listFlSpot() {
+    return listRecords.map((e) {
+      {
+        return FlSpot(DateFormat('yyyy/MM/dd').parse(e.dayTime!).day.toDouble(),
+            e.sugarAmount!.toDouble());
+      }
+    }).toList();
   }
 }

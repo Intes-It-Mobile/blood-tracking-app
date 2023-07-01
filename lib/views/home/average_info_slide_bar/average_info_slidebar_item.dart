@@ -26,14 +26,15 @@ class AverageInfoSlideBarItemWidget extends StatefulWidget {
 
 class _AverageInfoSlideBarItemWidgetState
     extends State<AverageInfoSlideBarItemWidget> {
-      SugarInfoStore? sugarInfoStore;
+  SugarInfoStore? sugarInfoStore;
 
-      @override
+  @override
   void didChangeDependencies() {
-       sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
 
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,12 +64,19 @@ class _AverageInfoSlideBarItemWidgetState
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  child: Text(
-                    "${widget.number.toString().substring(0,3)}",
-                    style: AppTheme.appBodyTextStyle36,
-                  ),
+                  child: widget.number.toString().length > 5
+                      ? Text(
+                          "${widget.number.toString().substring(0, 5)}",
+                          style: AppTheme.appBodyTextStyle36,
+                        )
+                      : Text(
+                          "${widget.number}",
+                          style: AppTheme.appBodyTextStyle36,
+                        ),
                 ),
-                Text("${sugarInfoStore!.swapedToMol==true? AppLocalizations.of(context)!.getTranslate('mmol/L'):AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
+                Text(
+                    "${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                    style: AppTheme.appBodyTextStyle),
               ],
             ),
           )

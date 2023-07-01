@@ -38,7 +38,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   DateTime? selectedDay;
   DateTime? selectedHour;
   int? recordId;
-  TextEditingController? _controller;
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               .setEditChooseCondition(editRecordStore!.conditionId!);
           editRecordStore!
               .setEditInputSugarAmount(editRecordStore!.editingSugarAmount!);
-          _controller!.text = '${editRecordStore!.editingSugarAmount}';
+          _controller.text = '${editRecordStore!.editingSugarAmount}';
         }
         setState(() {
           isFirst = false;
@@ -335,6 +335,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                             width: 165,
                                             child: TextField(
                                               decoration: InputDecoration(
+                                                hintText: editRecordStore!
+                                                    .editingSugarAmount!
+                                                    .toString(),
                                                 errorText: editRecordStore!
                                                             .isButtonEnabled &&
                                                         editRecordStore!
@@ -373,7 +376,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                       newSelection;
                                                 }
                                               },
-                                   
+
                                               onChanged: (value) {
                                                 if (value.length <= 5) {
                                                   editRecordStore!

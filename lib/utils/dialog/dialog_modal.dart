@@ -99,7 +99,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration( 
               border: Border.all(color: AppColors.AppColor4),
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -112,7 +112,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
                       "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
                   hintStyle: AppTheme.hintText,
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 185)),
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 20)),
             ),
           ),
           Container(
