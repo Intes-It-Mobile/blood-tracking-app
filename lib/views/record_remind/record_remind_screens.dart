@@ -19,6 +19,7 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../utils/locale/appLocalizations.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+DateFormat dateFormat = DateFormat("hh:mm");
 
 class RecordRemindScreens extends StatefulWidget {
   final void Function(bool isToggled) onToggled;
@@ -30,35 +31,62 @@ class RecordRemindScreens extends StatefulWidget {
 }
 
 class _RecordRemindScreensState extends State<RecordRemindScreens> {
+
   final FlutterLocalNotificationsPlugin notificationsPlugin =
   FlutterLocalNotificationsPlugin();
+
   DateTime? _alarmTime;
-  DateTime? _alarmTime1;
   late String _alarmTimeString;
-  bool _isRepeatSelected = false;
+  bool isRepeatSelected = false;
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>>? _alarms;
   List<AlarmInfo>? _currentAlarms;
 
+
+
   double size = 30;
   double innerPadding = 0;
-
   @override
   void initState() {
+    // _currentAlarms?.length;
+    //  print("aaaaa: ${_currentAlarms![0].isPending}");
+   // _alarms = _currentAlarms;
+  //  print('aaaaa: ${_currentAlarms![0].alarmDateTime}');
     _alarmTime = DateTime.now();
     _alarmHelper.initializeDatabase().then((value) {
       print('------database intialized');
       loadAlarms();
     });
     innerPadding = size / 10;
+    getSwitchValues();
     super.initState();
+  }
+
+
+  getSwitchValues() async {
+    isRepeatSelected = await getSwitchState();
+    setState(() {});
+  }
+
+  Future<bool> saveSwitchState(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("switchState", value);
+    return prefs.setBool("switchState", value);
+  }
+
+  Future<bool> getSwitchState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isRepeatSelected = prefs.getBool("switchState")!;
+    print(isRepeatSelected);
+    return isRepeatSelected;
   }
 
   void loadAlarms() {
     _alarms = _alarmHelper.getAlarms();
-    if (mounted) setState(() {});
-  }
 
+    if (mounted) setState(() {});
+    print("aaaaaa: ${_alarms}");
+  }
 
   bool val1 = true;
   bool val2 = false;
@@ -75,7 +103,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,37 +110,35 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
-        title: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 12),
-                      child: SvgPicture.asset(
-                        Assets.iconBack,
-                        height: 44,
-                      ),
+        title: Column(
+          children: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: SvgPicture.asset(
+                      Assets.iconBack,
+                      height: 44,
                     ),
                   ),
-                  Expanded(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate(
-                          'record_remind')}",
-                      style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                      maxLines: 2,
-                    ),
+                ),
+                Expanded(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.getTranslate(
+                        'record_remind')}",
+                    style: AppTheme.Headline20Text,
+                    overflow: TextOverflow
+                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                    maxLines: 2,
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
       body: Container(
@@ -125,156 +150,159 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
               _currentAlarms = snapshot.data;
               //  print("List: ${_currentAlarms?.map((e) => null)}");
               //   _currentAlarms?.forEach((e) => print(e.toMap()));
-              return Column(
-                children: [
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _currentAlarms?.length,
-                      itemBuilder: (context, int index) {
-                        if (_currentAlarms!.isNotEmpty) {
-                          _currentAlarms!.sort((b, a) =>
-                              (DateFormat('dd-MM-yyyy HH:mm').parse(
-                                  "${a.alarmDateTime}}")).compareTo(
-                                  DateFormat('dd-MM-yyyy HH:mm').parse("${b.alarmDateTime}")));
-                        }
-                        var alarmTime = DateFormat('hh:mm')
-                            .format(_currentAlarms![index].alarmDateTime!);
-                        print(alarmTime);
-                        return Card(
-                          child: Container(
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.12,
-                            //margin: const EdgeInsets.only(bottom: 32),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 4),
-                            decoration: const BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    alarmTime,
-                                    style: AppTheme.hintText.copyWith(
-                                        fontSize: 36,
-                                        color: AppColors.AppColor4,
-                                        fontWeight: FontWeight.w700),
+              return SingleChildScrollView(
+                primary: true,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: _currentAlarms?.length,
+                        itemBuilder: (context, int index) {
+                          if (_currentAlarms!.isNotEmpty) {
+                            _currentAlarms!.sort((a, b) =>
+                                (savedDateString(a.alarmDateTime!)).compareTo(
+                                    savedDateString(b.alarmDateTime!)));
+                          }
+                          var alarmTime = DateFormat('hh:mm')
+                              .format(_currentAlarms![index].alarmDateTime!);
+                          print(alarmTime);
+                          return Card(
+                            child: Container(
+                              height: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .height * 0.12,
+                              //margin: const EdgeInsets.only(bottom: 32),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 4,),
+                              decoration: const BoxDecoration(
+                                color: AppColors.AppColor3,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      alarmTime,
+                                      style: AppTheme.hintText.copyWith(
+                                          fontSize: 36,
+                                          color: AppColors.AppColor4,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 2, right: 2),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  showDiaLogEdit(
-                                                      context,
-                                                      _currentAlarms![index]
-                                                          .id);
-                                                  print(_currentAlarms![index]);
-                                                  // print(_currentAlarms![index].alarmDateTime);
-                                                },
-                                                child: SvgPicture.asset(
-                                                    Assets.iconEditRecord),
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  deleteAlarm(
-                                                      _currentAlarms![index]
-                                                          .id);
-                                                },
-                                                child: SvgPicture.asset(
-                                                    Assets.iconDelete),
-                                              ),
-                                            ],
+                                  Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 2, right: 2),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDiaLogEdit(
+                                                        context,
+                                                        _currentAlarms![index].id);
+                                                    print(_currentAlarms![index]);
+                                                    // print(_currentAlarms![index].alarmDateTime);
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                      Assets.iconEditRecord),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    deleteAlarm(
+                                                        _currentAlarms![index]
+                                                            .id);
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                      Assets.iconDelete),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 13,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: StatefulBuilder(
-                                            builder: (context, setModalState) {
-                                              return CupertinoSwitch(
-                                                onChanged: (bool value) {
-                                                  setModalState(() {
-                                                    _isRepeatSelected = value;
-                                                  });
-                                                },
-                                                value: _isRepeatSelected,
-                                                trackColor: AppColors.AppColor1,
-                                                activeColor: AppColors
-                                                    .AppColor2,
-                                              );
-                                            },
+                                          const SizedBox(
+                                            height: 13,
                                           ),
-                                        ),
-                                      ],
-                                    ))
-                              ],
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: StatefulBuilder(
+                                              builder: (context, setModalState) {
+                                                return CupertinoSwitch(
+                                                  onChanged: (bool value) {
+                                                    setModalState(() {
+                                                      isRepeatSelected = value;
+                                                      saveSwitchState(value);
+                                                    });
+                                                  },
+                                                  value: isRepeatSelected,
+                                                  trackColor: AppColors.AppColor1,
+                                                  activeColor: AppColors
+                                                      .AppColor2,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ))
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                  if (_currentAlarms!.length < 100)
-                    MaterialButton(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 16),
-                      onPressed: () {
-                        _alarmTimeString =
-                            DateFormat('HH:mm').format(DateTime.now());
-                        showDiaLog(context, null);
-                        // scheduleAlarm();
-                      },
-                      child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.05,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.32,
-                        decoration: BoxDecoration(
-                            color: AppColors.AppColor2,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                            child: Text(
-                              "${AppLocalizations.of(context)!.getTranslate(
-                                  'new_alarm')}",
-                              style: AppTheme.hintText.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white),
-                            )),
-                      ),
-                    )
-                  else
-                    const Center(
-                        child: Text(
-                          'Only 5 alarms allowed!',
-                          style: TextStyle(color: Colors.white),
-                        )),
-                ],
+                          );
+                        }),
+                    if (_currentAlarms!.length < 100)
+                      MaterialButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 16),
+                        onPressed: () {
+                          _alarmTimeString =
+                              DateFormat('HH:mm').format(DateTime.now());
+                          showDiaLog(context, null);
+                          // scheduleAlarm();
+                        },
+                        child: Container(
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.05,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.32,
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor2,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                              child: Text(
+                                "${AppLocalizations.of(context)!.getTranslate(
+                                    'new_alarm')}",
+                                style: AppTheme.hintText.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
+                              ),),
+                        ),
+                      )
+                    else
+                      const Center(
+                          child: Text(
+                            'Only 5 alarms allowed!',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                  ],
+                ),
               );
             }
             return Center(
@@ -314,10 +342,11 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         activeColor: AppColors.AppColor2,
         onChanged: (value) {
           setModalState(() {
-            _isRepeatSelected = value;
+            isRepeatSelected = value;
+            saveSwitchState(value);
           });
         },
-        value: _isRepeatSelected,
+        value: isRepeatSelected,
       );
     });
   }
@@ -433,10 +462,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              onSaveAlarm(_isRepeatSelected);
+                              onSaveAlarm(isRepeatSelected);
                               print("dateTime convert: ${savedDateString(
-                                  _alarmTimeString)}");
-
+                                  _alarmTime!)}");
                             },
                             child: Container(
                               height: 35,
@@ -465,7 +493,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-  Future<String?> showDiaLogEdit(BuildContext context, int? id,) {
+  Future<String?> showDiaLogEdit(BuildContext context, int? index,) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) =>
@@ -522,7 +550,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              CustomSwitchTimer(context, id),
+                              CustomSwitchTimer(context, index),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -578,7 +606,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           child: GestureDetector(
                             onTap: () {
                               // print(id);
-                              _editToDoItem(id!, _isRepeatSelected);
+                              _editToDoItem(index!, isRepeatSelected);
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
                             child: Container(
@@ -607,6 +635,11 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
             }),
           ),
     );
+  }
+  @override
+  void dispose() {
+    _currentAlarms?.length;
+    super.dispose();
   }
 
   Widget customSwitchDialog(bool val, Function onChangeMethod) {
@@ -646,7 +679,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
         'Enter a record',
-        'Time: ${savedDateString(_alarmTimeString)}',
+        'Time: ${savedDateString(_alarmTime!)}',
         Time(
           scheduledNotificationDateTime.hour,
           scheduledNotificationDateTime.minute,
@@ -658,7 +691,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Enter a record',
-        'Time: ${savedDateString(_alarmTimeString)}',
+        'Time: ${savedDateString(_alarmTime!)}',
         tz.TZDateTime.from(scheduledNotificationDateTime, tz.local),
         platformChannelSpecifics,
         androidAllowWhileIdle: true,
@@ -667,14 +700,15 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       );
   }
 
-  String savedDateString(String date) {
-    return date = DateFormat("hh:mm yyyy-MM-dd").format(_alarmTime!);
+  String savedDateString(DateTime date) {
+    print("conver time: ${DateFormat("HH:mm").format(date)}");
+    return DateFormat("HH:mm").format(date);
   }
 
-  void _editToDoItem(int id, bool _isRepeatingEdit) {
+  void _editToDoItem(int index, bool _isRepeatingEdit) {
     DateTime? scheduleAlarmDateTime;
     AlarmInfo alarmInfo = _currentAlarms?.firstWhere((element) =>
-    element.id == id) as AlarmInfo;
+    element.id == index) as AlarmInfo;
     if (_alarmTime!.isAfter(DateTime.now())) {
       alarmInfo.alarmDateTime = _alarmTime;
       scheduleAlarmDateTime = _alarmTime;
@@ -695,21 +729,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   //   prefs.setString('myObjectKey', jsonString);
   //   print("Save to shprf: ${alarmInfo.alarmDateTime} ");
   // }
-  tz.TZDateTime _convertTime(int hour, int minutes) {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduleDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
-      minutes,
-    );
-    if (scheduleDate.isBefore(now)) {
-      scheduleDate = scheduleDate.add(const Duration(days: 1));
-    }
-    return scheduleDate;
-  }
 
   void onSaveAlarm(bool _isRepeating) {
     DateTime? scheduleAlarmDateTime;

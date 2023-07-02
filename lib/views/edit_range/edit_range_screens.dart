@@ -113,7 +113,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                   itemCount: sugarInfoStore!.listRootConditions?.length,
                   itemBuilder: (context, index) {
                     print('_items: ${_items.length}');
-                    return sugarInfoStore!.listRootConditions!.length <= 8
+                    return sugarInfoStore!.listRootConditions! != null
                         ? Container(
                             height:
                                 MediaQuery.of(context).size.height * 0.23,
@@ -133,7 +133,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                       width: 15,
                                     ),
                                     Text(
-                                      '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].name}')}',
+                                      '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].name}')}',
                                       style: AppTheme.hintText.copyWith(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w700,
@@ -163,7 +163,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].status}')}',
+                                                '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
                                                         color: Color(
@@ -192,7 +192,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].status}')}',
+                                              '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].status}')}',
                                               style: AppTheme.hintText
                                                   .copyWith(
                                                       color:
@@ -231,7 +231,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].status}')}',
+                                                '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
                                                         color: Color(
@@ -261,7 +261,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].status}')}',
+                                              '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].status}')}',
                                               style: AppTheme.hintText
                                                   .copyWith(
                                                       color:
