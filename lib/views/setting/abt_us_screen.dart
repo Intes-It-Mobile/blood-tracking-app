@@ -71,7 +71,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             margin: const EdgeInsets.symmetric(vertical: 15),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(AppLocalizations.of(context)!
-                .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),),
+                .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),textAlign: TextAlign.justify,),
           ),
           const Spacer(),
           RichText(

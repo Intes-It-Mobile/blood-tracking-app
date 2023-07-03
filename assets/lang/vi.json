@@ -99,5 +99,9 @@
     "edit":"Edit",
     "replace": "Replace",
     "add": "Add",
-    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?"
+    "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?",
+    "change_unit": "Change unit",
+    "mg_dl": "mg/dL",
+    "mmol_l": "mmol/L",
+    "choose_this_unit": "Choose this unit"
 }

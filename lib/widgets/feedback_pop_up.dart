@@ -7,8 +7,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../constants/assets.dart';
 import '../utils/locale/appLocalizations.dart';
 
-class FeedbackPopUpWidget extends StatelessWidget {
+class FeedbackPopUpWidget extends StatefulWidget {
   const FeedbackPopUpWidget({super.key});
+
+  @override
+  State<FeedbackPopUpWidget> createState() => _FeedbackPopUpWidgetState();
+}
+
+class _FeedbackPopUpWidgetState extends State<FeedbackPopUpWidget> {
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,77 +24,89 @@ class FeedbackPopUpWidget extends StatelessWidget {
         children: [
           Container(
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Form(
+                  key: formKey,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('feedback_title')}",
-                        style: AppTheme.Headline20Text.copyWith(
-                            color: AppColors.AppColor4),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          "${AppLocalizations.of(context)!.getTranslate('feedback_title')}",
+                          style: AppTheme.Headline20Text.copyWith(
+                              color: AppColors.AppColor4),
+                        ),
                       ),
+                    ],
+                  ),
+              ),
+              Container(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  child: Container(
+                    child: Text(
+                      "${AppLocalizations.of(context)!.getTranslate('email_if_have')}",
+                      style: AppTheme.appBodyTextStyle
+                          .copyWith(color: AppColors.AppColor4),
                     ),
-                  ],
-                ),
+                  ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Container(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('email_if_have')}",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: AppColors.AppColor4),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.AppColor4),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText:
+                            "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
+                        hintStyle: AppTheme.hintText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13)),
+                  ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.AppColor4),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  child: Container(
+                    child: Text(
+                      "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn')}",
+                      style: AppTheme.appBodyTextStyle
+                          .copyWith(color: AppColors.AppColor4),
+                    ),
                   ),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText:
-                          "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
-                      hintStyle: AppTheme.hintText,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13)),
-                ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                child: Container(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn')}",
-                    style: AppTheme.appBodyTextStyle
-                        .copyWith(color: AppColors.AppColor4),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.AppColor4),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.AppColor4),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText:
+                            "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
+                        hintStyle: AppTheme.hintText,
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 185)),
+                    onChanged: (value) {
+                      if(value.length >=6){
+                        setState(() {
+
+                        });
+                      }else{
+
+                      }
+                    },
                   ),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText:
-                          "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
-                      hintStyle: AppTheme.hintText,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 185)),
-                ),
               ),
             ]),
+                ),
           ),
           Positioned(
             right: 20,

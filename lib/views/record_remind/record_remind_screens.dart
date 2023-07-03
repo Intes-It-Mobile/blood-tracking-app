@@ -62,28 +62,28 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       loadAlarms();
     });
     innerPadding = size / 10;
-    getSwitchValues();
+   // getSwitchValues();
     super.initState();
   }
 
 
-  getSwitchValues() async {
-    _isRepeatSelected = await getSwitchState();
-    setState(() {});
-  }
+  // getSwitchValues() async {
+  //   _isRepeatSelected = await getSwitchState();
+  //   setState(() {});
+  // }
 
-  Future<bool> saveSwitchState(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("switchState", value);
-    return prefs.setBool("switchState", value);
-  }
-
-  Future<bool> getSwitchState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _isRepeatSelected = prefs.getBool("switchState")!;
-    print(_isRepeatSelected);
-    return _isRepeatSelected;
-  }
+  // Future<bool> saveSwitchState(bool value) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool("switchState", value);
+  //   return prefs.setBool("switchState", value);
+  // }
+  //
+  // Future<bool> getSwitchState() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   _isRepeatSelected = prefs.getBool("switchState")!;
+  //   print(_isRepeatSelected);
+  //   return _isRepeatSelected;
+  // }
 
   void loadAlarms() {
     _alarms = _alarmHelper.getAlarms();
@@ -248,7 +248,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                                   onChanged: (bool value)async  {
                                                     setModalState(() {
                                                       _currentAlarms?[index].isPending = value;
-                                                      saveSwitchState(value);
+                                                      //saveSwitchState(value);
 
                                                     });
                                                     await _alarmHelper
@@ -352,7 +352,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         onChanged: (value) {
           setModalState(() {
             _isRepeatSelected = value;
-            saveSwitchState(value);
+            //saveSwitchState(value);
           });
         },
         value: _isRepeatSelected,
