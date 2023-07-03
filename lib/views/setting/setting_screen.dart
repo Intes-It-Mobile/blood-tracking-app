@@ -9,10 +9,9 @@ import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../routes.dart';
-import '../../utils/dialog/dialog_modal.dart';
+import '../../utils/dialog/dialog_feedback.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
-import '../../widgets/feedback_pop_up.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

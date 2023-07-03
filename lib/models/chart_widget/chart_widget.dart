@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 import 'package:blood_sugar_tracking/models/sugar_info/sugar_info.dart';
 
@@ -15,7 +16,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   List<SugarRecord> listRecords = [
     SugarRecord(
         conditionId: 1,
-        dayTime: "2023/05/23",
+        dayTime: "2023/06/23",
         hourTime: "08:30",
         id: 1,
         status: "diabetes",
@@ -35,20 +36,84 @@ class _ScrollableChartState extends State<ScrollableChart> {
         status: "low",
         sugarAmount: 23),
     SugarRecord(
-        conditionId: 2,
-        dayTime: "2023/06/26",
-        hourTime: "15:30",
-        id: 3,
-        status: "low",
-        sugarAmount: 95),
-    SugarRecord(
         conditionId: 0,
-        dayTime: "2023/06/27",
+        dayTime: "2023/07/01",
         hourTime: "08:30",
         id: 4,
         status: "normal",
-        sugarAmount: 125),
+        sugarAmount: 175),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/07/12",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 85),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/07/25",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 123),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/08/11",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 293),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/08/21",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 479),
   ];
+  double maxSugarAmount = 0;
+  List<TitleModel> leftTitles = [];
+  double maxYAdjusted = 0;
+  double chartHeight = 200;
+  @override
+  void initState() {
+    super.initState();
+    calculateMaxSugarAmount();
+    generateLeftTitles();
+    adjustMaxY();
+  }
+  void adjustMaxY() {
+    double maxVisibleSugarAmount = maxSugarAmount;
+    double scaleFactor = chartHeight / maxVisibleSugarAmount;
+  
+    if (scaleFactor < 1) {
+      maxYAdjusted = maxVisibleSugarAmount;
+    } else {
+      maxYAdjusted = chartHeight / scaleFactor;
+    }
+
+    // Ensure that the maxYAdjusted value is divisible by 10
+    maxYAdjusted = ((maxYAdjusted ~/ (maxSugarAmount / 10)) + 1) * (maxSugarAmount / 10);
+  }
+
+
+  void calculateMaxSugarAmount() {
+    for (var record in listRecords) {
+      if (record.sugarAmount! > maxSugarAmount) {
+        maxSugarAmount = record.sugarAmount!;
+      }
+    }
+  }
+
+  void generateLeftTitles() {
+    double step = maxSugarAmount / 10;
+    for (double i = 0; i <= maxSugarAmount; i += step) {
+      leftTitles.add(TitleModel(title: i.toStringAsFixed(2)));
+    }
+    leftTitles = leftTitles.reversed
+        .toList(); // Sắp xếp lại danh sách theo thứ tự tăng dần
+  }
+
   DateTime convertStringToDate(String dateTime, String pattern) {
     return DateFormat(pattern).parse(dateTime);
   }
@@ -56,6 +121,18 @@ class _ScrollableChartState extends State<ScrollableChart> {
   List<FlSpot> data = [];
   @override
   Widget build(BuildContext context) {
+    double maxSugarAmount = 0.0;
+    for (var record in listRecords) {
+      if (record.sugarAmount! > maxSugarAmount) {
+        maxSugarAmount = record.sugarAmount!;
+      }
+    }
+
+    // List<TitleModel> leftTitles = [];
+    double step = maxSugarAmount /
+        10; // Khoảng cách giữa các giá trị là 1/10 của maxSugarAmount
+
+    // leftTitles = leftTitles.reversed.toList();
     List<String> bottomTitles = [];
     DateTime currentDate = DateTime.now();
     DateTime firstDayOfPreviousMonth =
@@ -90,21 +167,25 @@ class _ScrollableChartState extends State<ScrollableChart> {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: 250,
+        height: chartHeight,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: SizedBox(
             width: 1500,
             child: LineChart(
               LineChartData(
+                borderData: FlBorderData(show: false),
+                rangeAnnotations: RangeAnnotations(verticalRangeAnnotations: [
+                  VerticalRangeAnnotation(x1: 60, x2: 61)
+                ]),
                 minX: 0,
                 maxX: 90,
                 minY: 0,
-                maxY: 300,
+                maxY: maxYAdjusted,
                 backgroundColor: Colors.white,
                 lineBarsData: [
                   LineChartBarData(
@@ -157,8 +238,35 @@ class _ScrollableChartState extends State<ScrollableChart> {
                     }),
                 titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: true),
-                  ),
+                      sideTitles: SideTitles(
+                          interval: 30,
+                          showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            if (value >= 0 && value <= maxSugarAmount) {
+                              double sugarValue = maxSugarAmount - value;
+                              int index = (sugarValue / step).floor().toInt();
+                              if (index >= 0 && index < leftTitles.length) {
+                                return Text(
+                                  leftTitles[index]
+                                      .title
+                                      .split('.')[0], // Lấy phần số nguyên
+                                  style: const TextStyle(
+                                      fontSize: 10, color: Colors.black),
+                                );
+                              }
+                            }
+                            return SizedBox();
+                          })
+
+                      // getTitlesWidget: (value, meta) {return Text(
+                      //         bottomTitles[intValue],
+                      //         style: TextStyle(
+                      //           color: Colors.black,
+                      //           fontSize: 10,
+                      //         ),
+                      //       )},
+
+                      ),
                   rightTitles: AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
@@ -173,7 +281,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                       reservedSize: 32,
                       getTitlesWidget: (value, meta) {
                         int intValue = value.toInt();
-                        var listSugarAmountDay = new List<int>.generate(10, (i) => i + 1);
+
                         if (intValue >= 0 && intValue < bottomTitles.length) {
                           return Text(
                             bottomTitles[intValue],
@@ -199,9 +307,46 @@ class _ScrollableChartState extends State<ScrollableChart> {
   List<FlSpot> listFlSpot() {
     return listRecords.map((e) {
       {
-        return FlSpot(DateFormat('yyyy/MM/dd').parse(e.dayTime!).day.toDouble(),
+        return FlSpot(calculateDateNumber("${e.dayTime} ${e.hourTime}")!,
             e.sugarAmount!.toDouble());
       }
     }).toList();
   }
+
+  double? calculateDateNumber(String time) {
+    DateTime currentDate = DateTime.now();
+    DateTime specifiedDate = DateFormat('yyyy/MM/dd HH:mm').parse(time);
+    double differenceValue = 0;
+
+    int daysInThisMonth =
+        DateTime(currentDate.year, currentDate.month + 1, 0).day;
+    DateTime dayPreviousMonthDate =
+        DateTime(currentDate.year, currentDate.month - 1, 1);
+    int daysInPreviousMonth =
+        DateTime(dayPreviousMonthDate.year, dayPreviousMonthDate.month + 1, 0)
+            .day;
+
+    differenceValue = ((currentDate.year - specifiedDate.year) * 12 +
+            currentDate.month -
+            specifiedDate.month) *
+        1.0;
+    switch (differenceValue) {
+      case 1.0:
+        return specifiedDate.day.toDouble();
+      case -1.0:
+        return specifiedDate.day.toDouble() +
+            daysInThisMonth +
+            daysInPreviousMonth;
+      case 0:
+        return specifiedDate.day.toDouble() + daysInPreviousMonth;
+      default:
+        throw RangeError("");
+    }
+  }
+}
+
+class TitleModel {
+  final String title;
+
+  TitleModel({required this.title});
 }
