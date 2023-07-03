@@ -389,6 +389,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                       Container(
                                         width: 165,
                                         child: TextField(
+                                          inputFormatters: [
+                                            // Allow Decimal Number With Precision of 2 Only
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                          ],
                                           decoration: InputDecoration(
                                             errorText: sugarInfoStore!
                                                         .isButtonEnabled &&
@@ -429,26 +434,13 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                           onEditingComplete: sugarInfoStore!
                                               .validateSugarAmount,
                                           onChanged: (value) {
-                                            if (value.length <= 5) {
-                                              sugarInfoStore!
-                                                  .setInputSugarAmount(
-                                                      double.parse(value));
-                                            } else {
-                                              sugarInfoStore!
-                                                  .sugarAmountController
-                                                  .value = TextEditingValue(
-                                                text: sugarInfoStore!
-                                                    .sugarAmountController.text
-                                                    .substring(0, 5),
-                                                selection:
-                                                    TextSelection.collapsed(
-                                                        offset: 5),
-                                              );
-                                            }
+                                            sugarInfoStore!.setInputSugarAmount(
+                                                double.parse(value));
+
                                             sugarInfoStore!
                                                 .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
-                                                int.parse(value) * 1.0);
+                                                double.parse(value) );
                                             print("onchange: ${value}");
                                           },
                                           textAlign: TextAlign.center,
@@ -456,7 +448,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                             sugarInfoStore!
                                                 .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
-                                                int.parse(value) * 1.0);
+                                                double.tryParse(value)!);
                                             print(value);
                                           },
                                           keyboardType: TextInputType.number,
