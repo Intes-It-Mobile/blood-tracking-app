@@ -37,7 +37,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
   DateTime? _alarmTime;
   late String _alarmTimeString;
-  bool isRepeatSelected = false;
+  bool _isRepeatSelected = false;
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>>? _alarms;
   List<AlarmInfo>? _currentAlarms;
@@ -52,6 +52,10 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     //  print("aaaaa: ${_currentAlarms![0].isPending}");
    // _alarms = _currentAlarms;
   //  print('aaaaa: ${_currentAlarms![0].alarmDateTime}');
+  //   setState(() {
+  //     _isRepeatSelected = _currentAlarms
+  //   });
+  //  print(_isRepeatSelected);
     _alarmTime = DateTime.now();
     _alarmHelper.initializeDatabase().then((value) {
       print('------database intialized');
@@ -64,7 +68,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
 
   getSwitchValues() async {
-    isRepeatSelected = await getSwitchState();
+    _isRepeatSelected = await getSwitchState();
     setState(() {});
   }
 
@@ -76,9 +80,9 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
 
   Future<bool> getSwitchState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isRepeatSelected = prefs.getBool("switchState")!;
-    print(isRepeatSelected);
-    return isRepeatSelected;
+    _isRepeatSelected = prefs.getBool("switchState")!;
+    print(_isRepeatSelected);
+    return _isRepeatSelected;
   }
 
   void loadAlarms() {
@@ -241,13 +245,18 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                             child: StatefulBuilder(
                                               builder: (context, setModalState) {
                                                 return CupertinoSwitch(
-                                                  onChanged: (bool value) {
+                                                  onChanged: (bool value)async  {
                                                     setModalState(() {
-                                                      isRepeatSelected = value;
+                                                      _currentAlarms?[index].isPending = value;
                                                       saveSwitchState(value);
+
                                                     });
+                                                    await _alarmHelper
+                                                        .updateIsDone(
+                                                      _currentAlarms![index].isPending!,_currentAlarms![index]
+                                                    );
                                                   },
-                                                  value: isRepeatSelected,
+                                                  value: _currentAlarms![index].isPending!,
                                                   trackColor: AppColors.AppColor1,
                                                   activeColor: AppColors
                                                       .AppColor2,
@@ -342,11 +351,11 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
         activeColor: AppColors.AppColor2,
         onChanged: (value) {
           setModalState(() {
-            isRepeatSelected = value;
+            _isRepeatSelected = value;
             saveSwitchState(value);
           });
         },
-        value: isRepeatSelected,
+        value: _isRepeatSelected,
       );
     });
   }
@@ -462,7 +471,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              onSaveAlarm(isRepeatSelected);
+                              onSaveAlarm(_isRepeatSelected);
                               print("dateTime convert: ${savedDateString(
                                   _alarmTime!)}");
                             },
@@ -606,7 +615,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                           child: GestureDetector(
                             onTap: () {
                               // print(id);
-                              _editToDoItem(index!, isRepeatSelected);
+                              _editToDoItem(index!, _isRepeatSelected);
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
                             child: Container(
@@ -741,6 +750,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: _currentAlarms!.length,
       title: 'alarm',
+      isPending: _isRepeatSelected
     );
     _alarmHelper.insertAlarm(alarmInfo);
     if (scheduleAlarmDateTime != null) {

@@ -17,7 +17,7 @@ class AlarmInfo {
     id: json["id"],
     title: json["title"],
     alarmDateTime: DateTime.parse(json["alarmDateTime"]),
-    isPending: json["isPending"],
+    isPending: (json['isPending'] as int) == 0 ? false : true,
     gradientColorIndex: json["gradientColorIndex"],
   );
   Map<String, dynamic> toMap() => {

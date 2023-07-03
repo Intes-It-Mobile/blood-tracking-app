@@ -13,6 +13,7 @@ class AlarmHelper {
   static AlarmHelper? _alarmHelper;
 
   AlarmHelper._createInstance();
+
   factory AlarmHelper() {
     if (_alarmHelper == null) {
       _alarmHelper = AlarmHelper._createInstance();
@@ -69,12 +70,24 @@ class AlarmHelper {
 
   Future<int> update(AlarmInfo alarmInfo) async {
     var db = await this.database;
-    final result = await db.update(tableAlarm,alarmInfo.toMap() , where: '$columnId = ?',whereArgs: [alarmInfo.id]);
+    final result = await db.update(tableAlarm, alarmInfo.toMap(),
+        where: '$columnId = ?', whereArgs: [alarmInfo.id]);
     return result;
   }
 
   Future<int> delete(int? id) async {
     var db = await this.database;
     return await db.delete(tableAlarm, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateIsDone(bool isDoneTodb,AlarmInfo alarmInfo) async {
+    Database db = await this.database;
+    return await db.update(
+      tableAlarm,
+      {
+        'isPending': isDoneTodb == true ? 1 : 0,
+      },
+        where: '$columnId = ?', whereArgs: [alarmInfo.id]
+    );
   }
 }
