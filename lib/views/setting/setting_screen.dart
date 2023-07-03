@@ -131,7 +131,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       showDialog(
                         context: context,
                         builder: (dialogContext) {
-                          return DialogFeedback();
+                          return const DialogFeedback();
                         },
                       );
                     },
