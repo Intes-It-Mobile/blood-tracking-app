@@ -135,7 +135,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
               child: Text(
-                "${AppLocalizations.of(context)!.getTranslate('feedback_send')}",
+                "${AppLocalizations.of(context)!.getTranslate('feedback_send_btn')}",
                 style: AppTheme.BtnText,
               ),
             ),
