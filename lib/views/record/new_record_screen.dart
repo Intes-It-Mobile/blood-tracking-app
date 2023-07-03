@@ -169,9 +169,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setChooseCondition(0);
       sugarInfoStore!.setStatusLevel("low");
       sugarInfoStore!.setInputSugarAmount(80);
-
-      isFirst == false;
     }
+    isFirst == false;
   }
 
   @override
@@ -390,16 +389,20 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                       Container(
                                         width: 165,
                                         child: TextField(
-                                          inputFormatters: [
-                                            _DecimalLimitInputFormatter(),
-                                            FilteringTextInputFormatter.allow(
-                                                RegExp(
-                                                    r'^\d{0,3}(\.\d{0,1})?$')),
-                                          ],
+                                          decoration: InputDecoration(
+                                            errorText: sugarInfoStore!
+                                                        .isButtonEnabled &&
+                                                    sugarInfoStore!
+                                                            .tempSugarAmount !=
+                                                        null
+                                                ? 'Please enter correct value between 18-630 mg/dL'
+                                                : null,
+                                          ),
                                           // maxLengthEnforcement:
                                           //     MaxLengthEnforcement.none,
                                           // maxLength: 3,
-                                          controller: _controller,
+                                          controller: sugarInfoStore!
+                                              .sugarAmountController,
                                           focusNode: focusNode,
                                           onTap: () {
                                             final TextSelection
@@ -423,15 +426,23 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                   newSelection;
                                             }
                                           },
+                                          onEditingComplete: sugarInfoStore!
+                                              .validateSugarAmount,
                                           onChanged: (value) {
-                                            if (value.length > 3) {
-                                              _controller!.value =
-                                                  _controller!.value.copyWith(
-                                                text: value.substring(0, 3),
+                                            if (value.length <= 5) {
+                                              sugarInfoStore!
+                                                  .setInputSugarAmount(
+                                                      double.parse(value));
+                                            } else {
+                                              sugarInfoStore!
+                                                  .sugarAmountController
+                                                  .value = TextEditingValue(
+                                                text: sugarInfoStore!
+                                                    .sugarAmountController.text
+                                                    .substring(0, 5),
                                                 selection:
                                                     TextSelection.collapsed(
-                                                        offset: 3),
-                                                composing: TextRange.empty,
+                                                        offset: 5),
                                               );
                                             }
                                             sugarInfoStore!
@@ -479,9 +490,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                     ),
 
-                    Text(
-                      "${sugarInfoStore!.errorText}",
-                      style: AppTheme.errorText,
+                    Center(
+                      child: Text(
+                        "${sugarInfoStore!.errorText}",
+                        style: AppTheme.errorText,
+                      ),
                     ),
                     // Center(
                     //   child: Container(
@@ -577,7 +590,7 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                         borderRadius: BorderRadius.circular(10)
                       ),
                       child: Center(
-                        child: Text('${AppLocalizations.of(context)!.getTranslate('mg_dl')}',style: AppTheme.unitText,),
+                        child: Text('${AppLocalizations.of(context)!.getTranslate('mg/dL')}',style: AppTheme.unitText,),
                       ),
                     ),
                   ),
@@ -593,7 +606,7 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                           borderRadius: BorderRadius.circular(10)
                       ),
                       child: Center(
-                        child: Text('${AppLocalizations.of(context)!.getTranslate('mmol_l')}',style: AppTheme.unitText,),
+                        child: Text('${AppLocalizations.of(context)!.getTranslate('mmol/L')}',style: AppTheme.unitText,),
                       ),
                     ),
                   ),

@@ -56,7 +56,7 @@
     "feedback_write_dwn": "Write down your feedback (*)",
     "feedback_write_dwn_label_txt": "Write at least 6 character to send",
     "feedback_help": "Write at least 6 character to send",
-    "feedback_send": "Send feedback",
+    "feedback_send_btn": "Send feedback",
     "date_and_time": "Date & Time",
     "condition": "Condition",
     "sugar amount": "Sugar Amount",
@@ -100,8 +100,8 @@
     "replace": "Replace",
     "add": "Add",
     "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?",
+    "mg/dL":"mg/dL",
+    "mmol/L":"mmol/dL",
     "change_unit": "Change unit",
-    "mg_dl": "mg/dL",
-    "mmol_l": "mmol/L",
     "choose_this_unit": "Choose this unit"
 }

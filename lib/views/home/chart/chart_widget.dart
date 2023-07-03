@@ -60,7 +60,6 @@ class _LineChartState extends State<LineChart> {
                 ),
               ),
               height: 200,
-              
               margin: EdgeInsets.all(16.0),
               child: sugarInfoStore!.listRecordArrangedByTime != null &&
                       sugarInfoStore!.listRecordArrangedByTime!.isNotEmpty

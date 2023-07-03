@@ -17,6 +17,7 @@ class DialogFeedback extends StatefulWidget {
 }
 
 class _DialogFeedbackState extends State<DialogFeedback> {
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -112,7 +113,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
                       "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
                   hintStyle: AppTheme.hintText,
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 185)),
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 20)),
             ),
           ),
           Container(

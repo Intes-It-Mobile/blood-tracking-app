@@ -1,5 +1,7 @@
+import 'package:blood_sugar_tracking/controllers/stores/sugar_info_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/app_theme.dart';
 import '../../../constants/colors.dart';
@@ -24,6 +26,15 @@ class AverageInfoSlideBarItemWidget extends StatefulWidget {
 
 class _AverageInfoSlideBarItemWidgetState
     extends State<AverageInfoSlideBarItemWidget> {
+  SugarInfoStore? sugarInfoStore;
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,12 +64,19 @@ class _AverageInfoSlideBarItemWidgetState
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  child: Text(
-                    "${widget.number.toString().substring(0,3)}",
-                    style: AppTheme.appBodyTextStyle36,
-                  ),
+                  child: widget.number.toString().length > 5
+                      ? Text(
+                          "${widget.number.toString().substring(0, 5)}",
+                          style: AppTheme.appBodyTextStyle36,
+                        )
+                      : Text(
+                          "${widget.number}",
+                          style: AppTheme.appBodyTextStyle36,
+                        ),
                 ),
-                Text("mg/dL", style: AppTheme.appBodyTextStyle),
+                Text(
+                    "${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                    style: AppTheme.appBodyTextStyle),
               ],
             ),
           )
