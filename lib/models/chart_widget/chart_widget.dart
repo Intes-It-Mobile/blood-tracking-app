@@ -27,71 +27,71 @@ class _ScrollableChartState extends State<ScrollableChart> {
     super.didChangeDependencies();
   }
 
-  // List<SugarRecord> listRecords = [
-  //   SugarRecord(
-  //       conditionId: 1,
-  //       dayTime: "2023/06/23",
-  //       hourTime: "00:01",
-  //       id: 1,
-  //       status: "diabetes",
-  //       sugarAmount: 80),
-  //   SugarRecord(
-  //       conditionId: 1,
-  //       dayTime: "2023/06/23",
-  //       hourTime: "22:01",
-  //       id: 1,
-  //       status: "diabetes",
-  //       sugarAmount: 120),
-  //   SugarRecord(
-  //       conditionId: 1,
-  //       dayTime: "2023/06/24",
-  //       hourTime: "16:30",
-  //       id: 2,
-  //       status: "diabetes",
-  //       sugarAmount: 245),
-  //   SugarRecord(
-  //       conditionId: 2,
-  //       dayTime: "2023/06/25",
-  //       hourTime: "15:30",
-  //       id: 3,
-  //       status: "low",
-  //       sugarAmount: 23),
-  //   SugarRecord(
-  //       conditionId: 0,
-  //       dayTime: "2023/07/01",
-  //       hourTime: "08:30",
-  //       id: 4,
-  //       status: "normal",
-  //       sugarAmount: 175),
-  //   SugarRecord(
-  //       conditionId: 0,
-  //       dayTime: "2023/07/12",
-  //       hourTime: "08:30",
-  //       id: 4,
-  //       status: "normal",
-  //       sugarAmount: 85),
-  //   SugarRecord(
-  //       conditionId: 0,
-  //       dayTime: "2023/07/25",
-  //       hourTime: "08:30",
-  //       id: 4,
-  //       status: "normal",
-  //       sugarAmount: 123),
-  //   SugarRecord(
-  //       conditionId: 0,
-  //       dayTime: "2023/08/11",
-  //       hourTime: "08:30",
-  //       id: 4,
-  //       status: "normal",
-  //       sugarAmount: 293),
-  //   SugarRecord(
-  //       conditionId: 0,
-  //       dayTime: "2023/08/21",
-  //       hourTime: "08:30",
-  //       id: 4,
-  //       status: "normal",
-  //       sugarAmount: 479),
-  // ];
+  List<SugarRecord> listRecords = [
+    SugarRecord(
+        conditionId: 1,
+        dayTime: "2023/06/23",
+        hourTime: "00:01",
+        id: 1,
+        status: "diabetes",
+        sugarAmount: 80),
+    SugarRecord(
+        conditionId: 1,
+        dayTime: "2023/06/23",
+        hourTime: "22:01",
+        id: 1,
+        status: "diabetes",
+        sugarAmount: 120),
+    SugarRecord(
+        conditionId: 1,
+        dayTime: "2023/06/24",
+        hourTime: "16:30",
+        id: 2,
+        status: "diabetes",
+        sugarAmount: 245),
+    SugarRecord(
+        conditionId: 2,
+        dayTime: "2023/06/25",
+        hourTime: "15:30",
+        id: 3,
+        status: "low",
+        sugarAmount: 23),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/07/01",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 175),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/07/12",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 85),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/07/25",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 123),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/08/11",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 293),
+    SugarRecord(
+        conditionId: 0,
+        dayTime: "2023/08/21",
+        hourTime: "08:30",
+        id: 4,
+        status: "normal",
+        sugarAmount: 479),
+  ];
   double maxSugarAmount = 0;
   List<TitleModel> leftTitles = [];
   double maxYAdjusted = 0;
@@ -120,7 +120,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   }
 
   void calculateMaxSugarAmount() {
-    for (var record in widget.listRecords) {
+    for (var record in listRecords) {
       if (record.sugarAmount! > maxSugarAmount) {
         maxSugarAmount = record.sugarAmount!;
       }
@@ -144,7 +144,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   @override
   Widget build(BuildContext context) {
     double maxSugarAmount = 0.0;
-    for (var record in widget.listRecords) {
+    for (var record in listRecords) {
       if (record.sugarAmount! > maxSugarAmount) {
         maxSugarAmount = record.sugarAmount!;
       }
@@ -178,7 +178,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
       }
     }
 
-    for (SugarRecord record in widget.listRecords) {
+    for (SugarRecord record in listRecords) {
       DateTime dateTime = DateFormat("yyyy/MM/dd").parse(record.dayTime!);
       int daysSincePreviousMonth = dateTime.difference(previousMonth).inDays;
       double x = daysSincePreviousMonth.toDouble();
@@ -195,7 +195,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
           ),
           width: MediaQuery.of(context).size.width * 0.9,
           height: chartHeight,
-          child: widget.listRecords != null && widget.listRecords.isNotEmpty
+          child: listRecords != null && listRecords.isNotEmpty
               ? SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
@@ -336,7 +336,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   }
 
   List<FlSpot> listFlSpot() {
-    return widget.listRecords.map((e) {
+    return listRecords.map((e) {
       {
         return FlSpot(
             calculateDateNumber("${e.dayTime} ${e.hourTime}")! -

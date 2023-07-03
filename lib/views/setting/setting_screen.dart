@@ -107,7 +107,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   ButtonWidget(
                     onTap: () {
-                      share();
+                    //  sug
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "export_data",
