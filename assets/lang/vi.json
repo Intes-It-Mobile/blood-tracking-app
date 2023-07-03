@@ -101,5 +101,7 @@
     "add": "Add",
     "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?",
     "mg/dL":"mg/dL",
-    "mmol/L":"mmol/dL"
+    "mmol/L":"mmol/dL",
+    "change_unit": "Change unit",
+    "choose_this_unit": "Choose this unit"
 }
