@@ -29,11 +29,12 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-@override
+  @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +62,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pushNamed(Routes.edit_range);
               },
               child: Container(
@@ -74,7 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pushNamed(Routes.record_remind);
               },
               child: Container(
@@ -87,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 sugarInfoStore!.swapUnit();
               },
               child: Container(
@@ -107,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   ButtonWidget(
                     onTap: () {
-                    //  sug
+                      sugarInfoStore!.exportToExcel();
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "export_data",

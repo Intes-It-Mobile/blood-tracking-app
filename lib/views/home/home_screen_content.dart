@@ -10,13 +10,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
-import '../../models/chart_widget/chart_widget.dart';
+import 'chart_widget/chart_widget.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import 'average_info_slide_bar/average_info_slidebar.dart';
-import 'chart/chart_widget.dart';
 
 class HomeScreenContent extends StatefulWidget {
   const HomeScreenContent({

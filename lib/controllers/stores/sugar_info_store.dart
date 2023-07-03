@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_share/flutter_share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -332,47 +332,54 @@ abstract class _SugarInfoStoreBase with Store {
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
   }
 
-Future<void> exportToExcel() async {
-  // Read data from the JSON file
-  String jsonString = await rootBundle.loadString('assets/data.json');
-  List<dynamic> jsonData = json.decode(jsonString)['list_record'];
+  Future<void> exportToExcel() async {
+    // Read data from the JSON file
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('myObjectKey');
+    List<dynamic> jsonData = json.decode(jsonString!)['list_record'];
 
-  // Create an Excel workbook and worksheet
-  var excel = Excel.createExcel();
-  var sheet = excel['Sheet1'];
+    // Create an Excel workbook and worksheet
+    var excel = Excel.createExcel();
+    var sheet = excel['Sheet1'];
 
-  // Assign column names
-  sheet.cell(CellIndex.indexByString("A1")).value = "Date";
-  sheet.cell(CellIndex.indexByString("B1")).value = "Time";
-  sheet.cell(CellIndex.indexByString("C1")).value = "Blood Sugar";
-  sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
-  sheet.cell(CellIndex.indexByString("E1")).value = "Type";
+    // Assign column names
+    sheet.cell(CellIndex.indexByString("A1")).value = "Date";
+    sheet.cell(CellIndex.indexByString("B1")).value = "Time";
+    sheet.cell(CellIndex.indexByString("C1")).value = "Blood Sugar";
+    sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
+    sheet.cell(CellIndex.indexByString("E1")).value = "Type";
 
-  // Write data to each column
-  for (int i = 0; i < jsonData.length; i++) {
-    var record = jsonData[i];
-    sheet.cell(CellIndex.indexByString("A${i + 2}")).value = record['day_time'];
-    sheet.cell(CellIndex.indexByString("B${i + 2}")).value = record['hour_time'];
-    sheet.cell(CellIndex.indexByString("C${i + 2}")).value = record['sugar_amount'];
-    sheet.cell(CellIndex.indexByString("D${i + 2}")).value = record['condition_id'];
-    sheet.cell(CellIndex.indexByString("E${i + 2}")).value = record['status'];
+    // Write data to each column
+    for (int i = 0; i < jsonData.length; i++) {
+      var record = jsonData[i];
+      sheet.cell(CellIndex.indexByString("A${i + 2}")).value =
+          record['day_time'];
+      sheet.cell(CellIndex.indexByString("B${i + 2}")).value =
+          record['hour_time'];
+      sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
+          record['sugar_amount'];
+      sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
+          record['condition_id'];
+      sheet.cell(CellIndex.indexByString("E${i + 2}")).value = record['status'];
+    }
+
+    // Save the workbook as an Excel file
+    var bytes = excel.encode();
+    var directory = await getApplicationDocumentsDirectory();
+    var file = "${directory.path}/data.xlsx";
+    await File(file).writeAsBytes(bytes!);
+
+    // Share the Excel file
+    await Share.shareFiles([file], text: 'Sharing the Excel file');
+
+    print("File exported and shared: $file");
+    bool fileExists = await File(file).exists();
+    if (fileExists) {
+      print("File exported successfully: $file");
+    } else {
+      print("Failed to export file");
+    }
   }
-
-  // Save the workbook as an Excel file
-  var bytes = excel.encode();
-  var directory = await getApplicationDocumentsDirectory();
-  var file = "${directory.path}/data.xlsx";
-  await File(file).writeAsBytes(bytes!);
-
-  // Share the Excel file
-  await FlutterShare.shareFile(
-    title: 'Share Excel File',
-    text: 'Sharing the Excel file',
-    filePath: file,
-  );
-
-  print("File exported and shared: $file");
-}
 
   @observable
   SugarRecord? editingRecord;

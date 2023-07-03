@@ -7,7 +7,7 @@ import 'dart:math';
 import 'package:blood_sugar_tracking/models/sugar_info/sugar_info.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/stores/sugar_info_store.dart';
+import '../../../controllers/stores/sugar_info_store.dart';
 
 class ScrollableChart extends StatefulWidget {
   List<SugarRecord> listRecords = [];
