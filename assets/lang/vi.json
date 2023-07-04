@@ -55,7 +55,7 @@
     "email_label_txt": "Leave your email so that we can contact back if neccessary",
     "feedback_write_dwn": "Write down your feedback (*)",
     "feedback_write_dwn_label_txt": "Write at least 6 character to send",
-    "feedback_help": "Write at least 6 character to send",
+    "feedback_help": "Your feedback will help us better",
     "feedback_send_btn": "Send feedback",
     "date_and_time": "Date & Time",
     "condition": "Condition",
@@ -101,7 +101,7 @@
     "add": "Add",
     "add_new_record": "You have entered the record at this time. Do you want to cover it or add a new record?",
     "mg/dL":"mg/dL",
-    "mmol/L":"mmol/dL",
+    "mmol/L":"mmol/L",
     "change_unit": "Change unit",
     "choose_this_unit": "Choose this unit"
 }

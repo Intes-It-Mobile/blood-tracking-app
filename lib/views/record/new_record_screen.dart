@@ -559,7 +559,7 @@ Future<String?> showDiaLogUnit(BuildContext context) {
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.18,
+          height: MediaQuery.of(context).size.height * 0.17,
           width: 400,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

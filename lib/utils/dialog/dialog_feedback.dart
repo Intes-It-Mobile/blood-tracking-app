@@ -33,6 +33,8 @@ class _DialogFeedbackState extends State<DialogFeedback> {
       ),
       alignment: Alignment.bottomCenter,
       insetPadding: const EdgeInsets.only(bottom: 0.0),
+      titlePadding: const EdgeInsets.only(top: 10),
+      contentPadding: EdgeInsets.zero,
       title: Stack(
         children: [
           Center(
