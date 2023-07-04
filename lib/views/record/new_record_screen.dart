@@ -169,6 +169,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setChooseCondition(0);
       sugarInfoStore!.setStatusLevel("low");
       sugarInfoStore!.setInputSugarAmount(80);
+      sugarInfoStore!.sugarAmountController.text = "80";
     }
     isFirst == false;
   }
@@ -440,7 +441,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                             sugarInfoStore!
                                                 .checkValidateNewRecord();
                                             sugarInfoStore!.setInputSugarAmount(
-                                                double.parse(value) );
+                                                double.parse(value));
                                             print("onchange: ${value}");
                                           },
                                           textAlign: TextAlign.center,
@@ -567,7 +568,8 @@ Future<String?> showDiaLogUnit(BuildContext context) {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.getTranslate('change_unit')}',
-                style: AppTheme.hintText.copyWith(color: AppColors.AppColor4,fontWeight: FontWeight.w600),
+                style: AppTheme.hintText.copyWith(
+                    color: AppColors.AppColor4, fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 15,
@@ -578,11 +580,13 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                     child: Container(
                       height: 35,
                       decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(10)
-                      ),
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
-                        child: Text('${AppLocalizations.of(context)!.getTranslate('mg/dL')}',style: AppTheme.unitText,),
+                        child: Text(
+                          '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
+                          style: AppTheme.unitText,
+                        ),
                       ),
                     ),
                   ),
@@ -595,10 +599,12 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: AppColors.AppColor3),
-                          borderRadius: BorderRadius.circular(10)
-                      ),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
-                        child: Text('${AppLocalizations.of(context)!.getTranslate('mmol/L')}',style: AppTheme.unitText,),
+                        child: Text(
+                          '${AppLocalizations.of(context)!.getTranslate('mmol/L')}',
+                          style: AppTheme.unitText,
+                        ),
                       ),
                     ),
                   ),
@@ -607,13 +613,15 @@ Future<String?> showDiaLogUnit(BuildContext context) {
               const Spacer(),
               Container(
                 height: 35,
-                margin: const EdgeInsets.only(left: 50,right: 50),
+                margin: const EdgeInsets.only(left: 50, right: 50),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: AppColors.AppColor2,
                 ),
                 child: Center(
-                  child: Text('${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',style: AppTheme.TextIntroline16Text,
+                  child: Text(
+                    '${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',
+                    style: AppTheme.TextIntroline16Text,
                   ),
                 ),
               )
