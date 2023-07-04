@@ -103,6 +103,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                 fontWeight: FontWeight.w800,
                                 color: AppColors.AppColor2),
                           ),
+                          SizedBox(height: 10,),
                           Container(
                             height: 200,
                             decoration: BoxDecoration(

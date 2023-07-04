@@ -239,7 +239,8 @@ abstract class _SugarInfoStoreBase with Store {
         hourTime: choosedDayHourStr,
         status: currentStatus,
         sugarAmount: currentSugarAmount,
-        conditionId: chooseCondition!.id));
+        conditionId: chooseCondition!.id,
+        conditionName: chooseCondition!.name));
     listRecords = ListRecord(listRecord: listRecord);
     choosedDayTimeStr = null;
     choosedDayHourStr = null;

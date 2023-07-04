@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -82,6 +83,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           editRecordStore!
               .setEditInputSugarAmount(editRecordStore!.editingSugarAmount!);
           _controller.text = '${editRecordStore!.editingSugarAmount}';
+          editRecordStore!.sugarAmountEditControllerEdit.text = '${editRecordStore!.editingSugarAmount}';
         }
         setState(() {
           isFirst = false;
@@ -334,6 +336,11 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             width: 165,
                                             child: TextField(
+                                                inputFormatters: [
+                                            // Allow Decimal Number With Precision of 2 Only
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                          ],
                                               decoration: InputDecoration(
                                                 hintText: editRecordStore!
                                                     .editingSugarAmount!
