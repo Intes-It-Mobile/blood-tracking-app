@@ -10,12 +10,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
-import '../../models/chart_widget/chart_widget.dart';
+import 'chart_widget/chart_widget.dart';
+import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import 'average_info_slide_bar/average_info_slidebar.dart';
-import 'chart/chart_widget.dart';
 
 class HomeScreenContent extends StatefulWidget {
   const HomeScreenContent({
@@ -29,6 +29,7 @@ class HomeScreenContent extends StatefulWidget {
 class _HomeScreenContentState extends State<HomeScreenContent> {
   SugarInfoStore? sugarInfoStore;
   bool? isFirst = true;
+  List<SugarRecord>? listRecords = [];
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -39,6 +40,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     if (sugarInfoStore!.listRecord != null &&
         sugarInfoStore!.listRecord!.isNotEmpty) {
       sugarInfoStore!.getAverageNumber();
+      listRecords = sugarInfoStore!.listRecordArrangedByTime!;
     }
     if (isFirst = true) {
       sugarInfoStore!.setConditionFilterId("default_txt");
@@ -51,63 +53,101 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    return Column(
-      children: [
-        Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.32,
-              child: Stack(
-                children: [
-                  Container(
-                    width: screenWidth,
-                    height: screenHeight * 0.24384236453,
-                    color: AppColors.AppColor2,
-                    padding: const EdgeInsets.only(top: 20),
-                    // child: const TopWidgetHomeContent(),
-                  ),
-                  Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: 20,
-                    child: sugarInfoStore!.recentNumber != null
-                        ? AverageInfoSlideBarWidget()
-                        : Container(),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-                padding: const EdgeInsets.only(top: 20),
-                child: TopWidgetHomeContent())
-          ],
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            primary: true,
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                // LineChart(),
-                ScrollableChart(),
-                RecordInfoSlideBarWidget(),
-                const SizedBox(
-                  height: 5,
+    return Observer(builder: (_) {
+      return Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.32,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: screenWidth,
+                      height: screenHeight * 0.24384236453,
+                      color: AppColors.AppColor2,
+                      padding: const EdgeInsets.only(top: 20),
+                      // child: const TopWidgetHomeContent(),
+                    ),
+                    Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      bottom: 20,
+                      child: sugarInfoStore!.recentNumber != null
+                          ? AverageInfoSlideBarWidget()
+                          : Container(),
+                    ),
+                  ],
                 ),
-                ButtonWidget(
-                  mainAxisSizeMin: true,
-                  btnText: "new_record",
-                  btnColor: AppColors.AppColor4,
-                  suffixIconPath: Assets.iconEditBtn,
-                  onTap: () {
-                    Navigator.of(context).pushNamed(Routes.new_record);
-                  },
-                )
-              ],
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TopWidgetHomeContent())
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              primary: true,
+              physics: const BouncingScrollPhysics(),
+              child: Observer(builder: (_) {
+                return Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.getTranslate('chart')}",
+                            style: AppTheme.TextIntroline16Text.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.AppColor2),
+                          ),
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: listRecords != null &&
+                                    listRecords!.isNotEmpty
+                                ? Container(
+                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                    child: ScrollableChart(
+                                      listRecords: listRecords!,
+                                    ),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    RecordInfoSlideBarWidget(),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    ButtonWidget(
+                      mainAxisSizeMin: true,
+                      btnText: "new_record",
+                      btnColor: AppColors.AppColor4,
+                      suffixIconPath: Assets.iconEditBtn,
+                      onTap: () {
+                        Navigator.of(context).pushNamed(Routes.new_record);
+                      },
+                    )
+                  ],
+                );
+              }),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }
