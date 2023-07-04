@@ -89,6 +89,7 @@ class _SettingScreenState extends State<SettingScreen> {
             InkWell(
               onTap: (){
                 sugarInfoStore!.swapUnit();
+                showDiaLogUnit(context);
               },
               child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -144,4 +145,82 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
+}
+
+
+
+Future<String?> showDiaLogUnit(BuildContext context) {
+  return showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      content: StatefulBuilder(builder: (context, setModalState) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.17,
+          width: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${AppLocalizations.of(context)!.getTranslate('change_unit')}',
+                style: AppTheme.hintText.copyWith(color: AppColors.AppColor4,fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(
+                        child: Text('${AppLocalizations.of(context)!.getTranslate('mg/dL')}',style: AppTheme.unitText,),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.AppColor3),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(
+                        child: Text('${AppLocalizations.of(context)!.getTranslate('mmol/L')}',style: AppTheme.unitText,),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Container(
+                height: 35,
+                margin: const EdgeInsets.only(left: 50,right: 50),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: AppColors.AppColor2,
+                ),
+                child: Center(
+                  child: Text('${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',style: AppTheme.TextIntroline16Text,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
+    ),
+  );
 }

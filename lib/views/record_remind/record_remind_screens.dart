@@ -169,7 +169,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                 (savedDateString(a.alarmDateTime!)).compareTo(
                                     savedDateString(b.alarmDateTime!)));
                           }
-                          var alarmTime = DateFormat('hh:mm')
+                          var alarmTime = DateFormat('HH:mm')
                               .format(_currentAlarms![index].alarmDateTime!);
                           print(alarmTime);
                           return Card(
@@ -215,7 +215,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                                   onTap: () {
                                                     showDiaLogEdit(
                                                         context,
-                                                        _currentAlarms![index].id);
+                                                        _currentAlarms![index].id!,index);
                                                     print(_currentAlarms![index]);
                                                     // print(_currentAlarms![index].alarmDateTime);
                                                   },
@@ -249,7 +249,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                                                     setModalState(() {
                                                       _currentAlarms?[index].isPending = value;
                                                       //saveSwitchState(value);
-
                                                     });
                                                     await _alarmHelper
                                                         .updateIsDone(
@@ -278,7 +277,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                         onPressed: () {
                           _alarmTimeString =
                               DateFormat('HH:mm').format(DateTime.now());
-                          showDiaLog(context, null);
+                          showDiaLog(context, null,_currentAlarms!.length);
                           // scheduleAlarm();
                         },
                         child: Container(
@@ -343,24 +342,27 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
   }
 
 
-  Widget CustomSwitchTimer(BuildContext context, int? id) {
+  Widget CustomSwitchTimer(BuildContext context,int index) {
     return StatefulBuilder(builder: (context, setModalState) {
-      print("id: ${id}");
       return CupertinoSwitch(
         trackColor: AppColors.AppColor1,
         activeColor: AppColors.AppColor2,
-        onChanged: (value) {
+        onChanged: (value) async{
           setModalState(() {
             _isRepeatSelected = value;
             //saveSwitchState(value);
           });
+          await _alarmHelper
+              .updateIsDone(
+              _isRepeatSelected,_currentAlarms![index]
+          );
         },
         value: _isRepeatSelected,
       );
     });
   }
 
-  Future<String?> showDiaLog(BuildContext context, int? id) {
+  Future<String?> showDiaLog(BuildContext context, int? id,int index) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) =>
@@ -416,7 +418,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              CustomSwitchTimer(context, id),
+                              CustomSwitchTimer(context,index),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -502,7 +504,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
     );
   }
 
-  Future<String?> showDiaLogEdit(BuildContext context, int? index,) {
+  Future<String?> showDiaLogEdit(BuildContext context, int index,int id) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) =>
@@ -559,7 +561,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              CustomSwitchTimer(context, index),
+                              CustomSwitchTimer(context,index),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -645,11 +647,6 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
           ),
     );
   }
-  @override
-  void dispose() {
-    _currentAlarms?.length;
-    super.dispose();
-  }
 
   Widget customSwitchDialog(bool val, Function onChangeMethod) {
     return CupertinoSwitch(
@@ -723,7 +720,7 @@ class _RecordRemindScreensState extends State<RecordRemindScreens> {
       scheduleAlarmDateTime = _alarmTime;
     } else
       scheduleAlarmDateTime = _alarmTime!.add(Duration(days: 1));
-    _alarmHelper.update(alarmInfo);
+    _alarmHelper.update(alarmInfo,_isRepeatSelected);
     if (scheduleAlarmDateTime != null) {
       scheduleAlarm(scheduleAlarmDateTime, alarmInfo,
           isRepeating: _isRepeatingEdit);
