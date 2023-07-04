@@ -68,7 +68,7 @@ class AlarmHelper {
     return _alarms;
   }
 
-  Future<int> update(AlarmInfo alarmInfo) async {
+  Future<int> update(AlarmInfo alarmInfo,bool isDoneTodb) async {
     var db = await this.database;
     final result = await db.update(tableAlarm, alarmInfo.toMap(),
         where: '$columnId = ?', whereArgs: [alarmInfo.id]);
