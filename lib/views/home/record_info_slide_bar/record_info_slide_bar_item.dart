@@ -3,10 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/app_theme.dart';
 import '../../../constants/assets.dart';
 import '../../../constants/colors.dart';
+import '../../../controllers/stores/sugar_info_store.dart';
 import '../../../models/sugar_info/sugar_info.dart';
 import '../../../routes.dart';
 import '../../../utils/locale/appLocalizations.dart';
@@ -32,6 +34,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
 
 class _RecordInfoSliderItemWidgetState
     extends State<RecordInfoSliderItemWidget> {
+  SugarInfoStore? sugarInfoStore;    
   SugarRecord? editRecord;
   String? date = "2023/06/15";
   String? time = "15:58";
@@ -50,7 +53,12 @@ class _RecordInfoSliderItemWidgetState
     }
   }
 
-  final String name = "kieuvietthang";
+  @override
+  void didChangeDependencies() {
+        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +110,7 @@ class _RecordInfoSliderItemWidgetState
                                     .copyWith(fontSize: 32),
                               ),
                       ),
-                      Text("mg/dL", style: AppTheme.appBodyTextStyle),
+                      Text("${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),

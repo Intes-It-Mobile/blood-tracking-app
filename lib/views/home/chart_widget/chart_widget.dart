@@ -21,6 +21,7 @@ class ScrollableChart extends StatefulWidget {
 class _ScrollableChartState extends State<ScrollableChart> {
   SugarInfoStore? sugarInfoStore;
   List<SugarRecord> listRecordsDisplay = [];
+  ScrollController _scrollController = ScrollController();
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -131,7 +132,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
 
   void adjustMaxY() {
     double maxVisibleSugarAmount = maxSugarAmount;
-
+  
     // Ensure that the maxYAdjusted value is divisible by 50
     maxYAdjusted = maxSugarAmount.toInt();
     for (var i = 0;; i++) {
@@ -268,9 +269,10 @@ class _ScrollableChartState extends State<ScrollableChart> {
                     SizedBox(width: 10),
                     Flexible(
                       child: SingleChildScrollView(
+                        controller: _scrollController,
                         scrollDirection: Axis.horizontal,
                         child: SizedBox(
-                          width: 1500,
+                          width: 4000,
                           child: LineChart(
                             LineChartData(
                               borderData: FlBorderData(show: false),
@@ -422,7 +424,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
     int seconds = int.parse(parts[1]);
     double result = minutes + (seconds / 100);
     result = double.parse(result.toStringAsFixed(3));
-    double resultA = result / 50;
+    double resultA = result / 40;
     return resultA;
   }
 

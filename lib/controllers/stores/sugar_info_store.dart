@@ -11,6 +11,8 @@ import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
+import '../../utils/locale/appLocalizations.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -152,8 +154,12 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? isChoosedDayTimeStrDisplay = false;
 
+  @observable
+  DateTime? choosedDayTimePicker;
+
   @action
   setchoosedDayTime(DateTime choosedDayTime) {
+    choosedDayTimePicker = choosedDayTime;
     (choosedDayTimeStrDisplay =
         DateFormat('yyyy     MM     dd').format(choosedDayTime));
     choosedDayTimeStr = DateFormat('yyyy/MM/dd').format(choosedDayTime);
@@ -351,7 +357,7 @@ abstract class _SugarInfoStoreBase with Store {
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
   }
 
-  Future<void> exportToExcel() async {
+  Future<void> exportToExcel(BuildContext context) async {
     // Read data from the JSON file
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('myObjectKey');
@@ -376,10 +382,12 @@ abstract class _SugarInfoStoreBase with Store {
       sheet.cell(CellIndex.indexByString("B${i + 2}")).value =
           record['hour_time'];
       sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
-          record['sugar_amount'];
+          "${record['sugar_amount']}";
       sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
-          record['condition_name'];
-      sheet.cell(CellIndex.indexByString("E${i + 2}")).value = record['status'];
+          "${AppLocalizations.of(context)!.getTranslate(record['condition_name'])}";
+
+      sheet.cell(CellIndex.indexByString("E${i + 2}")).value =
+          "${AppLocalizations.of(context)!.getTranslate(record['status'])}";
     }
 
     // Save the workbook as an Excel file
@@ -634,10 +642,10 @@ abstract class _SugarInfoStoreBase with Store {
       if (condition.sugarAmount != null) {
         for (var sugarAmount in condition.sugarAmount!) {
           if (sugarAmount.minValue != null) {
-            sugarAmount.minValue = sugarAmount.minValue! ~/ 18;
+            sugarAmount.minValue = sugarAmount.minValue! / 18;
           }
           if (sugarAmount.maxValue != null) {
-            sugarAmount.maxValue = sugarAmount.maxValue! ~/ 18;
+            sugarAmount.maxValue = sugarAmount.maxValue! / 18;
           }
         }
       }
@@ -653,12 +661,13 @@ abstract class _SugarInfoStoreBase with Store {
       divisionnUnit();
     }
   }
+
   @observable
   bool? optionUnitIsMol;
 
   @action
   chooseUnitIsMol(bool isMol) {
-  optionUnitIsMol = isMol;
+    optionUnitIsMol = isMol;
   }
 ////////////////////////////////////////////////////////////////
 

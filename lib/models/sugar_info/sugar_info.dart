@@ -34,8 +34,8 @@ class Conditions {
 
 class SugarAmount {
   String? status;
-  int? minValue;
-  int? maxValue;
+  double? minValue;
+  double? maxValue;
 
   SugarAmount({this.status, this.minValue, this.maxValue});
 

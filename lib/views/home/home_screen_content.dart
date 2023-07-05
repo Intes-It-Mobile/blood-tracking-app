@@ -115,8 +115,11 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                   ),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
-                              child: listRecords != null &&
-                                      listRecords!.isNotEmpty
+                              child: sugarInfoStore!
+                                              .listRecordArrangedByTime! !=
+                                          null &&
+                                      sugarInfoStore!
+                                          .listRecordArrangedByTime!.isNotEmpty
                                   ? Container(
                                       padding:
                                           EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -128,10 +131,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                       }),
                                     )
                                   : Image.asset(Assets.empty_chart)
-                              // : SvgPicture.asset(
-                              //     Assets.empty_chart,
-
-                              //   ),
                               ),
                         ],
                       ),

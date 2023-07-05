@@ -59,7 +59,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
       maxDateTime: DateTime.now(),
-      initialDateTime: selectedDateTime ?? DateTime.now(),
+      initialDateTime: sugarInfoStore!.choosedDayTimePicker ?? DateTime.now(),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {

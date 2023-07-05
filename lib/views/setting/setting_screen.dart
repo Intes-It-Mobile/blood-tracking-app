@@ -110,7 +110,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   ButtonWidget(
                     onTap: () {
-                      sugarInfoStore!.exportToExcel();
+                      sugarInfoStore!.exportToExcel(context);
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "export_data",

@@ -166,7 +166,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showDiaLog(context);
+                      _showDiaLogDelete(context);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
@@ -432,29 +432,30 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               mainAxisSizeMin: true,
                               onTap: () {
-                                editRecordStore!.checkValidateEditRecord(0);
-                                if (editRecordStore!.errorText == null ||
-                                    editRecordStore!.errorText == "") {
-                                  sugarInfoStore!.editRecord(
-                                      recordId!,
-                                      SugarRecord(
-                                          conditionId: editRecordStore!
-                                              .editChooseCondition!.id,
-                                          dayTime: editRecordStore!
-                                              .editingDayTimeStr!,
-                                          hourTime: editRecordStore!
-                                              .editingHourTimeStr!,
-                                          id: recordId,
-                                          status: editRecordStore!
-                                              .currentEditStatus,
-                                          sugarAmount: editRecordStore!
-                                              .editingSugarAmount));
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    Routes.home,
-                                    (route) => false,
-                                  );
-                                }
+                                _showDiaLogChange(context);
+                                // editRecordStore!.checkValidateEditRecord(0);
+                                // if (editRecordStore!.errorText == null ||
+                                //     editRecordStore!.errorText == "") {
+                                //   sugarInfoStore!.editRecord(
+                                //       recordId!,
+                                //       SugarRecord(
+                                //           conditionId: editRecordStore!
+                                //               .editChooseCondition!.id,
+                                //           dayTime: editRecordStore!
+                                //               .editingDayTimeStr!,
+                                //           hourTime: editRecordStore!
+                                //               .editingHourTimeStr!,
+                                //           id: recordId,
+                                //           status: editRecordStore!
+                                //               .currentEditStatus,
+                                //           sugarAmount: editRecordStore!
+                                //               .editingSugarAmount));
+                                //   Navigator.pushNamedAndRemoveUntil(
+                                //     context,
+                                //     Routes.home,
+                                //     (route) => false,
+                                //   );
+                                // }
                               },
                               btnColor: AppColors.AppColor4,
                               btnText: "save_record",
@@ -470,8 +471,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           : Container(),
     );
   }
-
-  _showDiaLog(BuildContext context) {
+  
+  _showDiaLogDelete(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -541,6 +542,107 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               child: Center(
                                 child: Text(
                                     "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                    style: AppTheme.appBodyTextStyle.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.mainBgColor)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ));
+  }
+  _showDiaLogChange(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 8),
+              elevation: 0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              content: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 42),
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('save_edit_dialog_content')}",
+                        style: AppTheme.Headline16Text.copyWith(
+                            fontWeight: FontWeight.w500, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.AppColor3,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.AppColor2),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              editRecordStore!.checkValidateEditRecord(0);
+                              if (editRecordStore!.errorText == null ||
+                                  editRecordStore!.errorText == "") {
+                                sugarInfoStore!.editRecord(
+                                    recordId!,
+                                    SugarRecord(
+                                        conditionId: editRecordStore!
+                                            .editChooseCondition!.id,
+                                        dayTime:
+                                            editRecordStore!.editingDayTimeStr!,
+                                        hourTime: editRecordStore!
+                                            .editingHourTimeStr!,
+                                        id: recordId,
+                                        status:
+                                            editRecordStore!.currentEditStatus,
+                                        sugarAmount: editRecordStore!
+                                            .editingSugarAmount));
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  Routes.home,
+                                  (route) => false,
+                                );
+                              }
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              // width: 144,
+                              // height: 36,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor2,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('change_btn')}",
                                     style: AppTheme.appBodyTextStyle.copyWith(
                                         fontSize: 14,
                                         color: AppColors.mainBgColor)),
