@@ -82,15 +82,27 @@ abstract class _SugarInfoStoreBase with Store {
   @action
   setCurrentStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
-    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
-      currentStatus = chooseCondition!.sugarAmount!
-          .where((e) =>
-              e.minValue! * 1.0 <= inputAmount &&
-              inputAmount < e.maxValue! * 1.0)
-          .first
-          .status;
+    if (swapedToMol == false) {
+      if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
+    } else if (swapedToMol == true) {
+      if (inputAmount != null && inputAmount >= 1 || inputAmount <= 35) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
     }
-    print("Status: ${currentStatus}");
   }
 
   @action
@@ -198,9 +210,7 @@ abstract class _SugarInfoStoreBase with Store {
   replaceRecord(BuildContext context) {
     SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
         record.dayTime == choosedDayTimeStr &&
-        record.hourTime == choosedDayHourStr &&
-        record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus);
+        record.hourTime == choosedDayHourStr);
     {
       recordUpdate.conditionId = chooseCondition!.id;
       recordUpdate.dayTime = choosedDayTimeStr;
@@ -291,11 +301,19 @@ abstract class _SugarInfoStoreBase with Store {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (swapedToMol == false) {}
-      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-        setErrorText("Please enter correct value between 18-630 mg/dL");
-      } else {
-        setErrorText("");
+      if (swapedToMol == false) {
+        if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+          setErrorText("Please enter correct value between 18-630 mg/dL");
+        } else {
+          setErrorText("");
+        }
+      }
+      if (swapedToMol == true) {
+        if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
+          setErrorText("Please enter correct value between 1-35 mg/dL");
+        } else {
+          setErrorText("");
+        }
       }
     }
   }
@@ -360,7 +378,7 @@ abstract class _SugarInfoStoreBase with Store {
       sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
           record['sugar_amount'];
       sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
-          record['condition_id'];
+          record['condition_name'];
       sheet.cell(CellIndex.indexByString("E${i + 2}")).value = record['status'];
     }
 
@@ -579,8 +597,9 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? swapedToMol = false;
   @action
-  setSwapStatus() {
-    swapedToMol = !swapedToMol!;
+  @action
+  setSwapStatusToMol(bool? status) {
+    swapedToMol = status;
   }
 
   @action
@@ -588,6 +607,18 @@ abstract class _SugarInfoStoreBase with Store {
     for (int i = 0; i < listRecord!.length; i++) {
       if (listRecord![i].sugarAmount != null) {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! * 18;
+      }
+    }
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! * 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! * 18;
+          }
+        }
       }
     }
   }
@@ -599,22 +630,35 @@ abstract class _SugarInfoStoreBase with Store {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
       }
     }
-    // for (int i = 0; i < listRootConditions!.length; i++) {
-    //   if (listRootConditions![i].sugarAmount != null) {
-    //     listRootConditions![i].sugarAmount = listRootConditions![i].sugarAmount! / 18;
-    //   }
-    // }
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! ~/ 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! ~/ 18;
+          }
+        }
+      }
+    }
   }
 
   @action
   swapUnit() {
     if (swapedToMol == false) {
-      divisionnUnit();
-    }
-    if (swapedToMol == true) {
       multiplicationUnit();
     }
-    setSwapStatus();
+    if (swapedToMol == true) {
+      divisionnUnit();
+    }
+  }
+  @observable
+  bool? optionUnitIsMol;
+
+  @action
+  chooseUnitIsMol(bool isMol) {
+  optionUnitIsMol = isMol;
   }
 ////////////////////////////////////////////////////////////////
 

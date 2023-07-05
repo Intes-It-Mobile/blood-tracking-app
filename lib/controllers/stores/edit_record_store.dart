@@ -36,7 +36,7 @@ abstract class _EditRecordStoreBase with Store {
   String? editStatus;
 
   @observable
-  Conditions?  editChooseCondition;
+  Conditions? editChooseCondition;
   @observable
   List<Conditions>? listRootConditions;
   @observable
@@ -60,16 +60,31 @@ abstract class _EditRecordStoreBase with Store {
 
   @action
   setEditInputSugarAmount(double inputAmount) {
-    currentEditStatus = editChooseCondition!.sugarAmount!
-        .where((e) =>
-            e.minValue! * 1.0 <= inputAmount &&
-            inputAmount <= e.maxValue! * 1.0)
-        .first
-        .status;
-    editingSugarAmount = inputAmount;
+    setCurrentEditAmount(inputAmount);
+    setCurrentEditStatus(inputAmount);
     if (currentEditStatus != null) {
       setEditStatusLevel(currentEditStatus);
     }
+    print("inputAmount:    $inputAmount");
+  }
+
+  @action
+  setCurrentEditAmount(double inputAmount) {
+    editingSugarAmount = inputAmount;
+  }
+
+  @action
+  setCurrentEditStatus(double inputAmount) {
+    //  Lớn hơn >= min, nhỏ hơn max
+    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+      currentEditStatus = editChooseCondition!.sugarAmount!
+          .where((e) =>
+              e.minValue! * 1.0 <= inputAmount &&
+              inputAmount < e.maxValue! * 1.0)
+          .first
+          .status;
+    }
+    print("Status: ${editStatus}");
   }
 
   @action
@@ -108,7 +123,8 @@ abstract class _EditRecordStoreBase with Store {
   }
 
   @action
-  checkValidateNewRecord() {
+  checkValidateEditRecord(double value) {
+    print("Check Validate: $editingSugarAmount");
     if (editingDayTimeStr != null &&
         editingHourTimeStr != null &&
         currentEditStatus != null &&
@@ -127,17 +143,11 @@ abstract class _EditRecordStoreBase with Store {
   final TextEditingController sugarAmountEditControllerEdit =
       TextEditingController();
 
-
-
   @computed
   bool get isButtonEnabled =>
-     editingSugarAmount != null &&
+      editingSugarAmount != null &&
       editingSugarAmount! >= 18 &&
       editingSugarAmount! <= 630;
-
-
-
-
 
   @observable
   String sugarAmountEdit = '80';
@@ -168,7 +178,3 @@ abstract class _EditRecordStoreBase with Store {
     sugarAmountEdit = '80';
   }
 }
-
-
-
-

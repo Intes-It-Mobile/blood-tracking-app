@@ -15,18 +15,23 @@ import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+  var initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
-      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {});
-  var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
+      onDidReceiveLocalNotification:
+          (int id, String? title, String? body, String? payload) async {});
+  var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: (String? payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
@@ -50,7 +55,7 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<MenuInfo>(
             create: (context) => MenuInfo(MenuType.alarm),
-            child:  const SplashScreen(),
+            child: const SplashScreen(),
           ),
           Provider<EditRecordStore>(
             create: (_) => EditRecordStore(),
@@ -70,11 +75,29 @@ class MyApp extends StatelessWidget {
             Locale('vi', 'VI'),
             Locale('fr', 'FR'),
           ],
-          localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-              deviceLocale != null && ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
-                  ? deviceLocale
-                  : supportedLocales.first,
+          localeResolutionCallback:
+              (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                  deviceLocale != null &&
+                          ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+                      ? deviceLocale
+                      : supportedLocales.first,
           theme: ThemeData(
+            primaryColor: AppColors.AppColor2,
+            colorScheme: ColorScheme(
+              brightness: Brightness.light,
+              error: Colors.red,
+              onError: Colors.red,
+              primary: AppColors.AppColor2,
+              primaryVariant: AppColors.AppColor2,
+              secondary: AppColors.AppColor2,
+              secondaryVariant: AppColors.AppColor2,
+              background: Colors.white,
+              surface: Colors.grey,
+              onPrimary: Colors.white,
+              onSecondary: Colors.black,
+              onBackground: Colors.black,
+              onSurface: Colors.white,
+            ),
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,

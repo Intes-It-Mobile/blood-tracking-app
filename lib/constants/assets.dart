@@ -22,6 +22,7 @@ class Assets {
   static const String history_mpt = "assets/images/have_not_history.png";
   static const String intro_img = "assets/images/intro2_color.png";
   static const String intro_img1 = "assets/images/intro2_mol.png";
+  static const String empty_chart = "assets/images/empty_chart.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";

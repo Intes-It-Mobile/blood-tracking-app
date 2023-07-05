@@ -103,26 +103,36 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                 fontWeight: FontWeight.w800,
                                 color: AppColors.AppColor2),
                           ),
-                          SizedBox(height: 10,),
-                          Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: listRecords != null &&
-                                    listRecords!.isNotEmpty
-                                ? Container(
-                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                    child: ScrollableChart(
-                                      listRecords: listRecords!,
-                                    ),
-                                  )
-                                : Container(),
+                          SizedBox(
+                            height: 10,
                           ),
+                          Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: listRecords != null &&
+                                      listRecords!.isNotEmpty
+                                  ? Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                      child: Observer(builder: (_) {
+                                        return ScrollableChart(
+                                          listRecords: sugarInfoStore!
+                                              .listRecordArrangedByTime!,
+                                        );
+                                      }),
+                                    )
+                                  : Image.asset(Assets.empty_chart)
+                              // : SvgPicture.asset(
+                              //     Assets.empty_chart,
+
+                              //   ),
+                              ),
                         ],
                       ),
                     ),

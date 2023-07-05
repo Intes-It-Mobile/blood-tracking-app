@@ -28,7 +28,7 @@ class NewRecordScreen extends StatefulWidget {
 
 class _NewRecordScreenState extends State<NewRecordScreen> {
   FocusNode focusNode = FocusNode();
-  DateTime selectedDateTime = DateTime.now();
+  DateTime? selectedDateTime;
   DateTime timeNow = DateTime.now();
   SugarInfoStore? sugarInfoStore;
 
@@ -121,11 +121,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          Routes.home,
-                          (route) => false,
-                        );
+                        Navigator.of(context).pop();
                       },
                       child: Container(
                         // margin: EdgeInsets.only(left: 23),
@@ -153,6 +149,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   @override
   void didChangeDependencies() {
+    print("isFirsttttttttttttttttttttt:     ${isFirst}  ");
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     sugarInfoStore!.successSaveRecord == true
         ? setState(() {
@@ -166,12 +163,21 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     if (isFirst == true) {
       sugarInfoStore!.setchoosedDayHour(timeNow!);
       sugarInfoStore!.setchoosedDayTime(timeNow!);
-      sugarInfoStore!.setChooseCondition(0);
       sugarInfoStore!.setStatusLevel("low");
-      sugarInfoStore!.setInputSugarAmount(80);
-      sugarInfoStore!.sugarAmountController.text = "80";
+      sugarInfoStore!.setChooseCondition(0);
+      if (sugarInfoStore!.swapedToMol == false) {
+        sugarInfoStore!.setInputSugarAmount(80);
+        sugarInfoStore!.sugarAmountController.text = "80";
+      } else if (sugarInfoStore!.swapedToMol == true) {
+        sugarInfoStore!.setInputSugarAmount(4);
+        sugarInfoStore!.sugarAmountController.text = "4";
+      }
+      ;
+      setState(() {
+        isFirst = false;
+        print(" set isFirsttttttttttttttttttttt:     ${isFirst}  ");
+      });
     }
-    isFirst == false;
   }
 
   @override
@@ -395,62 +401,35 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                             FilteringTextInputFormatter.allow(
                                                 RegExp(r'^\d{0,3}\.?\d{0,2}')),
                                           ],
-                                          decoration: InputDecoration(
-                                            errorText: sugarInfoStore!
-                                                        .isButtonEnabled &&
-                                                    sugarInfoStore!
-                                                            .tempSugarAmount !=
-                                                        null
-                                                ? 'Please enter correct value between 18-630 mg/dL'
-                                                : null,
-                                          ),
-                                          // maxLengthEnforcement:
-                                          //     MaxLengthEnforcement.none,
-                                          // maxLength: 3,
                                           controller: sugarInfoStore!
                                               .sugarAmountController,
                                           focusNode: focusNode,
-                                          onTap: () {
-                                            final TextSelection
-                                                currentSelection =
-                                                _controller!.selection;
-                                            _controller!.value =
-                                                _controller!.value.copyWith(
-                                              selection:
-                                                  TextSelection.collapsed(
-                                                      offset: _controller!
-                                                          .text.length),
-                                              composing: TextRange.empty,
-                                            );
-                                            if (currentSelection.baseOffset <
-                                                _controller!.text.length) {
-                                              final TextSelection newSelection =
-                                                  TextSelection.collapsed(
-                                                      offset: _controller!
-                                                          .text.length);
-                                              _controller!.selection =
-                                                  newSelection;
-                                            }
+                                          onEditingComplete: () {
+                                            print(
+                                                "1111111111111111 onEditing 1111111111111111");
+                                            sugarInfoStore!
+                                                .validateSugarAmount();
                                           },
-                                          onEditingComplete: sugarInfoStore!
-                                              .validateSugarAmount,
                                           onChanged: (value) {
+                                            print(
+                                                "1111111111111111 onChange 1111111111111111");
                                             sugarInfoStore!.setInputSugarAmount(
                                                 double.parse(value));
-
                                             sugarInfoStore!
                                                 .checkValidateNewRecord();
-                                            sugarInfoStore!.setInputSugarAmount(
-                                                double.parse(value));
                                             print("onchange: ${value}");
                                           },
                                           textAlign: TextAlign.center,
                                           onSubmitted: (value) {
-                                            sugarInfoStore!
-                                                .checkValidateNewRecord();
+                                            print(
+                                                "1111111111111111 submit 1111111111111111");
                                             sugarInfoStore!.setInputSugarAmount(
                                                 double.tryParse(value)!);
+                                            sugarInfoStore!
+                                                .checkValidateNewRecord();
                                             print(value);
+                                            FocusScope.of(context).unfocus();
+                                            // Navigator.of(context).pop();
                                           },
                                           keyboardType: TextInputType.number,
                                           style: AppTheme.sugarInputText,
@@ -464,7 +443,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                           showDiaLogUnit(context);
                                         },
                                         child: Text(
-                                          "mg/dL",
+                                          "${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
                                           style: AppTheme.appBodyTextStyle
                                               .copyWith(color: Colors.black),
                                         ),
@@ -472,34 +451,20 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                     ],
                                   ),
                                 ),
-                                // Container(
-                                //     margin: EdgeInsets.only(left: 19),
-                                //     child:
-                                //         SvgPicture.asset(Assets.iconSwapUnit))
                               ],
                             ),
                           )
                         ],
                       ),
                     ),
-
                     Center(
-                      child: Text(
-                        "${sugarInfoStore!.errorText}",
-                        style: AppTheme.errorText,
-                      ),
+                      child: Observer(builder: (_) {
+                        return Text(
+                          "${sugarInfoStore!.errorText}",
+                          style: AppTheme.errorText,
+                        );
+                      }),
                     ),
-                    // Center(
-                    //   child: Container(
-                    //     margin: EdgeInsets.symmetric(vertical: 11),
-                    //     child: Observer(builder: (_) {
-                    //       return Text(
-                    //         "${AppLocalizations.of(context)!.getTranslate(sugarInfoStore!.errorText != null && sugarInfoStore!.errorText != "" ? sugarInfoStore!.errorText! : "")}",
-                    //         style: AppTheme.errorText,
-                    //       );
-                    //     }),
-                    //   ),
-                    // ),
                     Center(
                       child: ButtonWidget(
                         enable: sugarInfoStore!.errorText == null ||
@@ -580,7 +545,7 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                     child: Container(
                       height: 35,
                       decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
+                          color:   AppColors.AppColor3,
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
@@ -831,10 +796,12 @@ class _StatusWidgetState extends State<StatusWidget> {
         }),
         Expanded(
           child: Center(
-            child: Text(
-              "${getAmountValue(sugarInfoStore!.statusLevel)}",
-              style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
-            ),
+            child: Observer(builder: (_) {
+              return Text(
+                "${getAmountValue(sugarInfoStore!.statusLevel)}",
+                style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+              );
+            }),
           ),
         )
       ],
