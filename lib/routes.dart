@@ -34,7 +34,7 @@ class Routes {
     new_record: (context) => NewRecordScreen(),
     edit_record: (context) => EditRecordScreen(),
     edit_range: (context) => EditRangeScreens(),
-    record_remind: (context) => RecordRemindScreens(onToggled: (bool isToggled) {  },),
+    record_remind: (context) => ExampleAlarmHomeScreen(),
     intro: (context) => IntroScreen(),
     history: (context) => RecordHistory(),
   };
