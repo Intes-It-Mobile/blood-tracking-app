@@ -1075,11 +1075,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setSwapStatus() {
+  dynamic setSwapStatusToMol(bool? status) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.setSwapStatus');
+        name: '_SugarInfoStoreBase.setSwapStatusToMol');
     try {
-      return super.setSwapStatus();
+      return super.setSwapStatusToMol(status);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }

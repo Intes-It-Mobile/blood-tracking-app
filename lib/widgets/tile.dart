@@ -35,37 +35,37 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
     super.initState();
   }
 
-  AlarmSettings buildAlarmSettings() {
-    final now = DateTime.now();
-    final id = creating
-        ? DateTime.now().millisecondsSinceEpoch % 100000
-        : widget.alarmSettings!.id;
-
-    DateTime dateTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      alarmTime.hour,
-      alarmTime.minute,
-      0,
-      0,
-    );
-    if (dateTime.isBefore(DateTime.now())) {
-      dateTime = dateTime.add(const Duration(days: 1));
-    }
-
-    final alarmSettings = AlarmSettings(
-      id: id,
-      dateTime: dateTime,
-      loopAudio: widget.loopAudio,
-      vibrate: widget.loopAudio,
-      notificationTitle: widget.loopAudio ? 'Enter a record' : null,
-      notificationBody: widget.loopAudio ? 'Time: ${alarms?.last.dateTime}' : null,
-      assetAudioPath: '',
-      stopOnNotificationOpen: false,
-    );
-    return alarmSettings;
-  }
+  // AlarmSettings buildAlarmSettings() {
+  //   final now = DateTime.now();
+  //   final id = creating
+  //       ? DateTime.now().millisecondsSinceEpoch % 100000
+  //       : widget.alarmSettings!.id;
+  //
+  //   DateTime dateTime = DateTime(
+  //     now.year,
+  //     now.month,
+  //     now.day,
+  //     alarmTime.hour,
+  //     alarmTime.minute,
+  //     0,
+  //     0,
+  //   );
+  //   if (dateTime.isBefore(DateTime.now())) {
+  //     dateTime = dateTime.add(const Duration(days: 1));
+  //   }
+  //
+  //   final alarmSettings = AlarmSettings(
+  //     id: id,
+  //     dateTime: dateTime,
+  //     loopAudio: widget.loopAudio,
+  //     vibrate: widget.loopAudio,
+  //     notificationTitle: widget.loopAudio ? 'Enter a record' : null,
+  //     notificationBody: widget.loopAudio ? 'Time: ${alarms?.last.dateTime}' : null,
+  //     assetAudioPath: '',
+  //     stopOnNotificationOpen: false,
+  //   );
+  //   return alarmSettings;
+  // }
 
   @override
   Widget build(BuildContext context) {

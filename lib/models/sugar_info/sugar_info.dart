@@ -34,8 +34,8 @@ class Conditions {
 
 class SugarAmount {
   String? status;
-  int? minValue;
-  int? maxValue;
+  double? minValue;
+  double? maxValue;
 
   SugarAmount({this.status, this.minValue, this.maxValue});
 
@@ -47,8 +47,7 @@ class SugarAmount {
 }
 
 class ListRecord {
- 
- List<SugarRecord>? listRecord;
+  List<SugarRecord>? listRecord;
 
   ListRecord({this.listRecord});
 
@@ -77,8 +76,16 @@ class SugarRecord {
   double? sugarAmount;
   String? dayTime;
   String? hourTime;
+  String? conditionName;
 
-  SugarRecord({this.status, this.sugarAmount, this.dayTime, this.hourTime,this.id,this.conditionId});
+  SugarRecord(
+      {this.status,
+      this.sugarAmount,
+      this.dayTime,
+      this.hourTime,
+      this.id,
+      this.conditionId,
+      this.conditionName});
 
   SugarRecord.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -87,6 +94,7 @@ class SugarRecord {
     hourTime = json['hour_time'];
     id = json['id'];
     conditionId = json['condition_id'];
+    conditionName = json['condition_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +105,7 @@ class SugarRecord {
     data['hour_time'] = this.hourTime;
     data['id'] = this.id;
     data['condition_id'] = this.conditionId;
+    data['condition_name'] = this.conditionName;
     return data;
   }
 }

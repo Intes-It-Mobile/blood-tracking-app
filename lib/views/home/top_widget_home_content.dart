@@ -215,8 +215,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           });
         },
         buttonStyleData: ButtonStyleData(
-          height: 30,
-          width: 120,
+          height: 20,
+          width: 80,
           // padding: const EdgeInsets.only(left: 14, right: 14),
           decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(14),

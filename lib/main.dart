@@ -17,7 +17,8 @@ import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<MenuInfo>(
             create: (context) => MenuInfo(MenuType.alarm),
-            child:  const SplashScreen(),
+            child: const SplashScreen(),
           ),
           Provider<EditRecordStore>(
             create: (_) => EditRecordStore(),
@@ -75,10 +76,12 @@ class MyApp extends StatelessWidget {
             Locale('vi', 'VI'),
             Locale('fr', 'FR'),
           ],
-          localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-              deviceLocale != null && ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
-                  ? deviceLocale
-                  : supportedLocales.first,
+          localeResolutionCallback:
+              (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                  deviceLocale != null &&
+                          ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+                      ? deviceLocale
+                      : supportedLocales.first,
           theme: ThemeData(
             primaryColor: AppColors.AppColor2,
             colorScheme: ColorScheme(

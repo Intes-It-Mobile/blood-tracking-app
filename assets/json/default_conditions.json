@@ -6,23 +6,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -32,23 +32,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -58,23 +58,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -84,23 +84,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -110,23 +110,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -136,23 +136,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 99
+          "min_value": 72.0,
+          "max_value": 99.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 99,
-          "max_value": 126
+          "min_value": 99.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -162,23 +162,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 140
+          "min_value": 72.0,
+          "max_value": 140.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 140,
-          "max_value": 153
+          "min_value": 140.0,
+          "max_value": 153.0
         },
         {
           "status": "diabetes",
-          "min_value": 153,
-          "max_value": 631
+          "min_value": 153.0,
+          "max_value": 631.0
         }
       ]
     },
@@ -188,23 +188,23 @@
       "sugar_amount": [
         {
           "status": "low",
-          "min_value": 18,
-          "max_value": 72
+          "min_value": 18.0,
+          "max_value": 72.0
         },
         {
           "status": "normal",
-          "min_value": 72,
-          "max_value": 85
+          "min_value": 72.0,
+          "max_value": 85.0
         },
         {
           "status": "pre_diabetes",
-          "min_value": 85,
-          "max_value": 126
+          "min_value": 85.0,
+          "max_value": 126.0
         },
         {
           "status": "diabetes",
-          "min_value": 126,
-          "max_value": 631
+          "min_value": 126.0,
+          "max_value": 631.0
         }
       ]
     }

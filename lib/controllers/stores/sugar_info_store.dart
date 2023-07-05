@@ -11,6 +11,8 @@ import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
+import '../../utils/locale/appLocalizations.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -82,15 +84,27 @@ abstract class _SugarInfoStoreBase with Store {
   @action
   setCurrentStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
-    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
-      currentStatus = chooseCondition!.sugarAmount!
-          .where((e) =>
-              e.minValue! * 1.0 <= inputAmount &&
-              inputAmount < e.maxValue! * 1.0)
-          .first
-          .status;
+    if (swapedToMol == false) {
+      if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
+    } else if (swapedToMol == true) {
+      if (inputAmount != null && inputAmount >= 1 || inputAmount <= 35) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
     }
-    print("Status: ${currentStatus}");
   }
 
   @action
@@ -140,8 +154,12 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? isChoosedDayTimeStrDisplay = false;
 
+  @observable
+  DateTime? choosedDayTimePicker;
+
   @action
   setchoosedDayTime(DateTime choosedDayTime) {
+    choosedDayTimePicker = choosedDayTime;
     (choosedDayTimeStrDisplay =
         DateFormat('yyyy     MM     dd').format(choosedDayTime));
     choosedDayTimeStr = DateFormat('yyyy/MM/dd').format(choosedDayTime);
@@ -198,9 +216,7 @@ abstract class _SugarInfoStoreBase with Store {
   replaceRecord(BuildContext context) {
     SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
         record.dayTime == choosedDayTimeStr &&
-        record.hourTime == choosedDayHourStr &&
-        record.conditionId == chooseCondition!.id &&
-        record.status == currentStatus);
+        record.hourTime == choosedDayHourStr);
     {
       recordUpdate.conditionId = chooseCondition!.id;
       recordUpdate.dayTime = choosedDayTimeStr;
@@ -239,7 +255,8 @@ abstract class _SugarInfoStoreBase with Store {
         hourTime: choosedDayHourStr,
         status: currentStatus,
         sugarAmount: currentSugarAmount,
-        conditionId: chooseCondition!.id));
+        conditionId: chooseCondition!.id,
+        conditionName: chooseCondition!.name));
     listRecords = ListRecord(listRecord: listRecord);
     choosedDayTimeStr = null;
     choosedDayHourStr = null;
@@ -290,11 +307,19 @@ abstract class _SugarInfoStoreBase with Store {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (swapedToMol == false) {}
-      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-        setErrorText("Please enter correct value between 18-630 mg/dL");
-      } else {
-        setErrorText("");
+      if (swapedToMol == false) {
+        if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+          setErrorText("Please enter correct value between 18-630 mg/dL");
+        } else {
+          setErrorText("");
+        }
+      }
+      if (swapedToMol == true) {
+        if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
+          setErrorText("Please enter correct value between 1-35 mg/dL");
+        } else {
+          setErrorText("");
+        }
       }
     }
   }
@@ -332,7 +357,7 @@ abstract class _SugarInfoStoreBase with Store {
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
   }
 
-  Future<void> exportToExcel() async {
+  Future<void> exportToExcel(BuildContext context) async {
     // Read data from the JSON file
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('myObjectKey');
@@ -357,10 +382,12 @@ abstract class _SugarInfoStoreBase with Store {
       sheet.cell(CellIndex.indexByString("B${i + 2}")).value =
           record['hour_time'];
       sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
-          record['sugar_amount'];
+          "${record['sugar_amount']}";
       sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
-          record['condition_id'];
-      sheet.cell(CellIndex.indexByString("E${i + 2}")).value = record['status'];
+          "${AppLocalizations.of(context)!.getTranslate(record['condition_name'])}";
+
+      sheet.cell(CellIndex.indexByString("E${i + 2}")).value =
+          "${AppLocalizations.of(context)!.getTranslate(record['status'])}";
     }
 
     // Save the workbook as an Excel file
@@ -578,8 +605,9 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? swapedToMol = false;
   @action
-  setSwapStatus() {
-    swapedToMol = !swapedToMol!;
+  @action
+  setSwapStatusToMol(bool? status) {
+    swapedToMol = status;
   }
 
   @action
@@ -587,6 +615,18 @@ abstract class _SugarInfoStoreBase with Store {
     for (int i = 0; i < listRecord!.length; i++) {
       if (listRecord![i].sugarAmount != null) {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! * 18;
+      }
+    }
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! * 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! * 18;
+          }
+        }
       }
     }
   }
@@ -598,22 +638,36 @@ abstract class _SugarInfoStoreBase with Store {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
       }
     }
-    // for (int i = 0; i < listRootConditions!.length; i++) {
-    //   if (listRootConditions![i].sugarAmount != null) {
-    //     listRootConditions![i].sugarAmount = listRootConditions![i].sugarAmount! / 18;
-    //   }
-    // }
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! / 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+          }
+        }
+      }
+    }
   }
 
   @action
   swapUnit() {
     if (swapedToMol == false) {
-      divisionnUnit();
-    }
-    if (swapedToMol == true) {
       multiplicationUnit();
     }
-    setSwapStatus();
+    if (swapedToMol == true) {
+      divisionnUnit();
+    }
+  }
+
+  @observable
+  bool? optionUnitIsMol;
+
+  @action
+  chooseUnitIsMol(bool isMol) {
+    optionUnitIsMol = isMol;
   }
 ////////////////////////////////////////////////////////////////
 

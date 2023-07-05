@@ -301,6 +301,28 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
   }
 
   @override
+  dynamic setCurrentEditAmount(double inputAmount) {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.setCurrentEditAmount');
+    try {
+      return super.setCurrentEditAmount(inputAmount);
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCurrentEditStatus(double inputAmount) {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.setCurrentEditStatus');
+    try {
+      return super.setCurrentEditStatus(inputAmount);
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setEditStatusLevel(String? currentEditStatus) {
     final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
         name: '_EditRecordStoreBase.setEditStatusLevel');
@@ -345,11 +367,11 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
   }
 
   @override
-  dynamic checkValidateNewRecord() {
+  dynamic checkValidateEditRecord(double value) {
     final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
-        name: '_EditRecordStoreBase.checkValidateNewRecord');
+        name: '_EditRecordStoreBase.checkValidateEditRecord');
     try {
-      return super.checkValidateNewRecord();
+      return super.checkValidateEditRecord(value);
     } finally {
       _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
     }
