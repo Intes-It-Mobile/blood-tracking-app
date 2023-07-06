@@ -12,6 +12,7 @@ import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../record_remind/record_remind_screens.dart';
 
 class TopWidgetHomeContent extends StatefulWidget {
   const TopWidgetHomeContent({super.key});
@@ -64,7 +65,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed(Routes.record_remind);
+                           Navigator.of(context).pushNamed(Routes.record_remind);
                         },
                         child: Container(
                           decoration: const BoxDecoration(
