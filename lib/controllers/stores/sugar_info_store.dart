@@ -316,7 +316,7 @@ abstract class _SugarInfoStoreBase with Store {
       }
       if (swapedToMol == true) {
         if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
-          setErrorText("Please enter correct value between 1-35 mg/dL");
+          setErrorText("Please enter correct value between 1-35 mmol/L");
         } else {
           setErrorText("");
         }

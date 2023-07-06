@@ -97,6 +97,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
 
   void _showDatePickerDay() {
     DatePicker.showDatePicker(
+      maxDateTime: DateTime.now(),
       initialDateTime: editRecordStore!.editingDayTime!,
       dateFormat: "yyyy/MM/dd",
       context,
@@ -114,6 +115,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
 
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
+      maxDateTime: DateTime.now(),
       initialDateTime: editRecordStore!.editingHourTime!,
       dateFormat: "HH:mm",
       context,
@@ -471,7 +473,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           : Container(),
     );
   }
-  
+
   _showDiaLogDelete(BuildContext context) {
     return showDialog(
         context: context,
@@ -556,6 +558,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               ),
             ));
   }
+
   _showDiaLogChange(BuildContext context) {
     return showDialog(
         context: context,
