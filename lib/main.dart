@@ -17,23 +17,9 @@ import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-  // var initializationSettingsIOS = IOSInitializationSettings(
-  //     requestAlertPermission: true,
-  //     requestBadgePermission: true,
-  //     requestSoundPermission: true,
-  //     onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {});
-  // var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  // await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
-  //   if (payload != null) {
-  //     debugPrint('notification payload: ' + payload);
-  //   }
-  // });
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Alarm.init(showDebugLogs: true);
