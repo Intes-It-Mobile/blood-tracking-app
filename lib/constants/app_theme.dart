@@ -130,4 +130,12 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(12),
     fontFamily: FontFamily.IBMPlexSans,
   );
+  static final unit24Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(24),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
 }
