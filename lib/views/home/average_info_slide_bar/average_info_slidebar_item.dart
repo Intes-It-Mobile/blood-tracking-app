@@ -75,7 +75,7 @@ class _AverageInfoSlideBarItemWidgetState
                         ),
                 ),
                 Text(
-                    "${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                    "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
                     style: AppTheme.appBodyTextStyle),
               ],
             ),

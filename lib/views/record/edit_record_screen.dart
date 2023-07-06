@@ -17,6 +17,7 @@ import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
+import '../../widgets/sucess_dialog.dart';
 
 class EditRecordScreen extends StatefulWidget {
   EditRecordScreen({
@@ -310,7 +311,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               ),
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
                                   padding: EdgeInsets.all(8),
@@ -349,6 +350,21 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                             Container(
                                               width: 165,
                                               child: TextField(
+                                                cursorColor:
+                                                    AppColors.AppColor2,
+                                                decoration: InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: AppColors
+                                                                  .AppColor2)),
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: AppColors
+                                                            .AppColor2), //<-- SEE HERE
+                                                  ),
+                                                ),
                                                 inputFormatters: [
                                                   // Allow Decimal Number With Precision of 2 Only
                                                   FilteringTextInputFormatter
@@ -397,7 +413,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                               width: 25,
                                             ),
                                             Text(
-                                              "${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                                              "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
                                               style: AppTheme.appBodyTextStyle
                                                   .copyWith(
                                                       color: Colors.black),
@@ -613,25 +629,32 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               editRecordStore!.checkValidateEditRecord(0);
                               if (editRecordStore!.errorText == null ||
                                   editRecordStore!.errorText == "") {
-                                sugarInfoStore!.editRecord(
-                                    recordId!,
-                                    SugarRecord(
-                                        conditionId: editRecordStore!
-                                            .editChooseCondition!.id,
-                                        dayTime:
-                                            editRecordStore!.editingDayTimeStr!,
-                                        hourTime: editRecordStore!
-                                            .editingHourTimeStr!,
-                                        id: recordId,
-                                        status:
-                                            editRecordStore!.currentEditStatus,
-                                        sugarAmount: editRecordStore!
-                                            .editingSugarAmount));
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  Routes.home,
-                                  (route) => false,
-                                );
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        SucessDialog());
+                                Future.delayed(Duration(milliseconds: 1500),
+                                    () {
+                                  sugarInfoStore!.editRecord(
+                                      recordId!,
+                                      SugarRecord(
+                                          conditionId: editRecordStore!
+                                              .editChooseCondition!.id,
+                                          dayTime: editRecordStore!
+                                              .editingDayTimeStr!,
+                                          hourTime: editRecordStore!
+                                              .editingHourTimeStr!,
+                                          id: recordId,
+                                          status: editRecordStore!
+                                              .currentEditStatus,
+                                          sugarAmount: editRecordStore!
+                                              .editingSugarAmount));
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    Routes.home,
+                                    (route) => false,
+                                  );
+                                });
                               }
                             },
                             child: Container(

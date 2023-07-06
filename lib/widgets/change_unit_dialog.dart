@@ -21,7 +21,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    isChooseMol = sugarInfoStore!.swapedToMol;
+    isChooseMol = sugarInfoStore!.isSwapedToMol;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -116,7 +116,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  if (sugarInfoStore!.swapedToMol != isChooseMol) {
+                  if (sugarInfoStore!.isSwapedToMol != isChooseMol) {
                     sugarInfoStore!.setSwapStatusToMol(isChooseMol);
                     sugarInfoStore!.swapUnit();
                   }

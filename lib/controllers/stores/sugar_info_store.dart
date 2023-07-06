@@ -84,7 +84,7 @@ abstract class _SugarInfoStoreBase with Store {
   @action
   setCurrentStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
-    if (swapedToMol == false) {
+    if (isSwapedToMol == false) {
       if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
         currentStatus = chooseCondition!.sugarAmount!
             .where((e) =>
@@ -94,7 +94,7 @@ abstract class _SugarInfoStoreBase with Store {
             .status;
       }
       print("Status: ${currentStatus}");
-    } else if (swapedToMol == true) {
+    } else if (isSwapedToMol == true) {
       if (inputAmount != null && inputAmount >= 1 || inputAmount <= 35) {
         currentStatus = chooseCondition!.sugarAmount!
             .where((e) =>
@@ -307,14 +307,14 @@ abstract class _SugarInfoStoreBase with Store {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (swapedToMol == false) {
+      if (isSwapedToMol == false) {
         if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
           setErrorText("Please enter correct value between 18-630 mg/dL");
         } else {
           setErrorText("");
         }
       }
-      if (swapedToMol == true) {
+      if (isSwapedToMol == true) {
         if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
           setErrorText("Please enter correct value between 1-35 mmol/L");
         } else {
@@ -406,6 +406,16 @@ abstract class _SugarInfoStoreBase with Store {
     } else {
       print("Failed to export file");
     }
+  }
+
+  Future<void> saveIsSwapedToMol(bool isSwapedToMol) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isSwapedToMol', isSwapedToMol);
+  }
+
+  Future<void> getIsSwapedToMol() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isSwapedToMol = prefs.getBool('isSwapedToMol');
   }
 
   @observable
@@ -526,11 +536,21 @@ abstract class _SugarInfoStoreBase with Store {
                   .isBefore(now.add(Duration(days: 1))))
           .toList();
 
-      threeDaysNumber = roundedResult(listThreeDaysNumber);
-      weekNumber = roundedResult(listweekNumber);
-      monthNumber = roundedResult(listMonthNumber);
-      yearNumber = roundedResult(listYearNumber);
-      allNumber = roundedResult(listRecordArrangedByTime);
+      threeDaysNumber = roundedResult(listThreeDaysNumber).isNaN
+          ? 0.0
+          : roundedResult(listThreeDaysNumber);
+      weekNumber = roundedResult(listweekNumber).isNaN
+          ? 0.0
+          : roundedResult(listweekNumber);
+      monthNumber = roundedResult(listMonthNumber).isNaN
+          ? 0.0
+          : roundedResult(listMonthNumber);
+      yearNumber = roundedResult(listYearNumber).isNaN
+          ? 0.0
+          : roundedResult(listYearNumber);
+      allNumber = roundedResult(listRecordArrangedByTime).isNaN
+          ? 0.0
+          : roundedResult(listRecordArrangedByTime);
     } else {
       recentNumber = 0.0;
       threeDaysNumber = 0.0;
@@ -603,11 +623,11 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @observable
-  bool? swapedToMol = false;
+  bool? isSwapedToMol = false;
   @action
   @action
   setSwapStatusToMol(bool? status) {
-    swapedToMol = status;
+    isSwapedToMol = status;
   }
 
   @action
@@ -654,11 +674,13 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   swapUnit() {
-    if (swapedToMol == false) {
+    if (isSwapedToMol == false) {
       multiplicationUnit();
+      saveIsSwapedToMol(isSwapedToMol!);
     }
-    if (swapedToMol == true) {
+    if (isSwapedToMol == true) {
       divisionnUnit();
+      saveIsSwapedToMol(isSwapedToMol!);
     }
   }
 
