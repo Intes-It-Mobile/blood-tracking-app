@@ -4,12 +4,11 @@ import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
-import 'package:blood_sugar_tracking/views/record_remind/record_remind_screens.dart';
+import 'package:blood_sugar_tracking/views/select_unit/select_unit_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +88,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,
           ),
-          home: SplashScreen(),
+          home: SelectUnit(),
         ),
       ),
     );

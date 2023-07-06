@@ -107,5 +107,7 @@
   "change_unit": "Change unit",
   "choose_this_unit": "Choose this unit",
   "change_btn":"Change",
-  "save_edit_dialog_content":"Do you want to save changes for this record?"
+  "save_edit_dialog_content":"Do you want to save changes for this record?",
+  "done":"Done",
+  "select_your_starting_unit":"Select Your Starting Unit"
 }
