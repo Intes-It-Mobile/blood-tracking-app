@@ -545,7 +545,7 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                     child: Container(
                       height: 35,
                       decoration: BoxDecoration(
-                          color:   AppColors.AppColor3,
+                          color: AppColors.AppColor3,
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
@@ -623,14 +623,25 @@ class _StatusWidgetState extends State<StatusWidget> {
     super.didChangeDependencies();
   }
 
+  String cutString(double number) {
+    if (number.toString().length > 4) {
+      String numberString = number.toString();
+      String before = numberString.split('.').first;
+      String after = numberString.split('.').last.substring(0, 2);
+      return "${before}.${after}";
+    } else {
+      return number.toString();
+    }
+  }
+
   String? getAmountValue(int? level) {
     if (sugarInfoStore!.chooseCondition!.sugarAmount!
             .elementAt(level!)
             .maxValue ==
         630) {
-      return ">= ${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue}";
+      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
     } else {
-      return "${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue} ~ ${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue}";
+      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
   }
 

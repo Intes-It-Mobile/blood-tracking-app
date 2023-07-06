@@ -132,7 +132,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
 
   void adjustMaxY() {
     double maxVisibleSugarAmount = maxSugarAmount;
-  
+
     // Ensure that the maxYAdjusted value is divisible by 50
     maxYAdjusted = maxSugarAmount.toInt();
     for (var i = 0;; i++) {
@@ -288,7 +288,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                               lineBarsData: [
                                 LineChartBarData(
                                     spots: listFlSpot(),
-                                    isCurved: true,
+                                    isCurved: false,
                                     gradient: const LinearGradient(
                                       colors: [
                                         Color(0xFF7CC5FA),
@@ -424,7 +424,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
     int seconds = int.parse(parts[1]);
     double result = minutes + (seconds / 100);
     result = double.parse(result.toStringAsFixed(3));
-    double resultA = result / 40;
+    double resultA = result*100 / 2400;
     return resultA;
   }
 
