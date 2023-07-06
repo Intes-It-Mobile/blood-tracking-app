@@ -142,7 +142,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                           print("aaaaaa: ${alarmTime}");
                           print("looAudio: ${alarms[index].loopAudio}");
                           return Container(
-                            height: MediaQuery.of(context).size.height * 0.12,
+                            height: MediaQuery.of(context).size.height * 0.13,
                             margin: const EdgeInsets.only(
                                 top: 15, left: 17, right: 17),
                             width: double.infinity,
@@ -159,6 +159,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     .then((_) => loadAlarms());
                               },
                               loopAudio: alarms[index].loopAudio,
+
                             ),
                           );
                         },

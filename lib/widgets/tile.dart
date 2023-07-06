@@ -29,43 +29,16 @@ class ExampleAlarmTile extends StatefulWidget {
 class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
 
   List<AlarmSettings>? alarms;
-
   @override
   void initState() {
+
     super.initState();
   }
+  String savedDateString(DateTime date) {
+    print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
+    return DateFormat("HH:mm dd/MM/yyyy").format(date);
+  }
 
-  // AlarmSettings buildAlarmSettings() {
-  //   final now = DateTime.now();
-  //   final id = creating
-  //       ? DateTime.now().millisecondsSinceEpoch % 100000
-  //       : widget.alarmSettings!.id;
-  //
-  //   DateTime dateTime = DateTime(
-  //     now.year,
-  //     now.month,
-  //     now.day,
-  //     alarmTime.hour,
-  //     alarmTime.minute,
-  //     0,
-  //     0,
-  //   );
-  //   if (dateTime.isBefore(DateTime.now())) {
-  //     dateTime = dateTime.add(const Duration(days: 1));
-  //   }
-  //
-  //   final alarmSettings = AlarmSettings(
-  //     id: id,
-  //     dateTime: dateTime,
-  //     loopAudio: widget.loopAudio,
-  //     vibrate: widget.loopAudio,
-  //     notificationTitle: widget.loopAudio ? 'Enter a record' : null,
-  //     notificationBody: widget.loopAudio ? 'Time: ${alarms?.last.dateTime}' : null,
-  //     assetAudioPath: '',
-  //     stopOnNotificationOpen: false,
-  //   );
-  //   return alarmSettings;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +61,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
       child: RawMaterialButton(
         onPressed: widget.onPressed,
         child: SizedBox(
-          height: 100,
+          height: 104,
           child: Row(
             children: [
               Expanded(
