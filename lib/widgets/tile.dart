@@ -1,4 +1,5 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
   List<AlarmSettings>? alarms;
   @override
   void initState() {
-
+  // widget.loopAudio = widget.alarmSettings!.loopAudio;
     super.initState();
   }
   String savedDateString(DateTime date) {
@@ -102,13 +103,20 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Switch(
-                          value: widget.loopAudio,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.loopAudio = value;
-                            });
-                          }
+                        child:  StatefulBuilder(
+                          builder: (context, setModalState) {
+                            return CupertinoSwitch(
+                              onChanged: (bool value) {
+                                setModalState(() {
+                                  widget.loopAudio = value;
+                                });
+                              },
+                              value: widget.loopAudio,
+                              trackColor: AppColors.AppColor1,
+                              activeColor: AppColors
+                                  .AppColor2,
+                            );
+                          },
                         ),
                       ),
                     ],

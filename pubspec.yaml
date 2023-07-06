@@ -83,16 +83,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-<<<<<<< HEAD
-=======
-#  plugin:
-#    platforms:
-#      android:
-#        package: com.gdelataillade.alarm.alarm
-#        pluginClass: AlarmPlugin
-#      ios:
-#        pluginClass: AlarmPlugin
->>>>>>> 016e6158974bd65c0cc03caba4c8f05575345009
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

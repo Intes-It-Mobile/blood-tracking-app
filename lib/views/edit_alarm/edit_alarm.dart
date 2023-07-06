@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,10 @@ import '../../utils/locale/appLocalizations.dart';
 class ExampleAlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
 
-
-  ExampleAlarmEditScreen( {Key? key, this.alarmSettings,}) : super(key: key);
+  ExampleAlarmEditScreen({
+    Key? key,
+    this.alarmSettings,
+  }) : super(key: key);
 
   @override
   State<ExampleAlarmEditScreen> createState() => _ExampleAlarmEditScreenState();
@@ -53,6 +56,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       assetAudio = widget.alarmSettings!.assetAudioPath;
     }
   }
+
   String savedDateString(DateTime date) {
     print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
     return DateFormat("HH:mm dd/MM/yyyy").format(date);
@@ -88,12 +92,14 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     final alarmSettings = AlarmSettings(
       id: id,
       dateTime: dateTime,
-      loopAudio: showNotification,
+      loopAudio: loopAudio,
       vibrate: vibrate,
       notificationTitle: showNotification ? 'Enter a record' : null,
-      notificationBody: showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
+      notificationBody:
+          showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
       assetAudioPath: assetAudio,
-      stopOnNotificationOpen: false,
+      stopOnNotificationOpen: true,
+      enableNotificationOnKill: true,
     );
     return alarmSettings;
   }
@@ -163,12 +169,19 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black),
                           ),
-                          Switch(
-                            value: showNotification,
-                            onChanged: (value) =>
-                                setState(() {
-                                  showNotification = value;
-                                } ),
+                          StatefulBuilder(
+                            builder: (context, setModalState) {
+                              return CupertinoSwitch(
+                                onChanged: (bool value) {
+                                  setModalState(() {
+                                    showNotification = value;
+                                  });
+                                },
+                                value: showNotification,
+                                trackColor: AppColors.AppColor1,
+                                activeColor: AppColors.AppColor2,
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -182,10 +195,19 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black),
                           ),
-                          Switch(
-                            value: vibrate,
-                            onChanged: (value) =>
-                                setState(() => vibrate = value),
+                          StatefulBuilder(
+                            builder: (context, setModalState) {
+                              return CupertinoSwitch(
+                                onChanged: (bool value) {
+                                  setModalState(() {
+                                    vibrate = value;
+                                  });
+                                },
+                                value: vibrate,
+                                trackColor: AppColors.AppColor1,
+                                activeColor: AppColors.AppColor2,
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -278,18 +300,6 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
               ),
             ],
           ),
-          // if (!creating)
-          //   TextButton(
-          //     onPressed: deleteAlarm,
-          //     child: Text(
-          //       'Delete Alarm',
-          //       style: Theme.of(context)
-          //           .textTheme
-          //           .titleMedium!
-          //           .copyWith(color: Colors.red),
-          //     ),
-          //   ),
-          // const SizedBox(),
         ],
       ),
     );

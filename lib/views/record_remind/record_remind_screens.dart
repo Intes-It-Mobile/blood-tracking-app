@@ -45,6 +45,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   void loadAlarms() {
     setState(() {
       alarms = Alarm.getAlarms();
+      // Alarm.ringStream.stream.listen((event) => );
       alarms.sort((a, b) =>
           (savedDateString(a.dateTime)).compareTo(savedDateString(b.dateTime)));
     });
@@ -182,8 +183,10 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: AppColors.AppColor2),
-                child: const Center(
-                  child: Text('New alarm'),
+                child:  Center(
+                  child: Text("${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
+                    style: AppTheme.TextInfomation14Text.copyWith(color: Colors.white),
+                    ),
                 ),
               ),
             ),
@@ -193,32 +196,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
           ],
         ),
       ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.all(10),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: [
-      //       FloatingActionButton(
-      //         onPressed: () {
-      //           final alarmSettings = AlarmSettings(
-      //             id: 42,
-      //             dateTime: DateTime.now(),
-      //             assetAudioPath: 'assets/marimba.mp3',
-      //           );
-      //           Alarm.set(alarmSettings: alarmSettings);
-      //         },
-      //         backgroundColor: Colors.red,
-      //         heroTag: null,
-      //         child: const Text("RING NOW", textAlign: TextAlign.center),
-      //       ),
-      //       FloatingActionButton(
-      //         onPressed: () => navigateToAlarmScreen(null),
-      //         child: const Icon(Icons.alarm_add_rounded, size: 33),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
