@@ -94,7 +94,7 @@ flutter:
     - assets/icons/
     - assets/lang/
     - assets/json/
-#    - assets/marimba.mp3
+    - assets/marimba.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

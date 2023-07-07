@@ -66,7 +66,8 @@ class _DialogFeedbackState extends State<DialogFeedback> {
       content: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               child: Container(
@@ -87,11 +88,13 @@ class _DialogFeedbackState extends State<DialogFeedback> {
               ),
               child: TextFormField(
                 decoration: InputDecoration(
-                    hintText:
-                        "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
-                    hintStyle: AppTheme.hintText,
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13)),
+                  hintText:
+                      "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
+                  hintStyle: AppTheme.hintText,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13),
+                  hoverColor: Colors.black
+                ),
               ),
             ),
             Container(
@@ -115,17 +118,18 @@ class _DialogFeedbackState extends State<DialogFeedback> {
               child: TextFormField(
                 maxLines: 4,
                 decoration: InputDecoration(
+                    hoverColor: Colors.black,
                     hintText:
                         "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
                     hintStyle: AppTheme.hintText,
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 20)),
-                onChanged: (value){
-                  if(value.length >= 6){
+                onChanged: (value) {
+                  if (value.length >= 6) {
                     setState(() {
                       isSelected = true;
                     });
-                  }else{
+                  } else {
                     setState(() {
                       isSelected = false;
                     });
@@ -144,34 +148,38 @@ class _DialogFeedbackState extends State<DialogFeedback> {
               ),
             ),
             Center(
-              child: isSelected == false ? Opacity(
-                opacity: 0.3,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.AppColor2,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+              child: isSelected == false
+                  ? Opacity(
+                      opacity: 0.3,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 13, vertical: 10),
+                        child: Text(
+                          "${AppLocalizations.of(context)!.getTranslate('feedback_send_btn')}",
+                          style: AppTheme.BtnText,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.AppColor2,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 10),
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('feedback_send_btn')}",
+                        style: AppTheme.BtnText,
+                      ),
                     ),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('feedback_send_btn')}",
-                    style: AppTheme.BtnText,
-                  ),
-                ),
-              ) : Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.AppColor2,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                child: Text(
-                  "${AppLocalizations.of(context)!.getTranslate('feedback_send_btn')}",
-                  style: AppTheme.BtnText,
-                ),
-              ),
             )
           ]),
         ),

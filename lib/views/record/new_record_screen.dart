@@ -879,7 +879,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 Text(
                   "${getTitle(selectedTitle)}",
                   style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black),
+                      fontWeight: FontWeight.w700, color: Colors.black,fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -933,7 +933,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               child: Text(
                                 "${getTitle(condition.name)}",
                                 style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white),
+                                    .copyWith(color: Colors.white,fontSize: 16),
                               ),
                             ),
                           ),

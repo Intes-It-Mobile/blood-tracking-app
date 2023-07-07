@@ -160,7 +160,10 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     .then((_) => loadAlarms());
                               },
                               loopAudio: alarms[index].loopAudio,
-
+                              onDelete: (){
+                                Alarm.stop(alarms[index].id)
+                                    .then((_) => loadAlarms());
+                              },
                             ),
                           );
                         },

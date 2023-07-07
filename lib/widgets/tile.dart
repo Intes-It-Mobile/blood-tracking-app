@@ -11,6 +11,7 @@ import '../views/edit_alarm/edit_alarm.dart';
 
 class ExampleAlarmTile extends StatefulWidget {
   final String title;
+  final void Function()? onDelete;
   bool loopAudio;
   final void Function() onPressed;
   final void Function()? onDismissed;
@@ -20,7 +21,7 @@ class ExampleAlarmTile extends StatefulWidget {
     required this.title,
     required this.onPressed,
     this.onDismissed,
-    this.alarmSettings, required this.loopAudio,
+    this.alarmSettings, required this.loopAudio, this.onDelete,
   }) : super(key: key);
 
   @override
@@ -93,6 +94,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                           ),
                           InkWell(
                             onTap: () {
+                              widget.onDelete?.call();
                             },
                             child: SvgPicture.asset(Assets.iconDelete),
                           ),

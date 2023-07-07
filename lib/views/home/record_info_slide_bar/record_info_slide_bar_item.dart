@@ -102,12 +102,12 @@ class _RecordInfoSliderItemWidgetState
                             ? Text(
                                 "${widget.sugarAmount.toString().substring(0, 5)}",
                                 style: AppTheme.appBodyTextStyle36
-                                    .copyWith(fontSize: 32),
+                                    .copyWith(fontSize: 36),
                               )
                             : Text(
                                 "${widget.sugarAmount}",
                                 style: AppTheme.appBodyTextStyle36
-                                    .copyWith(fontSize: 32),
+                                    .copyWith(fontSize: 36),
                               ),
                       ),
                       Text("${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
