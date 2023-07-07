@@ -217,10 +217,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       _showDatePickerDay();
                                     },
                                     child: Container(
-                                      margin: EdgeInsets.only(right: 30),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 9),
-                                      decoration: BoxDecoration(
+                                      margin: const EdgeInsets.only(right: 30),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 9),
+                                      decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
@@ -247,7 +247,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 9),
+                                          horizontal: 25, vertical: 9),
                                       decoration: BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
@@ -275,7 +275,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
                               "${AppLocalizations.of(context)!.getTranslate('condition')}",
                               style: AppTheme.Headline16Text.copyWith(
@@ -295,7 +295,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
                               "${AppLocalizations.of(context)!.getTranslate('sugar_amount')}",
                               style: AppTheme.Headline16Text.copyWith(
@@ -303,8 +303,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
                               color: AppColors.AppColor3,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(5),
@@ -314,8 +314,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(5),
                                       ),
@@ -336,13 +336,13 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 5),
+                                  margin: const EdgeInsets.only(bottom: 5),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Container(
-                                        margin: EdgeInsets.only(bottom: 10),
+                                        margin: const EdgeInsets.only(bottom: 10),
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
@@ -352,7 +352,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                               child: TextField(
                                                 cursorColor:
                                                     AppColors.AppColor2,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   focusedBorder:
                                                       UnderlineInputBorder(
                                                           borderSide: BorderSide(
@@ -846,7 +846,7 @@ class _StatusWidgetState extends State<StatusWidget> {
         }),
         Observer(builder: (_) {
           return Container(
-            margin: EdgeInsets.only(right: 4),
+            margin: const EdgeInsets.only(right: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -949,7 +949,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 Text(
                   "${getTitle(selectedTitle)}",
                   style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black,fontSize: 16),
+                      fontWeight: FontWeight.w500, color: Colors.black,fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -999,7 +999,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               child: Text(
                                 "${getTitle(condition.name)}",
                                 style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white,fontSize: 16),
+                                    .copyWith(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
