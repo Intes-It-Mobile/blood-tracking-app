@@ -253,6 +253,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$choosedDayTimePickerAtom =
+      Atom(name: '_SugarInfoStoreBase.choosedDayTimePicker', context: context);
+
+  @override
+  DateTime? get choosedDayTimePicker {
+    _$choosedDayTimePickerAtom.reportRead();
+    return super.choosedDayTimePicker;
+  }
+
+  @override
+  set choosedDayTimePicker(DateTime? value) {
+    _$choosedDayTimePickerAtom.reportWrite(value, super.choosedDayTimePicker,
+        () {
+      super.choosedDayTimePicker = value;
+    });
+  }
+
   late final _$dateTimeNowAtom =
       Atom(name: '_SugarInfoStoreBase.dateTimeNow', context: context);
 
@@ -672,19 +689,35 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
-  late final _$swapedToMolAtom =
-      Atom(name: '_SugarInfoStoreBase.swapedToMol', context: context);
+  late final _$isSwapedToMolAtom =
+      Atom(name: '_SugarInfoStoreBase.isSwapedToMol', context: context);
 
   @override
-  bool? get swapedToMol {
-    _$swapedToMolAtom.reportRead();
-    return super.swapedToMol;
+  bool? get isSwapedToMol {
+    _$isSwapedToMolAtom.reportRead();
+    return super.isSwapedToMol;
   }
 
   @override
-  set swapedToMol(bool? value) {
-    _$swapedToMolAtom.reportWrite(value, super.swapedToMol, () {
-      super.swapedToMol = value;
+  set isSwapedToMol(bool? value) {
+    _$isSwapedToMolAtom.reportWrite(value, super.isSwapedToMol, () {
+      super.isSwapedToMol = value;
+    });
+  }
+
+  late final _$optionUnitIsMolAtom =
+      Atom(name: '_SugarInfoStoreBase.optionUnitIsMol', context: context);
+
+  @override
+  bool? get optionUnitIsMol {
+    _$optionUnitIsMolAtom.reportRead();
+    return super.optionUnitIsMol;
+  }
+
+  @override
+  set optionUnitIsMol(bool? value) {
+    _$optionUnitIsMolAtom.reportWrite(value, super.optionUnitIsMol, () {
+      super.optionUnitIsMol = value;
     });
   }
 
@@ -1119,6 +1152,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic chooseUnitIsMol(bool isMol) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.chooseUnitIsMol');
+    try {
+      return super.chooseUnitIsMol(isMol);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setSugarAmount(String value) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setSugarAmount');
@@ -1201,6 +1245,7 @@ choosedDayTimeStrDisplay: ${choosedDayTimeStrDisplay},
 choosedDayHourStrDisplay: ${choosedDayHourStrDisplay},
 isChoosedDayHourStrDisplay: ${isChoosedDayHourStrDisplay},
 isChoosedDayTimeStrDisplay: ${isChoosedDayTimeStrDisplay},
+choosedDayTimePicker: ${choosedDayTimePicker},
 dateTimeNow: ${dateTimeNow},
 stringTimeDayNow: ${stringTimeDayNow},
 stringTimeHourNow: ${stringTimeHourNow},
@@ -1227,7 +1272,8 @@ yearNumber: ${yearNumber},
 allNumber: ${allNumber},
 filterConditionId: ${filterConditionId},
 filterConditionTitle: ${filterConditionTitle},
-swapedToMol: ${swapedToMol},
+isSwapedToMol: ${isSwapedToMol},
+optionUnitIsMol: ${optionUnitIsMol},
 sugarAmount: ${sugarAmount},
 tempSugarAmount: ${tempSugarAmount},
 sugarAmountEdit: ${sugarAmountEdit},

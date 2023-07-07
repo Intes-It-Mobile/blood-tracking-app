@@ -33,66 +33,70 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      child: Stack(
-        children: [
-          Scaffold(
-            // extendBodyBehindAppBar: true,
-            resizeToAvoidBottomInset: true,
-            appBar: CustomAppBar(),
-            backgroundColor: Colors.white,
-            body: WillPopScope(
-              onWillPop: _onWillPop,
-              child: Container(
-                // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: _buildPageContent(),
-              ),
-            ),
-            bottomNavigationBar: Container(
-              color: Colors.transparent,
-              margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
-              child: BottomAppBarCum(
-                color: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                padding: EdgeInsets.zero,
+    return Material(
+      
+      color: Colors.transparent,
+      child: Container(
+        child: Stack(
+          children: [
+            Scaffold(
+              // extendBodyBehindAppBar: true,
+              resizeToAvoidBottomInset: true,
+              appBar: CustomAppBar(),
+              backgroundColor: Colors.white,
+              body: WillPopScope(
+                onWillPop: _onWillPop,
                 child: Container(
+                  // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: _buildPageContent(),
+                ),
+              ),
+              bottomNavigationBar: Container(
+                color: Colors.transparent,
+                margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
+                child: BottomAppBarCum(
                   color: Colors.transparent,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _buildNavItem(
-                            Assets.iconHomeNav,
-                            'A',
-                            0,
-                            AppLocalizations.of(context)!.getTranslate('home_page_nav'),
-                          ),
-                          _buildNavItem(
-                              Assets.iconInfoNav, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
-                          _buildNavItem(Assets.iconSettingsNav, 'C', 2,
-                              AppLocalizations.of(context)!.getTranslate('setting_nav')),
-                        ],
-                      ),
-                      // Container(width: double.infinity,height: 50,color: Colors.blue,)
-                    ],
+                  surfaceTintColor: Colors.transparent,
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buildNavItem(
+                              Assets.iconHomeNav,
+                              'A',
+                              0,
+                              AppLocalizations.of(context)!.getTranslate('home_page_nav'),
+                            ),
+                            _buildNavItem(
+                                Assets.iconInfoNav, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
+                            _buildNavItem(Assets.iconSettingsNav, 'C', 2,
+                                AppLocalizations.of(context)!.getTranslate('setting_nav')),
+                          ],
+                        ),
+                        // Container(width: double.infinity,height: 50,color: Colors.blue,)
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-              bottom: 0,
-              child: hasAds
-                  ? Container(
-                      width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
-                  : Container(
-                      width: screenWidth,
-                      height: 39,
-                      color: AppColors.AppColor2,
-                    ))
-        ],
+            Positioned(
+                bottom: 0,
+                child: hasAds
+                    ? Container(
+                        width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
+                    : Container(
+                        width: screenWidth,
+                        height: 39,
+                        color: AppColors.AppColor2,
+                      ))
+          ],
+        ),
       ),
     );
   }

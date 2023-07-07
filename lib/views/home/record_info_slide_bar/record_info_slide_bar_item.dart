@@ -110,7 +110,7 @@ class _RecordInfoSliderItemWidgetState
                                     .copyWith(fontSize: 36),
                               ),
                       ),
-                      Text("${sugarInfoStore!.swapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
+                      Text("${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),
