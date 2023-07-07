@@ -98,16 +98,16 @@ class _RecordInfoSliderItemWidgetState
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        child: widget.sugarAmount.toString().length > 5
+                        child: widget.sugarAmount.toString().length > 6
                             ? Text(
-                                "${widget.sugarAmount.toString().substring(0, 5)}",
-                                style: AppTheme.appBodyTextStyle36
-                                    .copyWith(fontSize: 36),
+                                "${widget.sugarAmount.toString().substring(0, 6)}",
+                                style: AppTheme.appBodyTextStyle32
+
                               )
                             : Text(
                                 "${widget.sugarAmount}",
-                                style: AppTheme.appBodyTextStyle36
-                                    .copyWith(fontSize: 36),
+                                style: AppTheme.appBodyTextStyle32
+
                               ),
                       ),
                       Text("${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),

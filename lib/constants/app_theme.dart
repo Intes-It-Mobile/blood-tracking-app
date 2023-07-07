@@ -35,6 +35,14 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(36),
     fontFamily: FontFamily.IBMPlexSans,
   );
+  static final TextStyle appBodyTextStyle32 = TextStyle(
+    color: AppColors.AppColor4,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(32),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
   static final TextStyle timeText = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w500,
