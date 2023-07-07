@@ -52,6 +52,7 @@ class _RecordInfoSliderItemWidgetState
         return AppColors.LowStt;
     }
   }
+  final String texttahng = "333.333";
 
   @override
   void didChangeDependencies() {
@@ -98,15 +99,15 @@ class _RecordInfoSliderItemWidgetState
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        child: widget.sugarAmount.toString().length > 6
+                        child: widget.sugarAmount.toString().length > 7
                             ? Text(
-                                "${widget.sugarAmount.toString().substring(0, 6)}",
-                                style: AppTheme.appBodyTextStyle32
+                                "${widget.sugarAmount.toString().substring(0, 7)}",
+                                style: AppTheme.appBodyTextStyle26
 
                               )
                             : Text(
                                 "${widget.sugarAmount}",
-                                style: AppTheme.appBodyTextStyle32
+                                style: AppTheme.appBodyTextStyle26
 
                               ),
                       ),
