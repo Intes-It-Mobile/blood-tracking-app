@@ -265,7 +265,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           Container(
                             margin: EdgeInsets.only(right: 30),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 9),
+                                horizontal: 25, vertical: 9),
                             decoration: BoxDecoration(
                                 color: AppColors.AppColor3,
                                 borderRadius:
@@ -288,13 +288,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               ],
                             ),
                           ),
+                          const Spacer(),
                           GestureDetector(
                             onTap: () {
                               _showDatePickerHour();
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 9),
+                                  horizontal: 25, vertical: 9),
                               decoration: BoxDecoration(
                                   color: AppColors.AppColor3,
                                   borderRadius:
@@ -765,7 +766,7 @@ class _StatusWidgetState extends State<StatusWidget> {
         }),
         Observer(builder: (_) {
           return Container(
-            margin: EdgeInsets.only(right: 4),
+            margin: const EdgeInsets.only(right: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -918,7 +919,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 Text(
                   "${getTitle(selectedTitle)}",
                   style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black,fontSize: 16),
+                      fontWeight: FontWeight.w500, color: Colors.black,fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -972,7 +973,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               child: Text(
                                 "${getTitle(condition.name)}",
                                 style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white,fontSize: 16),
+                                    .copyWith(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

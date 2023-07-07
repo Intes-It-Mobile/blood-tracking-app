@@ -21,8 +21,8 @@ class ExampleAlarmEditScreen extends StatefulWidget {
 }
 
 class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
-  late bool creating;
 
+  late bool creating;
   late TimeOfDay selectedTime;
   late DateTime alarmTime;
   late bool loopAudio;
