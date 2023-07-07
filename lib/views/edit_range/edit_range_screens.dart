@@ -173,7 +173,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                         fontSize: 12)),
                                             Text(
                                                 '<' +
-                                                    '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].minValue}',
+                                                    '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].maxValue}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
                                                         color: Colors.black,
@@ -271,7 +271,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                       fontSize: 12)),
                                           Text(
                                               '>=' +
-                                                  '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].maxValue}',
+                                                  '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].minValue}',
                                               style: AppTheme.hintText
                                                   .copyWith(
                                                       color: Colors.black,
