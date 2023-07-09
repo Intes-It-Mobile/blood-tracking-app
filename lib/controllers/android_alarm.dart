@@ -2,13 +2,12 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:alarm/alarm.dart';
+import 'package:alarm/service/storage.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:vibration/vibration.dart';
-
-import '../alarm.dart';
-import '../alarm_storage.dart';
-import '../just_audio.dart';
 
 /// For Android support, [AndroidAlarmManager] is used to set an alarm
 /// and trigger a callback when the given time is reached.
@@ -17,7 +16,7 @@ class AndroidAlarm {
   static const stopPort = 'alarm-stop';
 
   static const platform =
-      MethodChannel('com.gdelataillade.alarm/notifOnAppKill');
+  MethodChannel('com.gdelataillade.alarm/notifOnAppKill');
 
   static bool vibrationsActive = false;
 
@@ -28,15 +27,15 @@ class AndroidAlarm {
 
   /// Creates isolate communication channel and set alarm at given [dateTime].
   static Future<bool> set(
-    int id,
-    DateTime dateTime,
-    void Function()? onRing,
-    String assetAudioPath,
-    bool loopAudio,
-    bool vibrate,
-    double fadeDuration,
-    bool enableNotificationOnKill,
-  ) async {
+      int id,
+      DateTime dateTime,
+      void Function()? onRing,
+      String assetAudioPath,
+      bool loopAudio,
+      bool vibrate,
+      double fadeDuration,
+      bool enableNotificationOnKill,
+      ) async {
     try {
       final port = ReceivePort();
       final success = IsolateNameServer.registerPortWithName(
@@ -151,7 +150,7 @@ class AndroidAlarm {
 
         Timer.periodic(
           Duration(milliseconds: fadeDuration * 1000 ~/ 10),
-          (timer) {
+              (timer) {
             counter++;
             audioPlayer.setVolume(counter / 10);
             if (counter >= 10) timer.cancel();
@@ -172,7 +171,7 @@ class AndroidAlarm {
     try {
       final port = ReceivePort();
       final success =
-          IsolateNameServer.registerPortWithName(port.sendPort, stopPort);
+      IsolateNameServer.registerPortWithName(port.sendPort, stopPort);
 
       if (!success) {
         IsolateNameServer.removePortNameMapping(stopPort);

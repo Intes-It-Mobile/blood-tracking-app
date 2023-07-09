@@ -1,9 +1,8 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
-import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
-import '../../alarm.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -51,7 +50,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
         widget.alarmSettings!.dateTime.hour,
         widget.alarmSettings!.dateTime.minute,
       );
-      loopAudio = widget.alarmSettings!.loopAudio!;
+      loopAudio = widget.alarmSettings!.loopAudio;
       vibrate = widget.alarmSettings!.vibrate;
       showNotification = widget.alarmSettings!.notificationTitle != null &&
           widget.alarmSettings!.notificationTitle!.isNotEmpty &&
