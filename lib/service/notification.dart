@@ -1,8 +1,9 @@
-import 'package:alarm/alarm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+import '../alarm.dart';
 
 /// The purpose of this class is to show a notification to the user
 /// when the alarm rings so the user can understand where the audio

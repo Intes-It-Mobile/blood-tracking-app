@@ -1,14 +1,13 @@
-
 import 'dart:async';
 
-import 'package:alarm/alarm.dart';
+import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
-import 'package:blood_sugar_tracking/views/ring/ring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
 
+import '../../alarm.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -26,7 +25,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   late List<AlarmSettings> alarms;
   DateTime? alarmTime;
   static StreamSubscription? subscription;
-  bool check = false ;
+  bool check = false;
 
   @override
   void initState() {
@@ -51,22 +50,22 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
     });
   }
 
-  Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ExampleAlarmRingScreen(alarmSettings: alarmSettings),
-        ));
-    loadAlarms();
-  }
+  // Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
+  //   await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) =>
+  //             ExampleAlarmRingScreen(alarmSettings: alarmSettings),
+  //       ));
+  //   loadAlarms();
+  // }
 
   Future<void> navigateToAlarmScreen(AlarmSettings? settings) async {
     final res = await showDialog<String>(
         context: context,
         builder: (context) {
           return AlertDialog(
-              shape: const RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(5.0))),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
@@ -77,7 +76,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
           );
         });
 
-    if (res != null && res == "set"){
+    if (res != null && res == "set") {
       loadAlarms();
     }
   }
@@ -159,10 +158,14 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 Alarm.stop(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
-                              loopAudio: alarms[index].loopAudio,
-                              onDelete: (){
+                              loopAudio: alarms[index].loopAudio!,
+                              onDelete: () {
                                 Alarm.stop(alarms[index].id)
                                     .then((_) => loadAlarms());
+                              },
+                              onSwitch: (bool? v) {
+                               alarms[index].loopAudio = v ?? false;
+                                setState(() {});
                               },
                             ),
                           );
@@ -186,10 +189,12 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: AppColors.AppColor2),
-                child:  Center(
-                  child: Text("${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                    style: AppTheme.TextInfomation14Text.copyWith(color: Colors.white),
-                    ),
+                child: Center(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
+                    style: AppTheme.TextInfomation14Text.copyWith(
+                        color: Colors.white),
+                  ),
                 ),
               ),
             ),

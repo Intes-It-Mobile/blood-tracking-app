@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:alarm/alarm.dart';
-import 'package:alarm/service/storage.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:vibration/vibration.dart';
+
+import '../alarm.dart';
+import '../alarm_storage.dart';
+import '../just_audio.dart';
 
 /// For Android support, [AndroidAlarmManager] is used to set an alarm
 /// and trigger a callback when the given time is reached.
