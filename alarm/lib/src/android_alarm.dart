@@ -113,7 +113,7 @@ class AndroidAlarm {
     final audioPlayer = AudioPlayer();
 
     final res = IsolateNameServer.lookupPortByName("$ringPort-$id");
-    if (res == null) throw  AlarmException('Isolate port not found');
+    if (res == null) throw const AlarmException('Isolate port not found');
 
     final send = res;
     send.send('ring');

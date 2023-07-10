@@ -1,14 +1,13 @@
 import 'dart:async';
 
+import 'package:alarm/alarm.dart';
+import 'package:alarm/service/storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 
-import '../alarm.dart';
-import '../alarm_storage.dart';
-
 /// Uses method channel to interact with the native platform.
 class IOSAlarm {
-  static const methodChannel = MethodChannel('com.gdelataillade/alarm');
+  static const methodChannel = MethodChannel('com.example.blood_sugar_tracking/alarm');
 
   static const timers = <int, Timer?>{};
   static const fgbgSubscriptions = <int, StreamSubscription<FGBGType>?>{};

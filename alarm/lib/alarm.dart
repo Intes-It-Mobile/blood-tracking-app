@@ -1,13 +1,15 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-
-import 'package:blood_sugar_tracking/alarm_storage.dart';
-import 'package:blood_sugar_tracking/controllers/android_alarm.dart';
-import 'package:blood_sugar_tracking/controllers/ios_alarm.dart';
-import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
-import 'package:blood_sugar_tracking/service/notification.dart';
+export 'package:alarm/model/alarm_settings.dart';
+import 'package:alarm/model/alarm_settings.dart';
+import 'package:alarm/service/notification.dart';
+import 'package:alarm/service/storage.dart';
+import 'package:alarm/src/android_alarm.dart';
+import 'package:alarm/src/ios_alarm.dart';
 import 'package:flutter/foundation.dart';
+
+
 
 /// Custom print function designed for Alarm plugin.
 DebugPrintCallback alarmPrint = debugPrintThrottled;
@@ -52,9 +54,10 @@ class Alarm {
       final now = DateTime.now();
       if (alarm.dateTime.isAfter(now)) {
         await set(alarmSettings: alarm);
-      } else {
-        await AlarmStorage.unsaveAlarm(alarm.id);
       }
+      // else {
+      //   await AlarmStorage.unsaveAlarm(alarm.id);
+      // }
     }
   }
 
@@ -65,13 +68,13 @@ class Alarm {
   ///
   /// Also, schedules notification if [notificationTitle] and [notificationBody]
   /// are not null nor empty.
-  static Future<dynamic> set({required AlarmSettings alarmSettings}) async {
+  static Future<bool> set({required AlarmSettings alarmSettings}) async {
     for (final alarm in Alarm.getAlarms()) {
       if (alarm.id == alarmSettings.id ||
           (alarm.dateTime.day == alarmSettings.dateTime.day &&
               alarm.dateTime.hour == alarmSettings.dateTime.hour &&
               alarm.dateTime.minute == alarmSettings.dateTime.minute)) {
-        await Alarm.stop(alarm.id);
+      //  await Alarm.stop(alarm.id);
       }
     }
 
@@ -143,7 +146,14 @@ class Alarm {
 
   /// Stops alarm.
   static Future<bool> stop(int id) async {
-   // await AlarmStorage.unsaveAlarm(id);
+    // await AlarmStorage.unsaveAlarm(id);
+
+    AlarmNotification.instance.cancel(id);
+
+    return iOS ? await IOSAlarm.stopAlarm(id) : await AndroidAlarm.stop(id);
+  }
+  static Future<bool> stopDelete(int id) async {
+    await AlarmStorage.unsaveAlarm(id);
 
     AlarmNotification.instance.cancel(id);
 

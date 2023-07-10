@@ -1,12 +1,11 @@
-
 import 'dart:async';
 import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -21,7 +20,7 @@ class ExampleAlarmHomeScreen extends StatefulWidget {
 }
 
 class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
-  late List<AlarmSettings> alarms;
+  late List<dynamic> alarms;
   DateTime? alarmTime;
   static StreamSubscription? subscription;
   bool check = false ;
@@ -139,37 +138,9 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                           var alarmTime = DateFormat('HH:mm')
                               .format(alarms[index].dateTime);
                           print("aaaaaa: ${alarmTime}");
-                          AlarmSettings buildAlarmSettings(bool value) {
-                            final now = DateTime.now();
-
-                            DateTime dateTime = DateTime(
-                              now.year,
-                              now.month,
-                              now.day,
-                              alarms[index].dateTime.hour,
-                              alarms[index].dateTime.minute,
-                              0,
-                              0,
-                            );
-                            if (dateTime.isBefore(DateTime.now())) {
-                              dateTime = dateTime.add(const Duration(days: 1));
-                            }
-
-                            final alarmSettings = AlarmSettings(
-                              id: alarms[index].id,
-                              dateTime: dateTime,
-                              loopAudio: alarms[index].loopAudio,
-                              notificationTitle: alarms[index].loopAudio ? 'Enter a record' : null,
-                              notificationBody:
-                              alarms[index].loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-                              fadeDuration: 2.0,
-                              stopOnNotificationOpen: true,
-                              enableNotificationOnKill: true, assetAudioPath: '',
-                            );
-                            return alarmSettings;
-                          }
 
                           print("looAudio: ${alarms[index].loopAudio}");
+                          // print("loopAudio: ${loopAudio}");
                           return Container(
                             height: MediaQuery.of(context).size.height * 0.13,
                             margin: const EdgeInsets.only(
@@ -184,13 +155,36 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                               onPressed: () =>
                                   navigateToAlarmScreen(alarms[index]),
                               onDismissed: () {
-                                Alarm.stop(alarms[index].id)
+                                Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
                               loopAudio: alarms[index].loopAudio,
                               onDelete: (){
-                                Alarm.stop(alarms[index].id)
+                                Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
+                              },
+                              onLoopAudioChanged: (loopAudio) {
+                                alarms[index].loopAudio = loopAudio;
+                                var _alarmSettings =
+                                Alarm.getAlarm(alarms[index].id);
+                                if (_alarmSettings != null) {
+                                  Alarm.set(
+                                      alarmSettings: AlarmSettings(
+                                        id: _alarmSettings.id,
+                                        dateTime: _alarmSettings.dateTime,
+                                        loopAudio: loopAudio,
+                                        vibrate: _alarmSettings.vibrate,
+                                        notificationTitle: loopAudio ?
+                                        _alarmSettings.notificationTitle : null,
+                                        notificationBody: loopAudio ?
+                                        _alarmSettings.notificationBody : null,
+                                        assetAudioPath: loopAudio ?
+                                        _alarmSettings.assetAudioPath : '.',
+                                        fadeDuration: 3.0,
+                                        stopOnNotificationOpen: true,
+                                        enableNotificationOnKill: true,
+                                      ));
+                                }
                               },
                             //   onSwitch: (bool v) {
                             //   alarms[index].loopAudio = false;

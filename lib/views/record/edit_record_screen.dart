@@ -231,9 +231,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             child: Text(
                                               "${DateFormat('yyyy/MM/dd').format(editRecordStore!.editingDayTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                              style: AppTheme.appBodyTextStyle.copyWith(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                         ],
@@ -241,6 +242,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     ),
                                   )
                                 : Container(),
+                            const Spacer(),
                             sugarInfoStore!.editingRecord!.hourTime != null
                                 ? GestureDetector(
                                     onTap: () {
@@ -259,9 +261,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             child: Text(
                                               "${DateFormat('HH:mm').format(editRecordStore!.editingHourTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                              style:  AppTheme.appBodyTextStyle.copyWith(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                           ),
                                         ],

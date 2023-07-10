@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -93,15 +94,16 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     }
 
     final alarmSettings = AlarmSettings(
+
       id: id,
       dateTime: dateTime,
       loopAudio: showNotification,
       vibrate: vibrate,
-      notificationTitle: showNotification ? 'Enter a record' : null,
+      notificationTitle: showNotification ? 'Enter a record' : 'Enter a record',
       notificationBody:
-          showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
+          showNotification ? 'Time: ${savedDateString(dateTime)}' : 'Time: ${savedDateString(dateTime)}',
       assetAudioPath: showNotification ? assetAudio : '.',
-      fadeDuration: 2.0,
+      fadeDuration: 3.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
     );

@@ -1,5 +1,5 @@
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
-import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +13,7 @@ class ExampleAlarmTile extends StatefulWidget {
   final String title;
   final void Function()? onDelete;
   bool loopAudio;
+  final void Function(bool loopAudio)? onLoopAudioChanged;
   final void Function() onPressed;
   // final void Function(bool) onSwitch;
   final void Function()? onDismissed;
@@ -22,6 +23,7 @@ class ExampleAlarmTile extends StatefulWidget {
     required this.title,
     required this.onPressed,
     this.onDismissed,
+    this.onLoopAudioChanged,
     this.alarmSettings,
      required this.loopAudio,
     this.onDelete,
@@ -40,33 +42,33 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
   void initState() {
     // widget.loopAudio = widget.alarmSettings!.loopAudio;
     super.initState();
-    getSwitchValues();
+    //getSwitchValues();
   }
 
-  getSwitchValues() async {
-    widget.loopAudio = await getSwitchState();
-    setState(() {});
-  }
-
-  Future<bool> saveSwitchState(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("switchState", value);
-    print('Switch Value saved $value');
-    return prefs.setBool("switchState", value);
-  }
-
-  Future<bool> getSwitchState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isSwitchedFT = prefs.getBool("switchState");
-    print(isSwitchedFT);
-
-    return isSwitchedFT!;
-  }
-
-  String savedDateString(DateTime date) {
-    print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
-    return DateFormat("HH:mm dd/MM/yyyy").format(date);
-  }
+  // getSwitchValues() async {
+  //   widget.loopAudio = await getSwitchState();
+  //   setState(() {});
+  // }
+  //
+  // Future<bool> saveSwitchState(bool value) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool("switchState", value);
+  //   print('Switch Value saved $value');
+  //   return prefs.setBool("switchState", value);
+  // }
+  //
+  // Future<bool> getSwitchState() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool? isSwitchedFT = prefs.getBool("switchState");
+  //   print(isSwitchedFT);
+  //
+  //   return isSwitchedFT!;
+  // }
+  //
+  // String savedDateString(DateTime date) {
+  //   print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
+  //   return DateFormat("HH:mm dd/MM/yyyy").format(date);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +139,8 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                               onChanged: (bool value) {
                                 setModalState(() {
                                   widget.loopAudio = value;
-                                  saveSwitchState(value);
+                                  widget.onLoopAudioChanged?.call(value);
+                                  //saveSwitchState(value);
                                 });
                               },
                               value: widget.loopAudio,

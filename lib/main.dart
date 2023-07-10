@@ -65,10 +65,10 @@ class MyApp extends StatelessWidget {
           ],
           localeResolutionCallback:
               (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                  deviceLocale != null &&
-                          ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
-                      ? deviceLocale
-                      : supportedLocales.first,
+          deviceLocale != null &&
+              ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+              ? deviceLocale
+              : supportedLocales.first,
           theme: ThemeData(
             primaryColor: AppColors.AppColor2,
             colorScheme: ColorScheme(
@@ -90,8 +90,8 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,
           ),
-        //  home: SelectUnit(),
-        home: SplashScreen(),
+          //  home: SelectUnit(),
+          home: SplashScreen(),
         ),
       ),
     );

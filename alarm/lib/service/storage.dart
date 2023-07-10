@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/alarm_info/alarm_settings.dart';
 
 class AlarmStorage {
   static const prefix = '__alarm_id__';
