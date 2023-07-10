@@ -32,7 +32,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   DateTime? selectedDateTime;
   DateTime timeNow = DateTime.now();
   SugarInfoStore? sugarInfoStore;
-
+  bool? canTap = true;
   bool? isFirst = true;
   String? type;
   DateTime? selectedDate;
@@ -104,7 +104,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => SucessDialog());
-                        Future.delayed(Duration(milliseconds:1500), () {
+                        Future.delayed(Duration(milliseconds: 1500), () {
                           sugarInfoStore!.replaceRecord(context);
                         });
                       },
@@ -178,7 +178,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         sugarInfoStore!.setInputSugarAmount(4);
         sugarInfoStore!.sugarAmountController.text = "4";
       }
-      ;
+
+      sugarInfoStore!.sugarAmountController.text.contains(".");
       setState(() {
         isFirst = false;
         print(" set isFirsttttttttttttttttttttt:     ${isFirst}  ");
@@ -500,28 +501,38 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           margin: EdgeInsets.symmetric(vertical: 8),
                           mainAxisSizeMin: true,
                           onTap: () {
-                            sugarInfoStore!.checkValidateNewRecord();
-                            Future.delayed(Duration(milliseconds: 200), () {
-                              if (sugarInfoStore!.errorText == null ||
-                                  sugarInfoStore!.errorText == "") {
-                                sugarInfoStore!.checkDuplicate();
-                                Future.delayed(Duration(milliseconds: 300), () {
-                                  if (sugarInfoStore!.hasExistedRecord ==
-                                      true) {
-                                    showQuestionAdd();
-                                  } else {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            SucessDialog());
-                                    Future.delayed(Duration(seconds: 1), () {
-                                      sugarInfoStore!
-                                          .saveNewRecord(id!, context);
-                                    });
-                                  }
-                                });
-                              }
-                            });
+                            if (canTap == true) {
+                              setState(() {
+                                canTap = false;
+                              });
+                              sugarInfoStore!.checkValidateNewRecord();
+                              Future.delayed(Duration(milliseconds: 200), () {
+                                if (sugarInfoStore!.errorText == null ||
+                                    sugarInfoStore!.errorText == "") {
+                                  sugarInfoStore!.checkDuplicate();
+                                  Future.delayed(Duration(milliseconds: 300),
+                                      () {
+                                    if (sugarInfoStore!.hasExistedRecord ==
+                                        true) {
+                                      showQuestionAdd();
+                                    } else {
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              SucessDialog());
+                                      Future.delayed(Duration(seconds: 1), () {
+                                        sugarInfoStore!
+                                            .saveNewRecord(id!, context);
+                                      }).whenComplete(() {
+                                        setState(() {
+                                          canTap = true;
+                                        });
+                                      });
+                                    }
+                                  });
+                                }
+                              });
+                            }
                           },
                           btnColor: AppColors.AppColor4,
                           btnText: "save_record",
@@ -924,8 +935,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                   width: 100,
                 ),
                 showDropdown
-                    ? SvgPicture.asset(Assets.iconUpArrow)
-                    : SvgPicture.asset(Assets.iconDownArrow),
+                    ? SvgPicture.asset(Assets.iconDropdownUpArrow)
+                    : SvgPicture.asset(Assets.iconDropdownDownArrow),
               ],
             ),
           ),

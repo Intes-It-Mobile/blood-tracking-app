@@ -43,7 +43,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
       listRecords = sugarInfoStore!.listRecordArrangedByTime!;
     }
     if (isFirst = true) {
-      sugarInfoStore!.setConditionFilterId("default_txt");
+      sugarInfoStore!.setConditionFilterId("all");
       isFirst = false;
     }
     super.didChangeDependencies();
