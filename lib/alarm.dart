@@ -144,7 +144,7 @@ class Alarm {
 
   /// Stops alarm.
   static Future<bool> stop(int id) async {
-    await AlarmStorage.unsaveAlarm(id);
+   // await AlarmStorage.unsaveAlarm(id);
 
     AlarmNotification.instance.cancel(id);
 

@@ -6,7 +6,6 @@ import 'package:blood_sugar_tracking/views/home/top_widget_home_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
@@ -59,12 +58,12 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.32,
+                height: MediaQuery.of(context).size.height * 0.30555,
                 child: Stack(
                   children: [
                     Container(
                       width: screenWidth,
-                      height: screenHeight * 0.24384236453,
+                      height: screenHeight * 0.227844,
                       color: AppColors.AppColor2,
                       padding: const EdgeInsets.only(top: 20),
                       // child: const TopWidgetHomeContent(),

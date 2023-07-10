@@ -21,8 +21,8 @@ class ExampleAlarmEditScreen extends StatefulWidget {
 }
 
 class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
-  late bool creating;
 
+  late bool creating;
   late TimeOfDay selectedTime;
   late DateTime alarmTime;
   late bool loopAudio;
@@ -92,14 +92,14 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     final alarmSettings = AlarmSettings(
       id: id,
       dateTime: dateTime,
-      loopAudio: loopAudio,
+      loopAudio: showNotification,
       vibrate: vibrate,
       notificationTitle: showNotification ? 'Enter a record' : null,
-      notificationBody:
-          showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
+      notificationBody: showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
       assetAudioPath: assetAudio,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
+      fadeDuration: 2.0,
     );
     return alarmSettings;
   }
