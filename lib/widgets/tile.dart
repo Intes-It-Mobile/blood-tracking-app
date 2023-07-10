@@ -15,7 +15,7 @@ class ExampleAlarmTile extends StatefulWidget {
   bool loopAudio;
   final void Function() onPressed;
   final void Function()? onDismissed;
-  final Function(bool) onSwitch;
+ // final Function(bool) onSwitch;
   final AlarmSettings? alarmSettings;
   ExampleAlarmTile({
     Key? key,
@@ -25,7 +25,7 @@ class ExampleAlarmTile extends StatefulWidget {
     this.alarmSettings,
     required this.loopAudio,
     this.onDelete,
-    required this.onSwitch,
+  //  required this.onSwitch,
   }) : super(key: key);
 
   @override
@@ -115,7 +115,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                                 setModalState(() {
                                   widget.loopAudio = value;
                                 });
-                                widget.onSwitch(value);
+                              //  widget.onSwitch(value);
                               },
                               value: widget.loopAudio,
                               trackColor: AppColors.AppColor1,

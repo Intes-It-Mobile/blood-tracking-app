@@ -163,12 +163,11 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 Alarm.stop(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
-                              onSwitch: (bool v){
-                              alarms[index].loopAudio=false;
-                              setState(() {
-
-                              });
-                            },
+                            //   onSwitch: (bool v){
+                            //   alarms[index].loopAudio;
+                            //   setState(() {
+                            //   });
+                            // },
                             ),
                           );
                         },
