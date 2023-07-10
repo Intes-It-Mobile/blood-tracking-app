@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
-
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -21,7 +20,6 @@ class ExampleAlarmEditScreen extends StatefulWidget {
 }
 
 class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
-
   late bool creating;
   late TimeOfDay selectedTime;
   late DateTime alarmTime;
@@ -31,6 +29,11 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   late bool showNotification;
   late String assetAudio;
 
+  @override
+  void didUpdateWidget(covariant ExampleAlarmEditScreen oldWidget) {
+   saveAlarm();
+    super.didUpdateWidget(oldWidget);
+  }
   @override
   void initState() {
     super.initState();
@@ -95,11 +98,12 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       loopAudio: showNotification,
       vibrate: vibrate,
       notificationTitle: showNotification ? 'Enter a record' : null,
-      notificationBody: showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: assetAudio,
+      notificationBody:
+          showNotification ? 'Time: ${savedDateString(dateTime)}' : null,
+      assetAudioPath: showNotification ? assetAudio : '.',
+      fadeDuration: 2.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
-      fadeDuration: 2.0,
     );
     return alarmSettings;
   }

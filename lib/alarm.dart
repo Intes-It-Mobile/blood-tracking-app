@@ -1,13 +1,12 @@
 // ignore_for_file: avoid_print
 
-export 'package:alarm/model/alarm_settings.dart';
 import 'dart:async';
 
-import 'package:alarm/model/alarm_settings.dart';
-import 'package:alarm/service/notification.dart';
-import 'package:alarm/service/storage.dart';
+import 'package:blood_sugar_tracking/alarm_storage.dart';
 import 'package:blood_sugar_tracking/controllers/android_alarm.dart';
 import 'package:blood_sugar_tracking/controllers/ios_alarm.dart';
+import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
+import 'package:blood_sugar_tracking/service/notification.dart';
 import 'package:flutter/foundation.dart';
 
 /// Custom print function designed for Alarm plugin.

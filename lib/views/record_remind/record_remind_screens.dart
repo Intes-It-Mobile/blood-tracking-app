@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:alarm/alarm.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
-import 'package:blood_sugar_tracking/views/ring/ring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -51,15 +50,15 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
     });
   }
 
-  Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ExampleAlarmRingScreen(alarmSettings: alarmSettings),
-        ));
-    loadAlarms();
-  }
+  // Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
+  //   await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) =>
+  //             ExampleAlarmRingScreen(alarmSettings: alarmSettings),
+  //       ));
+  //   loadAlarms();
+  // }
 
   Future<void> navigateToAlarmScreen(AlarmSettings? settings) async {
     final res = await showDialog<String>(
@@ -164,6 +163,12 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 Alarm.stop(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
+                              onSwitch: (bool v){
+                              alarms[index].loopAudio=false;
+                              setState(() {
+
+                              });
+                            },
                             ),
                           );
                         },

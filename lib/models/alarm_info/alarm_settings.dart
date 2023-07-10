@@ -17,7 +17,7 @@ class AlarmSettings {
   final String assetAudioPath;
 
   /// If true, [assetAudioPath] will repeat indefinitely until alarm is stopped.
-  final bool loopAudio;
+  bool loopAudio;
 
   /// If true, device will vibrate for 500ms, pause for 500ms and repeat until
   /// alarm is stopped.
@@ -69,7 +69,7 @@ class AlarmSettings {
   ///
   /// Note that if you want to show a notification when alarm is triggered,
   /// both [notificationTitle] and [notificationBody] must not be null nor empty.
-  const AlarmSettings({
+   AlarmSettings({
     required this.id,
     required this.dateTime,
     required this.assetAudioPath,

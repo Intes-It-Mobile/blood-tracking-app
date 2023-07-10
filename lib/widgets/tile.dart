@@ -1,4 +1,5 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
+import 'package:blood_sugar_tracking/models/alarm_info/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,7 +8,6 @@ import 'package:intl/intl.dart';
 import '../alarm.dart';
 import '../constants/assets.dart';
 import '../constants/colors.dart';
-import '../views/edit_alarm/edit_alarm.dart';
 
 class ExampleAlarmTile extends StatefulWidget {
   final String title;
@@ -15,13 +15,17 @@ class ExampleAlarmTile extends StatefulWidget {
   bool loopAudio;
   final void Function() onPressed;
   final void Function()? onDismissed;
+  final Function(bool) onSwitch;
   final AlarmSettings? alarmSettings;
-   ExampleAlarmTile({
+  ExampleAlarmTile({
     Key? key,
     required this.title,
     required this.onPressed,
     this.onDismissed,
-    this.alarmSettings, required this.loopAudio, this.onDelete,
+    this.alarmSettings,
+    required this.loopAudio,
+    this.onDelete,
+    required this.onSwitch,
   }) : super(key: key);
 
   @override
@@ -29,18 +33,17 @@ class ExampleAlarmTile extends StatefulWidget {
 }
 
 class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
-
   List<AlarmSettings>? alarms;
   @override
   void initState() {
-  // widget.loopAudio = widget.alarmSettings!.loopAudio;
+    // widget.loopAudio = widget.alarmSettings!.loopAudio;
     super.initState();
   }
+
   String savedDateString(DateTime date) {
     print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
     return DateFormat("HH:mm dd/MM/yyyy").format(date);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +85,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15,right: 20),
+                  padding: const EdgeInsets.only(top: 15, right: 20),
                   child: Column(
                     children: [
                       Row(
@@ -105,18 +108,18 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child:  StatefulBuilder(
+                        child: StatefulBuilder(
                           builder: (context, setModalState) {
                             return CupertinoSwitch(
                               onChanged: (bool value) {
                                 setModalState(() {
                                   widget.loopAudio = value;
                                 });
+                                widget.onSwitch(value);
                               },
                               value: widget.loopAudio,
                               trackColor: AppColors.AppColor1,
-                              activeColor: AppColors
-                                  .AppColor2,
+                              activeColor: AppColors.AppColor2,
                             );
                           },
                         ),
