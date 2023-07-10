@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../alarm.dart';
 import '../constants/assets.dart';
 import '../constants/colors.dart';
 
@@ -14,8 +14,8 @@ class ExampleAlarmTile extends StatefulWidget {
   final void Function()? onDelete;
   bool loopAudio;
   final void Function() onPressed;
+  // final void Function(bool) onSwitch;
   final void Function()? onDismissed;
- // final Function(bool) onSwitch;
   final AlarmSettings? alarmSettings;
   ExampleAlarmTile({
     Key? key,
@@ -23,9 +23,9 @@ class ExampleAlarmTile extends StatefulWidget {
     required this.onPressed,
     this.onDismissed,
     this.alarmSettings,
-    required this.loopAudio,
+     required this.loopAudio,
     this.onDelete,
-  //  required this.onSwitch,
+    // required this.onSwitch,
   }) : super(key: key);
 
   @override
@@ -34,10 +34,33 @@ class ExampleAlarmTile extends StatefulWidget {
 
 class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
   List<AlarmSettings>? alarms;
+  late DateTime alarmTime;
+  late bool creating;
   @override
   void initState() {
     // widget.loopAudio = widget.alarmSettings!.loopAudio;
     super.initState();
+    getSwitchValues();
+  }
+
+  getSwitchValues() async {
+    widget.loopAudio = await getSwitchState();
+    setState(() {});
+  }
+
+  Future<bool> saveSwitchState(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("switchState", value);
+    print('Switch Value saved $value');
+    return prefs.setBool("switchState", value);
+  }
+
+  Future<bool> getSwitchState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isSwitchedFT = prefs.getBool("switchState");
+    print(isSwitchedFT);
+
+    return isSwitchedFT!;
   }
 
   String savedDateString(DateTime date) {
@@ -114,8 +137,8 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                               onChanged: (bool value) {
                                 setModalState(() {
                                   widget.loopAudio = value;
+                                  saveSwitchState(value);
                                 });
-                              //  widget.onSwitch(value);
                               },
                               value: widget.loopAudio,
                               trackColor: AppColors.AppColor1,

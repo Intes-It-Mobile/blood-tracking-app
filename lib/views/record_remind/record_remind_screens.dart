@@ -1,13 +1,12 @@
 
 import 'dart:async';
-
 import 'package:alarm/alarm.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -26,11 +25,11 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   DateTime? alarmTime;
   static StreamSubscription? subscription;
   bool check = false ;
-
   @override
   void initState() {
     super.initState();
     loadAlarms();
+
     // subscription ??= Alarm.ringStream.stream.listen(
     //   (alarmSettings) => navigateToRingScreen(alarmSettings),
     // );
@@ -44,11 +43,11 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   void loadAlarms() {
     setState(() {
       alarms = Alarm.getAlarms();
-      // Alarm.ringStream.stream.listen((event) => );
       alarms.sort((a, b) =>
           (savedDateString(a.dateTime)).compareTo(savedDateString(b.dateTime)));
     });
   }
+
 
   // Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
   //   await Navigator.push(
@@ -140,6 +139,36 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                           var alarmTime = DateFormat('HH:mm')
                               .format(alarms[index].dateTime);
                           print("aaaaaa: ${alarmTime}");
+                          AlarmSettings buildAlarmSettings(bool value) {
+                            final now = DateTime.now();
+
+                            DateTime dateTime = DateTime(
+                              now.year,
+                              now.month,
+                              now.day,
+                              alarms[index].dateTime.hour,
+                              alarms[index].dateTime.minute,
+                              0,
+                              0,
+                            );
+                            if (dateTime.isBefore(DateTime.now())) {
+                              dateTime = dateTime.add(const Duration(days: 1));
+                            }
+
+                            final alarmSettings = AlarmSettings(
+                              id: alarms[index].id,
+                              dateTime: dateTime,
+                              loopAudio: alarms[index].loopAudio,
+                              notificationTitle: alarms[index].loopAudio ? 'Enter a record' : null,
+                              notificationBody:
+                              alarms[index].loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
+                              fadeDuration: 2.0,
+                              stopOnNotificationOpen: true,
+                              enableNotificationOnKill: true, assetAudioPath: '',
+                            );
+                            return alarmSettings;
+                          }
+
                           print("looAudio: ${alarms[index].loopAudio}");
                           return Container(
                             height: MediaQuery.of(context).size.height * 0.13,
@@ -163,11 +192,14 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 Alarm.stop(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
-                            //   onSwitch: (bool v){
-                            //   alarms[index].loopAudio;
+                            //   onSwitch: (bool v) {
+                            //   alarms[index].loopAudio = false;
+                            //
                             //   setState(() {
+                            //
                             //   });
                             // },
+
                             ),
                           );
                         },
