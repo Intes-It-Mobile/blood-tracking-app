@@ -18,7 +18,7 @@ class SucessDialog extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
           content: StatefulBuilder(builder: (context, setModalState) {
             return Container(
-              height: MediaQuery.of(context).size.height * 0.17,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
             );
           }),

@@ -785,6 +785,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$isChartLoadingAtom =
+      Atom(name: '_SugarInfoStoreBase.isChartLoading', context: context);
+
+  @override
+  bool? get isChartLoading {
+    _$isChartLoadingAtom.reportRead();
+    return super.isChartLoading;
+  }
+
+  @override
+  set isChartLoading(bool? value) {
+    _$isChartLoadingAtom.reportWrite(value, super.isChartLoading, () {
+      super.isChartLoading = value;
+    });
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -1119,22 +1135,44 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic multiplicationUnit() {
+  dynamic multiplicationUnitListRecord() {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.multiplicationUnit');
+        name: '_SugarInfoStoreBase.multiplicationUnitListRecord');
     try {
-      return super.multiplicationUnit();
+      return super.multiplicationUnitListRecord();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic divisionnUnit() {
+  dynamic multiplicationUnitListRootCondition() {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.divisionnUnit');
+        name: '_SugarInfoStoreBase.multiplicationUnitListRootCondition');
     try {
-      return super.divisionnUnit();
+      return super.multiplicationUnitListRootCondition();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic divisionnUnitListRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.divisionnUnitListRecord');
+    try {
+      return super.divisionnUnitListRecord();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic divisionListRootCondition() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.divisionListRootCondition');
+    try {
+      return super.divisionListRootCondition();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1278,6 +1316,7 @@ sugarAmount: ${sugarAmount},
 tempSugarAmount: ${tempSugarAmount},
 sugarAmountEdit: ${sugarAmountEdit},
 tempSugarAmountEdit: ${tempSugarAmountEdit},
+isChartLoading: ${isChartLoading},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

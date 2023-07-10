@@ -122,6 +122,8 @@ abstract class _EditRecordStoreBase with Store {
     print("Erorrrrrrrrrrrrrrrr:${errorText}");
   }
 
+  @observable
+  bool? isSwapedToMol;
   @action
   checkValidateEditRecord(double value) {
     print("Check Validate: $editingSugarAmount");
@@ -131,10 +133,19 @@ abstract class _EditRecordStoreBase with Store {
         currentEditStatus != "" &&
         editingSugarAmount != null &&
         editChooseCondition!.id != null) {
-      if (editingSugarAmount! < 18 || editingSugarAmount! >= 630) {
-        setErrorText("Please enter correct value between 18-630 mg/dL");
-      } else {
-        setErrorText("");
+      if (isSwapedToMol == false) {
+        if (editingSugarAmount! < 18 || editingSugarAmount! > 630) {
+          setErrorText("Please enter correct value between 18-630 mg/dL");
+        } else {
+          setErrorText("");
+        }
+      }
+      if (isSwapedToMol == true) {
+        if (editingSugarAmount! < 1 || editingSugarAmount! > 35) {
+          setErrorText("Please enter correct value between 1-35 mmol/L");
+        } else {
+          setErrorText("");
+        }
       }
     }
   }

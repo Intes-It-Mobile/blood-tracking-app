@@ -232,6 +232,22 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
     });
   }
 
+  late final _$isSwapedToMolAtom =
+      Atom(name: '_EditRecordStoreBase.isSwapedToMol', context: context);
+
+  @override
+  bool? get isSwapedToMol {
+    _$isSwapedToMolAtom.reportRead();
+    return super.isSwapedToMol;
+  }
+
+  @override
+  set isSwapedToMol(bool? value) {
+    _$isSwapedToMolAtom.reportWrite(value, super.isSwapedToMol, () {
+      super.isSwapedToMol = value;
+    });
+  }
+
   late final _$sugarAmountEditAtom =
       Atom(name: '_EditRecordStoreBase.sugarAmountEdit', context: context);
 
@@ -426,6 +442,7 @@ editChooseCondition: ${editChooseCondition},
 listRootConditions: ${listRootConditions},
 rootSugarInfo: ${rootSugarInfo},
 editStatusLevel: ${editStatusLevel},
+isSwapedToMol: ${isSwapedToMol},
 sugarAmountEdit: ${sugarAmountEdit},
 tempSugarAmountEdit: ${tempSugarAmountEdit},
 isButtonEnabled: ${isButtonEnabled},

@@ -474,6 +474,14 @@ abstract class _SugarInfoStoreBase with Store {
         editedRecord.sugarAmount;
     listRecord!.firstWhere((e) => e.id == editItemId).status =
         editedRecord.status;
+    listRecordArrangedByTime = listRecord;
+    if (listRecordArrangedByTime!.length > 0) {
+      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${a!.dayTime!} ${a!.hourTime!}"))
+          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      getAverageNumber();
+    }
     saveListRecord(listRecords);
   }
 
@@ -577,7 +585,7 @@ abstract class _SugarInfoStoreBase with Store {
     return double.parse((listNumber!.fold(0.0,
                 (previousValue, item) => previousValue + item.sugarAmount!) /
             listNumber.length)
-        .toStringAsFixed(1));
+        .toStringAsFixed(2));
   }
 
   @observable
@@ -600,6 +608,11 @@ abstract class _SugarInfoStoreBase with Store {
           (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
               .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
     }
+    isChartLoading = true;
+    Future.delayed(Duration(milliseconds: 500), () {
+      isChartLoading = false;
+      print(isChartLoading);
+    });
   }
 
   @action
@@ -631,12 +644,16 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  multiplicationUnit() {
+  multiplicationUnitListRecord() {
     for (int i = 0; i < listRecord!.length; i++) {
       if (listRecord![i].sugarAmount != null) {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! * 18;
       }
     }
+  }
+
+  @action
+  multiplicationUnitListRootCondition() {
     for (var condition in listRootConditions!) {
       if (condition.sugarAmount != null) {
         for (var sugarAmount in condition.sugarAmount!) {
@@ -652,12 +669,16 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  divisionnUnit() {
+  divisionnUnitListRecord() {
     for (int i = 0; i < listRecord!.length; i++) {
       if (listRecord![i].sugarAmount != null) {
         listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
       }
     }
+  }
+
+  @action
+  divisionListRootCondition() {
     for (var condition in listRootConditions!) {
       if (condition.sugarAmount != null) {
         for (var sugarAmount in condition.sugarAmount!) {
@@ -675,11 +696,13 @@ abstract class _SugarInfoStoreBase with Store {
   @action
   swapUnit() {
     if (isSwapedToMol == false) {
-      multiplicationUnit();
+      multiplicationUnitListRecord();
+      multiplicationUnitListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
     }
     if (isSwapedToMol == true) {
-      divisionnUnit();
+      divisionnUnitListRecord();
+      divisionListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
     }
   }
@@ -756,4 +779,7 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   ////////////////////////////////////////////////////////////
+
+  @observable
+  bool? isChartLoading = false;
 }

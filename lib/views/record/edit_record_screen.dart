@@ -67,6 +67,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
         if (sugarInfoStore != null &&
             sugarInfoStore!.editingRecord != null &&
             editRecordStore != null) {
+          editRecordStore!.isSwapedToMol = sugarInfoStore!.isSwapedToMol;
           editRecordStore!
               .getRootSugarInfo(sugarInfoStore!.listRootConditions!);
           editRecordStore!.recordId = sugarInfoStore!.editingRecord!.id;
@@ -930,6 +931,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: () {
@@ -955,8 +957,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                   width: 100,
                 ),
                 showDropdown
-                    ? SvgPicture.asset(Assets.iconUpArrow)
-                    : SvgPicture.asset(Assets.iconDownArrow),
+                    ? SvgPicture.asset(Assets.iconDropdownDownArrow,
+                        color: AppColors.AppColor2)
+                    : SvgPicture.asset(Assets.iconDropdownUpArrow,
+                        color: AppColors.AppColor2),
               ],
             ),
           ),
