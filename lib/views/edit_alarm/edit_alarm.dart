@@ -103,7 +103,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showNotification ? assetAudio : assetAudioOff,
+      assetAudioPath: showNotification ? assetAudio : '.',
       soundAudio: showNotification,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
@@ -119,7 +119,6 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       }
     });
   }
-
 
   void deleteAlarm() {
     Alarm.stop(widget.alarmSettings!.id).then((res) {

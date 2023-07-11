@@ -14,7 +14,7 @@ class AlarmSettings {
   /// For iOS, you need to drag and drop your asset(s) to your `Runner` folder
   /// in Xcode and make sure 'Copy items if needed' is checked.
   /// Check out README.md for more informations.
-  final String assetAudioPath;
+   String assetAudioPath;
 
   /// If true, [assetAudioPath] will repeat indefinitely until alarm is stopped.
   bool loopAudio;
@@ -75,7 +75,7 @@ class AlarmSettings {
    AlarmSettings({
     required this.id,
     required this.dateTime,
-    required this.assetAudioPath,
+     this.assetAudioPath = 'assets/marimba.mp3',
     this.loopAudio = true,
     this.soundAudio = true,
     this.vibrate = true,
@@ -90,7 +90,7 @@ class AlarmSettings {
   factory AlarmSettings.fromJson(Map<String, dynamic> json) => AlarmSettings(
         id: json['id'] as int,
         dateTime: DateTime.fromMicrosecondsSinceEpoch(json['dateTime'] as int),
-        assetAudioPath: json['assetAudioPath'] as String,
+      //  assetAudioPath: json['assetAudioPath'] as String,
         loopAudio: json['loopAudio'] as bool,
         soundAudio: json['soundAudio'] as bool,
         vibrate: json['vibrate'] as bool,
