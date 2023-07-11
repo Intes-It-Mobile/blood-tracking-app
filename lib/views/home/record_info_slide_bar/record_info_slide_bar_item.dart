@@ -34,7 +34,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
 
 class _RecordInfoSliderItemWidgetState
     extends State<RecordInfoSliderItemWidget> {
-  SugarInfoStore? sugarInfoStore;    
+  SugarInfoStore? sugarInfoStore;
   SugarRecord? editRecord;
   String? date = "2023/06/15";
   String? time = "15:58";
@@ -52,13 +52,39 @@ class _RecordInfoSliderItemWidgetState
         return AppColors.LowStt;
     }
   }
+
   final String texttahng = "333.333";
 
   @override
   void didChangeDependencies() {
-        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+  }
+
+  String getFormattedValue(String input) {
+    // Tìm vị trí của dấu chấm trong chuỗi
+    int dotIndex = input.indexOf('.');
+
+    if (dotIndex != -1) {
+      // Lấy các kí tự trước dấu chấm
+      String beforeDot = input.substring(0, dotIndex);
+
+      // Lấy kí tự sau dấu chấm và kiểm tra độ dài
+      String afterDot = input.substring(dotIndex + 1);
+      if (afterDot.length > 2) {
+        // Giới hạn độ dài của kí tự sau dấu chấm là 2
+        afterDot = afterDot.substring(0, 2);
+      }
+
+      // Kết hợp các kết quả lại với nhau
+      String formattedValue = beforeDot + '.' + afterDot;
+
+      return formattedValue;
+    }
+
+    // Nếu không tìm thấy dấu chấm, trả về giá trị gốc
+    return input;
   }
 
   @override
@@ -101,17 +127,14 @@ class _RecordInfoSliderItemWidgetState
                       Container(
                         child: widget.sugarAmount.toString().length > 7
                             ? Text(
-                                "${widget.sugarAmount.toString().substring(0, 7)}",
-                                style: AppTheme.appBodyTextStyle26
-
-                              )
-                            : Text(
-                                "${widget.sugarAmount}",
-                                style: AppTheme.appBodyTextStyle26
-
-                              ),
+                                "${getFormattedValue(widget.sugarAmount.toString())}",
+                                style: AppTheme.appBodyTextStyle26)
+                            : Text("${widget.sugarAmount}",
+                                style: AppTheme.appBodyTextStyle26),
                       ),
-                      Text("${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}", style: AppTheme.appBodyTextStyle),
+                      Text(
+                          "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                          style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),

@@ -481,7 +481,23 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                 editRecordStore!.checkValidateEditRecord(0);
                                 if (editRecordStore!.errorText == null ||
                                     editRecordStore!.errorText == "") {
-                                  _showDiaLogChange(context);
+                                  sugarInfoStore!.checkDuplicateInEdit(
+                                      SugarRecord(
+                                          conditionName: editRecordStore!
+                                              .editChooseCondition!.name,
+                                          conditionId: editRecordStore!
+                                              .editChooseCondition!.id,
+                                          dayTime: editRecordStore!
+                                              .editingDayTimeStr!,
+                                          hourTime: editRecordStore!
+                                              .editingHourTimeStr!,
+                                          id: recordId,
+                                          status: editRecordStore!
+                                              .currentEditStatus,
+                                          sugarAmount: editRecordStore!
+                                              .editingSugarAmount),
+                                      context,
+                                      recordId!);
                                 } else {
                                   setState(() {
                                     errorText = sugarInfoStore!.errorText;
@@ -644,8 +660,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                 editRecordStore!.checkValidateEditRecord(0);
                                 if (editRecordStore!.errorText == null ||
                                     editRecordStore!.errorText == "") {
-                                  Future.delayed(Duration(milliseconds: 0),
-                                      () {
+                                  Future.delayed(Duration(milliseconds: 0), () {
                                     sugarInfoStore!.checkDuplicateInEdit(
                                         SugarRecord(
                                             conditionName: editRecordStore!
@@ -758,7 +773,7 @@ class _StatusWidgetState extends State<StatusWidget> {
       return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
     } else {
       print(
-          "abcd abcd abcd${widget.                                           editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}");
+          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}");
       return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
   }
@@ -786,29 +801,31 @@ class _StatusWidgetState extends State<StatusWidget> {
       children: [
         Container(
           margin: EdgeInsets.only(right: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Observer(builder: (_) {
-                return Container(
-                  height: 20,
-                  width: 28,
-                  decoration: BoxDecoration(
-                    color: AppColors.LowStt,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                );
-              }),
-              widget.editRecordStore!.editStatusLevel == 0
-                  ? Container(
-                      child: SvgPicture.asset(
-                        Assets.iconUpArrow,
-                        // height: 6,
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
+          child: Observer(builder: (_) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Observer(builder: (_) {
+                  return Container(
+                    height: 20,
+                    width: 28,
+                    decoration: BoxDecoration(
+                      color: AppColors.LowStt,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  );
+                }),
+                widget.editRecordStore!.editStatusLevel == 0
+                    ? Container(
+                        child: SvgPicture.asset(
+                          Assets.iconUpArrow,
+                          // height: 6,
+                        ),
+                      )
+                    : Container()
+              ],
+            );
+          }),
         ),
         Observer(builder: (_) {
           return Container(
