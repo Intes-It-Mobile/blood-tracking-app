@@ -35,7 +35,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void initState() {
-   // ReadJsonData();
+    // ReadJsonData();
     super.initState();
   }
 
@@ -49,6 +49,18 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
     final a = SugarInfo.fromJson(list);
     _items.add(a);
     return _items;
+  }
+
+  String? subString(String? value) {
+    if (value!.length > 4) {
+      if (sugarInfoStore!.isSwapedToMol == true) {
+        return value.substring(0, 4);
+      } else {
+        return value.substring(0, 5);
+      }
+    } else {
+      return value;
+    }
   }
 
   @override
@@ -76,15 +88,25 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        "${AppLocalizations.of(context)!.getTranslate('edit_target_range')}",
-                        style: AppTheme.Headline20Text,
-                        overflow: TextOverflow
-                            .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                        maxLines: 2,
-                      ),
-                    ),
+                    sugarInfoStore!.isSwapedToMol == false
+                        ? Expanded(
+                            child: Text(
+                              "${AppLocalizations.of(context)!.getTranslate('edit_target_range_mg')}",
+                              style: AppTheme.Headline20Text,
+                              overflow: TextOverflow
+                                  .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                              maxLines: 2,
+                            ),
+                          )
+                        : Expanded(
+                            child: Text(
+                              "${AppLocalizations.of(context)!.getTranslate('edit_target_range_mol')}",
+                              style: AppTheme.Headline20Text,
+                              overflow: TextOverflow
+                                  .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                              maxLines: 2,
+                            ),
+                          ),
                   ],
                 ),
               ],
@@ -115,8 +137,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     print('_items: ${_items.length}');
                     return sugarInfoStore!.listRootConditions! != null
                         ? Container(
-                            height:
-                                MediaQuery.of(context).size.height * 0.23,
+                            height: MediaQuery.of(context).size.height * 0.23,
                             width: double.infinity,
                             color: index.isEven || index == 0
                                 ? AppColors.AppColor3
@@ -166,14 +187,15 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                 '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
-                                                        color: Color(
-                                                            0xFF0084FF),
+                                                        color:
+                                                            Color(0xFF0084FF),
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 12)),
                                             Text(
                                                 '<' +
-                                                    '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].maxValue}',
+                                                    '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].maxValue.toString())}',
+                                                // '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[0].maxValue}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
                                                         color: Colors.black,
@@ -193,23 +215,18 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                         children: [
                                           Text(
                                               '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].status}')}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color:
-                                                          Color(0xFF0EB500),
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 12)),
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Color(0xFF0EB500),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12)),
                                           Text(
-                                              '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].minValue}' +
+                                              '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].minValue.toString())}' +
                                                   '~' +
-                                                  '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].maxValue}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12)),
+                                                  '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[1].maxValue.toString())}',
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12)),
                                         ],
                                       ),
                                     ),
@@ -234,15 +251,15 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                                 '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].status}')}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
-                                                        color: Color(
-                                                            0xFFFF8A00),
+                                                        color:
+                                                            Color(0xFFFF8A00),
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 12)),
                                             Text(
-                                                '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].minValue}' +
+                                                '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].minValue.toString())}' +
                                                     '~' +
-                                                    '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].maxValue}',
+                                                    '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[2].maxValue.toString())}',
                                                 style: AppTheme.hintText
                                                     .copyWith(
                                                         color: Colors.black,
@@ -262,22 +279,17 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                         children: [
                                           Text(
                                               '${AppLocalizations.of(context).getTranslate('${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].status}')}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color:
-                                                          Color(0xFFB5000B),
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 12)),
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Color(0xFFB5000B),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12)),
                                           Text(
                                               '>=' +
-                                                  '${sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].minValue}',
-                                              style: AppTheme.hintText
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12)),
+                                                  '${subString(sugarInfoStore!.listRootConditions?[index].sugarAmount?[3].minValue.toString())}',
+                                              style: AppTheme.hintText.copyWith(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12)),
                                         ],
                                       ),
                                     ),

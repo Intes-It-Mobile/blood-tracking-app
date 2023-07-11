@@ -23,7 +23,7 @@ class AlarmSettings {
   /// alarm is stopped.
   ///
   /// If [loopAudio] is set to false, vibrations will stop when audio ends.
-  final bool vibrate;
+   bool vibrate;
 
   /// Duration, in seconds, over which to fade the alarm ringtone.
   /// Set to 0.0 by default, which means no fade.

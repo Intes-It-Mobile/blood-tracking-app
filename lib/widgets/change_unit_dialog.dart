@@ -53,6 +53,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                 children: [
                   Expanded(
                     child: InkWell(
+                      splashColor: Colors.transparent,
                       onTap: () {
                         if (isChooseMol == true) {
                           setState(() {
@@ -69,6 +70,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                               color: isChooseMol == false
                                   ? AppColors.AppColor3
                                   : Colors.white,
+                              border: Border.all(color: AppColors.AppColor3),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                             child: Text(
@@ -85,6 +87,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                   ),
                   Expanded(
                     child: InkWell(
+                      splashColor: Colors.transparent,
                       onTap: () {
                         if (isChooseMol == false) {
                           setState(() {
@@ -115,11 +118,11 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
               ),
               const Spacer(),
               InkWell(
+                splashColor: Colors.white,
                 onTap: () {
                   if (sugarInfoStore!.isSwapedToMol != isChooseMol) {
                     sugarInfoStore!.setSwapStatusToMol(isChooseMol);
                     sugarInfoStore!.swapUnit();
-               
                   }
                   Navigator.of(context).pop();
                 },

@@ -2,17 +2,21 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../constants/app_theme.dart';
+import '../../constants/colors.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/sucess_dialog.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -41,11 +45,31 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   List<Conditions>? listRootConditionsFilter;
 
+  get sugarInfoStore => null;
+
   @action
   getRootSugarInfo(SugarInfo? fromSharepref) {
     rootSugarInfo = fromSharepref;
-    listRootConditions = fromSharepref!.conditions;
-    setValueToListFilter(listRootConditions);
+    if (isSwapedToMol == false) {
+      listRootConditions = fromSharepref!.conditions;
+      setValueToListFilter(listRootConditions);
+    }
+    if (isSwapedToMol == true) {
+      listRootConditions = fromSharepref!.conditions;
+      for (var condition in listRootConditions!) {
+        if (condition.sugarAmount != null) {
+          for (var sugarAmount in condition.sugarAmount!) {
+            if (sugarAmount.minValue != null) {
+              sugarAmount.minValue = sugarAmount.minValue! / 18;
+            }
+            if (sugarAmount.maxValue != null) {
+              sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+            }
+          }
+        }
+      }
+      setValueToListFilter(listRootConditions);
+    }
   }
 
   @action
@@ -197,12 +221,14 @@ abstract class _SugarInfoStoreBase with Store {
   bool? isListRecordsLoading = true;
 
   @observable
-  bool? successSaveRecord = false;
+  bool? isSaving = false;
 
   static final String ListRecordsKey = 'listRecord';
 
   @observable
   bool? hasExistedRecord = false;
+  @observable
+  bool? hasExistedEditRecord = false;
 
   @action
   checkDuplicate() {
@@ -210,6 +236,43 @@ abstract class _SugarInfoStoreBase with Store {
         record.dayTime == choosedDayTimeStr &&
         record.hourTime == choosedDayHourStr);
     print(hasExistedRecord);
+  }
+
+  @action
+  checkDuplicateInEdit(
+      SugarRecord sugarRecordEdit, BuildContext context, int id) {
+    hasExistedEditRecord = listRecord!.any((record) =>
+        record.dayTime == sugarRecordEdit.dayTime &&
+        record.hourTime == sugarRecordEdit.hourTime &&
+        record.id != sugarRecordEdit.id);
+    if (hasExistedEditRecord == true) {
+      showDiaLogChange(context, sugarRecordEdit);
+    } else if (hasExistedEditRecord == false) {
+      editRecord(id, sugarRecordEdit, context);
+    }
+    print(hasExistedEditRecord);
+  }
+
+  @action
+  replaceEditRecord(BuildContext context, SugarRecord sugarRecordEdit) {
+    SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
+        record.dayTime == sugarRecordEdit.dayTime &&
+        record.hourTime == sugarRecordEdit.hourTime);
+    {
+      recordUpdate.conditionId = sugarRecordEdit!.conditionId;
+      recordUpdate.dayTime = sugarRecordEdit.dayTime;
+      recordUpdate.hourTime = sugarRecordEdit.hourTime;
+      recordUpdate.status = sugarRecordEdit.status;
+      recordUpdate.sugarAmount = sugarRecordEdit.sugarAmount;
+      recordUpdate.conditionName = sugarRecordEdit.conditionName;
+    }
+
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
   }
 
   @action
@@ -248,7 +311,7 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  saveNewRecord(int id, BuildContext context) {
+  Future<void> saveNewRecord(int id, BuildContext context) async {
     listRecord!.add(SugarRecord(
         id: id,
         dayTime: choosedDayTimeStr,
@@ -263,12 +326,6 @@ abstract class _SugarInfoStoreBase with Store {
     listRecordArrangedByTime = listRecord;
     setErrorText("");
     saveListRecord(listRecords);
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Routes.home,
-      (route) => false,
-    );
-    successSaveRecord = true;
 
     if (listRecordArrangedByTime!.length > 0) {
       listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
@@ -277,8 +334,11 @@ abstract class _SugarInfoStoreBase with Store {
               .parse("${b!.dayTime!} ${b!.hourTime!}")));
       getAverageNumber();
     }
-
-    successSaveRecord = false;
+    await Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
   }
 
   @action
@@ -325,11 +385,13 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   static Future<void> saveListRecord(ListRecord? listRecords) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jsonString = json.encode(listRecords!.toJson());
-    prefs.setString('myObjectKey', jsonString);
+    if (listRecords != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String jsonString = json.encode(listRecords!.toJson());
+      prefs.setString('myObjectKey', jsonString);
 
-    print("Save to shprf: ${listRecords.listRecord!.length} ");
+      print("Save to shprf: ${listRecords.listRecord!.length} ");
+    }
   }
 
   Future<ListRecord?> getListRecords() async {
@@ -370,7 +432,10 @@ abstract class _SugarInfoStoreBase with Store {
     // Assign column names
     sheet.cell(CellIndex.indexByString("A1")).value = "Date";
     sheet.cell(CellIndex.indexByString("B1")).value = "Time";
-    sheet.cell(CellIndex.indexByString("C1")).value = "Blood Sugar";
+    sheet.cell(CellIndex.indexByString("C1")).value =
+        isSwapedToMol == true ? "Blood Sugar(mmol/L)" : "Blood Sugar(mg/dL)";
+
+    sheet.setColWidth(2, 25);
     sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
     sheet.cell(CellIndex.indexByString("E1")).value = "Type";
 
@@ -411,11 +476,16 @@ abstract class _SugarInfoStoreBase with Store {
   Future<void> saveIsSwapedToMol(bool isSwapedToMol) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isSwapedToMol', isSwapedToMol);
+    saveListRecord(listRecords);
   }
 
   Future<void> getIsSwapedToMol() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isSwapedToMol = prefs.getBool('isSwapedToMol');
+    if (prefs.getBool('isSwapedToMol') == null) {
+      isSwapedToMol = false;
+    } else {
+      isSwapedToMol = prefs.getBool('isSwapedToMol');
+    }
   }
 
   @observable
@@ -462,7 +532,8 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  editRecord(int editItemId, SugarRecord editedRecord) {
+  editRecord(int editItemId, SugarRecord editedRecord, BuildContext context) {
+    // _showDiaLogChange
     listRecord!.firstWhere((e) => e.id == editItemId).dayTime =
         editedRecord.dayTime;
     listRecord!.firstWhere((e) => e.id == editItemId).hourTime =
@@ -483,6 +554,87 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     }
     saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+  }
+
+  @action
+  showDiaLogChange(BuildContext context, SugarRecord record) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        content: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text(
+                  "${AppLocalizations.of(context)!.getTranslate('edit_duplicate_dialog')}",
+                  style: AppTheme.Headline16Text.copyWith(
+                      fontWeight: FontWeight.w500, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        replaceEditRecord(context, record);
+                        deleteRecord(record.id);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('replace')}",
+                            style: AppTheme.TextIntroline16Text.copyWith(
+                                color: AppColors.AppColor2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 23),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        // margin: EdgeInsets.only(left: 23),
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor2,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                            style: AppTheme.TextIntroline16Text,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @observable
@@ -595,6 +747,7 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   filterListRecord() {
+    listRecordArrangedByTime = [];
     if (filterConditionId != -1) {
       listRecordArrangedByTime = listRecord!
           .where((e) => e.conditionId == filterConditionId)!
@@ -623,11 +776,13 @@ abstract class _SugarInfoStoreBase with Store {
       filterConditionTitle =
           listRootConditions!.where((e) => e.name == value).first.name;
       filterListRecord();
+      isShouldRender = !isShouldRender!;
       getAverageNumber();
     } else {
       filterConditionId = -1;
       filterConditionTitle = "all";
       filterListRecord();
+      isShouldRender = !isShouldRender!;
       getAverageNumber();
     }
 
@@ -699,11 +854,13 @@ abstract class _SugarInfoStoreBase with Store {
       multiplicationUnitListRecord();
       multiplicationUnitListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
+      saveListRecord(listRecords);
     }
     if (isSwapedToMol == true) {
       divisionnUnitListRecord();
       divisionListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
+      saveListRecord(listRecords);
     }
   }
 
@@ -782,4 +939,7 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   bool? isChartLoading = false;
+
+  @observable
+  bool? isShouldRender = false;
 }

@@ -19,16 +19,20 @@ class ScrollableChart extends StatefulWidget {
 }
 
 class _ScrollableChartState extends State<ScrollableChart> {
+  final ScrollController _scrollController = ScrollController();
   SugarInfoStore? sugarInfoStore;
   bool? isShouldRender;
   List<SugarRecord> listRecordsDisplay = [];
-  ScrollController _scrollController = ScrollController();
+  // ScrollController _scrollController = ScrollController();
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    // listRecords = sugarInfoStore!.listRecordArrangedByTime!;
-
     super.didChangeDependencies();
+  }
+
+  void setScrollOffset(double offset) {
+    _scrollController!.animateTo(offset,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   List<SugarRecord> getListDisplay(List<SugarRecord> listInput) {
@@ -45,9 +49,9 @@ class _ScrollableChartState extends State<ScrollableChart> {
                 .parse(e.dayTime!)
                 .isBefore(startOfNextMonth))
         .toList();
-        if(listRecordsDisplay.isEmpty){
-          listRecordsDisplay = listRecords;
-        }
+    if (listRecordsDisplay.isEmpty) {
+      listRecordsDisplay = listRecords;
+    }
     return listRecordsDisplay;
   }
 
@@ -55,7 +59,6 @@ class _ScrollableChartState extends State<ScrollableChart> {
   //   sugarInfoStore!.
   // }
   List<SugarRecord> listRecords = [
-
     SugarRecord(
         conditionId: 1,
         dayTime: "2023/08/31",
@@ -112,6 +115,9 @@ class _ScrollableChartState extends State<ScrollableChart> {
   List<FlSpot> data = [];
   @override
   Widget build(BuildContext context) {
+    sugarInfoStore!.isShouldRender != null
+        ? getListDisplay(sugarInfoStore!.listRecordArrangedByTime!)
+        : getListDisplay(sugarInfoStore!.listRecordArrangedByTime!);
     double maxSugarAmount = 0.0;
     for (var record in listRecordsDisplay) {
       if (record.sugarAmount! > maxSugarAmount) {
@@ -367,15 +373,21 @@ class _ScrollableChartState extends State<ScrollableChart> {
   List<FlSpot> listFlSpot() {
     return listRecordsDisplay.map((e) {
       {
+        setScrollOffset(xValue(listRecordsDisplay.first.dayTime!,
+                listRecordsDisplay.last.hourTime!) /
+            90 *
+            4000-180);
         return FlSpot(
-            calculateDateNumber("${e.dayTime} ${e.hourTime}")! -
-                1 +
-                calculateHourTime(e!.hourTime!)!
-            // 1
-            ,
-            e.sugarAmount!.toDouble());
+            xValue(e.dayTime!, e.hourTime!), e.sugarAmount!.toDouble());
       }
     }).toList();
+  }
+
+  double xValue(String dayTime, String hourTime) {
+    double value = calculateDateNumber("${dayTime} ${hourTime}")! -
+        1 +
+        calculateHourTime(hourTime!)!;
+    return value;
   }
 
   double? calculateHourTime(String hourTime) {

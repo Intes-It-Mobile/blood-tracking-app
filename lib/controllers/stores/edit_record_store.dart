@@ -188,4 +188,11 @@ abstract class _EditRecordStoreBase with Store {
   void resetSugarAmountEdit() {
     sugarAmountEdit = '80';
   }
+
+  @observable
+  bool? setCondition = true;
+  @action
+  activeNewCondition(){
+    setCondition = !setCondition!;
+  }
 }

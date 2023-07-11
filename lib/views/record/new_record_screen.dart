@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
-import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -153,19 +152,24 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     );
   }
 
+  addZeroToDecimal() {
+    String? value = sugarInfoStore!.sugarAmountController.text;
+    List<String> parts = value.split(".");
+    if (value.split('.')[1].length < 1) {
+      // Không có phần thập phân, thêm số 0 vào cuối chuỗi
+      sugarInfoStore!.sugarAmountController.text = value + "0";
+    } else {
+      // Chuỗi đã có phần thập phân
+      sugarInfoStore!.sugarAmountController.text = value;
+    }
+    print("1111111111111111 addZero");
+  }
+
   @override
   void didChangeDependencies() {
     print("isFirsttttttttttttttttttttt:     ${isFirst}  ");
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    sugarInfoStore!.successSaveRecord == true
-        ? setState(() {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.home,
-              (route) => false,
-            );
-          })
-        : ();
+
     if (isFirst == true) {
       sugarInfoStore!.setchoosedDayHour(timeNow!);
       sugarInfoStore!.setchoosedDayTime(timeNow!);
@@ -173,12 +177,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setChooseCondition(0);
       if (sugarInfoStore!.isSwapedToMol == false) {
         sugarInfoStore!.setInputSugarAmount(80);
-        sugarInfoStore!.sugarAmountController.text = "80";
+        sugarInfoStore!.sugarAmountController.text = "80.0";
       } else if (sugarInfoStore!.isSwapedToMol == true) {
         sugarInfoStore!.setInputSugarAmount(4);
-        sugarInfoStore!.sugarAmountController.text = "4";
+        sugarInfoStore!.sugarAmountController.text = "4.0";
       }
-
       sugarInfoStore!.sugarAmountController.text.contains(".");
       setState(() {
         isFirst = false;
@@ -239,8 +242,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         ),
         body: GestureDetector(
           onTap: () {
+            print("gesture");
             // Truyền focusNode để tắt bàn phím khi người dùng nhấn ra ngoài
             FocusScope.of(context).requestFocus(FocusNode());
+            addZeroToDecimal();
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
@@ -435,6 +440,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                   "1111111111111111 onEditing 1111111111111111");
                                               sugarInfoStore!
                                                   .validateSugarAmount();
+                                              addZeroToDecimal();
                                             },
                                             onChanged: (value) {
                                               print(
@@ -457,6 +463,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                   .checkValidateNewRecord();
                                               print(value);
                                               FocusScope.of(context).unfocus();
+                                              addZeroToDecimal();
                                               // Navigator.of(context).pop();
                                             },
                                             keyboardType: TextInputType.number,
@@ -502,10 +509,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           margin: EdgeInsets.symmetric(vertical: 8),
                           mainAxisSizeMin: true,
                           onTap: () {
-                            if (canTap == true) {
-                              setState(() {
-                                canTap = false;
-                              });
+                            print("Check Saving:${sugarInfoStore!.isSaving}");
+                            if (sugarInfoStore!.isSaving == false) {
+                              sugarInfoStore!.isSaving = true;
                               sugarInfoStore!.checkValidateNewRecord();
                               Future.delayed(Duration(milliseconds: 200), () {
                                 if (sugarInfoStore!.errorText == null ||
@@ -524,14 +530,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                       Future.delayed(Duration(seconds: 1), () {
                                         sugarInfoStore!
                                             .saveNewRecord(id!, context);
-                                      }).whenComplete(() {
-                                        setState(() {
-                                          canTap = true;
-                                        });
                                       });
                                     }
                                   });
                                 }
+                              });
+                              Future.delayed(Duration(seconds: 1), () {
+                                sugarInfoStore!.isSaving = false;
+                                print("Saving :${sugarInfoStore!.isSaving}");
                               });
                             }
                           },
@@ -930,7 +936,9 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 Text(
                   "${getTitle(selectedTitle)}",
                   style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w500, color: Colors.black,fontSize: 16),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -970,6 +978,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               selectedId = condition.id;
                               showDropdown = false;
                               sugarInfoStore!.setChooseCondition(selectedId!);
+                              sugarInfoStore!.setInputSugarAmount(
+                                  sugarInfoStore!.currentSugarAmount!);
                               // Future.delayed(const Duration(milliseconds: 200),
                               //     () {
                               //   sugarInfoStore!.setInputSugarAmount(
@@ -983,8 +993,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               value: selectedTitle,
                               child: Text(
                                 "${getTitle(condition.name)}",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),
+                                style: AppTheme.appBodyTextStyle.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
