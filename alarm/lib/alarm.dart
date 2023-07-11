@@ -110,6 +110,7 @@ class Alarm {
         () => ringStream.add(alarmSettings),
         alarmSettings.assetAudioPath,
         alarmSettings.loopAudio,
+        alarmSettings.soundAudio,
         alarmSettings.vibrate,
         alarmSettings.fadeDuration,
         alarmSettings.enableNotificationOnKill,
@@ -121,9 +122,11 @@ class Alarm {
         () => ringStream.add(alarmSettings),
         alarmSettings.assetAudioPath,
         alarmSettings.loopAudio,
+        alarmSettings.soundAudio,
         alarmSettings.vibrate,
         alarmSettings.fadeDuration,
         alarmSettings.enableNotificationOnKill,
+
       );
     }
 

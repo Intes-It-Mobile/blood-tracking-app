@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -13,7 +14,7 @@ class ExampleAlarmEditScreen extends StatefulWidget {
 
   ExampleAlarmEditScreen({
     Key? key,
-    this.alarmSettings,
+    required this.alarmSettings,
   }) : super(key: key);
 
   @override
@@ -53,6 +54,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       );
       loopAudio = widget.alarmSettings!.loopAudio;
       vibrate = widget.alarmSettings!.vibrate;
+      showNotification = widget.alarmSettings!.soundAudio;
       showNotification = widget.alarmSettings!.notificationTitle != null &&
           widget.alarmSettings!.notificationTitle!.isNotEmpty &&
           widget.alarmSettings!.notificationBody != null &&
@@ -74,6 +76,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   //   if (res != null) setState(() => alarmTime = res);
   // }
 
+
   AlarmSettings buildAlarmSettings() {
     final now = DateTime.now();
     final id = creating
@@ -94,15 +97,14 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     }
 
     final alarmSettings = AlarmSettings(
-
       id: id,
       dateTime: dateTime,
-      loopAudio: showNotification,
+      loopAudio: loopAudio,
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
-      notificationBody:
-      loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
+      notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
       assetAudioPath: showNotification ? assetAudio : '.',
+      soundAudio: showNotification,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
@@ -117,6 +119,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       }
     });
   }
+
 
   void deleteAlarm() {
     Alarm.stop(widget.alarmSettings!.id).then((res) {
@@ -147,6 +150,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
               Expanded(
                 flex: 1,
                 child: TimePickerSpinner(
+                  time: widget.alarmSettings?.dateTime,
                   itemHeight: 30,
                   highlightedTextStyle: AppTheme.hintText.copyWith(
                       fontWeight: FontWeight.w700, color: Colors.black),

@@ -32,6 +32,7 @@ class AndroidAlarm {
       void Function()? onRing,
       String assetAudioPath,
       bool loopAudio,
+      bool soundAudio,
       bool vibrate,
       double fadeDuration,
       bool enableNotificationOnKill,
@@ -77,6 +78,7 @@ class AndroidAlarm {
       params: {
         'assetAudioPath': assetAudioPath,
         'loopAudio': loopAudio,
+        'soundAudio': soundAudio,
         'fadeDuration': fadeDuration,
       },
     );

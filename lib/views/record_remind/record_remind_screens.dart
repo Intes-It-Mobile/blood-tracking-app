@@ -23,7 +23,8 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   late List<dynamic> alarms;
   DateTime? alarmTime;
   static StreamSubscription? subscription;
-  bool check = false ;
+  bool check = false;
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +48,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
     });
   }
 
-
   // Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
   //   await Navigator.push(
   //       context,
@@ -63,18 +63,20 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              shape: const RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(5.0))),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
               width: 400,
               height: MediaQuery.of(context).size.height * 0.30,
-              child: ExampleAlarmEditScreen(alarmSettings: settings),
+              child: ExampleAlarmEditScreen(
+                alarmSettings: settings,
+              ),
             ),
           );
         });
 
-    if (res != null && res == "set"){
+    if (res != null && res == "set") {
       loadAlarms();
     }
   }
@@ -152,48 +154,52 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                             child: ExampleAlarmTile(
                               key: Key(alarms[index].id.toString()),
                               title: alarmTime,
-                              onPressed: () =>
-                                  navigateToAlarmScreen(alarms[index]),
+                              onPressed: () async {
+                                navigateToAlarmScreen(alarms[index]);
+                              },
                               onDismissed: () {
                                 Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
                               loopAudio: alarms[index].loopAudio,
-                              onDelete: (){
+                              onDelete: () {
                                 Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
                               },
                               onLoopAudioChanged: (loopAudio) {
                                 alarms[index].loopAudio = loopAudio;
                                 var _alarmSettings =
-                                Alarm.getAlarm(alarms[index].id);
+                                    Alarm.getAlarm(alarms[index].id);
                                 if (_alarmSettings != null) {
                                   Alarm.set(
                                       alarmSettings: AlarmSettings(
-                                        id: _alarmSettings.id,
-                                        dateTime: _alarmSettings.dateTime,
-                                        loopAudio: loopAudio,
-                                        vibrate: _alarmSettings.vibrate,
-                                        notificationTitle: loopAudio ?
-                                         _alarmSettings.notificationTitle : null,
-                                        notificationBody: loopAudio ?
-                                         _alarmSettings.notificationBody : null,
-                                        assetAudioPath: loopAudio ?
-                                        _alarmSettings.assetAudioPath : '.',
-                                        fadeDuration: 3.0,
-                                        stopOnNotificationOpen: true,
-                                        enableNotificationOnKill: true,
-                                      ));
+                                    id: _alarmSettings.id,
+                                    dateTime: _alarmSettings.dateTime,
+                                    loopAudio: loopAudio,
+                                    soundAudio: _alarmSettings.soundAudio,
+                                    vibrate: _alarmSettings.vibrate,
+                                    notificationTitle: loopAudio
+                                        ? null
+                                        : _alarmSettings.notificationTitle,
+                                    notificationBody: loopAudio
+                                        ? null
+                                        : _alarmSettings.notificationBody,
+                                    assetAudioPath: loopAudio
+                                        ? _alarmSettings.assetAudioPath
+                                        : '.',
+                                    fadeDuration: 3.0,
+                                    stopOnNotificationOpen: true,
+                                    enableNotificationOnKill: true,
+                                  ));
                                 }
                               },
-                            //   onSwitch: (bool v) {
-                            //   alarms[index].loopAudio = false;
-                            //
-                            //   setState(() {
-                            //
-                            //   });
-                            // },
-
+                              //   onSwitch: (bool v) {
+                              //   alarms[index].loopAudio = false;
+                              //
+                              //   setState(() {
+                              //
+                              //   });
+                              // },
                             ),
                           );
                         },
@@ -216,10 +222,12 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: AppColors.AppColor2),
-                child:  Center(
-                  child: Text("${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                    style: AppTheme.TextInfomation14Text.copyWith(color: Colors.white),
-                    ),
+                child: Center(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
+                    style: AppTheme.TextInfomation14Text.copyWith(
+                        color: Colors.white),
+                  ),
                 ),
               ),
             ),
@@ -232,7 +240,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
     );
   }
 
-  Widget hourMinute12H() {
+  Widget hourMinute12H(AlarmSettings alarmSettings) {
     return TimePickerSpinner(
       itemHeight: 30,
       highlightedTextStyle: AppTheme.hintText
@@ -242,7 +250,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
       is24HourMode: true,
       onTimeChange: (time) {
         setState(() {
-          alarmTime = time;
+          alarmSettings.dateTime = time;
         });
       },
     );

@@ -3,7 +3,7 @@ class AlarmSettings {
   final int id;
 
   /// Date and time when the alarm will be triggered.
-  final DateTime dateTime;
+   DateTime dateTime;
 
   /// Path to audio asset to be used as the alarm ringtone. Accepted formats:
   ///
@@ -18,6 +18,8 @@ class AlarmSettings {
 
   /// If true, [assetAudioPath] will repeat indefinitely until alarm is stopped.
   bool loopAudio;
+
+  bool soundAudio;
 
   /// If true, device will vibrate for 500ms, pause for 500ms and repeat until
   /// alarm is stopped.
@@ -53,6 +55,7 @@ class AlarmSettings {
     hash = hash ^ dateTime.hashCode;
     hash = hash ^ assetAudioPath.hashCode;
     hash = hash ^ loopAudio.hashCode;
+    hash = hash ^ soundAudio.hashCode;
     hash = hash ^ vibrate.hashCode;
     hash = hash ^ fadeDuration.hashCode;
     hash = hash ^ (notificationTitle?.hashCode ?? 0);
@@ -74,6 +77,7 @@ class AlarmSettings {
     required this.dateTime,
     required this.assetAudioPath,
     this.loopAudio = true,
+    this.soundAudio = true,
     this.vibrate = true,
     this.fadeDuration = 0.0,
     this.notificationTitle,
@@ -88,6 +92,7 @@ class AlarmSettings {
         dateTime: DateTime.fromMicrosecondsSinceEpoch(json['dateTime'] as int),
         assetAudioPath: json['assetAudioPath'] as String,
         loopAudio: json['loopAudio'] as bool,
+        soundAudio: json['soundAudio'] as bool,
         vibrate: json['vibrate'] as bool,
         fadeDuration: json['fadeDuration'] as double,
         notificationTitle: json['notificationTitle'] as String?,
@@ -103,6 +108,7 @@ class AlarmSettings {
     DateTime? dateTime,
     String? assetAudioPath,
     bool? loopAudio,
+    bool? soundAudio,
     bool? vibrate,
     double? fadeDuration,
     String? notificationTitle,
@@ -115,6 +121,7 @@ class AlarmSettings {
       dateTime: dateTime ?? this.dateTime,
       assetAudioPath: assetAudioPath ?? this.assetAudioPath,
       loopAudio: loopAudio ?? this.loopAudio,
+      soundAudio: soundAudio ?? this.soundAudio,
       vibrate: vibrate ?? this.vibrate,
       fadeDuration: fadeDuration ?? this.fadeDuration,
       notificationTitle: notificationTitle ?? this.notificationTitle,
@@ -132,6 +139,7 @@ class AlarmSettings {
         'dateTime': dateTime.microsecondsSinceEpoch,
         'assetAudioPath': assetAudioPath,
         'loopAudio': loopAudio,
+        'soundAudio': soundAudio,
         'vibrate': vibrate,
         'fadeDuration': fadeDuration,
         'notificationTitle': notificationTitle,
@@ -159,6 +167,7 @@ class AlarmSettings {
           dateTime == other.dateTime &&
           assetAudioPath == other.assetAudioPath &&
           loopAudio == other.loopAudio &&
+          soundAudio == other.soundAudio &&
           vibrate == other.vibrate &&
           fadeDuration == other.fadeDuration &&
           notificationTitle == other.notificationTitle &&

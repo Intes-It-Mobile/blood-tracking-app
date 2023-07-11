@@ -22,6 +22,7 @@ class IOSAlarm {
     void Function()? onRing,
     String assetAudio,
     bool loopAudio,
+    bool soundAudio,
     bool vibrate,
     double fadeDuration,
     bool enableNotificationOnKill,
