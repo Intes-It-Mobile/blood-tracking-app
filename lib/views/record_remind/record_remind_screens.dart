@@ -29,7 +29,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   void initState() {
     super.initState();
     loadAlarms();
-
     // subscription ??= Alarm.ringStream.stream.listen(
     //   (alarmSettings) => navigateToRingScreen(alarmSettings),
     // );
@@ -179,11 +178,11 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     soundAudio: _alarmSettings.soundAudio,
                                     vibrate: _alarmSettings.vibrate,
                                     notificationTitle: loopAudio
-                                        ? null
-                                        : _alarmSettings.notificationTitle,
+                                        ? _alarmSettings.notificationTitle
+                                        : null,
                                     notificationBody: loopAudio
-                                        ? null
-                                        : _alarmSettings.notificationBody,
+                                        ? _alarmSettings.notificationBody
+                                        : null,
                                     assetAudioPath: loopAudio
                                         ? _alarmSettings.assetAudioPath
                                         : '.',

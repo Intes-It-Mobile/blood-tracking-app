@@ -48,7 +48,6 @@ class AlarmStorage {
         alarms.add(AlarmSettings.fromJson(json.decode(res!)));
       }
     }
-
     return alarms;
   }
 

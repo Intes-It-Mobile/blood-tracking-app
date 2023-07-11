@@ -30,7 +30,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   late bool vibrate;
   late bool showNotification;
   late String assetAudio;
-
+  String assetAudioOff = '.';
   @override
   void didUpdateWidget(covariant ExampleAlarmEditScreen oldWidget) {
    saveAlarm();
@@ -103,7 +103,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showNotification ? assetAudio : '.',
+      assetAudioPath: showNotification ? assetAudio : assetAudioOff,
       soundAudio: showNotification,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
@@ -184,10 +184,11 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               return CupertinoSwitch(
                                 onChanged: (bool value) {
                                   setModalState(() {
+                                    widget.alarmSettings?.soundAudio = showNotification;
                                     showNotification = value;
                                   });
                                 },
-                                value: showNotification,
+                                value: widget.alarmSettings?.soundAudio ?? showNotification,
                                 trackColor: AppColors.AppColor1,
                                 activeColor: AppColors.AppColor2,
                               );
@@ -269,7 +270,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                     child: creating == false
                         ? InkWell(
                             onTap: () {
-                              saveAlarm();
+                               saveAlarm();
                             },
                             child: Container(
                               width: double.infinity,
