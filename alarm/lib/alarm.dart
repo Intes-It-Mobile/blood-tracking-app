@@ -74,7 +74,7 @@ class Alarm {
           (alarm.dateTime.day == alarmSettings.dateTime.day &&
               alarm.dateTime.hour == alarmSettings.dateTime.hour &&
               alarm.dateTime.minute == alarmSettings.dateTime.minute)) {
-      //  await Alarm.stop(alarm.id);
+        await Alarm.stop(alarm.id);
       }
     }
 

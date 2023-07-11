@@ -42,33 +42,8 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
   void initState() {
     // widget.loopAudio = widget.alarmSettings!.loopAudio;
     super.initState();
-    //getSwitchValues();
   }
 
-  // getSwitchValues() async {
-  //   widget.loopAudio = await getSwitchState();
-  //   setState(() {});
-  // }
-  //
-  // Future<bool> saveSwitchState(bool value) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool("switchState", value);
-  //   print('Switch Value saved $value');
-  //   return prefs.setBool("switchState", value);
-  // }
-  //
-  // Future<bool> getSwitchState() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool? isSwitchedFT = prefs.getBool("switchState");
-  //   print(isSwitchedFT);
-  //
-  //   return isSwitchedFT!;
-  // }
-  //
-  // String savedDateString(DateTime date) {
-  //   print("conver time: ${DateFormat("HH:mm dd/MM/yyyy").format(date)}");
-  //   return DateFormat("HH:mm dd/MM/yyyy").format(date);
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -97,11 +97,11 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
 
       id: id,
       dateTime: dateTime,
-      loopAudio: loopAudio,
+      loopAudio: showNotification,
       vibrate: vibrate,
-      notificationTitle: showNotification ? 'Enter a record' : 'Enter a record',
+      notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody:
-          showNotification ? 'Time: ${savedDateString(dateTime)}' : 'Time: ${savedDateString(dateTime)}',
+      loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
       assetAudioPath: showNotification ? assetAudio : '.',
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
