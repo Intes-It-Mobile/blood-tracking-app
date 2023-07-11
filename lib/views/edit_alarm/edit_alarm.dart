@@ -97,7 +97,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
 
       id: id,
       dateTime: dateTime,
-      loopAudio: showNotification,
+      loopAudio: loopAudio,
       vibrate: vibrate,
       notificationTitle: showNotification ? 'Enter a record' : 'Enter a record',
       notificationBody:
