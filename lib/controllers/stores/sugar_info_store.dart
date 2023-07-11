@@ -433,7 +433,7 @@ abstract class _SugarInfoStoreBase with Store {
     sheet.cell(CellIndex.indexByString("A1")).value = "Date";
     sheet.cell(CellIndex.indexByString("B1")).value = "Time";
     sheet.cell(CellIndex.indexByString("C1")).value =
-        isSwapedToMol == true ? "Blood Sugar(mmol/L)" : "Blood Sugar(mg/dL)";
+        isSwapedToMol == true ? "Blood Sugar (mmol/L)" : "Blood Sugar (mg/dL)";
 
     sheet.setColWidth(2, 25);
     sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
@@ -458,7 +458,7 @@ abstract class _SugarInfoStoreBase with Store {
     // Save the workbook as an Excel file
     var bytes = excel.encode();
     var directory = await getApplicationDocumentsDirectory();
-    var file = "${directory.path}/data.xlsx";
+    var file = "${directory.path}/blood_sugar_tracking_data.xlsx";
     await File(file).writeAsBytes(bytes!);
 
     // Share the Excel file
@@ -545,6 +545,8 @@ abstract class _SugarInfoStoreBase with Store {
         editedRecord.sugarAmount;
     listRecord!.firstWhere((e) => e.id == editItemId).status =
         editedRecord.status;
+    listRecord!.firstWhere((e) => e.id == editItemId).conditionName =
+        editedRecord.conditionName;
     listRecordArrangedByTime = listRecord;
     if (listRecordArrangedByTime!.length > 0) {
       listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
