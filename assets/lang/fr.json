@@ -65,7 +65,8 @@
     "date_and_time":"Date & Time",
     "condition":"Condition",
     "sugar amount":"Sugar Amount",
-    "edit_target_range":"Edit target range (mmol/L)",
+    "edit_target_range_mol": "Edit target range (mmol/L)",
+    "edit_target_range_mg": "Edit target range (mg/dL)",
     "record_remind":"Record remind",
     "notification":"The range of blood sugar data is personal. The following are the default international blood sugar standards. If yiy want a more accurate blood data range, please consult you doctor.",
     "new_alarm":"New alarm",
@@ -118,7 +119,8 @@
     "change_btn":"Change",
     "save_edit_dialog_content":"Do you want to save changes for this record?",
     "done":"Done",
-    "select_your_starting_unit":"Select Your Starting Unit"
+    "select_your_starting_unit":"Select Your Starting Unit",
 
+    "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?"
 
 }

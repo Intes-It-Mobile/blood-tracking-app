@@ -384,19 +384,19 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
-  late final _$successSaveRecordAtom =
-      Atom(name: '_SugarInfoStoreBase.successSaveRecord', context: context);
+  late final _$isSavingAtom =
+      Atom(name: '_SugarInfoStoreBase.isSaving', context: context);
 
   @override
-  bool? get successSaveRecord {
-    _$successSaveRecordAtom.reportRead();
-    return super.successSaveRecord;
+  bool? get isSaving {
+    _$isSavingAtom.reportRead();
+    return super.isSaving;
   }
 
   @override
-  set successSaveRecord(bool? value) {
-    _$successSaveRecordAtom.reportWrite(value, super.successSaveRecord, () {
-      super.successSaveRecord = value;
+  set isSaving(bool? value) {
+    _$isSavingAtom.reportWrite(value, super.isSaving, () {
+      super.isSaving = value;
     });
   }
 
@@ -413,6 +413,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   set hasExistedRecord(bool? value) {
     _$hasExistedRecordAtom.reportWrite(value, super.hasExistedRecord, () {
       super.hasExistedRecord = value;
+    });
+  }
+
+  late final _$hasExistedEditRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.hasExistedEditRecord', context: context);
+
+  @override
+  bool? get hasExistedEditRecord {
+    _$hasExistedEditRecordAtom.reportRead();
+    return super.hasExistedEditRecord;
+  }
+
+  @override
+  set hasExistedEditRecord(bool? value) {
+    _$hasExistedEditRecordAtom.reportWrite(value, super.hasExistedEditRecord,
+        () {
+      super.hasExistedEditRecord = value;
     });
   }
 
@@ -801,6 +818,31 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$isShouldRenderAtom =
+      Atom(name: '_SugarInfoStoreBase.isShouldRender', context: context);
+
+  @override
+  bool? get isShouldRender {
+    _$isShouldRenderAtom.reportRead();
+    return super.isShouldRender;
+  }
+
+  @override
+  set isShouldRender(bool? value) {
+    _$isShouldRenderAtom.reportWrite(value, super.isShouldRender, () {
+      super.isShouldRender = value;
+    });
+  }
+
+  late final _$saveNewRecordAsyncAction =
+      AsyncAction('_SugarInfoStoreBase.saveNewRecord', context: context);
+
+  @override
+  Future<void> saveNewRecord(int id, BuildContext context) {
+    return _$saveNewRecordAsyncAction
+        .run(() => super.saveNewRecord(id, context));
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -926,6 +968,29 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic checkDuplicateInEdit(
+      SugarRecord sugarRecordEdit, BuildContext context, int id) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkDuplicateInEdit');
+    try {
+      return super.checkDuplicateInEdit(sugarRecordEdit, context, id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic replaceEditRecord(BuildContext context, SugarRecord sugarRecordEdit) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.replaceEditRecord');
+    try {
+      return super.replaceEditRecord(context, sugarRecordEdit);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic replaceRecord(BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.replaceRecord');
@@ -953,17 +1018,6 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.setAgreeReplace');
     try {
       return super.setAgreeReplace(value);
-    } finally {
-      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic saveNewRecord(int id, BuildContext context) {
-    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.saveNewRecord');
-    try {
-      return super.saveNewRecord(id, context);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1069,11 +1123,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic editRecord(int editItemId, SugarRecord editedRecord) {
+  dynamic editRecord(
+      int editItemId, SugarRecord editedRecord, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.editRecord');
     try {
-      return super.editRecord(editItemId, editedRecord);
+      return super.editRecord(editItemId, editedRecord, context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic showDiaLogChange(BuildContext context, SugarRecord record) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.showDiaLogChange');
+    try {
+      return super.showDiaLogChange(context, record);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1291,8 +1357,9 @@ listRecord: ${listRecord},
 listRecordArrangedByTime: ${listRecordArrangedByTime},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
-successSaveRecord: ${successSaveRecord},
+isSaving: ${isSaving},
 hasExistedRecord: ${hasExistedRecord},
+hasExistedEditRecord: ${hasExistedEditRecord},
 userAgreeAddNew: ${userAgreeAddNew},
 userAgreeReplace: ${userAgreeReplace},
 canSaveNewRecord: ${canSaveNewRecord},
@@ -1317,6 +1384,7 @@ tempSugarAmount: ${tempSugarAmount},
 sugarAmountEdit: ${sugarAmountEdit},
 tempSugarAmountEdit: ${tempSugarAmountEdit},
 isChartLoading: ${isChartLoading},
+isShouldRender: ${isShouldRender},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

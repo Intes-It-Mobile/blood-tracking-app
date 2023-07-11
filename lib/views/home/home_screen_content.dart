@@ -129,8 +129,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                         );
                                       }),
                                     )
-                                  : Image.asset(Assets.empty_chart)
-                              ),
+                                  : Image.asset(Assets.empty_chart)),
                         ],
                       ),
                     ),

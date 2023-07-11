@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
-import 'package:flutter_html_v3/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +39,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   DateTime? selectedDay;
   DateTime? selectedHour;
   int? recordId;
+  String? errorText = "";
+  bool? canTap = true;
   TextEditingController _controller = TextEditingController();
 
   @override
@@ -133,8 +134,30 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     );
   }
 
+  void setErrorText(String text) {
+    setState(() {
+      errorText = text;
+    });
+  }
+
+  addZeroToDecimal() {
+    String? value = editRecordStore!.sugarAmountEditControllerEdit.text;
+    List<String> parts = value.split(".");
+    if (value.split('.')[1].length < 1) {
+      // Không có phần thập phân, thêm số 0 vào cuối chuỗi
+      editRecordStore!.sugarAmountEditControllerEdit.text = value + "0";
+    } else {
+      // Chuỗi đã có phần thập phân
+      editRecordStore!.sugarAmountEditControllerEdit.text = value;
+    }
+    print("1111111111111111 addZero");
+  }
+
   @override
   Widget build(BuildContext context) {
+    editRecordStore!.errorText != null && editRecordStore!.errorText != ""
+        ? setErrorText(editRecordStore!.errorText!)
+        : setErrorText("");
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -194,6 +217,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               onTap: () {
                 // Truyền focusNode để tắt bàn phím khi người dùng nhấn ra ngoài
                 FocusScope.of(context).requestFocus(FocusNode());
+                addZeroToDecimal();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
@@ -328,10 +352,11 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Expanded(
-                                          child: StatusWidget(
-                                        editRecordStore: editRecordStore,
-                                      )),
+                                      Expanded(child: Observer(builder: (_) {
+                                        return StatusWidget(
+                                          editRecordStore: editRecordStore,
+                                        );
+                                      })),
                                       Container(
                                         child: SvgPicture.asset(
                                             Assets.iconEditPen),
@@ -346,7 +371,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
@@ -356,7 +382,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                               child: TextField(
                                                 cursorColor:
                                                     AppColors.AppColor2,
-                                                decoration: const InputDecoration(
+                                                decoration:
+                                                    const InputDecoration(
                                                   focusedBorder:
                                                       UnderlineInputBorder(
                                                           borderSide: BorderSide(
@@ -440,7 +467,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                           Observer(builder: (_) {
                             return Center(
                               child: Text(
-                                "${editRecordStore!.errorText}",
+                                "${errorText}",
                                 style: AppTheme.errorText,
                               ),
                             );
@@ -454,30 +481,15 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               mainAxisSizeMin: true,
                               onTap: () {
-                                _showDiaLogChange(context);
-                                // editRecordStore!.checkValidateEditRecord(0);
-                                // if (editRecordStore!.errorText == null ||
-                                //     editRecordStore!.errorText == "") {
-                                //   sugarInfoStore!.editRecord(
-                                //       recordId!,
-                                //       SugarRecord(
-                                //           conditionId: editRecordStore!
-                                //               .editChooseCondition!.id,
-                                //           dayTime: editRecordStore!
-                                //               .editingDayTimeStr!,
-                                //           hourTime: editRecordStore!
-                                //               .editingHourTimeStr!,
-                                //           id: recordId,
-                                //           status: editRecordStore!
-                                //               .currentEditStatus,
-                                //           sugarAmount: editRecordStore!
-                                //               .editingSugarAmount));
-                                //   Navigator.pushNamedAndRemoveUntil(
-                                //     context,
-                                //     Routes.home,
-                                //     (route) => false,
-                                //   );
-                                // }
+                                editRecordStore!.checkValidateEditRecord(0);
+                                if (editRecordStore!.errorText == null ||
+                                    editRecordStore!.errorText == "") {
+                                  _showDiaLogChange(context);
+                                } else {
+                                  setState(() {
+                                    errorText = sugarInfoStore!.errorText;
+                                  });
+                                }
                               },
                               btnColor: AppColors.AppColor4,
                               btnText: "save_record",
@@ -630,35 +642,34 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              editRecordStore!.checkValidateEditRecord(0);
-                              if (editRecordStore!.errorText == null ||
-                                  editRecordStore!.errorText == "") {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        SucessDialog());
-                                Future.delayed(Duration(milliseconds: 1500),
-                                    () {
-                                  sugarInfoStore!.editRecord(
-                                      recordId!,
-                                      SugarRecord(
-                                          conditionId: editRecordStore!
-                                              .editChooseCondition!.id,
-                                          dayTime: editRecordStore!
-                                              .editingDayTimeStr!,
-                                          hourTime: editRecordStore!
-                                              .editingHourTimeStr!,
-                                          id: recordId,
-                                          status: editRecordStore!
-                                              .currentEditStatus,
-                                          sugarAmount: editRecordStore!
-                                              .editingSugarAmount));
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    Routes.home,
-                                    (route) => false,
-                                  );
-                                });
+                              if (canTap == true) {
+                                canTap = false;
+                                editRecordStore!.checkValidateEditRecord(0);
+                                if (editRecordStore!.errorText == null ||
+                                    editRecordStore!.errorText == "") {
+                                  Future.delayed(Duration(milliseconds: 0),
+                                      () {
+                                    sugarInfoStore!.checkDuplicateInEdit(
+                                        SugarRecord(
+                                            conditionName: editRecordStore!
+                                                .editChooseCondition!.name,
+                                            conditionId: editRecordStore!
+                                                .editChooseCondition!.id,
+                                            dayTime: editRecordStore!
+                                                .editingDayTimeStr!,
+                                            hourTime: editRecordStore!
+                                                .editingHourTimeStr!,
+                                            id: recordId,
+                                            status: editRecordStore!
+                                                .currentEditStatus,
+                                            sugarAmount: editRecordStore!
+                                                .editingSugarAmount),
+                                        context,
+                                        recordId!);
+
+                                    canTap = true;
+                                  });
+                                }
                               }
                             },
                             child: Container(
@@ -713,40 +724,46 @@ class _StatusWidgetState extends State<StatusWidget> {
     super.didChangeDependencies();
   }
 
-  Widget getLevelText(int level) {
+  String getLevelText(int level) {
     switch (level) {
       case 0:
-        return Text(
-          "${AppLocalizations.of(context)!.getTranslate('low')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
-        );
+        return "${AppLocalizations.of(context)!.getTranslate('low')}";
       case 1:
-        return Text(
-          "${AppLocalizations.of(context)!.getTranslate('normal')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
-        );
+        return "${AppLocalizations.of(context)!.getTranslate('normal')}";
       case 2:
-        return Text(
-          "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
-        );
+        return "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}";
       case 3:
-        return Text(
-          "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
-          style: AppTheme.appBodyTextStyle
-              .copyWith(color: getLevelTextColor(level)),
-        );
+        return "${AppLocalizations.of(context)!.getTranslate('diabetes')}";
 
       default:
         throw RangeError("");
     }
   }
 
+  String cutString(double number) {
+    if (number.toString().length > 6) {
+      String numberString = number.toString();
+      String before = numberString.split('.').first;
+      String after = numberString.split('.').last.substring(0, 2);
+      return "${before}.${after}";
+    } else {
+      return "${number.toString()}";
+    }
+  }
+
   String? getAmountValue(int? level) {
-    return "${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue} ~ ${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue}";
+    if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+            .elementAt(level!)
+            .maxValue ==
+        630) {
+      print(
+          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()}");
+      return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+    } else {
+      print(
+          "abcd abcd abcd${widget.                                           editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}");
+      return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+    }
   }
 
   Color getLevelTextColor(int level) {
@@ -874,14 +891,30 @@ class _StatusWidgetState extends State<StatusWidget> {
             ),
           );
         }),
-        getLevelText(widget.editRecordStore!.editStatusLevel!),
+        Observer(builder: (_) {
+          return Text(getLevelText(widget.editRecordStore!.editStatusLevel!),
+              style: AppTheme.appBodyTextStyle.copyWith(
+                  color: getLevelTextColor(
+                      widget.editRecordStore!.editStatusLevel!)));
+        }),
         Expanded(
-          child: Center(
-            child: Text(
-              "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
-              style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
-            ),
-          ),
+          child: Observer(builder: (_) {
+            return Observer(builder: (_) {
+              return Center(
+                child: widget.editRecordStore!.editStatusLevel == 1
+                    ? Text(
+                        "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
+                        style: AppTheme.appBodyTextStyle
+                            .copyWith(color: Colors.black),
+                      )
+                    : Text(
+                        "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
+                        style: AppTheme.appBodyTextStyle
+                            .copyWith(color: Colors.black),
+                      ),
+              );
+            });
+          }),
         )
       ],
     );
@@ -954,7 +987,9 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 Text(
                   "${getTitle(selectedTitle)}",
                   style: AppTheme.appBodyTextStyle.copyWith(
-                      fontWeight: FontWeight.w500, color: Colors.black,fontSize: 16),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -997,6 +1032,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               showDropdown = false;
                               widget.editRecordStore!
                                   .setEditChooseCondition(selectedId!);
+                              widget.editRecordStore!.setEditInputSugarAmount(
+                                  widget!.editRecordStore!.editingSugarAmount!);
                             });
                           },
                           child: Container(
@@ -1005,8 +1042,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               value: selectedTitle,
                               child: Text(
                                 "${getTitle(condition.name)}",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),
+                                style: AppTheme.appBodyTextStyle.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

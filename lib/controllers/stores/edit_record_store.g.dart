@@ -280,6 +280,22 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
     });
   }
 
+  late final _$setConditionAtom =
+      Atom(name: '_EditRecordStoreBase.setCondition', context: context);
+
+  @override
+  bool? get setCondition {
+    _$setConditionAtom.reportRead();
+    return super.setCondition;
+  }
+
+  @override
+  set setCondition(bool? value) {
+    _$setConditionAtom.reportWrite(value, super.setCondition, () {
+      super.setCondition = value;
+    });
+  }
+
   late final _$_EditRecordStoreBaseActionController =
       ActionController(name: '_EditRecordStoreBase', context: context);
 
@@ -427,6 +443,17 @@ mixin _$EditRecordStore on _EditRecordStoreBase, Store {
   }
 
   @override
+  dynamic activeNewCondition() {
+    final _$actionInfo = _$_EditRecordStoreBaseActionController.startAction(
+        name: '_EditRecordStoreBase.activeNewCondition');
+    try {
+      return super.activeNewCondition();
+    } finally {
+      _$_EditRecordStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 editingDayTime: ${editingDayTime},
@@ -445,6 +472,7 @@ editStatusLevel: ${editStatusLevel},
 isSwapedToMol: ${isSwapedToMol},
 sugarAmountEdit: ${sugarAmountEdit},
 tempSugarAmountEdit: ${tempSugarAmountEdit},
+setCondition: ${setCondition},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

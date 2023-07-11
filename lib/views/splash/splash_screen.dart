@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    // sugarInfoStore!.getIsSwapedToMol();
+    sugarInfoStore!.getIsSwapedToMol();
     sugarInfoStore!.getListRecords();
     super.didChangeDependencies();
   }
