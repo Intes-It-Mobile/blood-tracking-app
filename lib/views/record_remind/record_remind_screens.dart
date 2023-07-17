@@ -183,9 +183,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     notificationBody: loopAudio
                                         ? _alarmSettings.notificationBody
                                         : null,
-                                    assetAudioPath: loopAudio
-                                        ? _alarmSettings.assetAudioPath
-                                        : '.',
+                                    assetAudioPath: '.',
                                     fadeDuration: 3.0,
                                     stopOnNotificationOpen: true,
                                     enableNotificationOnKill: true,
