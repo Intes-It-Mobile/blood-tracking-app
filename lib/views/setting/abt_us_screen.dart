@@ -71,14 +71,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             margin: const EdgeInsets.symmetric(vertical: 15),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(AppLocalizations.of(context)!
-                .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),textAlign: TextAlign.justify,),
+                .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 16, color: Colors.black),textAlign: TextAlign.justify,),
           ),
           const Spacer(),
           RichText(
             text: TextSpan(
               children: [
                 TextSpan(text: '${AppLocalizations.of(context)!
-                    .getTranslate('app_name')}', style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,fontSize: 12, color: AppColors.AppColor2),),
+                    .getTranslate('app_name_about_us')}', style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,fontSize: 12, color: AppColors.AppColor2),),
                 TextSpan(
                   text: '${AppLocalizations.of(context)!
                       .getTranslate('version')}',
