@@ -721,17 +721,6 @@ abstract class _SugarInfoStoreBase with Store {
       yearNumber = 0.0;
       allNumber = 0.0;
     }
-
-    // threeDaysNumber = listThreeDaysNumber.fold(
-    //         0.0, (previousValue, item) => previousValue + item.sugarAmount!) /
-    //     listThreeDaysNumber.length;
-
-    print("recentNumber:${recentNumber}");
-    print("threeDaysNumber:${threeDaysNumber}");
-    print("weekNumber:${weekNumber}");
-    print("monthNumber:${monthNumber}");
-    print("yearNumber:${yearNumber}");
-    print("allNumber:${allNumber}");
   }
 
   @action
@@ -756,7 +745,7 @@ abstract class _SugarInfoStoreBase with Store {
           .toList();
       listRecordArrangedByTime!.sort((b, a) =>
           (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!))); 
     } else {
       listRecordArrangedByTime = listRecord!;
       listRecordArrangedByTime!.sort((b, a) =>

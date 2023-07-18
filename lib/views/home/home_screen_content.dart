@@ -58,6 +58,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           Stack(
             children: [
               Container(
+                color: Colors.transparent,
                 height: MediaQuery.of(context).size.height * 0.30555,
                 child: Stack(
                   children: [
@@ -73,7 +74,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                       right: 0.0,
                       bottom: 20,
                       child: sugarInfoStore!.recentNumber != null
-                          ? AverageInfoSlideBarWidget()
+                          ? const AverageInfoSlideBarWidget()
                           : Container(),
                     ),
                   ],
@@ -81,7 +82,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
               ),
               Container(
                   padding: const EdgeInsets.only(top: 20),
-                  child: TopWidgetHomeContent())
+                  child: const TopWidgetHomeContent())
             ],
           ),
           Expanded(
