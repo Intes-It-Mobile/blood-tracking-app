@@ -384,15 +384,15 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                     return Expanded(child: StatusWidget());
                                   }),
                                   // Text("${sugarInfoStore!.chooseCondition!.sugarAmount.}")
-                                  Container(
-                                    child: Row(children: [
-                                      SvgPicture.asset(Assets.iconEditPen),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      // SvgPicture.asset(Assets.iconSwapUnit)
-                                    ]),
-                                  )
+                                  // Container(
+                                  //   child: Row(children: [
+                                  //     SvgPicture.asset(Assets.iconEditPen),
+                                  //     SizedBox(
+                                  //       width: 10,
+                                  //     ),
+                                  //     // SvgPicture.asset(Assets.iconSwapUnit)
+                                  //   ]),
+                                  // )
                                 ],
                               ),
                             ),
