@@ -92,7 +92,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
         }
         setState(() {
           isFirst = false;
-          print(" set isFirsttttttttttttttttttttt:     ${isFirst}  ");
         });
       }
     }
@@ -107,7 +106,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
       onConfirm: (DateTime day, List<int> index) {
         setState(() {
           selectedDay = day;
-          print("Date: ${selectedDay}");
+
           // sugarInfoStore!.setchoosedDayTime(day);
           editRecordStore!.setEditedDayTime(day);
         });
@@ -125,7 +124,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
       onConfirm: (DateTime hour, List<int> index) {
         setState(() {
           selectedHour = hour;
-          print("Date: ${selectedHour}");
           // sugarInfoStore!.setchoosedDayHour(hour);
           editRecordStore!.setEditedHourTime(hour);
         });
@@ -150,7 +148,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
       // Chuỗi đã có phần thập phân
       editRecordStore!.sugarAmountEditControllerEdit.text = value;
     }
-    print("1111111111111111 addZero");
   }
 
   @override
@@ -255,10 +252,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             child: Text(
                                               "${DateFormat('yyyy/MM/dd').format(editRecordStore!.editingDayTime!)}",
-                                              style: AppTheme.appBodyTextStyle.copyWith(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500),
+                                              style: AppTheme.appBodyTextStyle
+                                                  .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                             ),
                                           ),
                                         ],
@@ -285,10 +284,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           Container(
                                             child: Text(
                                               "${DateFormat('HH:mm').format(editRecordStore!.editingHourTime!)}",
-                                              style:  AppTheme.appBodyTextStyle.copyWith(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500),
+                                              style: AppTheme.appBodyTextStyle
+                                                  .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                             ),
                                           ),
                                         ],
@@ -405,13 +406,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                 controller: editRecordStore!
                                                     .sugarAmountEditControllerEdit,
                                                 focusNode: focusNode,
-                                                onEditingComplete: () {
-                                                  print(
-                                                      "1111111111111111 onEditing 1111111111111111");
-                                                },
+                                                onEditingComplete: () {},
                                                 onChanged: (value) {
-                                                  print(
-                                                      "1111111111111111 change $value 111111111111111111");
                                                   editRecordStore!
                                                       .setEditInputSugarAmount(
                                                           double.parse(value));
@@ -421,8 +417,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                 },
                                                 textAlign: TextAlign.center,
                                                 onSubmitted: (value) {
-                                                  print(
-                                                      "1111111111111111 submit 111111111111111111");
+                                       
                                                   editRecordStore!
                                                       .setEditInputSugarAmount(
                                                           double.tryParse(
@@ -433,7 +428,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                               value)!);
                                                   FocusScope.of(context)
                                                       .unfocus();
-                                                  print("onsubmit: ${value}");
                                                 },
                                                 keyboardType:
                                                     TextInputType.number,
@@ -1095,7 +1089,6 @@ class _MyDateTimePickerState extends State<MyDateTimePicker> {
       onConfirm: (dateTime, List<int> selectedIndex) {
         setState(() {
           selectedDateTime = dateTime;
-          print("DateTime:${dateTime}");
         });
       },
       dateFormat: 'yyyy MM dd HH mm',
