@@ -57,45 +57,69 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        child: Column(children: [
-          Center(
-            child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                height: 78,
-                child: Image.asset(
-                  Assets.about_us,
-                  fit: BoxFit.fitHeight,
-                )),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 15),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(AppLocalizations.of(context)!
-                .getTranslate('about_us_content'), style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 16, color: Colors.black),textAlign: TextAlign.justify,),
-          ),
-          const Spacer(),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(text: '${AppLocalizations.of(context)!
-                    .getTranslate('app_name_about_us')}', style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700,fontSize: 12, color: AppColors.AppColor2),),
-                TextSpan(
-                  text: '${AppLocalizations.of(context)!
-                      .getTranslate('version')}',
-                  style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400,fontSize: 12, color: Colors.black),
-                ),
-                TextSpan(
-                  text: '${AppLocalizations.of(context)!
-                      .getTranslate('1.0.0')}',
-                  style: AppTheme.hintText.copyWith(fontWeight: FontWeight.bold,fontSize: 12, color: Colors.black),
-                )
-              ],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(children: [
+            Center(
+              child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  height: 78,
+                  child: Image.asset(
+                    Assets.about_us,
+                    fit: BoxFit.fitHeight,
+                  )),
             ),
-          ),
-          const SizedBox(
-            height: 50,
-          )
-        ]),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                AppLocalizations.of(context)!.getTranslate('about_us_content'),
+                style: AppTheme.hintText.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Colors.black),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            const Spacer(),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        '${AppLocalizations.of(context)!.getTranslate('app_name_about_us')}',
+                    style: AppTheme.hintText.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                        color: AppColors.AppColor2),
+                  ),
+                  TextSpan(
+                    text:
+                        '${AppLocalizations.of(context)!.getTranslate('version')}',
+                    style: AppTheme.hintText.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: Colors.black),
+                  ),
+                  TextSpan(
+                    text:
+                        '${AppLocalizations.of(context)!.getTranslate('1.0.0')}',
+                    style: AppTheme.hintText.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.black),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            )
+          ]),
+        ),
       ),
     );
   }
