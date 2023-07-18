@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
             )
           : Navigator.pushNamedAndRemoveUntil(
               context,
-              Routes.intro,
+              Routes.select_unit,
               (route) => false,
             );
     });
@@ -55,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore!.getIsSwapedToMol();
     sugarInfoStore!.getListRecords();
     super.didChangeDependencies();
   }

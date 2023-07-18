@@ -22,6 +22,7 @@ class Assets {
   static const String history_mpt = "assets/images/have_not_history.png";
   static const String intro_img = "assets/images/intro2_color.png";
   static const String intro_img1 = "assets/images/intro2_mol.png";
+  static const String empty_chart = "assets/images/empty_chart.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";
@@ -40,7 +41,8 @@ class Assets {
   static const String iconEditRecord = "assets/icons/ic_edit_record.svg";
   static const String icon = "assets/icons/ic_up_arrow.svg";
   static const String iconUpArrow = "assets/icons/ic_up_arrow.svg";
-  static const String iconDownArrow = "assets/icons/ic_down_arrow.svg";
+  static const String iconDropdownDownArrow = "assets/icons/ic_dropdown_down_arrow.svg";
+  static const String iconDropdownUpArrow = "assets/icons/ic_dropdown_up_arrow.svg";
   static const String iconEditPen = "assets/icons/ic_edit_pen.svg";
   static const String iconSettingsNav = "assets/icons/ic_settings_nav.svg";
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";

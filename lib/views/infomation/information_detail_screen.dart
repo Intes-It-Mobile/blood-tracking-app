@@ -1,7 +1,10 @@
 import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html_v3/flutter_html.dart';
+// import 'package:flutter_html_v3/flutter_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/app_theme.dart';
@@ -77,7 +80,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
           child: Column(children: [
             Center(
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 15),
+                  margin: EdgeInsets.symmetric(vertical: 15),
                   height: 78,
                   child: Image.asset(
                     "${getImagePath(type)}",
@@ -89,17 +92,28 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Html(
                 data: """
-                      ${getContent(type)}
-                    """,
+                        ${getContent(type)}
+                      """,
                 style: {
                   'p': Style(
-                      textAlign:
-                          TextAlign.justify,fontFamily: FontFamily.IBMPlexSans), // Áp dụng một style cho thẻ <p>
+                      textAlign: TextAlign.justify,
+                      fontFamily: FontFamily
+                          .IBMPlexSans), // Áp dụng một style cho thẻ <p>
                   'strong': Style(
-                      fontWeight:
-                          FontWeight.bold,fontFamily: FontFamily.IBMPlexSans), // Áp dụng một style cho thẻ <strong>
+                      fontWeight: FontWeight.bold,
+                      fontFamily: FontFamily
+                          .IBMPlexSans), // Áp dụng một style cho thẻ <strong>
                 },
               ),
+              // child:
+
+              //  HtmlWidget(
+              //   "${getContent(type)}",
+              //   textStyle: AppTheme.appBodyTextStyle.copyWith(
+              //       color: Colors.black,
+              //       fontWeight: FontWeight.w400,
+              //       fontSize: 16,),
+              // )
             )
           ]),
         ),

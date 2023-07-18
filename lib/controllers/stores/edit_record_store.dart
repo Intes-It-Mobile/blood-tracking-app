@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
@@ -41,12 +42,13 @@ abstract class _EditRecordStoreBase with Store {
   @observable
   SugarInfo? rootSugarInfo;
   @observable
-  int? editStatusLevel ;
+  int? editStatusLevel;
   @action
-  getRootSugarInfo(List<Conditions>editChooseCondition ) {
-   
+  getRootSugarInfo(List<Conditions> editChooseCondition) {
+    //  Lớn hơn >= min, nhỏ hơn max
     listRootConditions = editChooseCondition;
   }
+
   @action
   setEditChooseCondition(int eDitchooseId) {
     editChooseCondition =
@@ -58,18 +60,34 @@ abstract class _EditRecordStoreBase with Store {
 
   @action
   setEditInputSugarAmount(double inputAmount) {
-    currentEditStatus = editChooseCondition!.sugarAmount!
-        .where((e) =>
-            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
-        .first
-        .status;
-    editingSugarAmount = inputAmount;
+    setCurrentEditAmount(inputAmount);
+    setCurrentEditStatus(inputAmount);
     if (currentEditStatus != null) {
       setEditStatusLevel(currentEditStatus);
     }
-  
+    print("inputAmount:    $inputAmount");
   }
-   @action
+
+  @action
+  setCurrentEditAmount(double inputAmount) {
+    editingSugarAmount = inputAmount;
+  }
+
+  @action
+  setCurrentEditStatus(double inputAmount) {
+    //  Lớn hơn >= min, nhỏ hơn max
+    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+      currentEditStatus = editChooseCondition!.sugarAmount!
+          .where((e) =>
+              e.minValue! * 1.0 <= inputAmount &&
+              inputAmount < e.maxValue! * 1.0)
+          .first
+          .status;
+    }
+    print("Status: ${editStatus}");
+  }
+
+  @action
   setEditStatusLevel(String? currentEditStatus) {
     switch (currentEditStatus) {
       case 'low':
@@ -84,6 +102,7 @@ abstract class _EditRecordStoreBase with Store {
         throw RangeError("");
     }
   }
+
   @action
   setEditedDayTime(DateTime dayTime) {
     editingDayTime = dayTime;
@@ -92,8 +111,88 @@ abstract class _EditRecordStoreBase with Store {
 
   @action
   setEditedHourTime(DateTime hourTime) {
-    editingHourTime= hourTime;
+    editingHourTime = hourTime;
     editingHourTimeStr = DateFormat('HH:mm').format(hourTime);
   }
 
+  String? errorText = "";
+  @action
+  setErrorText(String errorMessage) {
+    errorText = errorMessage;
+    print("Erorrrrrrrrrrrrrrrr:${errorText}");
+  }
+
+  @observable
+  bool? isSwapedToMol;
+  @action
+  checkValidateEditRecord(double value) {
+    print("Check Validate: $editingSugarAmount");
+    if (editingDayTimeStr != null &&
+        editingHourTimeStr != null &&
+        currentEditStatus != null &&
+        currentEditStatus != "" &&
+        editingSugarAmount != null &&
+        editChooseCondition!.id != null) {
+      if (isSwapedToMol == false) {
+        if (editingSugarAmount! < 18 || editingSugarAmount! > 630) {
+          setErrorText("Please enter correct value between 18-630 mg/dL");
+        } else {
+          setErrorText("");
+        }
+      }
+      if (isSwapedToMol == true) {
+        if (editingSugarAmount! < 1 || editingSugarAmount! > 35) {
+          setErrorText("Please enter correct value between 1-35 mmol/L");
+        } else {
+          setErrorText("");
+        }
+      }
+    }
+  }
+/////////////////////////////////////////////////////////////////
+
+  final TextEditingController sugarAmountEditControllerEdit =
+      TextEditingController();
+
+  @computed
+  bool get isButtonEnabled =>
+      editingSugarAmount != null &&
+      editingSugarAmount! >= 18 &&
+      editingSugarAmount! <= 630;
+
+  @observable
+  String sugarAmountEdit = '80';
+
+  @observable
+  String? tempSugarAmountEdit;
+
+  @computed
+  bool get isButtonEnabledEdit =>
+      double.tryParse(sugarAmountEdit) != null &&
+      double.parse(sugarAmountEdit) >= 18 &&
+      double.parse(sugarAmountEdit) <= 630;
+
+  @action
+  void setSugarAmountEdit(String value) {
+    tempSugarAmountEdit = value;
+  }
+
+  @action
+  void validateSugarAmountEdit() {
+    if (tempSugarAmountEdit != null) {
+      sugarAmountEdit = tempSugarAmountEdit!;
+    }
+  }
+
+  @action
+  void resetSugarAmountEdit() {
+    sugarAmountEdit = '80';
+  }
+
+  @observable
+  bool? setCondition = true;
+  @action
+  activeNewCondition(){
+    setCondition = !setCondition!;
+  }
 }

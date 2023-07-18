@@ -9,10 +9,10 @@ import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../routes.dart';
-import '../../utils/dialog/dialog_modal.dart';
+import '../../utils/dialog/dialog_feedback.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
-import '../../widgets/feedback_pop_up.dart';
+import '../../widgets/change_unit_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -30,11 +30,12 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-@override
+  @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pushNamed(Routes.edit_range);
               },
               child: Container(
@@ -75,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pushNamed(Routes.record_remind);
               },
               child: Container(
@@ -87,9 +88,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: SvgPicture.asset(Assets.iconAlarm),
               ),
             ),
-            Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: SvgPicture.asset(Assets.iconSwapUnit))
           ],
         ),
       ),
@@ -103,10 +101,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   ButtonWidget(
                     onTap: () {
-                      share();
+                      sugarInfoStore!.exportToExcel(context);
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "export_data",
+                  ),
+                  ButtonWidget(
+                    onTap: () {
+                      // sugarInfoStore!.swapUnit();
+                      showDiaLogUnit(sugarInfoStore!, context);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "change_unit",
                   ),
                   ButtonWidget(
                     onTap: () {
@@ -127,20 +133,27 @@ class _SettingScreenState extends State<SettingScreen> {
                       showDialog(
                         context: context,
                         builder: (dialogContext) {
-                          return DialogFeedback();
+                          return const DialogFeedback();
                         },
                       );
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "send_feedback",
                   ),
-                  GestureDetector( onTap: (){
-                    sugarInfoStore!.deleteData();
-                  },child: Container(width: 20,height: 20,color: Colors.amber,))
                 ]),
           ),
         ),
       ),
     );
   }
+}
+
+Future<String?> showDiaLogUnit(
+  SugarInfoStore store,
+  BuildContext context,
+) {
+  return showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => ChageUnitDialog(sugarInfoStore: store),
+  );
 }

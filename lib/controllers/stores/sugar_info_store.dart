@@ -1,12 +1,22 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:path_provider/path_provider.dart';
+import '../../constants/app_theme.dart';
+import '../../constants/colors.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import 'package:excel/excel.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/sucess_dialog.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -19,9 +29,6 @@ abstract class _SugarInfoStoreBase with Store {
   SugarInfo? rootSugarInfo;
 
   @observable
-  List<Conditions>? listRootConditions;
-
-  @observable
   String? currentStatus;
 
   @observable
@@ -32,10 +39,42 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   int? statusLevel = 0;
+
+  List<Conditions>? listRootConditions;
+
+  @observable
+  List<Conditions>? listRootConditionsFilter;
+
+  get sugarInfoStore => null;
+
   @action
   getRootSugarInfo(SugarInfo? fromSharepref) {
     rootSugarInfo = fromSharepref;
-    listRootConditions = fromSharepref!.conditions;
+    if (isSwapedToMol == false) {
+      listRootConditions = fromSharepref!.conditions;
+      setValueToListFilter(listRootConditions);
+    }
+    if (isSwapedToMol == true) {
+      listRootConditions = fromSharepref!.conditions;
+      for (var condition in listRootConditions!) {
+        if (condition.sugarAmount != null) {
+          for (var sugarAmount in condition.sugarAmount!) {
+            if (sugarAmount.minValue != null) {
+              sugarAmount.minValue = sugarAmount.minValue! / 18;
+            }
+            if (sugarAmount.maxValue != null) {
+              sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+            }
+          }
+        }
+      }
+      setValueToListFilter(listRootConditions);
+    }
+  }
+
+  @action
+  setValueToListFilter(List<Conditions>? list) {
+    listRootConditionsFilter = list;
   }
 
   @action
@@ -49,15 +88,46 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   setInputSugarAmount(double inputAmount) {
-    currentStatus = chooseCondition!.sugarAmount!
-        .where((e) =>
-            e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
-        .first
-        .status;
-    currentSugarAmount = inputAmount;
-    checkValidateSugarAmountInput(inputAmount);
+    // currentStatus = chooseCondition!.sugarAmount!
+    //     .where((e) =>
+    //         e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
+    //     .first
+    // .status;
+    setCurrentAmount(inputAmount);
+    setCurrentStatus(inputAmount);
     if (currentStatus != null) {
       setStatusLevel(currentStatus);
+    }
+  }
+
+  @action
+  setCurrentAmount(double inputAmount) {
+    currentSugarAmount = inputAmount;
+  }
+
+  @action
+  setCurrentStatus(double inputAmount) {
+    //  Lớn hơn >= min, nhỏ hơn max
+    if (isSwapedToMol == false) {
+      if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
+    } else if (isSwapedToMol == true) {
+      if (inputAmount != null && inputAmount >= 1 || inputAmount <= 35) {
+        currentStatus = chooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
+      print("Status: ${currentStatus}");
     }
   }
 
@@ -108,8 +178,12 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? isChoosedDayTimeStrDisplay = false;
 
+  @observable
+  DateTime? choosedDayTimePicker;
+
   @action
   setchoosedDayTime(DateTime choosedDayTime) {
+    choosedDayTimePicker = choosedDayTime;
     (choosedDayTimeStrDisplay =
         DateFormat('yyyy     MM     dd').format(choosedDayTime));
     choosedDayTimeStr = DateFormat('yyyy/MM/dd').format(choosedDayTime);
@@ -147,40 +221,124 @@ abstract class _SugarInfoStoreBase with Store {
   bool? isListRecordsLoading = true;
 
   @observable
-  bool? successSaveRecord = false;
+  bool? isSaving = false;
 
   static final String ListRecordsKey = 'listRecord';
+
+  @observable
+  bool? hasExistedRecord = false;
+  @observable
+  bool? hasExistedEditRecord = false;
+
   @action
-  saveNewRecord(int id, BuildContext context) {
-    checkValidateNewRecord();
-    if (errorText == "" || errorText == null) {
-      listRecord!.add(SugarRecord(
-          id: id,
-          dayTime: choosedDayTimeStr,
-          hourTime: choosedDayHourStr,
-          status: currentStatus,
-          sugarAmount: currentSugarAmount,
-          conditionId: chooseCondition!.id));
-      listRecords = ListRecord(listRecord: listRecord);
-      choosedDayTimeStr = null;
-      choosedDayHourStr = null;
-      listRecordArrangedByTime = listRecord;
-      saveListRecord(listRecords);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.home,
-        (route) => false,
-      );
-      successSaveRecord = true;
-      errorText = "";
-      if (listRecordArrangedByTime!.length > 0) {
-        listRecordArrangedByTime!.sort((b, a) =>
-            (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-                .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
-        getAverageNumber();
-      }
+  checkDuplicate() {
+    hasExistedRecord = listRecord!.any((record) =>
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr);
+    print(hasExistedRecord);
+  }
+
+  @action
+  checkDuplicateInEdit(
+      SugarRecord sugarRecordEdit, BuildContext context, int id) {
+    hasExistedEditRecord = listRecord!.any((record) =>
+        record.dayTime == sugarRecordEdit.dayTime &&
+        record.hourTime == sugarRecordEdit.hourTime &&
+        record.id != sugarRecordEdit.id);
+    if (hasExistedEditRecord == true) {
+      showDiaLogChange(context, sugarRecordEdit);
+    } else if (hasExistedEditRecord == false) {
+      editRecord(id, sugarRecordEdit, context);
     }
-    successSaveRecord = false;
+    print(hasExistedEditRecord);
+  }
+
+  @action
+  replaceEditRecord(BuildContext context, SugarRecord sugarRecordEdit) {
+    SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
+        record.dayTime == sugarRecordEdit.dayTime &&
+        record.hourTime == sugarRecordEdit.hourTime);
+    {
+      recordUpdate.conditionId = sugarRecordEdit!.conditionId;
+      recordUpdate.dayTime = sugarRecordEdit.dayTime;
+      recordUpdate.hourTime = sugarRecordEdit.hourTime;
+      recordUpdate.status = sugarRecordEdit.status;
+      recordUpdate.sugarAmount = sugarRecordEdit.sugarAmount;
+      recordUpdate.conditionName = sugarRecordEdit.conditionName;
+    }
+
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+  }
+
+  @action
+  replaceRecord(BuildContext context) {
+    SugarRecord recordUpdate = listRecord!.firstWhere((record) =>
+        record.dayTime == choosedDayTimeStr &&
+        record.hourTime == choosedDayHourStr);
+    {
+      recordUpdate.conditionId = chooseCondition!.id;
+      recordUpdate.dayTime = choosedDayTimeStr;
+      recordUpdate.hourTime = choosedDayHourStr;
+      recordUpdate.status = currentStatus;
+      recordUpdate.sugarAmount = currentSugarAmount;
+    }
+
+    saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+  }
+
+  @observable
+  bool? userAgreeAddNew = false;
+  @action
+  setAgreeAddNew(bool? value) {
+    userAgreeAddNew = true;
+  }
+
+  @observable
+  bool? userAgreeReplace = false;
+  @action
+  setAgreeReplace(bool? value) {
+    userAgreeReplace = true;
+  }
+
+  @action
+  Future<void> saveNewRecord(int id, BuildContext context) async {
+    listRecord!.add(SugarRecord(
+        id: id,
+        dayTime: choosedDayTimeStr,
+        hourTime: choosedDayHourStr,
+        status: currentStatus,
+        sugarAmount: currentSugarAmount,
+        conditionId: chooseCondition!.id,
+        conditionName: chooseCondition!.name));
+    listRecords = ListRecord(listRecord: listRecord);
+    choosedDayTimeStr = null;
+    choosedDayHourStr = null;
+    listRecordArrangedByTime = listRecord;
+    setErrorText("");
+    saveListRecord(listRecords);
+
+    if (listRecordArrangedByTime!.length > 0) {
+      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${a!.dayTime!} ${a!.hourTime!}"))
+          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      getAverageNumber();
+    }
+    await Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
   }
 
   @action
@@ -194,7 +352,12 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? canSaveNewRecord = false;
   @observable
-  String? errorText;
+  String? errorText = "";
+  @action
+  setErrorText(String errorMessage) {
+    errorText = errorMessage;
+    print("Erorrrrrrrrrrrrrrrr:${errorText}");
+  }
 
   @action
   checkValidateNewRecord() {
@@ -204,19 +367,31 @@ abstract class _SugarInfoStoreBase with Store {
         currentStatus != "" &&
         currentSugarAmount != null &&
         chooseCondition!.id != null) {
-      if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-        errorText = "errow_sugar_input_text";
-      } else {
-        errorText = "";
+      if (isSwapedToMol == false) {
+        if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
+          setErrorText("Please enter correct value between 18-630 mg/dL");
+        } else {
+          setErrorText("");
+        }
+      }
+      if (isSwapedToMol == true) {
+        if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
+          setErrorText("Please enter correct value between 1-35 mmol/L");
+        } else {
+          setErrorText("");
+        }
       }
     }
   }
 
   static Future<void> saveListRecord(ListRecord? listRecords) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jsonString = json.encode(listRecords!.toJson());
-    prefs.setString('myObjectKey', jsonString);
-    print("Save to shprf: ${listRecords.listRecord!.length} ");
+    if (listRecords != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String jsonString = json.encode(listRecords!.toJson());
+      prefs.setString('myObjectKey', jsonString);
+
+      print("Save to shprf: ${listRecords.listRecord!.length} ");
+    }
   }
 
   Future<ListRecord?> getListRecords() async {
@@ -242,6 +417,75 @@ abstract class _SugarInfoStoreBase with Store {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
+  }
+
+  Future<void> exportToExcel(BuildContext context) async {
+    // Read data from the JSON file
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('myObjectKey');
+    List<dynamic> jsonData = json.decode(jsonString!)['list_record'];
+
+    // Create an Excel workbook and worksheet
+    var excel = Excel.createExcel();
+    var sheet = excel['Sheet1'];
+
+    // Assign column names
+    sheet.cell(CellIndex.indexByString("A1")).value = "Date";
+    sheet.cell(CellIndex.indexByString("B1")).value = "Time";
+    sheet.cell(CellIndex.indexByString("C1")).value =
+        isSwapedToMol == true ? "Blood Sugar (mmol/L)" : "Blood Sugar (mg/dL)";
+
+    sheet.setColWidth(2, 25);
+    sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
+    sheet.cell(CellIndex.indexByString("E1")).value = "Type";
+
+    // Write data to each column
+    for (int i = 0; i < jsonData.length; i++) {
+      var record = jsonData[i];
+      sheet.cell(CellIndex.indexByString("A${i + 2}")).value =
+          record['day_time'];
+      sheet.cell(CellIndex.indexByString("B${i + 2}")).value =
+          record['hour_time'];
+      sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
+          "${record['sugar_amount']}";
+      sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
+          "${AppLocalizations.of(context)!.getTranslate(record['condition_name'])}";
+
+      sheet.cell(CellIndex.indexByString("E${i + 2}")).value =
+          "${AppLocalizations.of(context)!.getTranslate(record['status'])}";
+    }
+
+    // Save the workbook as an Excel file
+    var bytes = excel.encode();
+    var directory = await getApplicationDocumentsDirectory();
+    var file = "${directory.path}/blood_sugar_tracking_data.xlsx";
+    await File(file).writeAsBytes(bytes!);
+
+    // Share the Excel file
+    await Share.shareFiles([file], text: 'Sharing the Excel file');
+
+    print("File exported and shared: $file");
+    bool fileExists = await File(file).exists();
+    if (fileExists) {
+      print("File exported successfully: $file");
+    } else {
+      print("Failed to export file");
+    }
+  }
+
+  Future<void> saveIsSwapedToMol(bool isSwapedToMol) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isSwapedToMol', isSwapedToMol);
+    saveListRecord(listRecords);
+  }
+
+  Future<void> getIsSwapedToMol() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('isSwapedToMol') == null) {
+      isSwapedToMol = false;
+    } else {
+      isSwapedToMol = prefs.getBool('isSwapedToMol');
+    }
   }
 
   @observable
@@ -288,7 +532,8 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  editRecord(int editItemId, SugarRecord editedRecord) {
+  editRecord(int editItemId, SugarRecord editedRecord, BuildContext context) {
+    // _showDiaLogChange
     listRecord!.firstWhere((e) => e.id == editItemId).dayTime =
         editedRecord.dayTime;
     listRecord!.firstWhere((e) => e.id == editItemId).hourTime =
@@ -300,7 +545,98 @@ abstract class _SugarInfoStoreBase with Store {
         editedRecord.sugarAmount;
     listRecord!.firstWhere((e) => e.id == editItemId).status =
         editedRecord.status;
+    listRecord!.firstWhere((e) => e.id == editItemId).conditionName =
+        editedRecord.conditionName;
+    listRecordArrangedByTime = listRecord;
+    if (listRecordArrangedByTime!.length > 0) {
+      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${a!.dayTime!} ${a!.hourTime!}"))
+          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      getAverageNumber();
+    }
     saveListRecord(listRecords);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
+  }
+
+  @action
+  showDiaLogChange(BuildContext context, SugarRecord record) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        content: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text(
+                  "${AppLocalizations.of(context)!.getTranslate('edit_duplicate_dialog')}",
+                  style: AppTheme.Headline16Text.copyWith(
+                      fontWeight: FontWeight.w500, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        replaceEditRecord(context, record);
+                        deleteRecord(record.id);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('replace')}",
+                            style: AppTheme.TextIntroline16Text.copyWith(
+                                color: AppColors.AppColor2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 23),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        // margin: EdgeInsets.only(left: 23),
+                        padding: EdgeInsets.symmetric(vertical: 9),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor2,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                            style: AppTheme.TextIntroline16Text,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @observable
@@ -318,57 +654,77 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   getAverageNumber() {
-    recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
-    // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
-    List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
-        .where((e) =>
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isAfter(now.subtract(Duration(days: 3))) &&
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isBefore(now.add(Duration(days: 1))))
-        .toList();
-    List<SugarRecord>? listweekNumber = listRecordArrangedByTime!
-        .where((e) =>
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isAfter(now.subtract(Duration(days: 7))) &&
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isBefore(now.add(Duration(days: 1))))
-        .toList();
-    List<SugarRecord>? listMonthNumber = listRecordArrangedByTime!
-        .where((e) =>
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isAfter(now.subtract(Duration(days: 30))) &&
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isBefore(now.add(Duration(days: 1))))
-        .toList();
-    List<SugarRecord>? listYearNumber = listRecordArrangedByTime!
-        .where((e) =>
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isAfter(now.subtract(Duration(days: 365))) &&
-            DateFormat('yyyy/MM/dd')
-                .parse(e.dayTime!)
-                .isBefore(now.add(Duration(days: 1))))
-        .toList();
+    if (listRecordArrangedByTime != null &&
+        listRecordArrangedByTime!.isNotEmpty) {
+      recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
 
-    threeDaysNumber = double.parse((listThreeDaysNumber.fold(0.0,
-                (previousValue, item) => previousValue + item.sugarAmount!) /
-            listThreeDaysNumber.length)
-        .toStringAsFixed(1));
+      // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
+      List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
+          .where((e) =>
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isAfter(now.subtract(Duration(days: 4))) &&
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isBefore(now.add(Duration(days: 1))))
+          .toList();
+
+      List<SugarRecord>? listweekNumber = listRecordArrangedByTime!
+          .where(
+              (e) => DateFormat('yyyy/MM/dd').parse(e.dayTime!, true) != null)
+          .where((e) {
+        DateTime recordTime = DateFormat('yyyy/MM/dd').parse(e.dayTime!, true)!;
+        return recordTime.isAfter(now.subtract(Duration(days: now.weekday))) &&
+            recordTime.isBefore(now.add(Duration(days: 7 - now.weekday)));
+      }).toList();
+
+      List<SugarRecord>? listMonthNumber = listRecordArrangedByTime!
+          .where((e) =>
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isAfter(now.subtract(Duration(days: now.month))) &&
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isBefore(now.add(Duration(days: 30 - now.month))))
+          .toList();
+
+      List<SugarRecord>? listYearNumber = listRecordArrangedByTime!
+          .where((e) =>
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isAfter(now.subtract(Duration(days: 365))) &&
+              DateFormat('yyyy/MM/dd')
+                  .parse(e.dayTime!)
+                  .isBefore(now.add(Duration(days: 1))))
+          .toList();
+
+      threeDaysNumber = roundedResult(listThreeDaysNumber).isNaN
+          ? 0.0
+          : roundedResult(listThreeDaysNumber);
+      weekNumber = roundedResult(listweekNumber).isNaN
+          ? 0.0
+          : roundedResult(listweekNumber);
+      monthNumber = roundedResult(listMonthNumber).isNaN
+          ? 0.0
+          : roundedResult(listMonthNumber);
+      yearNumber = roundedResult(listYearNumber).isNaN
+          ? 0.0
+          : roundedResult(listYearNumber);
+      allNumber = roundedResult(listRecordArrangedByTime).isNaN
+          ? 0.0
+          : roundedResult(listRecordArrangedByTime);
+    } else {
+      recentNumber = 0.0;
+      threeDaysNumber = 0.0;
+      weekNumber = 0.0;
+      monthNumber = 0.0;
+      yearNumber = 0.0;
+      allNumber = 0.0;
+    }
 
     // threeDaysNumber = listThreeDaysNumber.fold(
     //         0.0, (previousValue, item) => previousValue + item.sugarAmount!) /
     //     listThreeDaysNumber.length;
-    weekNumber = roundedResult(listweekNumber);
-    monthNumber = roundedResult(listMonthNumber);
-    yearNumber = roundedResult(listYearNumber);
-    allNumber = roundedResult(listRecordArrangedByTime);
 
     print("recentNumber:${recentNumber}");
     print("threeDaysNumber:${threeDaysNumber}");
@@ -383,6 +739,209 @@ abstract class _SugarInfoStoreBase with Store {
     return double.parse((listNumber!.fold(0.0,
                 (previousValue, item) => previousValue + item.sugarAmount!) /
             listNumber.length)
-        .toStringAsFixed(1));
+        .toStringAsFixed(2));
   }
+
+  @observable
+  int? filterConditionId = 0;
+  @observable
+  String? filterConditionTitle = "default_txt";
+
+  @action
+  filterListRecord() {
+    listRecordArrangedByTime = [];
+    if (filterConditionId != -1) {
+      listRecordArrangedByTime = listRecord!
+          .where((e) => e.conditionId == filterConditionId)!
+          .toList();
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    } else {
+      listRecordArrangedByTime = listRecord!;
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+    }
+    isChartLoading = true;
+    Future.delayed(Duration(milliseconds: 500), () {
+      isChartLoading = false;
+      print(isChartLoading);
+    });
+  }
+
+  @action
+  setConditionFilterId(String? value) {
+    if (value != "all") {
+      filterConditionId =
+          listRootConditions!.where((e) => e.name == value).first.id;
+      filterConditionTitle =
+          listRootConditions!.where((e) => e.name == value).first.name;
+      filterListRecord();
+      isShouldRender = !isShouldRender!;
+      getAverageNumber();
+    } else {
+      filterConditionId = -1;
+      filterConditionTitle = "all";
+      filterListRecord();
+      isShouldRender = !isShouldRender!;
+      getAverageNumber();
+    }
+
+    print("filterConditionId: ${filterConditionId}");
+    print("filterConditionTitle: ${filterConditionTitle}");
+  }
+
+  @observable
+  bool? isSwapedToMol = false;
+  @action
+  @action
+  setSwapStatusToMol(bool? status) {
+    isSwapedToMol = status;
+  }
+
+  @action
+  multiplicationUnitListRecord() {
+    for (int i = 0; i < listRecord!.length; i++) {
+      if (listRecord![i].sugarAmount != null) {
+        listRecord![i].sugarAmount = listRecord![i].sugarAmount! * 18;
+      }
+    }
+  }
+
+  @action
+  multiplicationUnitListRootCondition() {
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! * 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! * 18;
+          }
+        }
+      }
+    }
+  }
+
+  @action
+  divisionnUnitListRecord() {
+    for (int i = 0; i < listRecord!.length; i++) {
+      if (listRecord![i].sugarAmount != null) {
+        listRecord![i].sugarAmount = listRecord![i].sugarAmount! / 18;
+      }
+    }
+  }
+
+  @action
+  divisionListRootCondition() {
+    for (var condition in listRootConditions!) {
+      if (condition.sugarAmount != null) {
+        for (var sugarAmount in condition.sugarAmount!) {
+          if (sugarAmount.minValue != null) {
+            sugarAmount.minValue = sugarAmount.minValue! / 18;
+          }
+          if (sugarAmount.maxValue != null) {
+            sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+          }
+        }
+      }
+    }
+  }
+
+  @action
+  swapUnit() {
+    if (isSwapedToMol == false) {
+      multiplicationUnitListRecord();
+      multiplicationUnitListRootCondition();
+      saveIsSwapedToMol(isSwapedToMol!);
+      saveListRecord(listRecords);
+    }
+    if (isSwapedToMol == true) {
+      divisionnUnitListRecord();
+      divisionListRootCondition();
+      saveIsSwapedToMol(isSwapedToMol!);
+      saveListRecord(listRecords);
+    }
+  }
+
+  @observable
+  bool? optionUnitIsMol;
+
+  @action
+  chooseUnitIsMol(bool isMol) {
+    optionUnitIsMol = isMol;
+  }
+////////////////////////////////////////////////////////////////
+
+  final TextEditingController sugarAmountController = TextEditingController();
+  final TextEditingController sugarAmountEditController =
+      TextEditingController();
+
+  @observable
+  String sugarAmount = '80';
+
+  @observable
+  String? tempSugarAmount;
+
+  @computed
+  bool get isButtonEnabled =>
+      double.tryParse(sugarAmount) != null &&
+      double.parse(sugarAmount) >= 18 &&
+      double.parse(sugarAmount) <= 630;
+
+  @action
+  void setSugarAmount(String value) {
+    tempSugarAmount = value;
+  }
+
+  @action
+  void validateSugarAmount() {
+    if (tempSugarAmount != null) {
+      sugarAmount = tempSugarAmount!;
+    }
+  }
+
+  @action
+  void resetSugarAmount() {
+    sugarAmount = '80';
+  }
+
+  @observable
+  String sugarAmountEdit = '80';
+
+  @observable
+  String? tempSugarAmountEdit;
+
+  @computed
+  bool get isButtonEnabledEdit =>
+      double.tryParse(sugarAmountEdit) != null &&
+      double.parse(sugarAmountEdit) >= 18 &&
+      double.parse(sugarAmountEdit) <= 630;
+
+  @action
+  void setSugarAmountEdit(String value) {
+    tempSugarAmountEdit = value;
+  }
+
+  @action
+  void validateSugarAmountEdit() {
+    if (tempSugarAmountEdit != null) {
+      sugarAmountEdit = tempSugarAmountEdit!;
+    }
+  }
+
+  @action
+  void resetSugarAmountEdit() {
+    sugarAmountEdit = '80';
+  }
+
+  ////////////////////////////////////////////////////////////
+
+  @observable
+  bool? isChartLoading = false;
+
+  @observable
+  bool? isShouldRender = false;
 }

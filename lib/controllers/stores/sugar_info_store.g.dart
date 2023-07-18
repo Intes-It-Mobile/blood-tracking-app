@@ -9,6 +9,21 @@ part of 'sugar_info_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
+  Computed<bool>? _$isButtonEnabledComputed;
+
+  @override
+  bool get isButtonEnabled =>
+      (_$isButtonEnabledComputed ??= Computed<bool>(() => super.isButtonEnabled,
+              name: '_SugarInfoStoreBase.isButtonEnabled'))
+          .value;
+  Computed<bool>? _$isButtonEnabledEditComputed;
+
+  @override
+  bool get isButtonEnabledEdit => (_$isButtonEnabledEditComputed ??=
+          Computed<bool>(() => super.isButtonEnabledEdit,
+              name: '_SugarInfoStoreBase.isButtonEnabledEdit'))
+      .value;
+
   late final _$abcAtom =
       Atom(name: '_SugarInfoStoreBase.abc', context: context);
 
@@ -38,22 +53,6 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   set rootSugarInfo(SugarInfo? value) {
     _$rootSugarInfoAtom.reportWrite(value, super.rootSugarInfo, () {
       super.rootSugarInfo = value;
-    });
-  }
-
-  late final _$listRootConditionsAtom =
-      Atom(name: '_SugarInfoStoreBase.listRootConditions', context: context);
-
-  @override
-  List<Conditions>? get listRootConditions {
-    _$listRootConditionsAtom.reportRead();
-    return super.listRootConditions;
-  }
-
-  @override
-  set listRootConditions(List<Conditions>? value) {
-    _$listRootConditionsAtom.reportWrite(value, super.listRootConditions, () {
-      super.listRootConditions = value;
     });
   }
 
@@ -118,6 +117,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   set statusLevel(int? value) {
     _$statusLevelAtom.reportWrite(value, super.statusLevel, () {
       super.statusLevel = value;
+    });
+  }
+
+  late final _$listRootConditionsFilterAtom = Atom(
+      name: '_SugarInfoStoreBase.listRootConditionsFilter', context: context);
+
+  @override
+  List<Conditions>? get listRootConditionsFilter {
+    _$listRootConditionsFilterAtom.reportRead();
+    return super.listRootConditionsFilter;
+  }
+
+  @override
+  set listRootConditionsFilter(List<Conditions>? value) {
+    _$listRootConditionsFilterAtom
+        .reportWrite(value, super.listRootConditionsFilter, () {
+      super.listRootConditionsFilter = value;
     });
   }
 
@@ -237,6 +253,23 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$choosedDayTimePickerAtom =
+      Atom(name: '_SugarInfoStoreBase.choosedDayTimePicker', context: context);
+
+  @override
+  DateTime? get choosedDayTimePicker {
+    _$choosedDayTimePickerAtom.reportRead();
+    return super.choosedDayTimePicker;
+  }
+
+  @override
+  set choosedDayTimePicker(DateTime? value) {
+    _$choosedDayTimePickerAtom.reportWrite(value, super.choosedDayTimePicker,
+        () {
+      super.choosedDayTimePicker = value;
+    });
+  }
+
   late final _$dateTimeNowAtom =
       Atom(name: '_SugarInfoStoreBase.dateTimeNow', context: context);
 
@@ -351,19 +384,84 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
-  late final _$successSaveRecordAtom =
-      Atom(name: '_SugarInfoStoreBase.successSaveRecord', context: context);
+  late final _$isSavingAtom =
+      Atom(name: '_SugarInfoStoreBase.isSaving', context: context);
 
   @override
-  bool? get successSaveRecord {
-    _$successSaveRecordAtom.reportRead();
-    return super.successSaveRecord;
+  bool? get isSaving {
+    _$isSavingAtom.reportRead();
+    return super.isSaving;
   }
 
   @override
-  set successSaveRecord(bool? value) {
-    _$successSaveRecordAtom.reportWrite(value, super.successSaveRecord, () {
-      super.successSaveRecord = value;
+  set isSaving(bool? value) {
+    _$isSavingAtom.reportWrite(value, super.isSaving, () {
+      super.isSaving = value;
+    });
+  }
+
+  late final _$hasExistedRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.hasExistedRecord', context: context);
+
+  @override
+  bool? get hasExistedRecord {
+    _$hasExistedRecordAtom.reportRead();
+    return super.hasExistedRecord;
+  }
+
+  @override
+  set hasExistedRecord(bool? value) {
+    _$hasExistedRecordAtom.reportWrite(value, super.hasExistedRecord, () {
+      super.hasExistedRecord = value;
+    });
+  }
+
+  late final _$hasExistedEditRecordAtom =
+      Atom(name: '_SugarInfoStoreBase.hasExistedEditRecord', context: context);
+
+  @override
+  bool? get hasExistedEditRecord {
+    _$hasExistedEditRecordAtom.reportRead();
+    return super.hasExistedEditRecord;
+  }
+
+  @override
+  set hasExistedEditRecord(bool? value) {
+    _$hasExistedEditRecordAtom.reportWrite(value, super.hasExistedEditRecord,
+        () {
+      super.hasExistedEditRecord = value;
+    });
+  }
+
+  late final _$userAgreeAddNewAtom =
+      Atom(name: '_SugarInfoStoreBase.userAgreeAddNew', context: context);
+
+  @override
+  bool? get userAgreeAddNew {
+    _$userAgreeAddNewAtom.reportRead();
+    return super.userAgreeAddNew;
+  }
+
+  @override
+  set userAgreeAddNew(bool? value) {
+    _$userAgreeAddNewAtom.reportWrite(value, super.userAgreeAddNew, () {
+      super.userAgreeAddNew = value;
+    });
+  }
+
+  late final _$userAgreeReplaceAtom =
+      Atom(name: '_SugarInfoStoreBase.userAgreeReplace', context: context);
+
+  @override
+  bool? get userAgreeReplace {
+    _$userAgreeReplaceAtom.reportRead();
+    return super.userAgreeReplace;
+  }
+
+  @override
+  set userAgreeReplace(bool? value) {
+    _$userAgreeReplaceAtom.reportWrite(value, super.userAgreeReplace, () {
+      super.userAgreeReplace = value;
     });
   }
 
@@ -479,6 +577,272 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$recentNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.recentNumber', context: context);
+
+  @override
+  double? get recentNumber {
+    _$recentNumberAtom.reportRead();
+    return super.recentNumber;
+  }
+
+  @override
+  set recentNumber(double? value) {
+    _$recentNumberAtom.reportWrite(value, super.recentNumber, () {
+      super.recentNumber = value;
+    });
+  }
+
+  late final _$threeDaysNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.threeDaysNumber', context: context);
+
+  @override
+  double? get threeDaysNumber {
+    _$threeDaysNumberAtom.reportRead();
+    return super.threeDaysNumber;
+  }
+
+  @override
+  set threeDaysNumber(double? value) {
+    _$threeDaysNumberAtom.reportWrite(value, super.threeDaysNumber, () {
+      super.threeDaysNumber = value;
+    });
+  }
+
+  late final _$weekNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.weekNumber', context: context);
+
+  @override
+  double? get weekNumber {
+    _$weekNumberAtom.reportRead();
+    return super.weekNumber;
+  }
+
+  @override
+  set weekNumber(double? value) {
+    _$weekNumberAtom.reportWrite(value, super.weekNumber, () {
+      super.weekNumber = value;
+    });
+  }
+
+  late final _$monthNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.monthNumber', context: context);
+
+  @override
+  double? get monthNumber {
+    _$monthNumberAtom.reportRead();
+    return super.monthNumber;
+  }
+
+  @override
+  set monthNumber(double? value) {
+    _$monthNumberAtom.reportWrite(value, super.monthNumber, () {
+      super.monthNumber = value;
+    });
+  }
+
+  late final _$yearNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.yearNumber', context: context);
+
+  @override
+  double? get yearNumber {
+    _$yearNumberAtom.reportRead();
+    return super.yearNumber;
+  }
+
+  @override
+  set yearNumber(double? value) {
+    _$yearNumberAtom.reportWrite(value, super.yearNumber, () {
+      super.yearNumber = value;
+    });
+  }
+
+  late final _$allNumberAtom =
+      Atom(name: '_SugarInfoStoreBase.allNumber', context: context);
+
+  @override
+  double? get allNumber {
+    _$allNumberAtom.reportRead();
+    return super.allNumber;
+  }
+
+  @override
+  set allNumber(double? value) {
+    _$allNumberAtom.reportWrite(value, super.allNumber, () {
+      super.allNumber = value;
+    });
+  }
+
+  late final _$filterConditionIdAtom =
+      Atom(name: '_SugarInfoStoreBase.filterConditionId', context: context);
+
+  @override
+  int? get filterConditionId {
+    _$filterConditionIdAtom.reportRead();
+    return super.filterConditionId;
+  }
+
+  @override
+  set filterConditionId(int? value) {
+    _$filterConditionIdAtom.reportWrite(value, super.filterConditionId, () {
+      super.filterConditionId = value;
+    });
+  }
+
+  late final _$filterConditionTitleAtom =
+      Atom(name: '_SugarInfoStoreBase.filterConditionTitle', context: context);
+
+  @override
+  String? get filterConditionTitle {
+    _$filterConditionTitleAtom.reportRead();
+    return super.filterConditionTitle;
+  }
+
+  @override
+  set filterConditionTitle(String? value) {
+    _$filterConditionTitleAtom.reportWrite(value, super.filterConditionTitle,
+        () {
+      super.filterConditionTitle = value;
+    });
+  }
+
+  late final _$isSwapedToMolAtom =
+      Atom(name: '_SugarInfoStoreBase.isSwapedToMol', context: context);
+
+  @override
+  bool? get isSwapedToMol {
+    _$isSwapedToMolAtom.reportRead();
+    return super.isSwapedToMol;
+  }
+
+  @override
+  set isSwapedToMol(bool? value) {
+    _$isSwapedToMolAtom.reportWrite(value, super.isSwapedToMol, () {
+      super.isSwapedToMol = value;
+    });
+  }
+
+  late final _$optionUnitIsMolAtom =
+      Atom(name: '_SugarInfoStoreBase.optionUnitIsMol', context: context);
+
+  @override
+  bool? get optionUnitIsMol {
+    _$optionUnitIsMolAtom.reportRead();
+    return super.optionUnitIsMol;
+  }
+
+  @override
+  set optionUnitIsMol(bool? value) {
+    _$optionUnitIsMolAtom.reportWrite(value, super.optionUnitIsMol, () {
+      super.optionUnitIsMol = value;
+    });
+  }
+
+  late final _$sugarAmountAtom =
+      Atom(name: '_SugarInfoStoreBase.sugarAmount', context: context);
+
+  @override
+  String get sugarAmount {
+    _$sugarAmountAtom.reportRead();
+    return super.sugarAmount;
+  }
+
+  @override
+  set sugarAmount(String value) {
+    _$sugarAmountAtom.reportWrite(value, super.sugarAmount, () {
+      super.sugarAmount = value;
+    });
+  }
+
+  late final _$tempSugarAmountAtom =
+      Atom(name: '_SugarInfoStoreBase.tempSugarAmount', context: context);
+
+  @override
+  String? get tempSugarAmount {
+    _$tempSugarAmountAtom.reportRead();
+    return super.tempSugarAmount;
+  }
+
+  @override
+  set tempSugarAmount(String? value) {
+    _$tempSugarAmountAtom.reportWrite(value, super.tempSugarAmount, () {
+      super.tempSugarAmount = value;
+    });
+  }
+
+  late final _$sugarAmountEditAtom =
+      Atom(name: '_SugarInfoStoreBase.sugarAmountEdit', context: context);
+
+  @override
+  String get sugarAmountEdit {
+    _$sugarAmountEditAtom.reportRead();
+    return super.sugarAmountEdit;
+  }
+
+  @override
+  set sugarAmountEdit(String value) {
+    _$sugarAmountEditAtom.reportWrite(value, super.sugarAmountEdit, () {
+      super.sugarAmountEdit = value;
+    });
+  }
+
+  late final _$tempSugarAmountEditAtom =
+      Atom(name: '_SugarInfoStoreBase.tempSugarAmountEdit', context: context);
+
+  @override
+  String? get tempSugarAmountEdit {
+    _$tempSugarAmountEditAtom.reportRead();
+    return super.tempSugarAmountEdit;
+  }
+
+  @override
+  set tempSugarAmountEdit(String? value) {
+    _$tempSugarAmountEditAtom.reportWrite(value, super.tempSugarAmountEdit, () {
+      super.tempSugarAmountEdit = value;
+    });
+  }
+
+  late final _$isChartLoadingAtom =
+      Atom(name: '_SugarInfoStoreBase.isChartLoading', context: context);
+
+  @override
+  bool? get isChartLoading {
+    _$isChartLoadingAtom.reportRead();
+    return super.isChartLoading;
+  }
+
+  @override
+  set isChartLoading(bool? value) {
+    _$isChartLoadingAtom.reportWrite(value, super.isChartLoading, () {
+      super.isChartLoading = value;
+    });
+  }
+
+  late final _$isShouldRenderAtom =
+      Atom(name: '_SugarInfoStoreBase.isShouldRender', context: context);
+
+  @override
+  bool? get isShouldRender {
+    _$isShouldRenderAtom.reportRead();
+    return super.isShouldRender;
+  }
+
+  @override
+  set isShouldRender(bool? value) {
+    _$isShouldRenderAtom.reportWrite(value, super.isShouldRender, () {
+      super.isShouldRender = value;
+    });
+  }
+
+  late final _$saveNewRecordAsyncAction =
+      AsyncAction('_SugarInfoStoreBase.saveNewRecord', context: context);
+
+  @override
+  Future<void> saveNewRecord(int id, BuildContext context) {
+    return _$saveNewRecordAsyncAction
+        .run(() => super.saveNewRecord(id, context));
+  }
+
   late final _$_SugarInfoStoreBaseActionController =
       ActionController(name: '_SugarInfoStoreBase', context: context);
 
@@ -488,6 +852,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.getRootSugarInfo');
     try {
       return super.getRootSugarInfo(fromSharepref);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setValueToListFilter(List<Conditions>? list) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setValueToListFilter');
+    try {
+      return super.setValueToListFilter(list);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -510,6 +885,28 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.setInputSugarAmount');
     try {
       return super.setInputSugarAmount(inputAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCurrentAmount(double inputAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setCurrentAmount');
+    try {
+      return super.setCurrentAmount(inputAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCurrentStatus(double inputAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setCurrentStatus');
+    try {
+      return super.setCurrentStatus(inputAmount);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -560,11 +957,89 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic saveNewRecord(int id, BuildContext context) {
+  dynamic checkDuplicate() {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.saveNewRecord');
+        name: '_SugarInfoStoreBase.checkDuplicate');
     try {
-      return super.saveNewRecord(id, context);
+      return super.checkDuplicate();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic checkDuplicateInEdit(
+      SugarRecord sugarRecordEdit, BuildContext context, int id) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkDuplicateInEdit');
+    try {
+      return super.checkDuplicateInEdit(sugarRecordEdit, context, id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic replaceEditRecord(BuildContext context, SugarRecord sugarRecordEdit) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.replaceEditRecord');
+    try {
+      return super.replaceEditRecord(context, sugarRecordEdit);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic replaceRecord(BuildContext context) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.replaceRecord');
+    try {
+      return super.replaceRecord(context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setAgreeAddNew(bool? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setAgreeAddNew');
+    try {
+      return super.setAgreeAddNew(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setAgreeReplace(bool? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setAgreeReplace');
+    try {
+      return super.setAgreeReplace(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setListRecordArrangedByTime() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setListRecordArrangedByTime');
+    try {
+      return super.setListRecordArrangedByTime();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setErrorText(String errorMessage) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setErrorText');
+    try {
+      return super.setErrorText(errorMessage);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -648,11 +1123,210 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic editRecord(int editItemId, SugarRecord editedRecord) {
+  dynamic editRecord(
+      int editItemId, SugarRecord editedRecord, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.editRecord');
     try {
-      return super.editRecord(editItemId, editedRecord);
+      return super.editRecord(editItemId, editedRecord, context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic showDiaLogChange(BuildContext context, SugarRecord record) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.showDiaLogChange');
+    try {
+      return super.showDiaLogChange(context, record);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getAverageNumber() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.getAverageNumber');
+    try {
+      return super.getAverageNumber();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  double roundedResult(List<SugarRecord>? listNumber) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.roundedResult');
+    try {
+      return super.roundedResult(listNumber);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic filterListRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.filterListRecord');
+    try {
+      return super.filterListRecord();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setConditionFilterId(String? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setConditionFilterId');
+    try {
+      return super.setConditionFilterId(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSwapStatusToMol(bool? status) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setSwapStatusToMol');
+    try {
+      return super.setSwapStatusToMol(status);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic multiplicationUnitListRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.multiplicationUnitListRecord');
+    try {
+      return super.multiplicationUnitListRecord();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic multiplicationUnitListRootCondition() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.multiplicationUnitListRootCondition');
+    try {
+      return super.multiplicationUnitListRootCondition();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic divisionnUnitListRecord() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.divisionnUnitListRecord');
+    try {
+      return super.divisionnUnitListRecord();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic divisionListRootCondition() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.divisionListRootCondition');
+    try {
+      return super.divisionListRootCondition();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic swapUnit() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.swapUnit');
+    try {
+      return super.swapUnit();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic chooseUnitIsMol(bool isMol) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.chooseUnitIsMol');
+    try {
+      return super.chooseUnitIsMol(isMol);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSugarAmount(String value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setSugarAmount');
+    try {
+      return super.setSugarAmount(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validateSugarAmount() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.validateSugarAmount');
+    try {
+      return super.validateSugarAmount();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetSugarAmount() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.resetSugarAmount');
+    try {
+      return super.resetSugarAmount();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSugarAmountEdit(String value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setSugarAmountEdit');
+    try {
+      return super.setSugarAmountEdit(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validateSugarAmountEdit() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.validateSugarAmountEdit');
+    try {
+      return super.validateSugarAmountEdit();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetSugarAmountEdit() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.resetSugarAmountEdit');
+    try {
+      return super.resetSugarAmountEdit();
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -663,11 +1337,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     return '''
 abc: ${abc},
 rootSugarInfo: ${rootSugarInfo},
-listRootConditions: ${listRootConditions},
 currentStatus: ${currentStatus},
 chooseCondition: ${chooseCondition},
 currentSugarAmount: ${currentSugarAmount},
 statusLevel: ${statusLevel},
+listRootConditionsFilter: ${listRootConditionsFilter},
 legalInput: ${legalInput},
 choosedDayTimeStr: ${choosedDayTimeStr},
 choosedDayHourStr: ${choosedDayHourStr},
@@ -675,6 +1349,7 @@ choosedDayTimeStrDisplay: ${choosedDayTimeStrDisplay},
 choosedDayHourStrDisplay: ${choosedDayHourStrDisplay},
 isChoosedDayHourStrDisplay: ${isChoosedDayHourStrDisplay},
 isChoosedDayTimeStrDisplay: ${isChoosedDayTimeStrDisplay},
+choosedDayTimePicker: ${choosedDayTimePicker},
 dateTimeNow: ${dateTimeNow},
 stringTimeDayNow: ${stringTimeDayNow},
 stringTimeHourNow: ${stringTimeHourNow},
@@ -682,14 +1357,36 @@ listRecord: ${listRecord},
 listRecordArrangedByTime: ${listRecordArrangedByTime},
 listRecords: ${listRecords},
 isListRecordsLoading: ${isListRecordsLoading},
-successSaveRecord: ${successSaveRecord},
+isSaving: ${isSaving},
+hasExistedRecord: ${hasExistedRecord},
+hasExistedEditRecord: ${hasExistedEditRecord},
+userAgreeAddNew: ${userAgreeAddNew},
+userAgreeReplace: ${userAgreeReplace},
 canSaveNewRecord: ${canSaveNewRecord},
 errorText: ${errorText},
 editingRecord: ${editingRecord},
 editedDayTime: ${editedDayTime},
 editedHourTime: ${editedHourTime},
 editedStatus: ${editedStatus},
-editedSugarAmount: ${editedSugarAmount}
+editedSugarAmount: ${editedSugarAmount},
+recentNumber: ${recentNumber},
+threeDaysNumber: ${threeDaysNumber},
+weekNumber: ${weekNumber},
+monthNumber: ${monthNumber},
+yearNumber: ${yearNumber},
+allNumber: ${allNumber},
+filterConditionId: ${filterConditionId},
+filterConditionTitle: ${filterConditionTitle},
+isSwapedToMol: ${isSwapedToMol},
+optionUnitIsMol: ${optionUnitIsMol},
+sugarAmount: ${sugarAmount},
+tempSugarAmount: ${tempSugarAmount},
+sugarAmountEdit: ${sugarAmountEdit},
+tempSugarAmountEdit: ${tempSugarAmountEdit},
+isChartLoading: ${isChartLoading},
+isShouldRender: ${isShouldRender},
+isButtonEnabled: ${isButtonEnabled},
+isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';
   }
 }

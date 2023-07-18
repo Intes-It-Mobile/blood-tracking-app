@@ -4,6 +4,7 @@ class AlarmInfo {
   DateTime? alarmDateTime;
   bool? isPending;
   int? gradientColorIndex;
+  AlarmInfo.withID(this.id,this.alarmDateTime);
 
   AlarmInfo(
       {this.id,
@@ -16,7 +17,7 @@ class AlarmInfo {
     id: json["id"],
     title: json["title"],
     alarmDateTime: DateTime.parse(json["alarmDateTime"]),
-    isPending: json["isPending"],
+    isPending: (json['isPending'] as int) == 0 ? false : true,
     gradientColorIndex: json["gradientColorIndex"],
   );
   Map<String, dynamic> toMap() => {

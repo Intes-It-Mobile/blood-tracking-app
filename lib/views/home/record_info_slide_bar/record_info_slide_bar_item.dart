@@ -3,10 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/app_theme.dart';
 import '../../../constants/assets.dart';
 import '../../../constants/colors.dart';
+import '../../../controllers/stores/sugar_info_store.dart';
 import '../../../models/sugar_info/sugar_info.dart';
 import '../../../routes.dart';
 import '../../../utils/locale/appLocalizations.dart';
@@ -17,13 +19,22 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
   String? hourTime = "";
   double? sugarAmount = 0.0;
   int? id = 0;
-  RecordInfoSliderItemWidget({super.key, required this.status, this.dayTime, this.hourTime, this.sugarAmount, this.id});
+  RecordInfoSliderItemWidget(
+      {super.key,
+      required this.status,
+      this.dayTime,
+      this.hourTime,
+      this.sugarAmount,
+      this.id});
 
   @override
-  State<RecordInfoSliderItemWidget> createState() => _RecordInfoSliderItemWidgetState();
+  State<RecordInfoSliderItemWidget> createState() =>
+      _RecordInfoSliderItemWidgetState();
 }
 
-class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget> {
+class _RecordInfoSliderItemWidgetState
+    extends State<RecordInfoSliderItemWidget> {
+  SugarInfoStore? sugarInfoStore;
   SugarRecord? editRecord;
   String? date = "2023/06/15";
   String? time = "15:58";
@@ -42,13 +53,48 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
     }
   }
 
+  final String texttahng = "333.333";
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  String getFormattedValue(String input) {
+    // Tìm vị trí của dấu chấm trong chuỗi
+    int dotIndex = input.indexOf('.');
+
+    if (dotIndex != -1) {
+      // Lấy các kí tự trước dấu chấm
+      String beforeDot = input.substring(0, dotIndex);
+
+      // Lấy kí tự sau dấu chấm và kiểm tra độ dài
+      String afterDot = input.substring(dotIndex + 1);
+      if (afterDot.length > 2) {
+        // Giới hạn độ dài của kí tự sau dấu chấm là 2
+        afterDot = afterDot.substring(0, 2);
+      }
+
+      // Kết hợp các kết quả lại với nhau
+      String formattedValue = beforeDot + '.' + afterDot;
+
+      return formattedValue;
+    }
+
+    // Nếu không tìm thấy dấu chấm, trả về giá trị gốc
+    return input;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(Routes.edit_record, arguments: {"record_id": widget.id});
+            Navigator.of(context).pushNamed(Routes.edit_record,
+                arguments: {"record_id": widget.id});
           },
           child: Container(
             width: (MediaQuery.of(context).size.width / 350) * 144,
@@ -79,23 +125,30 @@ class _RecordInfoSliderItemWidgetState extends State<RecordInfoSliderItemWidget>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        child: Text(
-                          "${widget.sugarAmount}",
-                          style: AppTheme.appBodyTextStyle36.copyWith(fontSize: 32),
-                        ),
+                        child: widget.sugarAmount.toString().length > 7
+                            ? Text(
+                                "${getFormattedValue(widget.sugarAmount.toString())}",
+                                style: AppTheme.appBodyTextStyle26)
+                            : Text("${widget.sugarAmount}",
+                                style: AppTheme.appBodyTextStyle26),
                       ),
-                      Text("mg/L", style: AppTheme.appBodyTextStyle),
+                      Text(
+                          "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                          style: AppTheme.appBodyTextStyle),
                     ],
                   ),
                 ),
                 Container(
                   child: Row(
                     children: [
-                      Text("Status : ", style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black)),
+                      Text("Status : ",
+                          style: AppTheme.appBodyTextStyle
+                              .copyWith(color: Colors.black)),
                       Text(
                         "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
                         // "abd",
-                        style: AppTheme.statusTxt.copyWith(color: SttTextColor(widget.status)),
+                        style: AppTheme.statusTxt
+                            .copyWith(color: SttTextColor(widget.status)),
                       ),
                     ],
                   ),

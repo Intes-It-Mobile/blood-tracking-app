@@ -35,6 +35,14 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(36),
     fontFamily: FontFamily.IBMPlexSans,
   );
+  static final TextStyle appBodyTextStyle26 = TextStyle(
+    color: AppColors.AppColor4,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(26),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
   static final TextStyle timeText = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w500,
@@ -120,6 +128,22 @@ class AppTheme {
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(14),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
+  static final unitText = TextStyle(
+    color: AppColors.AppColor4,
+    fontWeight: FontWeight.w500,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(12),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
+  static final unit24Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(24),
     fontFamily: FontFamily.IBMPlexSans,
   );
 }
