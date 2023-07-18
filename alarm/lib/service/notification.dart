@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -84,6 +85,11 @@ class AlarmNotification {
 
     if (dateTime.isBefore(now)) {
       dateTime = dateTime.add(const Duration(days: 1));
+      // AndroidAlarmManager.periodic(
+      //   const Duration(seconds: 30), 0,
+      //   printHello,
+      //   startAt: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 0),
+      // );
     }
 
     return tz.TZDateTime.from(dateTime, tz.local);

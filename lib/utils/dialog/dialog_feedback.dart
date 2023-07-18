@@ -87,13 +87,14 @@ class _DialogFeedbackState extends State<DialogFeedback> {
                 ),
               ),
               child: TextFormField(
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
+
                   hintText:
                       "${AppLocalizations.of(context)!.getTranslate('email_label_txt')}",
                   hintStyle: AppTheme.hintText,
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 13),
-                  hoverColor: Colors.black
                 ),
               ),
             ),
@@ -117,8 +118,9 @@ class _DialogFeedbackState extends State<DialogFeedback> {
               ),
               child: TextFormField(
                 maxLines: 4,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
-                    hoverColor: Colors.black,
+
                     hintText:
                         "${AppLocalizations.of(context)!.getTranslate('feedback_write_dwn_label_txt')}",
                     hintStyle: AppTheme.hintText,

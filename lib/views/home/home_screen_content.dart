@@ -115,8 +115,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: sugarInfoStore!
-                                              .listRecordArrangedByTime! !=
-                                          null &&
+                                              .listRecordArrangedByTime! != null &&
                                       sugarInfoStore!
                                           .listRecordArrangedByTime!.isNotEmpty
                                   ? Container(
