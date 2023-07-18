@@ -29,4 +29,5 @@ flutter:
         package: com.gdelataillade.alarm.alarm
         pluginClass: AlarmPlugin
       ios:
+        package: com.gdelataillade
         pluginClass: AlarmPlugin
