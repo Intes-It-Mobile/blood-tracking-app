@@ -134,7 +134,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               child: ListView.builder(
                   itemCount: sugarInfoStore!.listRootConditions?.length,
                   itemBuilder: (context, index) {
-                    print('_items: ${_items.length}');
+  
                     return sugarInfoStore!.listRootConditions! != null
                         ? Container(
                             height: MediaQuery.of(context).size.height * 0.23,
