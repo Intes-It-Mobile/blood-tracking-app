@@ -179,10 +179,10 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     vibrate: _alarmSettings.vibrate,
                                     notificationTitle: loopAudio
                                         ? _alarmSettings.notificationTitle
-                                        : null,
+                                        : _alarmSettings.notificationTitle,
                                     notificationBody: loopAudio
                                         ? _alarmSettings.notificationBody
-                                        : null,
+                                        : _alarmSettings.notificationBody,
                                     assetAudioPath: '.',
                                     fadeDuration: 3.0,
                                     stopOnNotificationOpen: true,
