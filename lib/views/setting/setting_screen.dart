@@ -88,15 +88,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: SvgPicture.asset(Assets.iconAlarm),
               ),
             ),
-            InkWell(
-              onTap: () {
-                // sugarInfoStore!.swapUnit();
-                showDiaLogUnit(sugarInfoStore!, context);
-              },
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: SvgPicture.asset(Assets.iconSwapUnit)),
-            )
           ],
         ),
       ),
@@ -114,6 +105,14 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "export_data",
+                  ),
+                  ButtonWidget(
+                    onTap: () {
+                      // sugarInfoStore!.swapUnit();
+                      showDiaLogUnit(sugarInfoStore!, context);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "change_unit",
                   ),
                   ButtonWidget(
                     onTap: () {

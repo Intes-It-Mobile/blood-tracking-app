@@ -33,6 +33,7 @@ class Conditions {
 }
 
 class SugarAmount {
+  int? id;
   String? status;
   double? minValue;
   double? maxValue;
@@ -40,6 +41,7 @@ class SugarAmount {
   SugarAmount({this.status, this.minValue, this.maxValue});
 
   SugarAmount.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     status = json['status'];
     minValue = json['min_value'];
     maxValue = json['max_value'];
