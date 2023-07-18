@@ -358,10 +358,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           editRecordStore: editRecordStore,
                                         );
                                       })),
-                                      Container(
-                                        child: SvgPicture.asset(
-                                            Assets.iconEditPen),
-                                      )
+                                      // Container(
+                                      //   child: SvgPicture.asset(
+                                      //       Assets.iconEditPen),
+                                      // )
                                     ],
                                   ),
                                 ),
