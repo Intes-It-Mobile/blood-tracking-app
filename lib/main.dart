@@ -6,35 +6,24 @@ import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-
+import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // transparent status bar
+      statusBarIconBrightness: Brightness.dark // dark text for status bar
+  ));
   WidgetsFlutterBinding.ensureInitialized();
-  var initializationSettingsAndroid =
-      AndroidInitializationSettings('codex_logo');
-  var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-      onDidReceiveLocalNotification:
-          (int id, String? title, String? body, String? payload) async {});
-  var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-  });
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  await Alarm.init(showDebugLogs: true);
   shareLocal = await ShareLocal.getInstance();
   runApp(const MyApp());
 }
@@ -76,20 +65,35 @@ class MyApp extends StatelessWidget {
           ],
           localeResolutionCallback:
               (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                  deviceLocale != null &&
-                          ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
-                      ? deviceLocale
-                      : supportedLocales.first,
+          deviceLocale != null &&
+              ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+              ? deviceLocale
+              : supportedLocales.first,
           theme: ThemeData(
+            primaryColor: AppColors.AppColor2,
+            colorScheme: ColorScheme(
+              brightness: Brightness.light,
+              primary: Colors.white,
+              error: Colors.red,
+              onError: Colors.red,
+              primaryVariant: AppColors.AppColor2,
+              secondary: AppColors.AppColor2,
+              secondaryVariant: AppColors.AppColor2,
+              onSecondary: Colors.black,
+              background: Colors.white,
+              surface: Colors.grey,
+              onPrimary: Colors.white,
+              onBackground: Colors.black,
+              onSurface: Colors.black,
+            ),
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,
           ),
+          //  home: SelectUnit(),
           home: SplashScreen(),
         ),
       ),
     );
   }
 }
-
-// test
