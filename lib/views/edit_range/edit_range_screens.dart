@@ -160,12 +160,18 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14),
                                     ),
-                                    // const Spacer(),
-                                    // SvgPicture.asset(
-                                    //     'assets/icons/ic_edit_pen.svg'),
-                                    // const SizedBox(
-                                    //   width: 20,
-                                    // )
+                                    const Spacer(),
+                                    // InkWell(
+                                    //   splashColor: Colors.transparent,
+                                    //   onTap: () {
+                                    //     showDiaLogUnit(context);
+                                    //   },
+                                    //   child: SvgPicture.asset(
+                                    //       'assets/icons/ic_edit_pen.svg'),
+                                    // ),
+                                    const SizedBox(
+                                      width: 20,
+                                    )
                                   ],
                                 ),
                                 const SizedBox(
@@ -304,5 +310,125 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
             )
           ],
         ));
+  }
+
+  Future<String?> showDiaLogUnit(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => ChangeTargetDialog(),
+    );
+  }
+}
+
+class ChangeTargetDialog extends StatefulWidget {
+  const ChangeTargetDialog({super.key});
+
+  @override
+  State<ChangeTargetDialog> createState() => _ChangeTargetDialogState();
+}
+
+class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
+  int? counter = 0;
+  @override
+  void addCounter() {
+    setState(() {
+      counter = counter! + 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      content: StatefulBuilder(builder: (context, setModalState) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: 400,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Before exercise",
+                  style: AppTheme.Headline16Text.copyWith(
+                      color: AppColors.AppColor4),
+                ),
+                Wrap(children: [
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Low",
+                            style: AppTheme.appBodyTextStyle
+                                .copyWith(color: AppColors.LowStt),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 11, vertical: 4),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Text("0",
+                                    style: AppTheme.appBodyTextStyle
+                                        .copyWith(color: Colors.black)),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text("~",
+                                    style: AppTheme.appBodyTextStyle
+                                        .copyWith(color: Colors.black)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 11, vertical: 4),
+                                decoration: BoxDecoration(
+                                    color: AppColors.AppColor3,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Text("4.0",
+                                    style: AppTheme.appBodyTextStyle
+                                        .copyWith(color: Colors.black)),
+                              ),
+                            ],
+                          )
+                        ]),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 35,
+                  margin: const EdgeInsets.only(left: 50, right: 50),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppColors.AppColor2,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',
+                      style: AppTheme.TextIntroline16Text,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }),
+    );
   }
 }

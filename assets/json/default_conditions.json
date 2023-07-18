@@ -5,21 +5,25 @@
       "name": "default_txt",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -31,21 +35,25 @@
       "name": "before_exercise",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -57,21 +65,25 @@
       "name": "before_meal",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -83,21 +95,25 @@
       "name": "fasting",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -109,21 +125,25 @@
       "name": "after_exercise",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -135,21 +155,25 @@
       "name": "asleep",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 99.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 99.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
@@ -161,21 +185,25 @@
       "name": "after_meal_1h",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 140.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 140.0,
           "max_value": 153.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 153.0,
           "max_value": 631.0
@@ -187,21 +215,25 @@
       "name": "after_meal_2h",
       "sugar_amount": [
         {
+          "id": 0,
           "status": "low",
           "min_value": 18.0,
           "max_value": 72.0
         },
         {
+          "id": 1,
           "status": "normal",
           "min_value": 72.0,
           "max_value": 85.0
         },
         {
+          "id": 2,
           "status": "pre_diabetes",
           "min_value": 85.0,
           "max_value": 126.0
         },
         {
+          "id": 3,
           "status": "diabetes",
           "min_value": 126.0,
           "max_value": 631.0
