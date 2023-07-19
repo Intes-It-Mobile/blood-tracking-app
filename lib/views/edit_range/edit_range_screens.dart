@@ -134,7 +134,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
               child: ListView.builder(
                   itemCount: sugarInfoStore!.listRootConditions?.length,
                   itemBuilder: (context, index) {
-  
                     return sugarInfoStore!.listRootConditions! != null
                         ? Container(
                             height: MediaQuery.of(context).size.height * 0.23,
@@ -161,14 +160,20 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                           fontSize: 14),
                                     ),
                                     const Spacer(),
-                                    // InkWell(
-                                    //   splashColor: Colors.transparent,
-                                    //   onTap: () {
-                                    //     showDiaLogUnit(context);
-                                    //   },
-                                    //   child: SvgPicture.asset(
-                                    //       'assets/icons/ic_edit_pen.svg'),
-                                    // ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        showDiaLogUnit(
+                                            context,
+                                            sugarInfoStore!
+                                                .listRootConditions![index]
+                                                .id!);
+                                        print(
+                                            "conditionId: ${sugarInfoStore!.listRootConditions![index].id!}");
+                                      },
+                                      child: SvgPicture.asset(
+                                          'assets/icons/ic_edit_pen.svg'),
+                                    ),
                                     const SizedBox(
                                       width: 20,
                                     )
@@ -312,28 +317,34 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
         ));
   }
 
-  Future<String?> showDiaLogUnit(BuildContext context) {
+  Future<String?> showDiaLogUnit(BuildContext context, int conditionId) {
     return showDialog<String>(
       context: context,
-      builder: (BuildContext context) => ChangeTargetDialog(),
+      builder: (
+        BuildContext context,
+      ) =>
+          ChangeTargetDialog(
+        conditionId: conditionId,
+      ),
     );
   }
 }
 
 class ChangeTargetDialog extends StatefulWidget {
-  const ChangeTargetDialog({super.key});
+  int? conditionId;
+  ChangeTargetDialog({super.key, required this.conditionId});
 
   @override
   State<ChangeTargetDialog> createState() => _ChangeTargetDialogState();
 }
 
 class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
-  int? counter = 0;
+  SugarInfoStore? sugarInfoStore;
+
   @override
-  void addCounter() {
-    setState(() {
-      counter = counter! + 1;
-    });
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
   }
 
   @override
@@ -358,54 +369,10 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                       color: AppColors.AppColor4),
                 ),
                 Wrap(children: [
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Low",
-                            style: AppTheme.appBodyTextStyle
-                                .copyWith(color: AppColors.LowStt),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 11, vertical: 4),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: Text("0",
-                                    style: AppTheme.appBodyTextStyle
-                                        .copyWith(color: Colors.black)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text("~",
-                                    style: AppTheme.appBodyTextStyle
-                                        .copyWith(color: Colors.black)),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 11, vertical: 4),
-                                decoration: BoxDecoration(
-                                    color: AppColors.AppColor3,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: Text("4.0",
-                                    style: AppTheme.appBodyTextStyle
-                                        .copyWith(color: Colors.black)),
-                              ),
-                            ],
-                          )
-                        ]),
-                  ),
+                  EditRangeItem(),
+                  EditRangeItem(),
+                  EditRangeItem(),
+                  EditRangeItem(),
                 ]),
                 const SizedBox(
                   height: 15,
@@ -429,6 +396,81 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
           ),
         );
       }),
+    );
+  }
+
+  List<Widget> builsListItem() {
+    return sugarInfoStore!.listRootConditions!
+        .where((e) => e.id == widget.conditionId)
+        .first
+        .sugarAmount!
+        .map((e) {
+      return EditRangeItem();
+    }).toList();
+  }
+}
+
+class EditRangeItem extends StatefulWidget {
+  String? conditionName;
+  int? conditionId;
+
+  EditRangeItem({
+    super.key,
+    this.conditionId,
+    this.conditionName,
+  });
+
+  @override
+  State<EditRangeItem> createState() => _EditRangeItemState();
+}
+
+class _EditRangeItemState extends State<EditRangeItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Low",
+              style:
+                  AppTheme.appBodyTextStyle.copyWith(color: AppColors.LowStt),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: Text("0",
+                      style: AppTheme.appBodyTextStyle
+                          .copyWith(color: Colors.black)),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text("~",
+                      style: AppTheme.appBodyTextStyle
+                          .copyWith(color: Colors.black)),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: AppColors.AppColor3,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: Text("4.0",
+                      style: AppTheme.appBodyTextStyle
+                          .copyWith(color: Colors.black)),
+                ),
+              ],
+            )
+          ]),
     );
   }
 }

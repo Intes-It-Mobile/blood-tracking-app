@@ -36,7 +36,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   }
 
   List<SugarRecord> getListDisplay(List<SugarRecord> listInput) {
-    DateTime now = DateTime.now();
+    DateTime now = DateTime.now(); 
     DateTime startOfCurrentMonth = DateTime(now.year, now.month, 1);
     DateTime startOfPreviousMonth = DateTime(now.year, now.month - 1, 0);
     DateTime startOfNextMonth = DateTime(now.year, now.month + 1, 1);

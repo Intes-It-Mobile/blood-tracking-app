@@ -933,4 +933,7 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   bool? isShouldRender = false;
+
+  ////////////////////////////////////////////////////////////////
+  
 }
