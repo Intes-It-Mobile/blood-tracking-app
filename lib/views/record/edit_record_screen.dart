@@ -358,10 +358,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           editRecordStore: editRecordStore,
                                         );
                                       })),
-                                      Container(
-                                        child: SvgPicture.asset(
-                                            Assets.iconEditPen),
-                                      )
+                                      // Container(
+                                      //   child: SvgPicture.asset(
+                                      //       Assets.iconEditPen),
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -753,7 +753,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 2);
+      String after = numberString.split('.').last.substring(0, 3);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";

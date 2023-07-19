@@ -54,7 +54,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
   String? subString(String? value) {
     if (value!.length > 4) {
       if (sugarInfoStore!.isSwapedToMol == true) {
-        return value.substring(0, 4);
+        return value.substring(0, 5);
       } else {
         return value.substring(0, 5);
       }

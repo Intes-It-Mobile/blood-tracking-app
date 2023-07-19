@@ -430,23 +430,19 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                 .sugarAmountController,
                                             focusNode: focusNode,
                                             onEditingComplete: () {
-                              
                                               sugarInfoStore!
                                                   .validateSugarAmount();
                                               addZeroToDecimal();
                                             },
                                             onChanged: (value) {
-                                    
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.parse(value));
                                               sugarInfoStore!
                                                   .checkValidateNewRecord();
-                                    
                                             },
                                             textAlign: TextAlign.center,
                                             onSubmitted: (value) {
-                                 
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.tryParse(value)!);
@@ -671,7 +667,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 2);
+      String after = numberString.split('.').last.substring(0, 3);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";
@@ -685,7 +681,6 @@ class _StatusWidgetState extends State<StatusWidget> {
         630) {
       return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
     } else {
-   
       return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
   }
