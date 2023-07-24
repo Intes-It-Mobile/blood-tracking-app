@@ -47,6 +47,7 @@ class Assets {
   static const String iconSettingsNav = "assets/icons/ic_settings_nav.svg";
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";
   static const String iconHomeNav = "assets/icons/ic_home_nav.svg";
+  static const String icSelect = "assets/icons/ic_select.svg";
 
   static const String iconSplash = "assets/icons/ic_splash_logo.svg";
 

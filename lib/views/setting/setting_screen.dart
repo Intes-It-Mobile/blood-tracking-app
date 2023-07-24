@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/views/setting/language_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,7 +16,7 @@ import '../../widgets/button_widget.dart';
 import '../../widgets/change_unit_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  const SettingScreen({super.key,});
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -23,6 +24,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   SugarInfoStore? sugarInfoStore;
+
   Future<void> share() async {
     await FlutterShare.share(
       title: 'Blood Sugar Tracking',
@@ -99,6 +101,13 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  ButtonWidget(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Routes.languages);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "languages",
+                  ),
                   ButtonWidget(
                     onTap: () {
                       sugarInfoStore!.exportToExcel(context);

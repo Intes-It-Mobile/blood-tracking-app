@@ -7,6 +7,7 @@ import 'package:blood_sugar_tracking/views/record/new_record_screen.dart';
 import 'package:blood_sugar_tracking/views/record_remind/record_remind_screens.dart';
 import 'package:blood_sugar_tracking/views/select_unit/select_unit_screen.dart';
 import 'package:blood_sugar_tracking/views/setting/abt_us_screen.dart';
+import 'package:blood_sugar_tracking/views/setting/language_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String intro = '/splash_intro';
   static const String select_unit = '/select_unit';
   static const String history = "/record_history";
+  static const String languages = "/languages";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -40,6 +42,7 @@ class Routes {
     intro: (context) => IntroScreen(),
     history: (context) => RecordHistory(),
     select_unit: (context) => SelectUnit(),
+    languages: (context) => LanguageScreen(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
