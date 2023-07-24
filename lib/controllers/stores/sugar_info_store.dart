@@ -13,10 +13,8 @@ import '../../constants/colors.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 import '../../utils/locale/appLocalizations.dart';
-import '../../widgets/sucess_dialog.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -109,7 +107,7 @@ abstract class _SugarInfoStoreBase with Store {
   setCurrentStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
     if (isSwapedToMol == false) {
-      if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+      if (inputAmount >= 18 || inputAmount <= 630) {
         currentStatus = chooseCondition!.sugarAmount!
             .where((e) =>
                 e.minValue! * 1.0 <= inputAmount &&
@@ -119,7 +117,7 @@ abstract class _SugarInfoStoreBase with Store {
       }
       print("Status: ${currentStatus}");
     } else if (isSwapedToMol == true) {
-      if (inputAmount != null && inputAmount >= 1 || inputAmount <= 35) {
+      if (inputAmount >= 1 || inputAmount <= 35) {
         currentStatus = chooseCondition!.sugarAmount!
             .where((e) =>
                 e.minValue! * 1.0 <= inputAmount &&
@@ -223,8 +221,6 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? isSaving = false;
 
-  static final String ListRecordsKey = 'listRecord';
-
   @observable
   bool? hasExistedRecord = false;
   @observable
@@ -259,7 +255,7 @@ abstract class _SugarInfoStoreBase with Store {
         record.dayTime == sugarRecordEdit.dayTime &&
         record.hourTime == sugarRecordEdit.hourTime);
     {
-      recordUpdate.conditionId = sugarRecordEdit!.conditionId;
+      recordUpdate.conditionId = sugarRecordEdit.conditionId;
       recordUpdate.dayTime = sugarRecordEdit.dayTime;
       recordUpdate.hourTime = sugarRecordEdit.hourTime;
       recordUpdate.status = sugarRecordEdit.status;
@@ -328,10 +324,10 @@ abstract class _SugarInfoStoreBase with Store {
     saveListRecord(listRecords);
 
     if (listRecordArrangedByTime!.length > 0) {
-      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
-              .parse("${a!.dayTime!} ${a!.hourTime!}"))
-          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
-              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd HH:mm').parse("${a.dayTime!} ${a.hourTime!}"))
+              .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+                  .parse("${b.dayTime!} ${b.hourTime!}")));
       getAverageNumber();
     }
     await Navigator.pushNamedAndRemoveUntil(
@@ -345,8 +341,8 @@ abstract class _SugarInfoStoreBase with Store {
   setListRecordArrangedByTime() {
     listRecordArrangedByTime = listRecord;
     listRecordArrangedByTime!.sort((b, a) =>
-        (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-            .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+        (DateFormat('yyyy/MM/dd').parse(a.dayTime!))
+            .compareTo(DateFormat('yyyy/MM/dd').parse(b.dayTime!)));
   }
 
   @observable
@@ -387,7 +383,7 @@ abstract class _SugarInfoStoreBase with Store {
   static Future<void> saveListRecord(ListRecord? listRecords) async {
     if (listRecords != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String jsonString = json.encode(listRecords!.toJson());
+      String jsonString = json.encode(listRecords.toJson());
       prefs.setString('myObjectKey', jsonString);
 
       print("Save to shprf: ${listRecords.listRecord!.length} ");
@@ -449,10 +445,10 @@ abstract class _SugarInfoStoreBase with Store {
       sheet.cell(CellIndex.indexByString("C${i + 2}")).value =
           "${record['sugar_amount']}";
       sheet.cell(CellIndex.indexByString("D${i + 2}")).value =
-          "${AppLocalizations.of(context)!.getTranslate(record['condition_name'])}";
+          "${AppLocalizations.of(context).getTranslate(record['condition_name'])}";
 
       sheet.cell(CellIndex.indexByString("E${i + 2}")).value =
-          "${AppLocalizations.of(context)!.getTranslate(record['status'])}";
+          "${AppLocalizations.of(context).getTranslate(record['status'])}";
     }
 
     // Save the workbook as an Excel file
@@ -745,7 +741,7 @@ abstract class _SugarInfoStoreBase with Store {
           .toList();
       listRecordArrangedByTime!.sort((b, a) =>
           (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!))); 
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
     } else {
       listRecordArrangedByTime = listRecord!;
       listRecordArrangedByTime!.sort((b, a) =>
@@ -935,5 +931,19 @@ abstract class _SugarInfoStoreBase with Store {
   bool? isShouldRender = false;
 
   ////////////////////////////////////////////////////////////////
-  
+
+  @observable
+  List<SugarAmount> tempCondition = [];
+  @observable
+  List<SugarAmount> tempConditionDisplay = [];
+
+  @action
+  getTempCondition(int id) {
+    tempCondition = rootSugarInfo!.conditions!
+        .where((e) => e.id == id)
+        .first
+        .sugarAmount!
+        .toList();
+    tempConditionDisplay = [...tempCondition];
+  }
 }

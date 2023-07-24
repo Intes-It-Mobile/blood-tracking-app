@@ -181,7 +181,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                           child: Text(
                             maxYAdjusted.toString(),
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.black),
+                                fontSize: 12, color: Colors.black),
                           ),
                         ),
                         SizedBox(
@@ -189,7 +189,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                           child: Text(
                             (maxYAdjusted * 0.8).toInt().toString(),
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.black),
+                                fontSize: 12, color: Colors.black),
                           ),
                         ),
                         SizedBox(
@@ -197,7 +197,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                           child: Text(
                             (maxYAdjusted * 0.6).toInt().toString(),
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.black),
+                                fontSize: 12, color: Colors.black),
                           ),
                         ),
                         SizedBox(
@@ -205,7 +205,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                           child: Text(
                             (maxYAdjusted * 0.4).toInt().toString(),
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.black),
+                                fontSize: 12, color: Colors.black),
                           ),
                         ),
                         SizedBox(
@@ -213,7 +213,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                           child: Text(
                             (maxYAdjusted * 0.2).toInt().toString(),
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.black),
+                                fontSize: 12, color: Colors.black),
                           ),
                         )
                       ],
@@ -306,7 +306,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                                                               0], // Lấy phần số nguyên
                                                           style:
                                                               const TextStyle(
-                                                                  fontSize: 10,
+                                                                  fontSize: 12,
                                                                   color: Colors
                                                                       .black),
                                                         )
@@ -346,7 +346,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
                                                   bottomTitles[intValue],
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontSize: 10,
+                                                    fontSize: 12,
                                                   ),
                                                 );
                                               }
@@ -386,7 +386,7 @@ class _ScrollableChartState extends State<ScrollableChart> {
   double xValue(String dayTime, String hourTime) {
     double value = calculateDateNumber("${dayTime} ${hourTime}")! -
         1 +
-        calculateHourTime(hourTime!)!;
+        calculateHourTime(hourTime)!;
     return value;
   }
 

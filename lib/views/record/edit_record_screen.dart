@@ -417,7 +417,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                 },
                                                 textAlign: TextAlign.center,
                                                 onSubmitted: (value) {
-                                       
                                                   editRecordStore!
                                                       .setEditInputSugarAmount(
                                                           double.tryParse(
@@ -766,12 +765,12 @@ class _StatusWidgetState extends State<StatusWidget> {
             .maxValue ==
         630) {
       print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()}");
-      return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()}");
+      return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
     } else {
       print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}");
-      return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}");
+      return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
     }
   }
 

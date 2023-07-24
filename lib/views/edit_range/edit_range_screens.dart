@@ -14,6 +14,8 @@ import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'package:flutter/services.dart' as rootBundle;
 
+import 'edit_range_dialog.dart';
+
 class EditRangeScreens extends StatefulWidget {
   const EditRangeScreens({Key? key}) : super(key: key);
 
@@ -28,6 +30,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
     listRootConditions = sugarInfoStore!.listRootConditions;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
@@ -326,151 +329,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
           ChangeTargetDialog(
         conditionId: conditionId,
       ),
-    );
-  }
-}
-
-class ChangeTargetDialog extends StatefulWidget {
-  int? conditionId;
-  ChangeTargetDialog({super.key, required this.conditionId});
-
-  @override
-  State<ChangeTargetDialog> createState() => _ChangeTargetDialogState();
-}
-
-class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
-  SugarInfoStore? sugarInfoStore;
-
-  @override
-  void didChangeDependencies() {
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    super.didChangeDependencies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
-      content: StatefulBuilder(builder: (context, setModalState) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          width: 400,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Before exercise",
-                  style: AppTheme.Headline16Text.copyWith(
-                      color: AppColors.AppColor4),
-                ),
-                Wrap(children: [
-                  EditRangeItem(),
-                  EditRangeItem(),
-                  EditRangeItem(),
-                  EditRangeItem(),
-                ]),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  height: 35,
-                  margin: const EdgeInsets.only(left: 50, right: 50),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.AppColor2,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',
-                      style: AppTheme.TextIntroline16Text,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      }),
-    );
-  }
-
-  List<Widget> builsListItem() {
-    return sugarInfoStore!.listRootConditions!
-        .where((e) => e.id == widget.conditionId)
-        .first
-        .sugarAmount!
-        .map((e) {
-      return EditRangeItem();
-    }).toList();
-  }
-}
-
-class EditRangeItem extends StatefulWidget {
-  String? conditionName;
-  int? conditionId;
-
-  EditRangeItem({
-    super.key,
-    this.conditionId,
-    this.conditionName,
-  });
-
-  @override
-  State<EditRangeItem> createState() => _EditRangeItemState();
-}
-
-class _EditRangeItemState extends State<EditRangeItem> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Low",
-              style:
-                  AppTheme.appBodyTextStyle.copyWith(color: AppColors.LowStt),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Text("0",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  child: Text("~",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 11, vertical: 4),
-                  decoration: BoxDecoration(
-                      color: AppColors.AppColor3,
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Text("4.0",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                ),
-              ],
-            )
-          ]),
     );
   }
 }
