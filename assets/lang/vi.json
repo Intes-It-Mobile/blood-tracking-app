@@ -17,7 +17,7 @@
     "diabetes": "Diabetes",
     "pre_diabetes": "Pre-diabetes",
     "low": "Low",
-    "new_record": "New Record",
+    "new_record": "Ghi lại số đo",
     "chart": "Chart",
     "infor": "Information",
     "info_title_1": "Know about blood sugar",
@@ -110,5 +110,9 @@
     "save_edit_dialog_content": "Do you want to save changes for this record?",
     "done": "Done",
     "select_your_starting_unit": "Select your starting unit",
-    "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?"
+    "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?",
+    "heart_rate_tracking": "Theo dõi nhịp tim",
+    "tap_to_measure" : "Nhấn để đo",
+    "measuring" :  "Đo lường...",
+    "put_your_finger_on_camera" : "Đặt ngón tay của bạn trên máy ảnh"
 }

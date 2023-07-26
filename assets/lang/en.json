@@ -112,6 +112,9 @@
   "save_edit_dialog_content":"Do you want to save changes for this record?",
   "done":"Done",
   "select_your_starting_unit":"Select your starting unit",
-  "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?"
-
+  "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?",
+  "heart_rate_tracking": "Heart rate tracking",
+  "tap_to_measure" : "Tap to measure",
+  "measuring" :  "Measuring...",
+  "put_your_finger_on_camera" : "Put your finger on camera"
 }
