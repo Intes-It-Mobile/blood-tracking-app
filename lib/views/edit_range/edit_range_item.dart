@@ -1,24 +1,29 @@
+import 'package:blood_sugar_tracking/controllers/stores/edit_range_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
+import '../../utils/locale/appLocalizations.dart';
 
 class EditRangeItem extends StatefulWidget {
   String? conditionName;
   int? id;
   String? status;
   double? minValue, maxValue;
+  Function(String value, int id)? onEdit;
   EditRangeItem(
       {super.key,
       this.id,
       this.conditionName,
       this.maxValue,
       this.minValue,
-      this.status});
+      this.status,
+      this.onEdit});
 
   @override
   State<EditRangeItem> createState() => _EditRangeItemState();
@@ -26,8 +31,10 @@ class EditRangeItem extends StatefulWidget {
 
 class _EditRangeItemState extends State<EditRangeItem> {
   SugarInfoStore? sugarInfoStore;
+  EditRangeStore? editRangeStore;
   TextEditingController maxValueController = TextEditingController();
-
+  List<SugarAmount> tempConditionDisplay = [];
+  bool? can = false;
   @override
   void initState() {
     maxValueController.text = "${widget.maxValue}";
@@ -37,7 +44,8 @@ class _EditRangeItemState extends State<EditRangeItem> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-
+    editRangeStore = EditRangeStore();
+    tempConditionDisplay = sugarInfoStore!.tempConditionDisplay;
     super.didChangeDependencies();
   }
 
@@ -58,11 +66,8 @@ class _EditRangeItemState extends State<EditRangeItem> {
 
   setMaxValue(String value) {
     double doubleValue = double.parse(value);
-    sugarInfoStore!.tempConditionDisplay
-        .where((e) => e.id == widget.id)
-        .first
-        .maxValue = doubleValue;
-
+    tempConditionDisplay.where((e) => e.id == widget.id).first.maxValue =
+        doubleValue;
   }
 
   @override
@@ -74,7 +79,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${widget.status}",
+              "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
               style: AppTheme.appBodyTextStyle
                   .copyWith(color: SttTextColor(widget.status)),
             ),
@@ -100,20 +105,32 @@ class _EditRangeItemState extends State<EditRangeItem> {
                           .copyWith(color: Colors.black)),
                 ),
                 Container(
+                    // padding: Ed,
                     width: 60,
-                    height: 60,
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    // height: 30,
+                    // padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                         color: AppColors.AppColor3,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Container(
-                      color: Colors.amber,
-                      child: Center(
+                      // color: Colors.amber,
+                      child: Align(
+                        alignment: Alignment.center,
                         child: TextField(
+                          textAlignVertical: TextAlignVertical.top,
+                          // cursorHeight: 10,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(5),
+                            // Allow Decimal Number With Precision of 2 Only
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d{0,3}\.?\d{0,2}')),  
+                          ],
                           controller: maxValueController,
                           textAlign: TextAlign.center,
-                          // onChanged: setMaxValue(maxValueController.text),
-                          onSubmitted: setMaxValue(maxValueController.text),
+                          onSubmitted: (value) {
+                            setMaxValue(maxValueController.text);
+                          },
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(vertical: 1),
                               border: InputBorder.none,
@@ -124,12 +141,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
                               .copyWith(color: Colors.black),
                         ),
                       ),
-                    )
-
-                    // Text("${widget.maxValue}",
-                    //     style: AppTheme.appBodyTextStyle
-                    //         .copyWith(color: Colors.black)),
-                    ),
+                    )),
               ],
             )
           ]),

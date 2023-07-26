@@ -169,8 +169,8 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                                         showDiaLogUnit(
                                             context,
                                             sugarInfoStore!
-                                                .listRootConditions![index]
-                                                .id!);
+                                                .listRootConditions![index].id!,
+                                            "${sugarInfoStore!.listRootConditions![index].name!}");
                                         print(
                                             "conditionId: ${sugarInfoStore!.listRootConditions![index].id!}");
                                       },
@@ -320,7 +320,8 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
         ));
   }
 
-  Future<String?> showDiaLogUnit(BuildContext context, int conditionId) {
+  Future<String?> showDiaLogUnit(
+      BuildContext context, int conditionId, String? conditionName) {
     return showDialog<String>(
       context: context,
       builder: (
@@ -328,6 +329,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
       ) =>
           ChangeTargetDialog(
         conditionId: conditionId,
+        conditionName: conditionName,
       ),
     );
   }

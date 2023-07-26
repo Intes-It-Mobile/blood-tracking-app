@@ -38,7 +38,7 @@ class SugarAmount {
   double? minValue;
   double? maxValue;
 
-  SugarAmount({this.status, this.minValue, this.maxValue});
+  SugarAmount({this.status, this.minValue, this.maxValue,this.id});
 
   SugarAmount.fromJson(Map<String, dynamic> json) {
     id = json['id'];
