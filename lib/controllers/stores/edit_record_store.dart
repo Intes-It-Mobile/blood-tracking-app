@@ -54,7 +54,6 @@ abstract class _EditRecordStoreBase with Store {
     editChooseCondition =
         listRootConditions!.where((e) => e.id == eDitchooseId).toList().first;
     if (editChooseCondition != null) {
-      print(editChooseCondition!.name);
     }
   }
 
@@ -65,7 +64,6 @@ abstract class _EditRecordStoreBase with Store {
     if (currentEditStatus != null) {
       setEditStatusLevel(currentEditStatus);
     }
-    print("inputAmount:    $inputAmount");
   }
 
   @action
@@ -76,7 +74,7 @@ abstract class _EditRecordStoreBase with Store {
   @action
   setCurrentEditStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
-    if (inputAmount != null && inputAmount >= 18 || inputAmount <= 630) {
+    if ( inputAmount >= 18 || inputAmount <= 630) {
       currentEditStatus = editChooseCondition!.sugarAmount!
           .where((e) =>
               e.minValue! * 1.0 <= inputAmount &&
@@ -84,7 +82,6 @@ abstract class _EditRecordStoreBase with Store {
           .first
           .status;
     }
-    print("Status: ${editStatus}");
   }
 
   @action
@@ -119,14 +116,12 @@ abstract class _EditRecordStoreBase with Store {
   @action
   setErrorText(String errorMessage) {
     errorText = errorMessage;
-    print("Erorrrrrrrrrrrrrrrr:${errorText}");
   }
 
   @observable
   bool? isSwapedToMol;
   @action
   checkValidateEditRecord(double value) {
-    print("Check Validate: $editingSugarAmount");
     if (editingDayTimeStr != null &&
         editingHourTimeStr != null &&
         currentEditStatus != null &&

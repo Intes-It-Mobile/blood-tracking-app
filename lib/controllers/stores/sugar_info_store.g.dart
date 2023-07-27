@@ -834,6 +834,39 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$tempConditionAtom =
+      Atom(name: '_SugarInfoStoreBase.tempCondition', context: context);
+
+  @override
+  List<SugarAmount> get tempCondition {
+    _$tempConditionAtom.reportRead();
+    return super.tempCondition;
+  }
+
+  @override
+  set tempCondition(List<SugarAmount> value) {
+    _$tempConditionAtom.reportWrite(value, super.tempCondition, () {
+      super.tempCondition = value;
+    });
+  }
+
+  late final _$tempConditionDisplayAtom =
+      Atom(name: '_SugarInfoStoreBase.tempConditionDisplay', context: context);
+
+  @override
+  List<SugarAmount> get tempConditionDisplay {
+    _$tempConditionDisplayAtom.reportRead();
+    return super.tempConditionDisplay;
+  }
+
+  @override
+  set tempConditionDisplay(List<SugarAmount> value) {
+    _$tempConditionDisplayAtom.reportWrite(value, super.tempConditionDisplay,
+        () {
+      super.tempConditionDisplay = value;
+    });
+  }
+
   late final _$saveNewRecordAsyncAction =
       AsyncAction('_SugarInfoStoreBase.saveNewRecord', context: context);
 
@@ -1333,6 +1366,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic getTempCondition(int id) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.getTempCondition');
+    try {
+      return super.getTempCondition(id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 abc: ${abc},
@@ -1385,6 +1429,8 @@ sugarAmountEdit: ${sugarAmountEdit},
 tempSugarAmountEdit: ${tempSugarAmountEdit},
 isChartLoading: ${isChartLoading},
 isShouldRender: ${isShouldRender},
+tempCondition: ${tempCondition},
+tempConditionDisplay: ${tempConditionDisplay},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';
