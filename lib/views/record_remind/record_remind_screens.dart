@@ -93,7 +93,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
-
         title: Column(
           children: [
             Row(
@@ -113,10 +112,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 Expanded(
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
-                    style: AppTheme.Headline20Text,
-                    overflow: TextOverflow
-                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                    maxLines: 2,
+                    style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
                   ),
                 ),
               ],
@@ -223,8 +219,8 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                   child: Center(
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                      style: AppTheme.TextInfomation14Text.copyWith(
-                          color: Colors.white),
+                      style: AppTheme.Headline20Text.copyWith(
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
