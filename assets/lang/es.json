@@ -116,6 +116,8 @@
   "edit_duplicate_dialog": "Ha ingresado al perfil en este punto. ¿Quieres reemplazar el registro anterior?",
   "languages": "Idiomas",
   "choose_your_language": "Elige tu idioma",
-  "next": "Próximo"
+  "next": "Próximo",
+  "no_alarms_set": "Sin alarma configurada",
+  "all_1": "Todo"
 
 }

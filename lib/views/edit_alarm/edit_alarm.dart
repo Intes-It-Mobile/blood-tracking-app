@@ -172,7 +172,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Sound',
+                            "${AppLocalizations.of(context)!.getTranslate('sound')}",
                             style: AppTheme.hintText.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,
@@ -199,7 +199,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Vibrate',
+                            "${AppLocalizations.of(context)!.getTranslate('vibrate')}",
                             style: AppTheme.hintText.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,

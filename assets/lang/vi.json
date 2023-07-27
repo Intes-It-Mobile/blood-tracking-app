@@ -114,5 +114,7 @@
     "edit_duplicate_dialog": "Bạn đã nhập bản ghi tại thời điểm này. Bạn có muốn thay thế bản ghi trước đó không?",
     "languages": "Ngôn ngữ",
     "choose_your_language": "Chọn ngôn ngữ của bạn",
-    "next": "Tiếp"
+    "next": "Tiếp",
+    "no_alarms_set": "Không có báo thức nào",
+    "all_1": "All"
 }

@@ -24,7 +24,7 @@
     "info_title_2": "Prévenir la maladie",
     "bls_do": "Connaissez-vous la glycémie ?",
     "bls_low_what": "Qu'est-ce que l'hypoglycémie ?",
-    "bls_high_what": "Qu'est-ce que l'hyperglycémie?",
+    "bls_high_what": "Qu'est-ce que l'hyperglycémie ?",
     "bls_monitor": "Surveiller la glycémie ",
     "prv_know_diabets":"Connaissances sur le diabète",
     "prv_low_bls":"Taux de sucre dans le sang bas (hypoglycémie)",
@@ -107,9 +107,9 @@
     "next_step":"Étape suivante",
     "homepage":"Page d'accueil",
     
-    "intro1":"Saisie rapide des données \n statistiques intelligentes",
-    "intro2":"Changement d'unité flexible \n Changement d'intervalle",
-    "intro3":"Vous rappeler de saisir \n votre enregistrement",
+    "intro1":"Saisie rapide des données\nstatistiques intelligentes",
+    "intro2":"Changement d'unité flexible\nChangement d'intervalle",
+    "intro3":"Vous rappeler de saisir\nvotre enregistrement",
     "edit":"Modifier",
     "replace": "Remplacer",
     "add": "Ajouter",
@@ -126,6 +126,8 @@
     "edit_duplicate_dialog": "Vous avez saisi le profil à ce moment. Souhaitez-vous remplacer l'enregistrement précédent?",
     "languages": "Langues",
     "choose_your_language": "Choisissez votre langue",
-    "next": "Suivant"
-
+    "next": "Suivant",
+    "sugar_amount": "Quantité de sucre",
+    "no_alarms_set": "Aucune alarme définie",
+    "all_1": "Tout"
 }

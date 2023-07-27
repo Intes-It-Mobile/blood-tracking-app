@@ -25,9 +25,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await appLanguage.fetchLocale();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
+  shareLocal = await ShareLocal.getInstance();
   await Alarm.init(showDebugLogs: true);
-   //shareLocal = await ShareLocal.getInstance();
   runApp(MyApp(
     appLanguage: appLanguage,
   ));
