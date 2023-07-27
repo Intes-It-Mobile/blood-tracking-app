@@ -74,7 +74,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: SvgPicture.asset(Assets.iconInfoBook),
+                child: SvgPicture.asset(Assets.iconEditRangeScreen),
               ),
             ),
             InkWell(

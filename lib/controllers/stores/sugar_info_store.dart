@@ -347,7 +347,7 @@ abstract class _SugarInfoStoreBase with Store {
       for (var sugarAmount in condition.sugarAmount!) {
         if (sugarAmount.minValue != null && sugarAmount.maxValue != null) {
           if (value >= sugarAmount.minValue! &&
-              value <= sugarAmount.maxValue!) {
+              value < sugarAmount.maxValue!) {
             return sugarAmount.status ?? "Unknown";
           }
         }
