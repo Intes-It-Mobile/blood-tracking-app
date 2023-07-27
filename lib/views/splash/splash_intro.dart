@@ -194,7 +194,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 )
               : SizedBox(),
           Container(
-              padding: EdgeInsets.only(left: 16, ),
+              padding: EdgeInsets.only(left: 8, ),
               margin: EdgeInsets.only(bottom: 155),
               alignment: Alignment.bottomLeft,
               child: Text(

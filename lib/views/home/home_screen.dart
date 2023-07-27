@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: btnColor,
               borderRadius: borderRadius,
             ),
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+            padding: const EdgeInsets.fromLTRB(6, 12, 6, 12),
             child: Center(
               child: Column(
                 children: [
@@ -147,6 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     "${text}",
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
                   )
                 ],

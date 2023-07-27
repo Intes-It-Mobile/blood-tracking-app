@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alarm/alarm.dart';
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,9 +19,9 @@ class AlarmStorage {
   /// Saves alarm info in local storage so we can restore it later
   /// in the case app is terminated.
   static Future<void> saveAlarm(AlarmSettings alarmSettings) => prefs.setString(
-        '$prefix${alarmSettings.id}',
-        json.encode(alarmSettings.toJson()),
-      );
+    '$prefix${alarmSettings.id}',
+    json.encode(alarmSettings.toJson()),
+  );
 
   /// Removes alarm from local storage.
   static Future<void> unsaveAlarm(int id) => prefs.remove("$prefix$id");
@@ -48,14 +49,15 @@ class AlarmStorage {
         alarms.add(AlarmSettings.fromJson(json.decode(res!)));
       }
     }
+
     return alarms;
   }
 
   /// Saves on app kill notification custom [title] and [body].
   static Future<void> setNotificationContentOnAppKill(
-    String title,
-    String body,
-  ) =>
+      String title,
+      String body,
+      ) =>
       Future.wait([
         prefs.setString(notificationOnAppKillTitle, title),
         prefs.setString(notificationOnAppKillBody, body),
@@ -68,5 +70,5 @@ class AlarmStorage {
   /// Returns notification on app kill [body].
   static String getNotificationOnAppKillBody() =>
       prefs.getString(notificationOnAppKillBody) ??
-      'You killed the app. Please reopen so your alarms can be rescheduled.';
+          'You killed the app. Please reopen so your alarms can be rescheduled.';
 }

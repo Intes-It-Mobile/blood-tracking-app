@@ -45,11 +45,11 @@ class AlarmNotification {
 
   // Callback to stop the alarm when the notification is opened for iOS versions older than 10.
   static onSelectNotificationOldIOS(
-    int? id,
-    String? _,
-    String? __,
-    String? ___,
-  ) async =>
+      int? id,
+      String? _,
+      String? __,
+      String? ___,
+      ) async =>
       await stopAlarm(id);
 
   /// Stops the alarm.
@@ -57,7 +57,6 @@ class AlarmNotification {
     if (id != null &&
         Alarm.getAlarm(id)?.stopOnNotificationOpen != null &&
         Alarm.getAlarm(id)!.stopOnNotificationOpen) {
-      // await Alarm.ringStream.onPause;
       await Alarm.stop(id);
     }
   }
@@ -68,13 +67,13 @@ class AlarmNotification {
 
     result = defaultTargetPlatform == TargetPlatform.android
         ? await localNotif
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestPermission()
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestPermission()
         : await localNotif
-            .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin>()
-            ?.requestPermissions(alert: true, badge: true, sound: true);
+        .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(alert: true, badge: true, sound: true);
 
     return result ?? false;
   }
@@ -84,11 +83,6 @@ class AlarmNotification {
 
     if (dateTime.isBefore(now)) {
       dateTime = dateTime.add(const Duration(days: 1));
-      // AndroidAlarmManager.periodic(
-      //   const Duration(seconds: 30), 0,
-      //   printHello,
-      //   startAt: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 0),
-      // );
     }
 
     return tz.TZDateTime.from(dateTime, tz.local);
@@ -139,7 +133,7 @@ class AlarmNotification {
         platformChannelSpecifics,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        UILocalNotificationDateInterpretation.absoluteTime,
       );
       alarmPrint('Notification with id $id scheduled successfuly at $zdt');
     } catch (e) {
