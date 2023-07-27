@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/tile.dart';
 import '../edit_alarm/edit_alarm.dart';
 
@@ -200,31 +201,41 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                     )
                     : Center(
                         child: Text(
-                          "No alarms set",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          "${AppLocalizations.of(context)!.getTranslate('no_alarms_set')}",
+                          style: AppTheme.Headline20Text.copyWith(color: Colors.black), // Hiển thị dấu chấm ba khi có tràn
                         ),
                       ),
               ),
-              GestureDetector(
+              ButtonWidget(
+                mainAxisSizeMin: true,
+                btnText: "new_alarm",
+                btnColor: AppColors.AppColor2,
+             //   suffixIconPath: Assets.iconEditBtn,
                 onTap: () {
                   navigateToAlarmScreen(null);
                 },
-                child: Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 10),
-                  width: 150,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.AppColor2),
-                  child: Center(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                      style: AppTheme.Headline20Text.copyWith(
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
               ),
+              // GestureDetector(
+              //   onTap: () {
+              //     navigateToAlarmScreen(null);
+              //   },
+              //   child: Container(
+              //     height: 50,
+              //     margin: const EdgeInsets.only(top: 10),
+              //     width: 150,
+              //    // padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(5),
+              //         color: AppColors.AppColor2),
+              //     child: Center(
+              //       child: Text(
+              //         "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
+              //         style: AppTheme.Headline20Text.copyWith(
+              //             fontWeight: FontWeight.w600),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 50,
               )

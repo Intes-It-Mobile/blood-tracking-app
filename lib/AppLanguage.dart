@@ -10,39 +10,41 @@ class AppLanguage extends ChangeNotifier {
 
   Locale get appLocal => _appLocale ?? Locale("en");
   fetchLocale() async {
-    if (shareLocal.getString('language_code') == null) {
+    var prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('language_code') == null) {
       _appLocale = Locale('en');
       return Null;
     }
-    _appLocale = Locale(shareLocal.getString('language_code')!);
+    _appLocale = Locale(prefs.getString('language_code')!);
     return Null;
   }
 
 
   void changeLanguage(Locale type) async {
+    var prefs = await SharedPreferences.getInstance();
     if (_appLocale == type) {
       return;
     }
     if (type == Locale("vi")) {
       _appLocale = Locale("vi");
-      await shareLocal.putString('language_code', 'vi');
-      await shareLocal.putString('countryCode', 'VI');
+      await prefs.setString('language_code', 'vi');
+      await prefs.setString('countryCode', 'VI');
     } else if(type == Locale("en")){
       _appLocale = Locale("en");
-      await shareLocal.putString('language_code', 'en');
-      await shareLocal.putString('countryCode', 'EN');
+      await prefs.setString('language_code', 'en');
+      await prefs.setString('countryCode', 'EN');
     }else if(type == Locale("zh")){
       _appLocale = Locale("zh");
-      await shareLocal.putString('language_code', 'zh');
-      await shareLocal.putString('countryCode', 'CN');
+      await prefs.setString('language_code', 'zh');
+      await prefs.setString('countryCode', 'CN');
     }else if(type == Locale("es")){
       _appLocale = Locale("es");
-      await shareLocal.putString('language_code', 'es');
-      await shareLocal.putString('countryCode', 'SP');
+      await prefs.setString('language_code', 'es');
+      await prefs.setString('countryCode', 'SP');
     }else{
       _appLocale = Locale("fr");
-      await shareLocal.putString('language_code', 'fr');
-      await shareLocal.putString('countryCode', 'FR');
+      await prefs.setString('language_code', 'fr');
+      await prefs.setString('countryCode', 'FR');
     }
     notifyListeners();
   }

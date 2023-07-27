@@ -22,7 +22,7 @@ class _LanguagePageState extends State<LanguagePage> {
     'français',
     'Tiếng Việt',
   ];
-  int _selectedIndex = -1;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _LanguagePageState extends State<LanguagePage> {
                 style: AppTheme.unit24Text,
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.42,
+                height: MediaQuery.of(context).size.height * 0.43,
                 width: double.infinity,
                 child: ListView.builder(
                     primary: true,
@@ -51,7 +51,7 @@ class _LanguagePageState extends State<LanguagePage> {
                           FunctionLanguages(index,context);
                           setState(() {
                             if (_selectedIndex == index) {
-                              _selectedIndex = -1;
+                              _selectedIndex = 0;
                             } else {
                               _selectedIndex = index;
                             }
@@ -102,19 +102,19 @@ class _LanguagePageState extends State<LanguagePage> {
     var appLanguage = Provider.of<AppLanguage>(context,listen: false);
     switch(index){
       case 0:
-        appLanguage.changeLanguage(Locale("en"));
+        appLanguage.changeLanguage(const Locale("en"));
         break;
       case 1:
-        appLanguage.changeLanguage(Locale("zh"));
+        appLanguage.changeLanguage(const Locale("zh"));
         break;
       case 2:
-        appLanguage.changeLanguage(Locale("es"));
+        appLanguage.changeLanguage(const Locale("es"));
         break;
       case 3:
-
+        appLanguage.changeLanguage(const Locale("fr"));
         break;
       case 4:
-        appLanguage.changeLanguage(Locale("vi"));
+        appLanguage.changeLanguage(const Locale("vi"));
         break;
     }
   }

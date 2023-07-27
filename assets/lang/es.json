@@ -76,6 +76,7 @@
   "after_exercise": "Después del ejercicio",
   "asleep": "Dormido",
   "errow_sugar_input_text": "Introduzca el valor correcto entre 18-630 mg/dL",
+  "errow_sugar_input1_text": "Ingrese el valor correcto entre 1-35 mmol/L",
   "save_record": "Guardar registro",
   "version": " versión",
   "1.0.0": " 1.0.0",
@@ -115,6 +116,8 @@
   "edit_duplicate_dialog": "Ha ingresado al perfil en este punto. ¿Quieres reemplazar el registro anterior?",
   "languages": "Idiomas",
   "choose_your_language": "Elige tu idioma",
-  "next": "Próximo"
+  "next": "Próximo",
+  "no_alarms_set": "Sin alarma configurada",
+  "all_1": "Todo"
 
 }
