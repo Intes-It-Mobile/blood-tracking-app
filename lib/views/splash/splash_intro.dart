@@ -194,8 +194,8 @@ class _IntroScreenState extends State<IntroScreen> {
                 )
               : SizedBox(),
           Container(
-              padding: EdgeInsets.only(left: 16, right: 180),
-              margin: EdgeInsets.only(bottom: 125),
+              padding: EdgeInsets.only(left: 16, ),
+              margin: EdgeInsets.only(bottom: 155),
               alignment: Alignment.bottomLeft,
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate(textIntro)}",

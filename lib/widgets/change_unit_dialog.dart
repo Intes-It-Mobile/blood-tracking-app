@@ -135,7 +135,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                   ),
                   child: Center(
                     child: Text(
-                      '${AppLocalizations.of(context)!.getTranslate('choose_this_unit')}',
+                      '${AppLocalizations.of(context)!.getTranslate('change_btn')}',
                       style: AppTheme.TextIntroline16Text,
                     ),
                   ),

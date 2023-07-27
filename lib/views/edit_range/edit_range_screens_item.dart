@@ -27,7 +27,7 @@ class EditRangeScreenItem extends StatefulWidget {
 class _EditRangeScreenItemState extends State<EditRangeScreenItem> {
 
   String? getTitle(String? value) {
-    return AppLocalizations.of(context)!.getTranslate('${value}');
+    return AppLocalizations.of(context).getTranslate('${value}');
   }
   @override
   Widget build(BuildContext context) {

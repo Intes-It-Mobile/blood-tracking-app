@@ -48,7 +48,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       onConfirm: (DateTime day, List<int> index) {
         setState(() {
           selectedDate = day;
-          print("Date: ${selectedDate}");
           sugarInfoStore!.setchoosedDayTime(day);
         });
       },
@@ -65,7 +64,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       onConfirm: (DateTime hour, List<int> index) {
         setState(() {
           selectedDate = hour;
-          print("Date: ${selectedDate}");
           sugarInfoStore!.setchoosedDayHour(hour);
         });
       },
@@ -162,12 +160,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       // Chuỗi đã có phần thập phân
       sugarInfoStore!.sugarAmountController.text = value;
     }
-    print("1111111111111111 addZero");
   }
 
   @override
   void didChangeDependencies() {
-    print("isFirsttttttttttttttttttttt:     ${isFirst}  ");
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
 
     if (isFirst == true) {
@@ -185,7 +181,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.sugarAmountController.text.contains(".");
       setState(() {
         isFirst = false;
-        print(" set isFirsttttttttttttttttttttt:     ${isFirst}  ");
       });
     }
   }
@@ -242,7 +237,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         ),
         body: GestureDetector(
           onTap: () {
-            print("gesture");
             // Truyền focusNode để tắt bàn phím khi người dùng nhấn ra ngoài
             FocusScope.of(context).requestFocus(FocusNode());
             addZeroToDecimal();
@@ -436,26 +430,19 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                 .sugarAmountController,
                                             focusNode: focusNode,
                                             onEditingComplete: () {
-                                              print(
-                                                  "1111111111111111 onEditing 1111111111111111");
                                               sugarInfoStore!
                                                   .validateSugarAmount();
                                               addZeroToDecimal();
                                             },
                                             onChanged: (value) {
-                                              print(
-                                                  "1111111111111111 onChange 1111111111111111");
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.parse(value));
                                               sugarInfoStore!
                                                   .checkValidateNewRecord();
-                                              print("onchange: ${value}");
                                             },
                                             textAlign: TextAlign.center,
                                             onSubmitted: (value) {
-                                              print(
-                                                  "1111111111111111 submit 1111111111111111");
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.tryParse(value)!);
@@ -680,7 +667,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 2);
+      String after = numberString.split('.').last.substring(0, 3);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";
@@ -692,12 +679,8 @@ class _StatusWidgetState extends State<StatusWidget> {
             .elementAt(level!)
             .maxValue ==
         630) {
-      print(
-          "abcd abcd abcd${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()}");
       return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
     } else {
-      print(
-          "abcd abcd abcd${sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!.toString()} ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}");
       return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
   }

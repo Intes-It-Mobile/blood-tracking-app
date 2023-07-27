@@ -7,10 +7,10 @@ import 'package:flutter_fgbg/flutter_fgbg.dart';
 
 /// Uses method channel to interact with the native platform.
 class IOSAlarm {
-  static const methodChannel = MethodChannel('com.gdelataillade.alarm/alarm');
+  static const methodChannel = MethodChannel('com.gdelataillade/alarm');
 
-  static const timers = <int, Timer?>{};
-  static const fgbgSubscriptions = <int, StreamSubscription<FGBGType>?>{};
+  static Map<int, Timer?> timers = <int, Timer?>{};
+  static Map<int, StreamSubscription<FGBGType>?> fgbgSubscriptions = <int, StreamSubscription<FGBGType>?>{};
 
   /// Calls the native function `setAlarm` and listens to alarm ring state.
   ///
@@ -40,8 +40,7 @@ class IOSAlarm {
             'vibrate': vibrate,
             'notifOnKillEnabled': enableNotificationOnKill,
             'notifTitleOnAppKill': AlarmStorage.getNotificationOnAppKillTitle(),
-            'notifDescriptionOnAppKill':
-                AlarmStorage.getNotificationOnAppKillBody(),
+            'notifDescriptionOnAppKill': AlarmStorage.getNotificationOnAppKillBody(),
           },
         ) ??
         false;
@@ -96,13 +95,9 @@ class IOSAlarm {
   /// current time at two different moments. If the two values are different,
   /// it means the alarm is ringing and then returns `true`.
   static Future<bool> checkIfRinging(int id) async {
-    final pos1 = await methodChannel
-            .invokeMethod<double?>('audioCurrentTime', {'id': id}) ??
-        0.0;
+    final pos1 = await methodChannel.invokeMethod<double?>('audioCurrentTime', {'id': id}) ?? 0.0;
     await Future.delayed(const Duration(milliseconds: 100));
-    final pos2 = await methodChannel
-            .invokeMethod<double?>('audioCurrentTime', {'id': id}) ??
-        0.0;
+    final pos2 = await methodChannel.invokeMethod<double?>('audioCurrentTime', {'id': id}) ?? 0.0;
 
     return pos2 > pos1;
   }

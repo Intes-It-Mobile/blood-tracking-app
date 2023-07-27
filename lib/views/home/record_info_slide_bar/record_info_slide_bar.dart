@@ -45,9 +45,9 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
                 )
               : Row(
                   children: <Widget>[
-                    Row(children: listRecordDisplay().sublist(0,3)),
+                    Row(children: listRecordDisplay().sublist(0, 3)),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.of(context).pushNamed(Routes.history);
                       },
                       child: Container(
@@ -59,7 +59,9 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
                         ),
                         child: Center(
                           child: SvgPicture.asset(
-                              'assets/icons/ic_chevron_right.svg',color: AppColors.AppColor4,),
+                            'assets/icons/ic_chevron_right.svg',
+                            color: AppColors.AppColor4,
+                          ),
                         ),
                       ),
                     ),
@@ -74,10 +76,13 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
     return sugarInfoStore!.listRecordArrangedByTime!.map((e) {
       return RecordInfoSliderItemWidget(
         id: e.id,
-        status: e.status,
         dayTime: e.dayTime,
         hourTime: e.hourTime,
         sugarAmount: e.sugarAmount,
+        status: sugarInfoStore!.findStatusForValueAndConditionId(
+            sugarInfoStore!.listRootConditions!,
+            e.sugarAmount!,
+            e.conditionId!),
       );
     }).toList();
   }

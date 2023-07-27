@@ -112,10 +112,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 Expanded(
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
-                    style: AppTheme.Headline20Text,
-                    overflow: TextOverflow
-                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                    maxLines: 2,
+                    style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
                   ),
                 ),
               ],
@@ -124,114 +121,115 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: alarms.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: alarms.length,
-                        separatorBuilder: (context, index) => Container(),
-                        itemBuilder: (context, index) {
-                          var alarmTime = DateFormat('HH:mm')
-                              .format(alarms[index].dateTime);
-                          print("aaaaaa: ${alarmTime}");
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: alarms.isNotEmpty
+                    ? ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: alarms.length,
+                      separatorBuilder: (context, index) => Container(),
+                      itemBuilder: (context, index) {
+                        var alarmTime = DateFormat('HH:mm')
+                            .format(alarms[index].dateTime);
+                        print("aaaaaa: ${alarmTime}");
 
-                          print("looAudio: ${alarms[index].loopAudio}");
-                          // print("loopAudio: ${loopAudio}");
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.13,
-                            margin: const EdgeInsets.only(
-                                top: 15, left: 17, right: 17),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: AppColors.AppColor3),
-                            child: ExampleAlarmTile(
-                              key: Key(alarms[index].id.toString()),
-                              title: alarmTime,
-                              onPressed: () async {
-                                navigateToAlarmScreen(alarms[index]);
-                              },
-                              onDismissed: () {
-                                Alarm.stopDelete(alarms[index].id)
-                                    .then((_) => loadAlarms());
-                              },
-                              loopAudio: alarms[index].loopAudio,
-                              onDelete: () {
-                                Alarm.stopDelete(alarms[index].id)
-                                    .then((_) => loadAlarms());
-                              },
-                              onLoopAudioChanged: (loopAudio) {
-                                alarms[index].loopAudio = loopAudio;
-                                var _alarmSettings =
-                                    Alarm.getAlarm(alarms[index].id);
-                                if (_alarmSettings != null) {
-                                  Alarm.set(
-                                      alarmSettings: AlarmSettings(
-                                    id: _alarmSettings.id,
-                                    dateTime: _alarmSettings.dateTime,
-                                    loopAudio: loopAudio,
-                                    soundAudio: _alarmSettings.soundAudio,
-                                    vibrate: _alarmSettings.vibrate,
-                                    notificationTitle: loopAudio
-                                        ? _alarmSettings.notificationTitle
-                                        : _alarmSettings.notificationTitle,
-                                    notificationBody: loopAudio
-                                        ? _alarmSettings.notificationBody
-                                        : _alarmSettings.notificationBody,
-                                    assetAudioPath: '.',
-                                    fadeDuration: 3.0,
-                                    stopOnNotificationOpen: true,
-                                    enableNotificationOnKill: true,
-                                  ));
-                                }
-                              },
-                              //   onSwitch: (bool v) {
-                              //   alarms[index].loopAudio = false;
-                              //
-                              //   setState(() {
-                              //
-                              //   });
-                              // },
-                            ),
-                          );
-                        },
-                      ),
+                        print("looAudio: ${alarms[index].loopAudio}");
+                        // print("loopAudio: ${loopAudio}");
+                        return Container(
+                          height:
+                              MediaQuery.of(context).size.height * 0.13,
+                          margin: const EdgeInsets.only(
+                              top: 15, left: 17, right: 17),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColors.AppColor3),
+                          child: ExampleAlarmTile(
+                            key: Key(alarms[index].id.toString()),
+                            title: alarmTime,
+                            onPressed: () async {
+                              navigateToAlarmScreen(alarms[index]);
+                            },
+                            onDismissed: () {
+                              Alarm.stopDelete(alarms[index].id)
+                                  .then((_) => loadAlarms());
+                            },
+                            loopAudio: alarms[index].loopAudio,
+                            onDelete: () {
+                              Alarm.stopDelete(alarms[index].id)
+                                  .then((_) => loadAlarms());
+                            },
+                            onLoopAudioChanged: (loopAudio) {
+                              alarms[index].loopAudio = loopAudio;
+                              var _alarmSettings =
+                                  Alarm.getAlarm(alarms[index].id);
+                              if (_alarmSettings != null) {
+                                Alarm.set(
+                                    alarmSettings: AlarmSettings(
+                                  id: _alarmSettings.id,
+                                  dateTime: _alarmSettings.dateTime,
+                                  loopAudio: loopAudio,
+                                  soundAudio: _alarmSettings.soundAudio,
+                                  vibrate: _alarmSettings.vibrate,
+                                  notificationTitle: loopAudio
+                                      ? _alarmSettings.notificationTitle
+                                      : null,
+                                  notificationBody: loopAudio
+                                      ? _alarmSettings.notificationBody
+                                      : null,
+                                  assetAudioPath: '.',
+                                  fadeDuration: 3.0,
+                                  stopOnNotificationOpen: true,
+                                  enableNotificationOnKill: true,
+                                ));
+                              }
+                            },
+                            //   onSwitch: (bool v) {
+                            //   alarms[index].loopAudio = false;
+                            //
+                            //   setState(() {
+                            //
+                            //   });
+                            // },
+                          ),
+                        );
+                      },
                     )
-                  : Center(
-                      child: Text(
-                        "No alarms set",
-                        style: Theme.of(context).textTheme.titleMedium,
+                    : Center(
+                        child: Text(
+                          "No alarms set",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  navigateToAlarmScreen(null);
+                },
+                child: Container(
+                  height: 50,
+                  margin: const EdgeInsets.only(top: 10),
+                  width: 150,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.AppColor2),
+                  child: Center(
+                    child: Text(
+                      "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
+                      style: AppTheme.Headline20Text.copyWith(
+                          fontWeight: FontWeight.w600),
                     ),
-            ),
-            GestureDetector(
-              onTap: () {
-                navigateToAlarmScreen(null);
-              },
-              child: Container(
-                height: 50,
-                width: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.AppColor2),
-                child: Center(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                    style: AppTheme.TextInfomation14Text.copyWith(
-                        color: Colors.white),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            )
-          ],
+              const SizedBox(
+                height: 50,
+              )
+            ],
+          ),
         ),
       ),
     );
