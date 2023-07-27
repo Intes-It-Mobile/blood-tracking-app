@@ -27,7 +27,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Alarm.init(showDebugLogs: true);
-  shareLocal = await ShareLocal.getInstance();
+   //shareLocal = await ShareLocal.getInstance();
   runApp(MyApp(
     appLanguage: appLanguage,
   ));

@@ -39,7 +39,7 @@ class _LanguagePageState extends State<LanguagePage> {
                 style: AppTheme.unit24Text,
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.42,
+                height: MediaQuery.of(context).size.height * 0.43,
                 width: double.infinity,
                 child: ListView.builder(
                     primary: true,
