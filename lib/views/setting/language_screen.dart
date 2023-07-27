@@ -45,14 +45,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     }else{
       _selectedIndex = 0;
     }
-    // if(prefs.getString('language_code'))
-    // for (int i = 0; i < languages.length; i++) {
-    //   if (langCode == languages[i]) {
-    //     _selectedIndex = i;
-    //     print('qweqwewq: ${i}');
-    //     break;
-    //   }
-    // }
+
     super.initState();
   }
 

@@ -102,19 +102,19 @@ class _LanguagePageState extends State<LanguagePage> {
     var appLanguage = Provider.of<AppLanguage>(context,listen: false);
     switch(index){
       case 0:
-        appLanguage.changeLanguage(Locale("en"));
+        appLanguage.changeLanguage(const Locale("en"));
         break;
       case 1:
-        appLanguage.changeLanguage(Locale("zh"));
+        appLanguage.changeLanguage(const Locale("zh"));
         break;
       case 2:
-        appLanguage.changeLanguage(Locale("es"));
+        appLanguage.changeLanguage(const Locale("es"));
         break;
       case 3:
-
+        appLanguage.changeLanguage(const Locale("fr"));
         break;
       case 4:
-        appLanguage.changeLanguage(Locale("vi"));
+        appLanguage.changeLanguage(const Locale("vi"));
         break;
     }
   }
