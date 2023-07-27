@@ -22,7 +22,7 @@ class _LanguagePageState extends State<LanguagePage> {
     'français',
     'Tiếng Việt',
   ];
-  int _selectedIndex = -1;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _LanguagePageState extends State<LanguagePage> {
                           FunctionLanguages(index,context);
                           setState(() {
                             if (_selectedIndex == index) {
-                              _selectedIndex = -1;
+                              _selectedIndex = 0;
                             } else {
                               _selectedIndex = index;
                             }

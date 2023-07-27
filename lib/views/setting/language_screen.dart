@@ -25,7 +25,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     'français',
     'Tiếng Việt',
   ];
-  int _selectedIndex = -1;
+  int _selectedIndex = 0;
   int value = 0;
   String? langCode;
   AppLanguage appLanguage = AppLanguage();
@@ -40,8 +40,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
       _selectedIndex = 1;
     }else if(shareLocal.getString('language_code') == "es"){
       _selectedIndex = 2;
-    }else {
+    }else  if(shareLocal.getString('language_code') == "fr") {
       _selectedIndex = 3;
+    }else{
+      _selectedIndex = 0;
     }
     // if(prefs.getString('language_code'))
     // for (int i = 0; i < languages.length; i++) {
@@ -84,9 +86,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
             const Spacer(),
             GestureDetector(
               onTap: () {
-                appLanguage.appLocal.languageCode == langCode
-                    ? FunctionLanguages(value, context, langCode!)
-                    : null;
+                FunctionLanguages(value, context, langCode!);
+
                 print("tangdasdsa: ${appLanguage.appLocal.languageCode}");
                 print("ssssss: ${langCode}");
                 // setState(() {
@@ -119,7 +120,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   value = index;
                   langCode = appLanguage.appLocal.languageCode ;
                   if (_selectedIndex == index) {
-                    _selectedIndex = -1;
+                    _selectedIndex = 0;
                   } else {
                     _selectedIndex = index;
                   }

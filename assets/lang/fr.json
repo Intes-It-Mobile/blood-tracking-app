@@ -83,6 +83,7 @@
     "asleep":"Endormi",
 
     "errow_sugar_input_text":"Veuillez entrer une valeur correcte entre 18 et 630 mg/dL.",
+    "errow_sugar_input1_text":"Veuillez entrer une valeur correcte entre 1-35 mmol/L.",
     "save_record":"Enregistrer",
     "version":" version",
     "1.0.0":" 1.0.0",
