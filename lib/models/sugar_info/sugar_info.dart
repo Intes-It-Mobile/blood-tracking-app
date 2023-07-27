@@ -11,6 +11,14 @@ class SugarInfo {
       });
     }
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.conditions != null) {
+      data['conditions'] = this.conditions!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Conditions {
@@ -30,6 +38,15 @@ class Conditions {
       });
     }
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    if (this.sugarAmount != null) {
+      data['sugar_amount'] = this.sugarAmount!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class SugarAmount {
@@ -38,13 +55,21 @@ class SugarAmount {
   double? minValue;
   double? maxValue;
 
-  SugarAmount({this.status, this.minValue, this.maxValue,this.id});
+  SugarAmount({this.status, this.minValue, this.maxValue, this.id});
 
   SugarAmount.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     status = json['status'];
     minValue = json['min_value'];
     maxValue = json['max_value'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['status'] = this.status;
+    data['min_value'] = this.minValue;
+    data['max_value'] = this.maxValue;
+    return data;
   }
 }
 

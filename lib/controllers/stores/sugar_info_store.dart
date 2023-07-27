@@ -331,7 +331,6 @@ abstract class _SugarInfoStoreBase with Store {
     );
   }
 
-  @observable
   String findStatusForValueAndConditionId(
       List<Conditions> listRootConditions, double value, int conditionId) {
     // Tìm điều kiện có id tương ứng
@@ -405,7 +404,7 @@ abstract class _SugarInfoStoreBase with Store {
     if (listRecords != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String jsonString = json.encode(listRecords.toJson());
-      prefs.setString('myObjectKey', jsonString);
+      prefs.setString('list_record', jsonString);
 
       print("Save to shprf: ${listRecords.listRecord!.length} ");
     }
@@ -413,7 +412,7 @@ abstract class _SugarInfoStoreBase with Store {
 
   Future<ListRecord?> getListRecords() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('myObjectKey');
+    String? jsonString = prefs.getString('list_record');
 
     if (jsonString != null) {
       Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -433,14 +432,14 @@ abstract class _SugarInfoStoreBase with Store {
 
   Future deleteData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
+    prefs.remove('list_record'); // Xóa đối tượng theo khóa 'list_record'
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
   }
 
   Future<void> exportToExcel(BuildContext context) async {
     // Read data from the JSON file
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('myObjectKey');
+    String? jsonString = prefs.getString('list_record');
     List<dynamic> jsonData = json.decode(jsonString!)['list_record'];
 
     // Create an Excel workbook and worksheet
@@ -985,7 +984,6 @@ abstract class _SugarInfoStoreBase with Store {
     tempConditionDisplay.where((e) => e.id == id).first.maxValue = doubleValue;
   }
 
-  @observable
   bool? canSave() {
     if (tempConditionDisplay == null || tempConditionDisplay.isEmpty) {
       return false;
@@ -1012,10 +1010,31 @@ abstract class _SugarInfoStoreBase with Store {
 
   @action
   setNewRootCondition() {
+    adjustMinMaxValues(tempConditionDisplay);
     rootSugarInfo!.conditions!
         .where((e) => e.id == tempConditionDisplay.first.id)
         .first
         .sugarAmount = tempConditionDisplay;
+    // updateMaxValue(rootSugarInfo!.conditions!);
+    saveRootConditionToSharedPreferences(rootSugarInfo!);
+    hasChangedRoot = !hasChangedRoot!;
     print("id                      ${tempConditionDisplay.first.id}");
   }
+
+  Future<void> saveRootConditionToSharedPreferences(SugarInfo sugarInfo) async {
+    if (sugarInfo != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String jsonString = json.encode(sugarInfo.toJson());
+      prefs.setString('json_data', jsonString);
+    }
+  }
+
+  void adjustMinMaxValues(List<SugarAmount> tempConditionDisplay) {
+    for (int i = 1; i < tempConditionDisplay.length; i++) {
+      tempConditionDisplay[i].minValue = tempConditionDisplay[i - 1].maxValue;
+    }
+  }
+
+  @observable
+  bool? hasChangedRoot = false;
 }
