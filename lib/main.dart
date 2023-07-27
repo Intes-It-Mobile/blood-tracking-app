@@ -4,6 +4,7 @@ import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
+import 'package:blood_sugar_tracking/views/language/language.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +73,13 @@ class MyApp extends StatelessWidget {
               Locale('en', 'EN'),
               Locale('vi', 'VI'),
               Locale('fr', 'FR'),
+              Locale('zh', 'CN'),
+              Locale('es', 'SP'),
             ],
             localeResolutionCallback: (Locale? deviceLocale,
                     Iterable<Locale> supportedLocales) =>
                 deviceLocale != null &&
-                        ['en', 'vi', 'fr'].contains(deviceLocale.languageCode)
+                        ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
                     ? deviceLocale
                     : supportedLocales.first,
             theme: ThemeData(
