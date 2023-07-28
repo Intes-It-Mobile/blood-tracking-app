@@ -11,15 +11,24 @@ import 'package:blood_sugar_tracking/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class EditRecordHeartRateScreen extends StatelessWidget {
-  EditRecordHeartRateScreen({super.key});
-  late HeartRateInfo info;
+class EditRecordHeartRateScreen extends StatefulWidget {
+  const EditRecordHeartRateScreen({super.key});
+
+  @override
+  State<EditRecordHeartRateScreen> createState() => _EditRecordHeartRateScreenState();
+}
+
+class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
+  HeartRateInfo? info;
   late BuildContext context;
+  DateTime? date;
+  bool checkError = false;
 
   @override
   Widget build(BuildContext context) {
-    info = ModalRoute.of(context)!.settings.arguments as HeartRateInfo;
     this.context = context;
+    info ??= ModalRoute.of(context)!.settings.arguments as HeartRateInfo;
+    date ??= info!.date;
     return Scaffold(
       appBar: _buildAppBarCustom(),
       body: _buildBody(),
@@ -98,48 +107,88 @@ class EditRecordHeartRateScreen extends StatelessWidget {
     );
     return Container(
       padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            AppLocalizations.of(context).getTranslate("date_and_time"),
-            style: textTitleStyle,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 20),
-            child: CustomDatetime(date: info.date),
-          ),
-          Text(
-            AppLocalizations.of(context).getTranslate("heart_rate"),
-            style: textTitleStyle,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 40),
-            child: SortHeartRate(indicator: info.indicator,),
-          ),
-          _buildBtnSaveRecord(),
-        ]
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              AppLocalizations.of(context).getTranslate("date_and_time"),
+              style: textTitleStyle,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 20),
+              child: CustomDatetime(
+                date : date!,
+                onChangedDate: (day) {
+                  setState(() {
+                    date = DateTime(day.year, day.month, day.day, date!.hour, date!.minute);
+                  });
+                },
+                onChangedHour: (hour) {
+                  setState(() {
+                    date = DateTime(date!.year, date!.month, date!.day, hour.hour, hour.minute);
+                  });
+                },
+              ),
+            ),
+            Text(
+              AppLocalizations.of(context).getTranslate("heart_rate"),
+              style: textTitleStyle,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+              child: SortHeartRate(
+                indicator: info!.indicator,
+                onChangedIndicator: (int n) {
+                  setState(() {
+                    info!.indicator = n;
+                  });
+                },
+              ),
+            ),
+            if (checkError) Center(
+              child: Text(
+                AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
+                style: AppTheme.errorText,
+              ),
+            ),
+            _buildBtnSaveRecord(),
+          ]
+        ),
       ),
     );
   }
 
-  Align _buildBtnSaveRecord() {
-    return Align(
+  Widget _buildBtnSaveRecord() {
+    return Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 30),
       child: InkWell(
         onTap: () {
-          ShowDialogCustom().showDialogCustom(
-            context: context,
-            title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
-            contentLeft: AppLocalizations.of(context).getTranslate('keep'),
-            contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
-            onClickBtRight: (){
-              Navigator.of(context).pop();
-            },
-            onClickBtnLeft: () {
-              Navigator.of(context).pop();
-            },
-          );
+          if (info!.indicator < 1 || info!.indicator > 120) {
+            checkError = true;
+          } else {
+            checkError = false;
+          }
+          if (checkError){
+            setState(() {});
+          } else {
+            ShowDialogCustom().showDialogCustom(
+              context: context,
+              title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
+              contentLeft: AppLocalizations.of(context).getTranslate('keep'),
+              contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
+              onClickBtRight: (){
+                Navigator.of(context).pop();
+              },
+              onClickBtnLeft: () {
+                Navigator.of(context).pop();
+              },
+            );
+          }
         },
         child: ButtonWidget(
           btnText: "save_record",
@@ -149,4 +198,6 @@ class EditRecordHeartRateScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }

@@ -3,18 +3,28 @@ import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class SortHeartRate extends StatelessWidget {
-  SortHeartRate({super.key, required this.indicator});
-  final int indicator;
+class SortHeartRate extends StatefulWidget {
+  SortHeartRate({super.key, required this.indicator, required this.onChangedIndicator});
+  int indicator;
+  final Function(int) onChangedIndicator;
+  @override
+  State<SortHeartRate> createState() => _SortHeartRateState();
+}
+
+class _SortHeartRateState extends State<SortHeartRate> {
   late BuildContext context;
+  TextEditingController? controller;
+  String? error;
 
   @override
   Widget build(BuildContext context) {
     this.context = context;
+    controller ??= TextEditingController(text: widget.indicator.toString());
     return Container(
       padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration( 
         borderRadius: BorderRadius.circular(5),
         color: AppColors.AppColor3
       ),
@@ -37,9 +47,9 @@ class SortHeartRate extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildStatusColor(color: AppColors.LowStt, check: indicator<=60),
-          _buildStatusColor(color: AppColors.NormalStt, check: indicator>60 && indicator<=100),
-          _buildStatusColor(color: AppColors.DiabetesStt, check: indicator>100),
+          _buildStatusColor(color: AppColors.LowStt, check: widget.indicator<=60),
+          _buildStatusColor(color: AppColors.NormalStt, check: widget.indicator>60 && widget.indicator<=100),
+          _buildStatusColor(color: AppColors.DiabetesStt, check: widget.indicator>100),
           const SizedBox(width: 10),
           _buildStatusString(),
           const Spacer(),
@@ -74,9 +84,9 @@ class SortHeartRate extends StatelessWidget {
 
   Widget _buildStatusString() {
     return Text(
-      indicator > 100
+      widget.indicator > 100
         ? "Fast"
-        : indicator > 60
+        : widget.indicator > 60
           ? "Normal"
           : "Slow",
       style: TextStyle(
@@ -85,20 +95,20 @@ class SortHeartRate extends StatelessWidget {
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
         letterSpacing: 0.6,
-        color: indicator > 100
+        color: widget.indicator > 100
                   ? AppColors.DiabetesStt
-                  : indicator > 60
+                  : widget.indicator > 60
                     ? AppColors.NormalStt
                     : AppColors.LowStt,
       )
     );
   }
 
-Widget _buildStatusInt() {
+  Widget _buildStatusInt() {
     return Text(
-      indicator > 100
+      widget.indicator > 100
         ? ">100"
-        : indicator > 60
+        : widget.indicator > 60
           ? "60~100"
           : "1~60",
       style: TextStyle(
@@ -119,28 +129,39 @@ Widget _buildStatusInt() {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: AppColors.AppColor4
-                  )
-                )
-              ),
-              child: Text(
-                indicator.toString(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: TextSizeConfig.getAdjustedFontSize(50),
-                  fontFamily: FontFamily.IBMPlexSans,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                  color: Colors.black,
+            child: TextField(
+              controller: controller,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              cursorColor: AppColors.AppColor2,
+              decoration:
+                const InputDecoration(
+                  focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: AppColors.AppColor2)),
+                  enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: AppColors.AppColor2)),
                 ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
+              style: TextStyle(
+                fontSize: TextSizeConfig.getAdjustedFontSize(50),
+                fontFamily: FontFamily.IBMPlexSans,
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                color: Colors.black,
               ),
+              onChanged: (value) {
+                int n = int.tryParse(value)??0;
+                setState(() {
+                  widget.indicator = n;
+                });
+              },
+              onSubmitted: (newValue) {
+                int n = int.tryParse(newValue)??0;
+                widget.onChangedIndicator(n);
+              },
             ),
           ),
-          SizedBox(width: 25),
+          const SizedBox(width: 25),
           Text(
             AppLocalizations.of(context).getTranslate("bpm"),
             style: TextStyle(

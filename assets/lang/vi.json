@@ -76,6 +76,7 @@
     "after_exercise": "After exercise",
     "asleep": "Asleep",
     "errow_sugar_input_text": "Please enter correct value between 18-630 mg/dL",
+    "errow_heart_rate_input_text": "Please enter correct value between 1-120",
     "save_record": "Save Record",
     "version": " version",
     "1.0.0": " 1.0.0",
