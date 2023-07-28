@@ -15,6 +15,7 @@ class EditRangeItem extends StatefulWidget {
   int? id;
   String? status;
   double? minValue, maxValue;
+  bool? isLastItem;
   Function(String value, int id)? onEdit;
   EditRangeItem(
       {super.key,
@@ -23,7 +24,8 @@ class EditRangeItem extends StatefulWidget {
       this.maxValue,
       this.minValue,
       this.status,
-      this.onEdit});
+      this.onEdit,
+      this.isLastItem});
 
   @override
   State<EditRangeItem> createState() => _EditRangeItemState();
@@ -37,7 +39,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
   bool? can = false;
   @override
   void initState() {
-    maxValueController.text = "${widget.maxValue}";
+    maxValueController.text = cutString(widget.maxValue!);
     super.initState();
   }
 
@@ -47,6 +49,17 @@ class _EditRangeItemState extends State<EditRangeItem> {
     editRangeStore = EditRangeStore();
     tempConditionDisplay = sugarInfoStore!.tempConditionDisplay;
     super.didChangeDependencies();
+  }
+
+  String cutString(double number) {
+    if (number.toString().length > 6) {
+      String numberString = number.toString();
+      String before = numberString.split('.').first;
+      String after = numberString.split('.').last.substring(0, 3);
+      return "${before}.${after}";
+    } else {
+      return "${number.toString()}";
+    }
   }
 
   Color? SttTextColor(String? value) {
@@ -86,65 +99,127 @@ class _EditRangeItemState extends State<EditRangeItem> {
             SizedBox(
               height: 12,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Text("${widget.minValue}",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2),
-                  child: Text("~",
-                      style: AppTheme.appBodyTextStyle
-                          .copyWith(color: Colors.black)),
-                ),
-                Container(
-                    // padding: Ed,
-                    width: 60,
-                    // height: 30,
-                    // padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Container(
-                      // color: Colors.amber,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical.top,
-                          // cursorHeight: 10,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(5),
-                            // Allow Decimal Number With Precision of 2 Only
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d{0,3}\.?\d{0,2}')),  
-                          ],
-                          controller: maxValueController,
-                          textAlign: TextAlign.center,
-                          onSubmitted: (value) {
-                            setMaxValue(maxValueController.text);
-                          },
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 1),
-                              border: InputBorder.none,
-                              hintText: "${widget.maxValue}",
-                              hintStyle: AppTheme.appBodyTextStyle
-                                  .copyWith(color: Colors.black)),
-                          style: AppTheme.appBodyTextStyle
-                              .copyWith(color: Colors.black),
-                        ),
+            widget.isLastItem != true
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Text("${cutString(widget.minValue!)}",
+                            style: AppTheme.appBodyTextStyle
+                                .copyWith(color: Colors.black)),
                       ),
-                    )),
-              ],
-            )
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2),
+                        child: Text("~",
+                            style: AppTheme.appBodyTextStyle
+                                .copyWith(color: Colors.black)),
+                      ),
+                      Container(
+                          // padding: Ed,
+                          width: 60,
+                          // height: 30,
+                          // padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Container(
+                            // color: Colors.amber,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: TextField(
+                                textAlignVertical: TextAlignVertical.top,
+                                // cursorHeight: 10,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  CustomInputFormatter(),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                ],
+                                // inputFormatters: [
+                                //   LengthLimitingTextInputFormatter(5),
+                                //   // Allow Decimal Number With Precision of 2 Only
+                                // FilteringTextInputFormatter.allow(
+                                //     RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                // ],
+                                controller: maxValueController,
+                                textAlign: TextAlign.center,
+                                onChanged: (value) {
+                                  setMaxValue(maxValueController.text);
+                                },
+                                onSubmitted: (value) {
+                                  setMaxValue(maxValueController.text);
+                                },
+                                decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 1),
+                                    border: InputBorder.none,
+                                    hintStyle: AppTheme.appBodyTextStyle
+                                        .copyWith(color: Colors.black)),
+                                style: AppTheme.appBodyTextStyle
+                                    .copyWith(color: Colors.black),
+                              ),
+                            ),
+                          )),
+                    ],
+                  )
+                : Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 2),
+                          child: Text(">=",
+                              style: AppTheme.appBodyTextStyle
+                                  .copyWith(color: Colors.black)),
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Text("${cutString(widget.minValue!)}",
+                              style: AppTheme.appBodyTextStyle
+                                  .copyWith(color: Colors.black)),
+                        ),
+                      ],
+                    ),
+                  ),
           ]),
     );
+  }
+}
+
+class CustomInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final text = newValue.text;
+
+    if (text.contains('.')) {
+      // Nếu có dấu "." trong chuỗi, giới hạn tối đa 5 ký tự
+      if (text.length <= 5) {
+        return newValue;
+      } else {
+        // Nếu nhập quá 5 ký tự, không cho phép cập nhật giá trị
+        return oldValue;
+      }
+    } else {
+      // Nếu không có dấu ".", giới hạn tối đa 4 ký tự
+      if (text.length <= 4) {
+        return newValue;
+      } else {
+        // Nếu nhập quá 4 ký tự, không cho phép cập nhật giá trị
+        return oldValue;
+      }
+    }
   }
 }

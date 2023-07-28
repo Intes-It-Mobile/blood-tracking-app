@@ -50,6 +50,7 @@ class Assets {
   static const String icSelect = "assets/icons/ic_select.svg";
 
   static const String iconSplash = "assets/icons/ic_splash_logo.svg";
+  static const String iconEditRangeScreen = "assets/icons/edit_range_icon.svg";
 
   Assets._();
 }

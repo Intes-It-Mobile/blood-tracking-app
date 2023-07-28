@@ -867,6 +867,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$hasChangedRootAtom =
+      Atom(name: '_SugarInfoStoreBase.hasChangedRoot', context: context);
+
+  @override
+  bool? get hasChangedRoot {
+    _$hasChangedRootAtom.reportRead();
+    return super.hasChangedRoot;
+  }
+
+  @override
+  set hasChangedRoot(bool? value) {
+    _$hasChangedRootAtom.reportWrite(value, super.hasChangedRoot, () {
+      super.hasChangedRoot = value;
+    });
+  }
+
   late final _$saveNewRecordAsyncAction =
       AsyncAction('_SugarInfoStoreBase.saveNewRecord', context: context);
 
@@ -1377,6 +1393,28 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic setMaxValue(String? value, int? id) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setMaxValue');
+    try {
+      return super.setMaxValue(value, id);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setNewRootCondition() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setNewRootCondition');
+    try {
+      return super.setNewRootCondition();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 abc: ${abc},
@@ -1431,6 +1469,7 @@ isChartLoading: ${isChartLoading},
 isShouldRender: ${isShouldRender},
 tempCondition: ${tempCondition},
 tempConditionDisplay: ${tempConditionDisplay},
+hasChangedRoot: ${hasChangedRoot},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';
