@@ -129,5 +129,7 @@
     "next": "Suivant",
     "sugar_amount": "Quantité de sucre",
     "no_alarms_set": "Aucune alarme définie",
-    "all_1": "Tout"
+    "All": "Tout",
+    "save_changes_button":"Sauvegarder les modifications",
+    "err_correct_value": "Veuillez entrer la valeur correcte !"
 }

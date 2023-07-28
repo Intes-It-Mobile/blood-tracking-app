@@ -70,7 +70,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
+                padding: const EdgeInsets.symmetric( vertical: 5,horizontal: 5),
                 decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),

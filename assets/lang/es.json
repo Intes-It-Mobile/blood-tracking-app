@@ -118,6 +118,8 @@
   "choose_your_language": "Elige tu idioma",
   "next": "Próximo",
   "no_alarms_set": "Sin alarma configurada",
-  "all_1": "Todo"
+  "All": "Todo",
+  "save_changes_button":"Guardar cambios",
+  "err_correct_value": "Por favor, introduzca el valor correcto."
 
 }

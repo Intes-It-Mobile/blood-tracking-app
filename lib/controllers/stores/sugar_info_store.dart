@@ -787,7 +787,7 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     } else {
       filterConditionId = -1;
-      filterConditionTitle = "all";
+      filterConditionTitle = "All";
       filterListRecord();
       isShouldRender = !isShouldRender!;
       getAverageNumber();

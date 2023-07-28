@@ -173,6 +173,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        SizedBox(width: 8),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 2),
                           child: Text(">=",

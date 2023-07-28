@@ -116,5 +116,7 @@
     "choose_your_language": "Chọn ngôn ngữ của bạn",
     "next": "Tiếp",
     "no_alarms_set": "Không có báo thức nào",
-    "all_1": "All"
+    "All": "All",
+    "save_changes_button":"Lưu thay đổi",
+    "err_correct_value": "Vui lòng nhập đúng giá trị!"
 }

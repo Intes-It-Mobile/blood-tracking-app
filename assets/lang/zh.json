@@ -116,5 +116,7 @@
   "choose_your_language": "選擇你的語言",
   "next": "下一個",
   "no_alarms_set": "沒有設置鬧鐘",
-  "all_1": "全部"
+  "All": "全部",
+  "save_changes_button":"保存更改",
+  "err_correct_value": "请输入正确的值！"
 }

@@ -39,6 +39,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
 
     return Container(
       child: AlertDialog(
+        contentPadding: EdgeInsets.fromLTRB(15, 15, 15, 5 ),
         insetPadding: EdgeInsets.symmetric(horizontal: 7),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0))),
@@ -46,7 +47,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.35,
+            height: MediaQuery.of(context).size.height * 0.38,
             width: 300,
             child: SingleChildScrollView(
               child: Column(
@@ -63,7 +64,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                   ),
                   Wrap(
                       runAlignment: WrapAlignment.spaceEvenly,
-                      spacing: 10,
+                      spacing: 25,
                       runSpacing: 10,
                       crossAxisAlignment: WrapCrossAlignment.start,
                       children: sugarInfoStore!.listRootConditions!.isNotEmpty
@@ -93,15 +94,15 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                             ]
                           : [Container()]),
                   const SizedBox(
-                    height: 15,
+                    height: 30,
                   ),
                   InkWell(
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
                       if (sugarInfoStore!.canSave() == false) {
-                        showSnackbarOverlay(
-                            context, "Please enter the correct value!");
+                        showSnackbarOverlay(context,
+                            "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
                       } else if (sugarInfoStore!.canSave() == true) {
                         sugarInfoStore!.setNewRootCondition();
                         Navigator.of(context).pop();
@@ -116,7 +117,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                       ),
                       child: Center(
                         child: Text(
-                          '${AppLocalizations.of(context)!.getTranslate('change_btn')}',
+                          '${AppLocalizations.of(context)!.getTranslate('save_changes_button')}',
                           style: AppTheme.TextIntroline16Text,
                         ),
                       ),
