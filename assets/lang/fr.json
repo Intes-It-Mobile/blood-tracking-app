@@ -130,5 +130,6 @@
     "measuring" :  "Mesure...",
     "put_your_finger_on_camera" : "Mettez votre doigt sur la caméra",
     "bpm": "BPM",
-    "status": "Statut"
+    "status": "Statut",
+    "result": "Result"
 }

@@ -27,9 +27,8 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    info ??= HeartRateInfo(date: DateTime.now(), indicator: 120);
+    info ??= ModalRoute.of(context)!.settings.arguments as HeartRateInfo;
     date ??= info!.date;
-    // info = ModalRoute.of(context)!.settings.arguments as HeartRateInfo;
     this.context = context;
     return Scaffold(
       appBar: _buildAppBarCustom(),
@@ -37,7 +36,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
     );
   }
 
-  AppBar _buildAppBarCustom(){ 
+  AppBar _buildAppBarCustom() {
     return AppBar(
       toolbarHeight: 56,
       backgroundColor: AppColors.AppColor2,
@@ -46,87 +45,77 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
         style: AppTheme.appBarTextStyle,
       ),
       titleSpacing: 0,
-      leadingWidth : 48,
+      leadingWidth: 48,
       leading: _buildButtonBack(),
     );
   }
 
   Widget _buildButtonBack() {
     return InkWell(
-      onTap:() {
+      onTap: () {
         Navigator.pop(context);
       },
       child: SvgPicture.asset(
-        Assets.iconBack, 
+        Assets.iconBack,
         height: 16,
-        width: 20, 
+        width: 20,
         fit: BoxFit.scaleDown,
       ),
     );
   }
 
-  Widget _buildBody(){
-    TextStyle textTitleStyle = TextStyle(
-      color: AppColors.AppColor4,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      fontFamily: FontFamily.IBMPlexSans,
-      fontStyle: FontStyle.normal,
-      letterSpacing: 0.8
-    );
+  Widget _buildBody() {
+    TextStyle textTitleStyle = TextStyle(color: AppColors.AppColor4, fontSize: 16, fontWeight: FontWeight.w600, fontFamily: FontFamily.IBMPlexSans, fontStyle: FontStyle.normal, letterSpacing: 0.8);
     return Container(
-      padding: const EdgeInsets.only(top: 26, left: 16, right: 16), 
+      padding: const EdgeInsets.only(top: 26, left: 16, right: 16),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      child: SingleChildScrollView (
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              AppLocalizations.of(context).getTranslate("date_and_time"),
-              style: textTitleStyle,
+      child: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+          Text(
+            AppLocalizations.of(context).getTranslate("date_and_time"),
+            style: textTitleStyle,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 20),
+            child: CustomDatetime(
+              date: date!,
+              onChangedDate: (day) {
+                setState(() {
+                  date = DateTime(day.year, day.month, day.day, date!.hour, date!.minute);
+                });
+              },
+              onChangedHour: (hour) {
+                setState(() {
+                  date = DateTime(date!.year, date!.month, date!.day, hour.hour, hour.minute);
+                });
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12, bottom: 20),
-              child: CustomDatetime(
-                date : date!,
-                onChangedDate: (day) {
-                  setState(() {
-                    date = DateTime(day.year, day.month, day.day, date!.hour, date!.minute);
-                  });
-                },
-                onChangedHour: (hour) {
-                  setState(() {
-                    date = DateTime(date!.year, date!.month, date!.day, hour.hour, hour.minute);
-                  });
-                },
-              ),
+          ),
+          Text(
+            AppLocalizations.of(context).getTranslate("heart_rate"),
+            style: textTitleStyle,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+            child: SortHeartRate(
+              indicator: info!.indicator,
+              onChangedIndicator: (int n) {
+                setState(() {
+                  info!.indicator = n;
+                });
+              },
             ),
-            Text(
-              AppLocalizations.of(context).getTranslate("heart_rate"),
-              style: textTitleStyle,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-              child: SortHeartRate(
-                indicator: info!.indicator,
-                onChangedIndicator: (int n) {
-                  setState(() {
-                    info!.indicator = n;
-                  });
-                },
-              ),
-            ),
-            if (checkError) Center(
+          ),
+          if (checkError)
+            Center(
               child: Text(
                 AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
                 style: AppTheme.errorText,
               ),
             ),
-            _buildBtnSaveRecord(),
-          ]
-        ),
+          _buildBtnSaveRecord(),
+        ]),
       ),
     );
   }
@@ -137,12 +126,12 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
         onTap: () {
-          if (info!.indicator < 1 || info!.indicator>120) {
+          if (info!.indicator < 1 || info!.indicator > 120) {
             checkError = true;
           } else {
             checkError = false;
           }
-          if (checkError){
+          if (checkError) {
             setState(() {});
           } else {
             ShowDialogCustom().showDialogCustom(
@@ -150,7 +139,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
               title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
               contentLeft: AppLocalizations.of(context).getTranslate('keep'),
               contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
-              onClickBtRight: (){
+              onClickBtRight: () {
                 Navigator.of(context).pop();
               },
               onClickBtnLeft: () {
