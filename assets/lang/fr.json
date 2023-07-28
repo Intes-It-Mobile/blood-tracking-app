@@ -123,9 +123,11 @@
     "select_your_starting_unit":"Select your starting unit",
 
     "edit_duplicate_dialog": "You have entered the profile at this point. Do you want to replace the previous record?",
+    "heart_rate": "Fréquence cardiaque",
     "heart_rate_tracking": "Suivi de la fréquence cardiaque",
     "tap_to_measure" : "Appuyez pour mesurer",
     "measuring" :  "Mesure...",
-    "put_your_finger_on_camera" : "Mettez votre doigt sur la caméra"
-
+    "put_your_finger_on_camera" : "Mettez votre doigt sur la caméra",
+    "bpm": "BPM",
+    "status": "Statut"
 }

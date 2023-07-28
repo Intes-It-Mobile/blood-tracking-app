@@ -146,4 +146,13 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(24),
     fontFamily: FontFamily.IBMPlexSans,
   );
+
+  static final appBarTextStyle = TextStyle(
+    fontFamily: FontFamily.IBMPlexSans,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+    color: Colors.white,
+    letterSpacing: 1
+  );
 }

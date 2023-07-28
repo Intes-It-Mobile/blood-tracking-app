@@ -1,4 +1,6 @@
 import 'package:blood_sugar_tracking/views/edit_range/edit_range_screens.dart';
+import 'package:blood_sugar_tracking/views/heart_rate/edit_record_heart_rate/edit_record_heart_rate.dart';
+import 'package:blood_sugar_tracking/views/heart_rate/history_heart_rate/history_heart_rate.dart';
 import 'package:blood_sugar_tracking/views/history/record_history.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/infomation/information_detail_screen.dart';
@@ -10,7 +12,8 @@ import 'package:blood_sugar_tracking/views/setting/abt_us_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
+import 'views/heart_rate/new_record_heart_rate/new_record_heart_rate.dart';
 
 class Routes {
   Routes._();
@@ -27,6 +30,9 @@ class Routes {
   static const String intro = '/splash_intro';
   static const String select_unit = '/select_unit';
   static const String history = "/record_history";
+  static const String history_heart_rate = "/history_heart_rate";
+  static const String edit_record_heart_rate = "/edit_record_heart_rate";
+  static const String new_record_heart_rate = "/new_record_heart_rate";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -40,6 +46,9 @@ class Routes {
     intro: (context) => IntroScreen(),
     history: (context) => RecordHistory(),
     select_unit: (context) => SelectUnit(),
+    history_heart_rate: (context) => HistoryHeartRateScreen(),
+    edit_record_heart_rate: (context) => EditRecordHeartRateScreen(), 
+    new_record_heart_rate: (context) => NewRecordHeartRateScreen(), 
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
