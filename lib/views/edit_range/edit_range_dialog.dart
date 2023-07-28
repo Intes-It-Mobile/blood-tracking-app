@@ -24,11 +24,15 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
   SugarInfoStore? sugarInfoStore;
   List<SugarAmount> tempCondition = [];
   EditRangeStore? editRangeStore;
+  bool? isMol;
   @override
   void didChangeDependencies() {
     editRangeStore = EditRangeStore();
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     sugarInfoStore!.getTempCondition(widget.conditionId!);
+    setState(() {
+isMol = sugarInfoStore!.isSwapedToMol;
+    });
     editRangeStore!.tempConditionDisplay = sugarInfoStore!.tempConditionDisplay;
     super.didChangeDependencies();
   }
@@ -39,7 +43,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
 
     return Container(
       child: AlertDialog(
-        contentPadding: EdgeInsets.fromLTRB(15, 15, 15, 5 ),
+        contentPadding: EdgeInsets.fromLTRB(15, 15, 15, 5),
         insetPadding: EdgeInsets.symmetric(horizontal: 7),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0))),
@@ -54,10 +58,26 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${AppLocalizations.of(context)!.getTranslate(widget.conditionName!)}",
-                    style: AppTheme.Headline16Text.copyWith(
-                        color: AppColors.AppColor4),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "${AppLocalizations.of(context)!.getTranslate(widget.conditionName!)}",
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor4),
+                        ),
+                      ),
+                      // isMol == false
+                      //     ? Text(
+                      //         "${AppLocalizations.of(context)!.getTranslate("mg/L")}",
+                      //         style: AppTheme.Headline16Text.copyWith(
+                      //             color: AppColors.AppColor4),
+                      //       )
+                      //     : Text(
+                      //         "${AppLocalizations.of(context)!.getTranslate("mmol/dL")}",
+                      //         style: AppTheme.Headline16Text.copyWith(
+                      //             color: AppColors.AppColor4)),
+                    ],
                   ),
                   SizedBox(
                     height: 10,
@@ -104,12 +124,14 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                         showSnackbarOverlay(context,
                             "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
                       } else if (sugarInfoStore!.canSave() == true) {
-                        sugarInfoStore!.setNewRootCondition();
+                        sugarInfoStore!
+                            .setNewRootCondition(widget.conditionId!);
                         Navigator.of(context).pop();
                       }
                     },
                     child: Container(
-                      height: 35,
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      height: 43,
                       margin: const EdgeInsets.only(left: 50, right: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),

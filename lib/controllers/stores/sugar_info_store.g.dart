@@ -867,6 +867,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$tempConditionIdAtom =
+      Atom(name: '_SugarInfoStoreBase.tempConditionId', context: context);
+
+  @override
+  int? get tempConditionId {
+    _$tempConditionIdAtom.reportRead();
+    return super.tempConditionId;
+  }
+
+  @override
+  set tempConditionId(int? value) {
+    _$tempConditionIdAtom.reportWrite(value, super.tempConditionId, () {
+      super.tempConditionId = value;
+    });
+  }
+
   late final _$hasChangedRootAtom =
       Atom(name: '_SugarInfoStoreBase.hasChangedRoot', context: context);
 
@@ -1095,11 +1111,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic checkValidateNewRecord() {
+  dynamic checkValidateNewRecord(BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.checkValidateNewRecord');
     try {
-      return super.checkValidateNewRecord();
+      return super.checkValidateNewRecord(context);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1404,11 +1420,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setNewRootCondition() {
+  dynamic setNewRootCondition(int editConditionId) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setNewRootCondition');
     try {
-      return super.setNewRootCondition();
+      return super.setNewRootCondition(editConditionId);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1469,6 +1485,7 @@ isChartLoading: ${isChartLoading},
 isShouldRender: ${isShouldRender},
 tempCondition: ${tempCondition},
 tempConditionDisplay: ${tempConditionDisplay},
+tempConditionId: ${tempConditionId},
 hasChangedRoot: ${hasChangedRoot},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}

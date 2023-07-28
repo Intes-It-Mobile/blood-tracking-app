@@ -346,8 +346,7 @@ abstract class _SugarInfoStoreBase with Store {
       // Tìm SugarAmount tương ứng với giá trị value
       for (var sugarAmount in condition.sugarAmount!) {
         if (sugarAmount.minValue != null && sugarAmount.maxValue != null) {
-          if (value >= sugarAmount.minValue! &&
-              value < sugarAmount.maxValue!) {
+          if (value >= sugarAmount.minValue! && value < sugarAmount.maxValue!) {
             return sugarAmount.status ?? "Unknown";
           }
         }
@@ -376,7 +375,7 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  checkValidateNewRecord() {
+  checkValidateNewRecord(BuildContext context) {
     if (choosedDayTimeStr != null &&
         choosedDayHourStr != null &&
         currentStatus != null &&
@@ -385,14 +384,16 @@ abstract class _SugarInfoStoreBase with Store {
         chooseCondition!.id != null) {
       if (isSwapedToMol == false) {
         if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-          setErrorText("Please enter correct value between 18-630 mg/dL");
+          setErrorText(
+              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_mg_text')}");
         } else {
           setErrorText("");
         }
       }
       if (isSwapedToMol == true) {
         if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
-          setErrorText("Please enter correct value between 1-35 mmol/L");
+          setErrorText(
+              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_mmol_text')}");
         } else {
           setErrorText("");
         }
@@ -846,6 +847,7 @@ abstract class _SugarInfoStoreBase with Store {
         for (var sugarAmount in condition.sugarAmount!) {
           if (sugarAmount.minValue != null) {
             sugarAmount.minValue = sugarAmount.minValue! / 18;
+            print("divisionnnnnnnnnnnnnnnnnnnnnnnnnn");
           }
           if (sugarAmount.maxValue != null) {
             sugarAmount.maxValue = sugarAmount.maxValue! / 18;
@@ -968,6 +970,8 @@ abstract class _SugarInfoStoreBase with Store {
         .toList();
   }
 
+  @observable
+  int? tempConditionId;
   @action
   getTempCondition(int id) {
     tempCondition = rootSugarInfo!.conditions!
@@ -1009,10 +1013,10 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  setNewRootCondition() {
+  setNewRootCondition(int editConditionId) {
     adjustMinMaxValues(tempConditionDisplay);
     rootSugarInfo!.conditions!
-        .where((e) => e.id == tempConditionDisplay.first.id)
+        .where((e) => e.id == editConditionId)
         .first
         .sugarAmount = tempConditionDisplay;
     // updateMaxValue(rootSugarInfo!.conditions!);
