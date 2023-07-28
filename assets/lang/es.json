@@ -119,6 +119,11 @@
   "next": "Próximo",
   "no_alarms_set": "Sin alarma configurada",
   "all_1": "Todo",
-  "status": "Estado"
+  "status": "Estado",
+  "personal_data": "Información personal",
+  "choose_your_gender": "Elige tu género",
+  "how_old_are_you": "Cuántos años tiene?",
+  "what_is_your_weight": "¿Cuál es tu peso?",
+  "How_tall_are_you": "Que tan alto eres?"
 
 }

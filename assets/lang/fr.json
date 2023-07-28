@@ -130,5 +130,10 @@
     "sugar_amount": "Quantité de sucre",
     "no_alarms_set": "Aucune alarme définie",
     "all_1": "Tout",
-    "status": "Statut"
+    "status": "Statut",
+    "personal_data": "Données personnelles",
+    "choose_your_gender": "Choisissez votre genre",
+    "how_old_are_you": "Quel âge as-tu?",
+    "what_is_your_weight": "Quel est votre poids?",
+    "How_tall_are_you": "Quelle est votre taille?"
 }

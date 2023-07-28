@@ -119,7 +119,13 @@
   "next": "Next",
   "no_alarms_set": "No alarm set",
   "all_1": "All",
-  "status": "Status"
+  "status": "Status",
+  "personal_data": "Personal data",
+  "choose_your_gender": "Choose your gender",
+  "how_old_are_you": "How old are you?",
+  "what_is_your_weight": "What is your weight?",
+  "How_tall_are_you": "How tall are you?"
+
 
 
 }
