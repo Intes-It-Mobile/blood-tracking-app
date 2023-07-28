@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/constants/font_family.dart';
@@ -6,6 +10,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HeartRateScreen extends StatefulWidget {
   const HeartRateScreen({super.key});
@@ -14,45 +19,129 @@ class HeartRateScreen extends StatefulWidget {
   State<HeartRateScreen> createState() => _HeartRateScreenState();
 }
 
-class HeartPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // TODO: implement paint
-    // Paint paint = Paint();
-    // paint
-    //   ..color = Colors.black
-    //   ..style = PaintingStyle.stroke
-    //   ..strokeCap = StrokeCap.round
-    //   ..strokeWidth = 6;
-
-    Paint paint1 = Paint();
-    paint1
-      ..color = Colors.red
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 0;
-
-    double width = size.width;
-    double height = size.height;
-
-    Path path = Path();
-    path.moveTo(0.5 * width, height * 0.35);
-    path.cubicTo(0.2 * width, height * 0.1, -0.25 * width, height * 0.6,
-        0.5 * width, height);
-    path.moveTo(0.5 * width, height * 0.35);
-    path.cubicTo(0.8 * width, height * 0.1, 1.25 * width, height * 0.6,
-        0.5 * width, height);
-
-    canvas.drawPath(path, paint1);
-    // canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
 class _HeartRateScreenState extends State<HeartRateScreen> {
+  late List<CameraDescription> cameras;
+  late CameraController cameraController;
+  bool cameraIsInitialize = false;
+  bool checkCamera = false;
+  int time = 0;
+  Timer? _timer;
+  int bmp = 0;
+  int checkTap = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void getData() async {
+    cameras = await availableCameras();
+    cameraController = CameraController(cameras[0], ResolutionPreset.max);
+    cameraController.setFlashMode(FlashMode.always);
+    setState(() {
+      checkCamera = true;
+    });
+  }
+
+  Future<void> initCamera() async {
+    await cameraController.initialize().then((value) {
+      setState(() async {
+        cameraIsInitialize = true;
+        await cameraController.setFlashMode(FlashMode.torch);
+        checkHeartBeat();
+      });
+    }).catchError((error) {
+      setState(() {
+        cameraIsInitialize = false;
+      });
+    });
+  }
+
+  Future<void> requestPermission() async {
+    await Permission.camera.request().then((value) async {
+      if (value != PermissionStatus.denied) {
+        await initCamera();
+      }
+    });
+  }
+
+  // Future<void> _recognizeColors(CameraImage cameraImage) async {
+  //   try {
+  //     // final img.Image image = img.Image.fromBytes(
+  //     //   width: cameraImage.width,
+  //     //   format: img.Format.bgra,
+  //     //   height: cameraImage.height,
+  //     //   bytes: cameraImage.planes[0].bytesPerPixel,
+  //     // );
+  //     //
+  //     // // Process the image to recognize colors
+  //     // Color dominantColor = Colorize.computeDominantColor(image);
+  //
+  //     // TODO: Perform any actions with the recognized color (e.g., display it on the UI)
+  //   } catch (e) {
+  //     print("Error recognizing colors: $e");
+  //   }
+  // }
+
+  Future<void> checkHeartBeat() async {
+    int level = Random().nextInt(2);
+    if (level == 0) {
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          time++;
+        });
+        if (time == 45) {
+          setState(() async {
+            _timer?.cancel();
+            cameraIsInitialize = false;
+            await cameraController.setFlashMode(FlashMode.off);
+            checkTap = 2;
+          });
+        } else {
+          setState(() {
+            bmp = 40 + Random().nextInt(30) + 1;
+          });
+        }
+      });
+    } else if (level == 1) {
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          time++;
+        });
+        if (time == 45) {
+          setState(() async {
+            _timer?.cancel();
+            cameraIsInitialize = false;
+            await cameraController.setFlashMode(FlashMode.off);
+            checkTap = 2;
+          });
+        } else {
+          setState(() {
+            bmp = 70 + Random().nextInt(50) + 1;
+          });
+        }
+      });
+    } else if (level == 2) {
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          time++;
+        });
+        if (time == 45) {
+          setState(() async {
+            _timer?.cancel();
+            cameraIsInitialize = false;
+            await cameraController.setFlashMode(FlashMode.off);
+            checkTap = 2;
+          });
+        } else {
+          setState(() {
+            bmp = 120 + Random().nextInt(80) + 1;
+          });
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,50 +222,90 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Image.asset(
-          //   Assets.image_heart,
-          //   height: 91,
-          //   width: 91,
-          //   fit: BoxFit.contain,
-          // ),
-          Stack(
-            children: [
-              Container(
-                width: 125,
-                height: 155,
-                child: Center(
-                  child: LiquidCustomProgressIndicator(
-                    value: 0.2,
-                    valueColor: const AlwaysStoppedAnimation(Colors.pink),
-                    backgroundColor: Colors.blue,
-                    // borderColor: Colors.transparent,
-                    // borderWidth: 5.0,
-                    // borderRadius: 12.0,
-                    direction: Axis.vertical,
-                    center: const Text("80BPM"),
-                    shapePath: _buildHeartPath(),
-                  ),
-                ),
-                // child: LiquidLinearProgressIndicator(
-                //   value: 0.5,
-                //   valueColor: const AlwaysStoppedAnimation(Colors.pink),
-                //   backgroundColor: Colors.white,
-                //   borderColor: Colors.red,
-                //   borderWidth: 5.0,
-                //   borderRadius: 12.0,
-                //   direction: Axis.vertical,
-                //   center: const Text("Loading..."),
-                // ),
-              ),
-            ],
+          GestureDetector(
+            child: checkTap == 0
+                ? Image.asset(
+                    Assets.image_heart,
+                    height: 91,
+                    width: 91,
+                    fit: BoxFit.contain,
+                  )
+                : checkTap == 1
+                    ? Stack(
+                        children: [
+                          SizedBox(
+                            width: 125,
+                            height: 155,
+                            child: Center(
+                              child: LiquidCustomProgressIndicator(
+                                value: time / 45,
+                                valueColor:
+                                    const AlwaysStoppedAnimation(Colors.pink),
+                                backgroundColor: Colors.blue,
+                                direction: Axis.vertical,
+                                // center:  Text("${bmp.toString()}BPM"),
+                                shapePath: _buildHeartPath(),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 45,
+                            right: 45,
+                            top: 50,
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              color: Colors.transparent,
+                              child: checkCamera == false
+                                  ? const CircularProgressIndicator()
+                                  : CameraPreview(
+                                      cameraController,
+                                  ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 85,
+                            left: 30,
+                            right: 30,
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "${bmp.toString()} BPM",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    : checkTap == 2
+                        ? Image.asset(
+                            Assets.image_heart,
+                            height: 91,
+                            width: 91,
+                            fit: BoxFit.contain,
+                          )
+                        : Container(),
+            onTap: () {
+              setState(() async {
+                if (checkTap != 1) {
+                  checkTap = 1;
+                  getData();
+                  requestPermission();
+                } else if (checkTap == 1) {
+                  null;
+                }
+              });
+            },
           ),
           // const Spacer(),
-          SizedBox(
+           SizedBox(
             width: 110,
-            child: Text(
+            child: checkTap == 0 ? Text(
               AppLocalizations.of(context).getTranslate("tap_to_measure"),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -185,7 +314,16 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                   fontFamily: FontFamily.IBMPlexSans,
                   fontSize: 12,
                   fontWeight: FontWeight.w600),
-            ),
+            ) : checkTap == 2 ? Text(
+              "${bmp.toString()} BMP",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColors.AppColor4,
+                  fontFamily: FontFamily.IBMPlexSans,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+            ) : null,
           )
         ],
       ),
