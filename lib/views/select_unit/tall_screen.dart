@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_chooser/wheel_chooser.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class TallScreen extends StatefulWidget {
@@ -28,6 +30,28 @@ class _TallScreenState extends State<TallScreen> {
                   style: AppTheme.unit24Text,
                 ),
               ),
+              Container(
+                height: 300,
+                child: WheelChooser.integer(
+                  onValueChanged: (old) {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => PersonalDataScreen(
+                    //       old: s,
+                    //     ),
+                    //   ),
+                    // );
+
+                  },
+                  maxValue: 400,
+                  minValue: 1,
+                  initValue: 25,
+                  selectTextStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
+                  unSelectTextStyle: TextStyle(color: Colors.grey),
+                ),
+              ),
             ],
           ),
           Positioned(
@@ -35,7 +59,7 @@ class _TallScreenState extends State<TallScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                // Navigator.of(context).pushNamed(Routes.gender_screen);
+                 Navigator.of(context).pushNamed(Routes.select_unit);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDataScreen(
                 //   name: information[_selectedIndex].gender,
                 // )));

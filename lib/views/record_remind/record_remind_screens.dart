@@ -215,27 +215,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                   navigateToAlarmScreen(null);
                 },
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     navigateToAlarmScreen(null);
-              //   },
-              //   child: Container(
-              //     height: 50,
-              //     margin: const EdgeInsets.only(top: 10),
-              //     width: 150,
-              //    // padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(5),
-              //         color: AppColors.AppColor2),
-              //     child: Center(
-              //       child: Text(
-              //         "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-              //         style: AppTheme.Headline20Text.copyWith(
-              //             fontWeight: FontWeight.w600),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               const SizedBox(
                 height: 50,
               )

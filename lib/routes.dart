@@ -10,6 +10,8 @@ import 'package:blood_sugar_tracking/views/record_remind/record_remind_screens.d
 import 'package:blood_sugar_tracking/views/select_unit/gender_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/old_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/select_unit_screen.dart';
+import 'package:blood_sugar_tracking/views/select_unit/tall_screen.dart';
+import 'package:blood_sugar_tracking/views/select_unit/weight_screen.dart';
 import 'package:blood_sugar_tracking/views/setting/abt_us_screen.dart';
 import 'package:blood_sugar_tracking/views/setting/language_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
@@ -37,6 +39,8 @@ class Routes {
   static const String personal_data = "/personal_data";
   static const String gender_screen = "/gender_screen";
   static const String old_screen = "/old_screen";
+  static const String weight_screen = "/weight_screen";
+  static const String tall_screen = "/tall_screen";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -55,6 +59,8 @@ class Routes {
     personal_data: (context) => PersonalDataScreen(),
     gender_screen: (context) => GenderScreen(),
     old_screen: (context) => OldScreen(),
+    weight_screen: (context) => WeightScreen(),
+    tall_screen: (context) => TallScreen(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

@@ -5,6 +5,7 @@ import 'package:wheel_chooser/wheel_chooser.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../models/information/information.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class OldScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _OldScreenState extends State<OldScreen> {
                     //     ),
                     //   ),
                     // );
-                    print("tuổi: ${widget.information?.old}");
+
                   },
                   maxValue: 115,
                   minValue: 1,
@@ -66,6 +67,7 @@ class _OldScreenState extends State<OldScreen> {
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDataScreen(
                 //   name: information[_selectedIndex].gender,
                 // )));
+                Navigator.of(context).pushNamed(Routes.weight_screen);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

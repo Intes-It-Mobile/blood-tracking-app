@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_chooser/wheel_chooser.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class WeightScreen extends StatefulWidget {
@@ -28,6 +30,27 @@ class _WeightScreenState extends State<WeightScreen> {
                   style: AppTheme.unit24Text,
                 ),
               ),
+              Container(
+                height: 300,
+                child: WheelChooser.integer(
+                  onValueChanged: (old) {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => PersonalDataScreen(
+                    //       old: s,
+                    //     ),
+                    //   ),
+                    // );
+                  },
+                  maxValue: 400,
+                  minValue: 1,
+                  initValue: 25,
+                  selectTextStyle: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
+                  unSelectTextStyle: const TextStyle(color: Colors.grey),
+                ),
+              ),
             ],
           ),
           Positioned(
@@ -39,6 +62,7 @@ class _WeightScreenState extends State<WeightScreen> {
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDataScreen(
                 //   name: information[_selectedIndex].gender,
                 // )));
+                Navigator.of(context).pushNamed(Routes.tall_screen);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",
