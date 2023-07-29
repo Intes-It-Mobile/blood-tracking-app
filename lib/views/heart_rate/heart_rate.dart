@@ -28,7 +28,6 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   bool cameraIsInitialize = false;
   bool checkCamera = false;
   int time = 0;
-  Timer? _timer;
   int bmp = 0;
   int checkTap = 0;
 
@@ -72,10 +71,10 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       time++;
       if (time == 45) {
-        _timer?.cancel();
+        timer.cancel();
+        int re = bmp;
         cameraIsInitialize = false;
         cameraController.setFlashMode(FlashMode.off);
-        int re = bmp;
         setState(() {
           checkTap = 0;
           time = 0;
@@ -85,18 +84,19 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           Routes.new_record_heart_rate,
           arguments: HeartRateInfo(date: DateTime.now(), indicator: re),
         );
+        return;
       } else {
         int level = Random().nextInt(2);
         setState(() {
           switch (level) {
             case 0:
-              bmp = 40 + Random().nextInt(30) + 1;
+              bmp = Random().nextInt(60) + 1;
               break;
             case 1:
-              bmp = 70 + Random().nextInt(50) + 1;
+              bmp = 60 + Random().nextInt(40);
               break;
             default:
-              bmp = 120 + Random().nextInt(80) + 1;
+              bmp = 100 + Random().nextInt(20);
           }
         });
       }
@@ -207,7 +207,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                     : Container(),
             onTap: () {
               setState(() async {
-                if (checkTap != 1) {
+                if (checkTap == 0) {
                   checkTap = 1;
                   getData();
                   requestPermission();
@@ -313,6 +313,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   Widget _buildButtonNewRecord() {
     return InkWell(
       onTap: () {
+        setState(() {
+          checkTap = 0;
+          time = 0;
+          bmp = 0;
+        });
         Navigator.of(context).pushNamed(
           Routes.new_record_heart_rate,
           arguments: HeartRateInfo(date: DateTime.now(), indicator: 70),

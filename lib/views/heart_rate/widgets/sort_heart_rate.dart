@@ -156,8 +156,8 @@ class _SortHeartRateState extends State<SortHeartRate> {
                 }
                 setState(() {
                   widget.indicator = n;
-                  widget.onChangedIndicator(value);
                 });
+                widget.onChangedIndicator(value);
               },
             ),
           ),

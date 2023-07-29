@@ -25,7 +25,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
   late BuildContext context;
   bool checkError = false;
   bool checkEmpty = false;
-  String? st;
+  String? st = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +138,10 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
         onTap: () {
-          checkEmpty = (st == "" || st == null);
-          checkError = (info!.indicator < 1 || info!.indicator > 120);
-          setState(() {});
+          setState(() {
+            checkEmpty = (st == "" || st == null);
+            checkError = (info!.indicator < 1 || info!.indicator > 120);
+          });
           if (!checkError && !checkEmpty) {
             ShowDialogCustom().showDialogCustom(
               context: context,
