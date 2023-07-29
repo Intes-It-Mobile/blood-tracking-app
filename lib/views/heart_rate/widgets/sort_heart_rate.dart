@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 class SortHeartRate extends StatefulWidget {
   SortHeartRate({super.key, required this.indicator, required this.onChangedIndicator});
   int indicator;
-  final Function(int) onChangedIndicator;
+  final Function(String?) onChangedIndicator;
   @override
   State<SortHeartRate> createState() => _SortHeartRateState();
 }
@@ -150,14 +150,14 @@ class _SortHeartRateState extends State<SortHeartRate> {
                 color: Colors.black,
               ),
               onChanged: (value) {
-                int n = int.tryParse(value)??0;
+                int n = 0;
+                if (value!="") {
+                  n = int.tryParse(value)??0;
+                }
                 setState(() {
                   widget.indicator = n;
+                  widget.onChangedIndicator(value);
                 });
-              },
-              onSubmitted: (newValue) {
-                int n = int.tryParse(newValue)??0;
-                widget.onChangedIndicator(n);
               },
             ),
           ),

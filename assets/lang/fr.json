@@ -131,5 +131,6 @@
     "put_your_finger_on_camera" : "Mettez votre doigt sur la caméra",
     "bpm": "BPM",
     "status": "Statut",
-    "result": "Result"
+    "result": "Result",
+    "enter_value": "Please enter the value"
 }

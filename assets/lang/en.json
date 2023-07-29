@@ -121,5 +121,6 @@
   "put_your_finger_on_camera" : "Put your finger on camera",
   "bpm": "BPM",
   "status": "Status",
-  "result": "Result"
+  "result": "Result",
+  "enter_value": "Please enter the value"
 }

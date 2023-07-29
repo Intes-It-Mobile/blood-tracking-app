@@ -23,6 +23,8 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
   late BuildContext context;
   DateTime? date;
   bool checkError = false;
+  bool checkEmpty = false;
+  String? st;
 
   @override
   Widget build(BuildContext context) {
@@ -142,19 +144,30 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
               padding: const EdgeInsets.only(top: 8.0, bottom: 10),
               child: SortHeartRate(
                 indicator: info!.indicator,
-                onChangedIndicator: (int n) {
-                  setState(() {
+                onChangedIndicator: (newValue) {
+                  st = newValue;
+                  if (newValue != "" && newValue != null){
+                    int n = int.tryParse(newValue)??0;
                     info!.indicator = n;
-                  });
+                  }
+                  setState(() {});
                 },
               ),
             ),
-            if (checkError) Center(
-              child: Text(
-                AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
-                style: AppTheme.errorText,
+            if (checkEmpty)
+              Center(
+                child: Text(
+                  AppLocalizations.of(context).getTranslate("enter_value"),
+                  style: AppTheme.errorText,
+                ),
               ),
-            ),
+            if (!checkEmpty && checkError)
+              Center(
+                child: Text(
+                  AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
+                  style: AppTheme.errorText,
+                ),
+              ),
             _buildBtnSaveRecord(),
           ]
         ),
@@ -168,20 +181,16 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
         onTap: () {
-          if (info!.indicator < 1 || info!.indicator > 120) {
-            checkError = true;
-          } else {
-            checkError = false;
-          }
-          if (checkError){
-            setState(() {});
-          } else {
+          checkEmpty = (st == "" || st == null);
+          checkError = (info!.indicator < 1 || info!.indicator > 120);
+          setState(() {});
+          if (!checkError && !checkEmpty) {
             ShowDialogCustom().showDialogCustom(
               context: context,
               title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
               contentLeft: AppLocalizations.of(context).getTranslate('keep'),
               contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
-              onClickBtRight: (){
+              onClickBtRight: () {
                 Navigator.of(context).pop();
               },
               onClickBtnLeft: () {

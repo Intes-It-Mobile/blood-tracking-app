@@ -24,6 +24,8 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
   DateTime? date;
   late BuildContext context;
   bool checkError = false;
+  bool checkEmpty = false;
+  String? st;
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +102,24 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
             padding: const EdgeInsets.only(top: 8.0, bottom: 10),
             child: SortHeartRate(
               indicator: info!.indicator,
-              onChangedIndicator: (int n) {
-                setState(() {
+              onChangedIndicator: (newValue) {
+                st = newValue;
+                if (newValue != "" && newValue != null){
+                  int n = int.tryParse(newValue)??0;
                   info!.indicator = n;
-                });
+                }
+                setState(() {});
               },
             ),
           ),
-          if (checkError)
+          if (checkEmpty)
+            Center(
+              child: Text(
+                AppLocalizations.of(context).getTranslate("enter_value"),
+                style: AppTheme.errorText,
+              ),
+            ),
+          if (!checkEmpty && checkError)
             Center(
               child: Text(
                 AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
@@ -126,14 +138,10 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
         onTap: () {
-          if (info!.indicator < 1 || info!.indicator > 120) {
-            checkError = true;
-          } else {
-            checkError = false;
-          }
-          if (checkError) {
-            setState(() {});
-          } else {
+          checkEmpty = (st == "" || st == null);
+          checkError = (info!.indicator < 1 || info!.indicator > 120);
+          setState(() {});
+          if (!checkError && !checkEmpty) {
             ShowDialogCustom().showDialogCustom(
               context: context,
               title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
