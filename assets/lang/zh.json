@@ -95,7 +95,7 @@
   "delete": "删除",
   "keep": "抓住",
   "you_have_not_record": "您还没有创建任何记录",
-  "wanna_exit": "您真的想摆脱血糖追踪吗？",
+  "wanna_exit": "你真的想退出嗎 Blood Sugar Tracking？",
   "intro1": "快速数据输入和\n智能统计",
   "intro2": "灵活变更单位\n改变范围",
   "intro3": "提示您输入\n你的个人资料",
@@ -118,7 +118,7 @@
   "no_alarms_set": "沒有設置鬧鐘",
   "All": "全部",
   "save_changes_button":"保存更改",
-  "err_correct_value": "请输入正确的值！"
+  "err_correct_value": "请输入正确的值！",
   "status": "地位",
   "personal_data": "個人資料",
   "choose_your_gender": "選擇您的性別",

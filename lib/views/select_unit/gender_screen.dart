@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../controllers/information/information_item.dart';
 import '../../models/information/information.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
@@ -16,14 +17,7 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-  List<Information> information = [
-    Information(
-      gender: 'Male',
-    ),
-    Information(
-      gender: 'Female',
-    ),
-  ];
+
 
   int _selectedIndex = -1;
   Information informations = Information();
@@ -48,7 +42,7 @@ class _GenderScreenState extends State<GenderScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.23,
                 child: ListView.builder(
-                  itemCount: information.length,
+                  itemCount: ListInformation().information.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
@@ -75,7 +69,7 @@ class _GenderScreenState extends State<GenderScreen> {
                                 : Colors.white),
                         child: Center(
                           child: Text(
-                            information[index].gender.toString(),
+                            ListInformation().information[index].gender.toString(),
                           ),
                         ),
                       ),
@@ -90,11 +84,19 @@ class _GenderScreenState extends State<GenderScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-               // Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDataScreen(name: information[value!.toInt()].gender)));
-                  Navigator.of(context).pushNamed(Routes.old_screen);
-                setState(() {
-                  Navigator.of(context).pushNamed(Routes.personal_data);
-                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PersonalDataScreen(
+                      name: ListInformation().information[value!.toInt()].name,
+                      gender: ListInformation().information[value!.toInt()].gender,
+                    ),
+                  ),
+                );
+                // Navigator.of(context).pushNamed(Routes.old_screen);
+                // setState(() {
+                //   Navigator.of(context).pushNamed(Routes.personal_data);
+                // });
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

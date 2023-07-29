@@ -92,7 +92,7 @@
   "delete": "Borrar",
   "keep": "Mantener",
   "you_have_not_record": "Aún no has creado ningún registro",
-  "wanna_exit": "¿Realmente desea salir del control de azúcar en la sangre?",
+  "wanna_exit": "Realmente desea salir Blood Sugar Tracking?",
   "stay": "Permanecer",
   "exit": "Salida",
   "skip_all": "Saltar todo",
@@ -120,7 +120,7 @@
   "no_alarms_set": "Sin alarma configurada",
   "All": "Todo",
   "save_changes_button":"Guardar cambios",
-  "err_correct_value": "Por favor, introduzca el valor correcto."
+  "err_correct_value": "Por favor, introduzca el valor correcto.",
   "status": "Estado",
   "personal_data": "Información personal",
   "choose_your_gender": "Elige tu género",

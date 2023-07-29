@@ -1,4 +1,5 @@
 class Information {
+  String? name;
    String? gender;
    int? old;
    int? weight;
@@ -9,5 +10,6 @@ class Information {
      this.old,
      this.weight,
      this.tall,
+    this.name
   });
 }
