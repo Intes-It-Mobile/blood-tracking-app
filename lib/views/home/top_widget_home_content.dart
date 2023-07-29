@@ -149,7 +149,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     "after_exercise",
     "asleep"
   ];
-  Conditions emptyItem = Conditions(id: -1, name: "all");
+  Conditions emptyItem = Conditions(id: -1, name: "All");
   String? selectedValue;
   bool showDropdown = false;
   List<Conditions>? listConditionsAll = [];

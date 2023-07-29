@@ -171,6 +171,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setchoosedDayTime(timeNow!);
       sugarInfoStore!.setStatusLevel("low");
       sugarInfoStore!.setChooseCondition(0);
+      sugarInfoStore!.errorText = "";
       if (sugarInfoStore!.isSwapedToMol == false) {
         sugarInfoStore!.setInputSugarAmount(80);
         sugarInfoStore!.sugarAmountController.text = "80.0";
@@ -439,17 +440,19 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                   .setInputSugarAmount(
                                                       double.parse(value));
                                               sugarInfoStore!
-                                                  .checkValidateNewRecord();
+                                                  .checkValidateNewRecord(
+                                                      context);
                                             },
                                             textAlign: TextAlign.center,
                                             onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.tryParse(value)!);
                                               sugarInfoStore!
-                                                  .checkValidateNewRecord();
+                                                  .checkValidateNewRecord(
+                                                      context);
                                               print(value);
-                                              FocusScope.of(context).unfocus();
                                               addZeroToDecimal();
                                               // Navigator.of(context).pop();
                                             },
@@ -499,7 +502,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             print("Check Saving:${sugarInfoStore!.isSaving}");
                             if (sugarInfoStore!.isSaving == false) {
                               sugarInfoStore!.isSaving = true;
-                              sugarInfoStore!.checkValidateNewRecord();
+                              sugarInfoStore!.checkValidateNewRecord(context);
                               Future.delayed(Duration(milliseconds: 200), () {
                                 if (sugarInfoStore!.errorText == null ||
                                     sugarInfoStore!.errorText == "") {

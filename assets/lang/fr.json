@@ -82,8 +82,8 @@
     "after_exercise":"Après l'exercice",
     "asleep":"Endormi",
 
-    "errow_sugar_input_text":"Veuillez entrer une valeur correcte entre 18 et 630 mg/dL.",
-    "errow_sugar_input1_text":"Veuillez entrer une valeur correcte entre 1-35 mmol/L.",
+    "errow_sugar_input_mg_text":"Veuillez entrer une valeur correcte entre 18 et 630 mg/dL.",
+    "errow_sugar_input_mmol_text":"Veuillez entrer une valeur correcte entre 1-35 mmol/L.",
     "save_record":"Enregistrer",
     "version":" version",
     "1.0.0":" 1.0.0",
@@ -129,7 +129,9 @@
     "next": "Suivant",
     "sugar_amount": "Quantité de sucre",
     "no_alarms_set": "Aucune alarme définie",
-    "all_1": "Tout",
+    "All": "Tout",
+    "save_changes_button":"Sauvegarder les modifications",
+    "err_correct_value": "Veuillez entrer la valeur correcte !"
     "status": "Statut",
     "personal_data": "Données personnelles",
     "choose_your_gender": "Choisissez votre genre",
