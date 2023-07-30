@@ -2,6 +2,7 @@ import 'package:blood_sugar_tracking/AppLanguage.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
+import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/views/language/language.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
           ),
           Provider<EditRecordStore>(
             create: (_) => EditRecordStore(),
+          ),
+          ChangeNotifierProvider<InformationNotifier>(
+            create: (context) => InformationNotifier(),
+            child: const SplashScreen(),
           ),
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {

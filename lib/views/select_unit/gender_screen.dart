@@ -1,6 +1,9 @@
+import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
+import 'package:blood_sugar_tracking/views/select_unit/old_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
@@ -17,8 +20,6 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-
-
   int _selectedIndex = -1;
   Information informations = Information();
   int? value;
@@ -69,7 +70,10 @@ class _GenderScreenState extends State<GenderScreen> {
                                 : Colors.white),
                         child: Center(
                           child: Text(
-                            ListInformation().information[index].gender.toString(),
+                            ListInformation()
+                                .information[index]
+                                .gender
+                                .toString(),
                           ),
                         ),
                       ),
@@ -84,19 +88,13 @@ class _GenderScreenState extends State<GenderScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PersonalDataScreen(
-                      name: ListInformation().information[value!.toInt()].name,
-                      gender: ListInformation().information[value!.toInt()].gender,
-                    ),
-                  ),
+
+                Information information = Information(
+                  gender: ListInformation().information[value!.toInt()].gender,
                 );
-                // Navigator.of(context).pushNamed(Routes.old_screen);
-                // setState(() {
-                //   Navigator.of(context).pushNamed(Routes.personal_data);
-                // });
+                Provider.of<InformationNotifier>(context, listen: false).setInformationData(information);
+                PersonalDataScreen();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => OldScreen()));
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",
