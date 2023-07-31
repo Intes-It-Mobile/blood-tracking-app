@@ -14,6 +14,7 @@ import '../../routes.dart';
 import 'package:excel/excel.dart';
 
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/share_local.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -44,29 +45,48 @@ abstract class _SugarInfoStoreBase with Store {
 
   get sugarInfoStore => null;
 
+  Future<void> checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Đây là lần đầu tiên người dùng vào ứng dụng, hãy lưu giá trị false vào SharedPreferences.
+    prefs.setBool('isFirstTime', false);
+  }
+
   @action
-  getRootSugarInfo(SugarInfo? fromSharepref) {
+  getRootSugarInfo(SugarInfo? fromSharepref) async {
+    bool isFirstTime;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    isFirstTime = prefs.getBool('isFirstTime') ?? true;
     rootSugarInfo = fromSharepref;
     if (isSwapedToMol == false) {
       listRootConditions = fromSharepref!.conditions;
       setValueToListFilter(listRootConditions);
     }
     if (isSwapedToMol == true) {
-      listRootConditions = fromSharepref!.conditions;
-      for (var condition in listRootConditions!) {
-        if (condition.sugarAmount != null) {
-          for (var sugarAmount in condition.sugarAmount!) {
-            if (sugarAmount.minValue != null) {
-              sugarAmount.minValue = sugarAmount.minValue! / 18;
-            }
-            if (sugarAmount.maxValue != null) {
-              sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+      if (isFirstTime != false) {
+        listRootConditions = fromSharepref!.conditions;
+        for (var condition in listRootConditions!) {
+          if (condition.sugarAmount != null) {
+            for (var sugarAmount in condition.sugarAmount!) {
+              if (sugarAmount.minValue != null) {
+                sugarAmount.minValue = sugarAmount.minValue! / 18;
+                print("Diivisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+              }
+              if (sugarAmount.maxValue != null) {
+                sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+                print("Diivisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+              }
             }
           }
         }
+        setValueToListFilter(listRootConditions);
+      } else {
+        listRootConditions = fromSharepref!.conditions;
+        setValueToListFilter(listRootConditions);
       }
-      setValueToListFilter(listRootConditions);
     }
+    checkFirstTime();
   }
 
   @action
@@ -105,21 +125,29 @@ abstract class _SugarInfoStoreBase with Store {
     //  Lớn hơn >= min, nhỏ hơn max
     if (isSwapedToMol == false) {
       if (inputAmount >= 18 || inputAmount <= 630) {
-        currentStatus = chooseCondition!.sugarAmount!
-            .where((e) =>
-                e.minValue! * 1.0 <= inputAmount &&
-                inputAmount < e.maxValue! * 1.0)
-            .first
-            .status;
+        if (inputAmount < 630) {
+          currentStatus = chooseCondition!.sugarAmount!
+              .where((e) =>
+                  e.minValue! * 1.0 <= inputAmount &&
+                  inputAmount < e.maxValue! * 1.0)
+              .first
+              .status;
+        } else {
+          currentStatus = "diabetes";
+        }
       }
     } else if (isSwapedToMol == true) {
       if (inputAmount >= 1 || inputAmount <= 35) {
-        currentStatus = chooseCondition!.sugarAmount!
-            .where((e) =>
-                e.minValue! * 1.0 <= inputAmount &&
-                inputAmount < e.maxValue! * 1.0)
-            .first
-            .status;
+        if (inputAmount < 35) {
+          currentStatus = chooseCondition!.sugarAmount!
+              .where((e) =>
+                  e.minValue! * 1.0 <= inputAmount &&
+                  inputAmount < e.maxValue! * 1.0)
+              .first
+              .status;
+        } else {
+          currentStatus = "diabetes";
+        }
       }
     }
   }
@@ -346,6 +374,15 @@ abstract class _SugarInfoStoreBase with Store {
       // Tìm SugarAmount tương ứng với giá trị value
       for (var sugarAmount in condition.sugarAmount!) {
         if (sugarAmount.minValue != null && sugarAmount.maxValue != null) {
+          if (isSwapedToMol == true) {
+            if (value == 35) {
+              return "diabetes";
+            }
+          } else {
+            if (value == 630) {
+              return "diabetes";
+            }
+          }
           if (value >= sugarAmount.minValue! && value < sugarAmount.maxValue!) {
             return sugarAmount.status ?? "Unknown";
           }
@@ -495,6 +532,7 @@ abstract class _SugarInfoStoreBase with Store {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isSwapedToMol', isSwapedToMol);
     saveListRecord(listRecords);
+    saveRootConditionToSharedPreferences(rootSugarInfo!);
   }
 
   Future<void> getIsSwapedToMol() async {
@@ -1001,9 +1039,22 @@ abstract class _SugarInfoStoreBase with Store {
         return false;
       }
 
+      if (isSwapedToMol == true) {
+        if (minValue > 35 || maxValue > 35) {
+          print("Mol Error in : $i");
+          return false;
+        }
+      } else {
+        if (minValue > 630 || maxValue > 630) {
+          print("mg Error in : $i");
+          return false;
+        }
+      }
+
       if (i > 0) {
         double? prevMaxValue = tempConditionDisplay[i - 1].maxValue;
-        if (prevMaxValue == null || prevMaxValue >= maxValue) {
+        if (prevMaxValue == null || prevMaxValue > maxValue) {
+          print("error compare");
           return false;
         }
       }

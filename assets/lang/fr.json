@@ -131,5 +131,7 @@
     "no_alarms_set": "Aucune alarme définie",
     "All": "Tout",
     "save_changes_button":"Sauvegarder les modifications",
-    "err_correct_value": "Veuillez entrer la valeur correcte !"
+    "err_correct_value": "Veuillez entrer la valeur correcte !",
+    "blood_sugar_txt": "Glycémie",
+	"heart_rate_txt": "Fréquence cardiaque"
 }

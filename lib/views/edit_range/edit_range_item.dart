@@ -25,7 +25,8 @@ class EditRangeItem extends StatefulWidget {
       this.minValue,
       this.status,
       this.onEdit,
-      this.isLastItem});
+      this.isLastItem
+    });
 
   @override
   State<EditRangeItem> createState() => _EditRangeItemState();
@@ -36,6 +37,8 @@ class _EditRangeItemState extends State<EditRangeItem> {
   EditRangeStore? editRangeStore;
   TextEditingController maxValueController = TextEditingController();
   List<SugarAmount> tempConditionDisplay = [];
+
+
   bool? can = false;
   @override
   void initState() {
@@ -139,7 +142,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
                                 inputFormatters: [
                                   CustomInputFormatter(),
                                   FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                      RegExp(r'^\d{0,3}\.?\d{0,1}')),
                                 ],
                                 // inputFormatters: [
                                 //   LengthLimitingTextInputFormatter(5),

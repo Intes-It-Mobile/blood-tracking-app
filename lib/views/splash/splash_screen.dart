@@ -6,6 +6,7 @@ import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobx/mobx.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../routes.dart';
@@ -60,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.didChangeDependencies();
   }
 
+  
   Future<String> getJson() {
     return rootBundle.loadString(jsonPath);
   }

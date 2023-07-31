@@ -120,5 +120,7 @@
   "no_alarms_set": "No alarm set",
   "All": "All",
   "save_changes_button": "Save changes",
-  "err_correct_value": "Please enter the correct value!"
+  "err_correct_value": "Please enter the correct value!",
+  "blood_sugar_txt":"Blood sugar",
+  "heart_rate_txt":"Heart rate"
 }

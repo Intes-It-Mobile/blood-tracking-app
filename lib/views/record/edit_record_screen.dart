@@ -401,7 +401,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                   // Allow Decimal Number With Precision of 2 Only
                                                   FilteringTextInputFormatter
                                                       .allow(RegExp(
-                                                          r'^\d{0,3}\.?\d{0,2}')),
+                                                          r'^\d{0,3}\.?\d{0,1}')),
                                                 ],
                                                 controller: editRecordStore!
                                                     .sugarAmountEditControllerEdit,

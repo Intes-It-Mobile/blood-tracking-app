@@ -24,6 +24,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
   SugarInfoStore? sugarInfoStore;
   List<SugarAmount> tempCondition = [];
   EditRangeStore? editRangeStore;
+  FocusNode focusNode = FocusNode();
   bool? isMol;
   @override
   void didChangeDependencies() {
@@ -31,10 +32,14 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     sugarInfoStore!.getTempCondition(widget.conditionId!);
     setState(() {
-isMol = sugarInfoStore!.isSwapedToMol;
+      isMol = sugarInfoStore!.isSwapedToMol;
     });
     editRangeStore!.tempConditionDisplay = sugarInfoStore!.tempConditionDisplay;
     super.didChangeDependencies();
+  }
+
+  void _onButtonPressed() {
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -120,6 +125,7 @@ isMol = sugarInfoStore!.isSwapedToMol;
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      FocusScope.of(context).unfocus();
                       if (sugarInfoStore!.canSave() == false) {
                         showSnackbarOverlay(context,
                             "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");

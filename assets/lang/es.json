@@ -120,6 +120,8 @@
   "no_alarms_set": "Sin alarma configurada",
   "All": "Todo",
   "save_changes_button":"Guardar cambios",
-  "err_correct_value": "Por favor, introduzca el valor correcto."
+  "err_correct_value": "Por favor, introduzca el valor correcto.",
+  "blood_sugar_txt": "Azúcar en sangre",
+	"heart_rate_txt": "Frecuencia cardiaca"
 
 }

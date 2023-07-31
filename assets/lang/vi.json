@@ -118,5 +118,7 @@
     "no_alarms_set": "Không có báo thức nào",
     "All": "Tất cả",
     "save_changes_button":"Lưu thay đổi",
-    "err_correct_value": "Vui lòng nhập đúng giá trị!"
+    "err_correct_value": "Vui lòng nhập đúng giá trị!",
+    "blood_sugar_txt": "Đường huyết",
+	"heart_rate_txt": "Nhịp tim"
 }
