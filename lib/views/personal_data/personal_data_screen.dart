@@ -12,21 +12,18 @@ import '../../utils/locale/appLocalizations.dart';
 
 class PersonalDataScreen extends StatefulWidget {
   // Information? information;
-  PersonalDataScreen({super.key,
-      //   this.information,
-      });
+  PersonalDataScreen({
+    super.key,
+    //   this.information,
+  });
 
   @override
   State<PersonalDataScreen> createState() => _PersonalDataScreenState();
 }
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
-  List<Information> information = [];
-
   @override
   Widget build(BuildContext context) {
-    Information? information =
-        Provider.of<InformationNotifier>(context).information;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -60,177 +57,185 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 108,
-                    margin: const EdgeInsets.only(left: 15,right: 8),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Gender",
-                              style: AppTheme.Headline16Text.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+      body: Consumer<InformationNotifier>(builder: (context, provider, _) {
+        Information? information = provider.getUserData('information_key');
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 108,
+                      margin: const EdgeInsets.only(left: 15, right: 8),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Gender",
+                                style: AppTheme.Headline16Text.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(Assets.iconEdit)
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          information!.gender.toString(),
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                              const Spacer(),
+                              SvgPicture.asset(Assets.iconEdit)
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          information != null
+                              ? Text(
+                                  information.gender.toString(),
+                                  style: AppTheme.Headline20Text.copyWith(
+                                      color: AppColors.AppColor4,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              : const Text('error')
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 108,
-                    margin: const EdgeInsets.only(right: 15,left: 8),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Age",
-                              style: AppTheme.Headline16Text.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+                  Expanded(
+                    child: Container(
+                      height: 108,
+                      margin: const EdgeInsets.only(right: 15, left: 8),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Age",
+                                style: AppTheme.Headline16Text.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(Assets.iconEdit)
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          information.old.toString(),
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                              const Spacer(),
+                              SvgPicture.asset(Assets.iconEdit)
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          information != null ?  Text(
+                            information.old.toString(),
+                            style: AppTheme.Headline20Text.copyWith(
+                                color: AppColors.AppColor4,
+                                fontWeight: FontWeight.w500),
+                          ) : const Text('error')
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 108,
-                    margin: const EdgeInsets.only(left: 15,right: 8),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                             'Weight',
-                              style: AppTheme.Headline16Text.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 108,
+                      margin: const EdgeInsets.only(left: 15, right: 8),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Weight',
+                                style: AppTheme.Headline16Text.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(Assets.iconEdit)
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          information.gender.toString(),
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                              const Spacer(),
+                              SvgPicture.asset(Assets.iconEdit)
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          information != null ? Text(
+                            information.gender.toString(),
+                            style: AppTheme.Headline20Text.copyWith(
+                                color: AppColors.AppColor4,
+                                fontWeight: FontWeight.w500),
+                          ) : const Text("error")
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 108,
-                    margin: const EdgeInsets.only(right: 15,left: 8),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor3,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Height",
-                              style: AppTheme.Headline16Text.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+                  Expanded(
+                    child: Container(
+                      height: 108,
+                      margin: const EdgeInsets.only(right: 15, left: 8),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Height",
+                                style: AppTheme.Headline16Text.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(Assets.iconEdit)
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          information.gender.toString(),
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                              const Spacer(),
+                              SvgPicture.asset(Assets.iconEdit)
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        information != null ?  Text(
+                            information.gender.toString(),
+                            style: AppTheme.Headline20Text.copyWith(
+                                color: AppColors.AppColor4,
+                                fontWeight: FontWeight.w500),
+                          ) : const Text('error')
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 }
