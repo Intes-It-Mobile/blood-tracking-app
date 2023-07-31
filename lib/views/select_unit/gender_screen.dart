@@ -24,7 +24,6 @@ class GenderScreen extends StatefulWidget {
 
 class _GenderScreenState extends State<GenderScreen> {
   int _selectedIndex = -1;
-  Information informations = Information();
   int? value;
 
   @override
@@ -99,8 +98,10 @@ class _GenderScreenState extends State<GenderScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                informations = Information(gender: ListInformation().information[value!.toInt()].gender);
-                informationNotifier.saveUserData('information_key', informations);
+                informationNotifier.informations = Information(gender: ListInformation().information[value!.toInt()].gender);
+                informationNotifier.informationList.add(informationNotifier.informations);
+                informationNotifier.saveUserData('information_key', informationNotifier.informations);
+                print("gender: ${informationNotifier.informations}");
              //   Provider.of<InformationNotifier>(context, listen: false).setInformationData(information);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => OldScreen()));
 

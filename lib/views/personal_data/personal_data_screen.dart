@@ -58,6 +58,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         ),
       ),
       body: Consumer<InformationNotifier>(builder: (context, provider, _) {
+        InformationNotifier informationNotifier =
+        Provider.of<InformationNotifier>(context);
         Information? information = provider.getUserData('information_key');
         return Column(
           children: [
@@ -96,7 +98,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           information != null
                               ? Text(
-                                  information.gender.toString(),
+                            informationNotifier.informationList[0].gender.toString(),
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -136,7 +138,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             height: 15,
                           ),
                           information != null ?  Text(
-                            information.old.toString(),
+                            informationNotifier.informationList[0].old.toString(),
                             style: AppTheme.Headline20Text.copyWith(
                                 color: AppColors.AppColor4,
                                 fontWeight: FontWeight.w500),
@@ -182,7 +184,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             height: 15,
                           ),
                           information != null ? Text(
-                            information.gender.toString(),
+                            '${informationNotifier.informationList[2].weight.toString()}' + '(kg)',
                             style: AppTheme.Headline20Text.copyWith(
                                 color: AppColors.AppColor4,
                                 fontWeight: FontWeight.w500),
@@ -221,7 +223,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             height: 15,
                           ),
                         information != null ?  Text(
-                            information.gender.toString(),
+                          '${informationNotifier.informationList[2].tall.toString()}' + '(cm)',
                             style: AppTheme.Headline20Text.copyWith(
                                 color: AppColors.AppColor4,
                                 fontWeight: FontWeight.w500),

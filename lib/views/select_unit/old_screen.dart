@@ -21,7 +21,6 @@ class OldScreen extends StatefulWidget {
 }
 
 class _OldScreenState extends State<OldScreen> {
-  Information information = Information();
   int currentValue = 25;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
@@ -58,9 +57,9 @@ class _OldScreenState extends State<OldScreen> {
                     setState(() {
                       int age = controllerWC.initialItem;
                       age = value;
-                     information.old = age;
+                      informationNotifier.informations.old = age;
                       print("tuổi: ${age}");
-                      print("dasdasddas: ${information.old?.toInt()}");
+                      print("dasdasddas: ${informationNotifier.informations.old?.toInt()}");
                     });
                   },
                   maxValue: 115,
@@ -80,13 +79,15 @@ class _OldScreenState extends State<OldScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                Information informations = Information(
-                  old: information.old?.toInt()
+                informationNotifier.informations = Information(
+                  old: informationNotifier.informations.old?.toInt()
                 );
                // Provider.of<InformationNotifier>(context, listen: false).update(informations);
-                print("age: ${information.old}");
-                informationNotifier.saveInformationData('information_key', informations);
-                Navigator.of(context).pushNamed(Routes.personal_data);
+                print("age: ${informationNotifier.informations.old}");
+                informationNotifier.informationList.add(informationNotifier.informations);
+                informationNotifier.saveUserData('information_key', informationNotifier.informations);
+                Navigator.of(context).pushNamed(Routes.weight_screen);
+                print('danh sach: ${informationNotifier.informationList.length}');
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

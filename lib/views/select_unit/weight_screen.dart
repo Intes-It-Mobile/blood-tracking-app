@@ -1,8 +1,11 @@
+import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../models/information/information.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
@@ -14,8 +17,18 @@ class WeightScreen extends StatefulWidget {
 }
 
 class _WeightScreenState extends State<WeightScreen> {
+  int currentValue = 25;
+  FixedExtentScrollController controllerWC = FixedExtentScrollController();
+
+  @override
+  void initState() {
+    controllerWC = FixedExtentScrollController(initialItem: currentValue);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    InformationNotifier informationNotifier =
+    Provider.of<InformationNotifier>(context);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -33,19 +46,18 @@ class _WeightScreenState extends State<WeightScreen> {
               Container(
                 height: 300,
                 child: WheelChooser.integer(
-                  onValueChanged: (old) {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => PersonalDataScreen(
-                    //       old: s,
-                    //     ),
-                    //   ),
-                    // );
+                  onValueChanged: (value) {
+                    setState(() {
+                      int weight = controllerWC.initialItem;
+                      weight = value;
+                      informationNotifier.informations.weight = weight;
+                      print("cân nặng: ${weight}");
+                      print("dasdasddas: ${informationNotifier.informations.weight?.toInt()}");
+                    });
                   },
                   maxValue: 400,
                   minValue: 1,
-                  initValue: 25,
+                  initValue: currentValue,
                   selectTextStyle: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
                   unSelectTextStyle: const TextStyle(color: Colors.grey),
@@ -58,10 +70,15 @@ class _WeightScreenState extends State<WeightScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                // Navigator.of(context).pushNamed(Routes.gender_screen);
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => PersonalDataScreen(
-                //   name: information[_selectedIndex].gender,
-                // )));
+                informationNotifier.informations = Information(
+                    weight: informationNotifier.informations.weight?.toInt()
+                );
+                // Provider.of<InformationNotifier>(context, listen: false).update(informations);
+                print("age: ${informationNotifier.informations.weight}");
+                informationNotifier.informationList.add(informationNotifier.informations);
+                informationNotifier.saveUserData('information_key', informationNotifier.informations);
+                Navigator.of(context).pushNamed(Routes.weight_screen);
+                print('danh sach: ${informationNotifier.informationList.length}');
                 Navigator.of(context).pushNamed(Routes.tall_screen);
               },
               child: Text(
