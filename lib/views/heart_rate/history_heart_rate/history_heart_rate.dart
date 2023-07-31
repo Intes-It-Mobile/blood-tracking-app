@@ -2,6 +2,7 @@ import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/constants/font_family.dart';
+import 'package:blood_sugar_tracking/controllers/stores/heart_rate_store.dart';
 import 'package:blood_sugar_tracking/models/heart_rate/heart_rate_info.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
@@ -9,30 +10,41 @@ import 'package:blood_sugar_tracking/views/heart_rate/history_heart_rate/history
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HistoryHeartRateScreen extends StatelessWidget {
-  HistoryHeartRateScreen({super.key});
-  List<HeartRateInfo> history = [
-    HeartRateInfo(
-      date: DateTime(2017, 9, 7, 8, 30), 
-      indicator: 120
-    ),
-    HeartRateInfo(
-      date: DateTime(2017, 9, 7, 17, 30), 
-      indicator: 60
-    ),
-    HeartRateInfo(
-      date: DateTime(2017, 9, 7, 17, 30), 
-      indicator: 100
-    ),
-  ];
+class HistoryHeartRateScreen extends StatefulWidget {
+  const HistoryHeartRateScreen({super.key});
+
+  @override
+  State<HistoryHeartRateScreen> createState() => _HistoryHeartRateScreenState();
+}
+
+class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
+  late List<HeartRateInfo> history;
   late BuildContext context;
+
+  Future<List<HeartRateInfo>> loadData() async {
+    HeartRateStore heartRateStore = HeartRateStore();
+    await heartRateStore.getListRecords();
+    return heartRateStore.listRecord ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
     this.context = context;
     return Scaffold(
       appBar: _buildAppBarCustom(),
-      body: _buildBody(),
+      body:  FutureBuilder(
+        future:  loadData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasData) {
+            history = snapshot.data;
+            return _buildBody();
+          }
+          return Container();
+        },
+      ),
     );
   }
 
@@ -65,6 +77,7 @@ class HistoryHeartRateScreen extends StatelessWidget {
   }
 
   Widget _buildBody(){
+    history.sort((a, b) => b.date!.compareTo(a.date!));
     return Container(
       margin: EdgeInsets.fromLTRB(27, 16, 27, 16),
       child: GridView.count(
@@ -72,10 +85,22 @@ class HistoryHeartRateScreen extends StatelessWidget {
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         crossAxisCount: 2,
-        children: List.generate(
-          history.length, 
-          (index) 
-            => HistoryHeartRateRecord(info: history[index])
+        children: List.generate(history.length, (index) {
+            return HistoryHeartRateRecord(
+              info: history[index], 
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  Routes.edit_record_heart_rate, 
+                  arguments: history[index]
+                ).then((onValue) async {
+                  if (onValue as bool == true){
+                    history = await loadData();
+                    setState(() {});
+                  }
+                });
+              },
+            );    
+          }
         ),
       )
     );

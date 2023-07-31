@@ -10,7 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class HistoryHeartRateRecord extends StatelessWidget {
-  HistoryHeartRateRecord({super.key, required this.info});
+  HistoryHeartRateRecord({super.key, required this.info, required this.onClick});
+  final Function() onClick;
   final HeartRateInfo info;
   late BuildContext context;
 
@@ -18,9 +19,7 @@ class HistoryHeartRateRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.edit_record_heart_rate, arguments: info);
-      },
+      onTap: onClick,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         decoration: BoxDecoration(
@@ -63,7 +62,7 @@ class HistoryHeartRateRecord extends StatelessWidget {
       color: Colors.black
     );
     return Text(
-      DateFormat('yyyy/MM/dd  HH:mm').format(info.date),
+      DateFormat('yyyy/MM/dd  HH:mm').format(info.date??DateTime.now()),
       maxLines: 1,
       style: textStyle,
       overflow: TextOverflow.ellipsis,
@@ -101,6 +100,7 @@ class HistoryHeartRateRecord extends StatelessWidget {
   }
 
   Widget _buildStatusCustom() {
+    info.indicator ??= 0;
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -117,9 +117,9 @@ class HistoryHeartRateRecord extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         Text(
-          info.indicator > 100
+          info.indicator! > 100
             ? "Fast"
-            : info.indicator > 60
+            : info.indicator! > 60
               ? "Normal"
               : "Slow",
           style: TextStyle(
@@ -127,9 +127,9 @@ class HistoryHeartRateRecord extends StatelessWidget {
             fontFamily: FontFamily.IBMPlexSans,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,
-            color: info.indicator > 100
+            color: info.indicator! > 100
                       ? AppColors.DiabetesStt
-                      : info.indicator > 60
+                      : info.indicator! > 60
                         ? AppColors.NormalStt
                         : AppColors.LowStt,
           ),

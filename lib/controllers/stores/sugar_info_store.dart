@@ -385,7 +385,6 @@ abstract class _SugarInfoStoreBase with Store {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String jsonString = json.encode(listRecords.toJson());
       prefs.setString('myObjectKey', jsonString);
-
       print("Save to shprf: ${listRecords.listRecord!.length} ");
     }
   }

@@ -9,7 +9,7 @@ class ShowDialogCustom {
     required String contentLeft,  
     required String contentRight,
     required Function() onClickBtnLeft,
-    required Function() onClickBtRight,
+    required Function() onClickBtnRight,
   }) async {
     return showDialog(
       context: context,
@@ -52,7 +52,7 @@ class ShowDialogCustom {
                   const SizedBox(width: 23),
                   Expanded(
                     child: GestureDetector(
-                      onTap: onClickBtRight,
+                      onTap: onClickBtnRight,
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 9),
                         decoration: const BoxDecoration(

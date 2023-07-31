@@ -2,15 +2,18 @@ import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/constants/font_family.dart';
+import 'package:blood_sugar_tracking/controllers/stores/heart_rate_store.dart';
 import 'package:blood_sugar_tracking/models/heart_rate/heart_rate_info.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
 import 'package:blood_sugar_tracking/views/heart_rate/widgets/custom_datetime.dart';
 import 'package:blood_sugar_tracking/views/heart_rate/widgets/show_dialog_custom.dart';
 import 'package:blood_sugar_tracking/views/heart_rate/widgets/sort_heart_rate.dart';
 import 'package:blood_sugar_tracking/widgets/button_widget.dart';
+import 'package:blood_sugar_tracking/widgets/sucess_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class NewRecordHeartRateScreen extends StatefulWidget {
   const NewRecordHeartRateScreen({super.key});
@@ -101,7 +104,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 10),
             child: SortHeartRate(
-              indicator: info!.indicator,
+              indicator: info?.indicator??0,
               onChangedIndicator: (newValue) {
                 st = newValue;
                 if (newValue != "" && newValue != null){
@@ -132,37 +135,50 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
     );
   }
 
+  bool loadData = false;
+
   Widget _buildBtnSaveRecord() {
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           setState(() {
             checkEmpty = (st == "" || st == null);
-            checkError = (info!.indicator < 1 || info!.indicator > 120);
+            checkError = ((info?.indicator??0) < 1 || (info?.indicator??0) > 120);
           });
           if (!checkError && !checkEmpty) {
-            ShowDialogCustom().showDialogCustom(
-              context: context,
-              title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
-              contentLeft: AppLocalizations.of(context).getTranslate('keep'),
-              contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
-              onClickBtRight: () {
-                Navigator.of(context).pop();
-              },
-              onClickBtnLeft: () {
-                Navigator.of(context).pop();
-              },
-            );
+            await _saveRecord();
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => SucessDialog());
+            Future.delayed(Duration(seconds: 1), () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            });
           }
         },
-        child: ButtonWidget(
-          btnText: "save_record",
-          btnColor: AppColors.AppColor4,
-          mainAxisSizeMin: true,
-        ),
+        child: loadData
+        ? Container()
+        : ButtonWidget(
+            btnText: "save_record",
+            btnColor: AppColors.AppColor4,
+            mainAxisSizeMin: true,
+          ),
       ),
     );
+  }
+
+  Future<bool> _saveRecord() async {
+    HeartRateStore heartRateStore = HeartRateStore();
+    await heartRateStore.saveNewRecord(
+      HeartRateInfo(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        date: date,
+        indicator: info!.indicator,
+      )
+    );
+    return true;
+    
   }
 }
