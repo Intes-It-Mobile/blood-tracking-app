@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
 import '../../constants/app_theme.dart';
@@ -21,14 +24,18 @@ class _OldScreenState extends State<OldScreen> {
   Information information = Information();
   int currentValue = 25;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
+
   @override
   void initState() {
    controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    InformationNotifier informationNotifier =
+    Provider.of<InformationNotifier>(context);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -51,7 +58,7 @@ class _OldScreenState extends State<OldScreen> {
                     setState(() {
                       int age = controllerWC.initialItem;
                       age = value;
-                      information.old = age;
+                     information.old = age;
                       print("tuổi: ${age}");
                       print("dasdasddas: ${information.old?.toInt()}");
                     });
@@ -76,10 +83,10 @@ class _OldScreenState extends State<OldScreen> {
                 Information informations = Information(
                   old: information.old?.toInt()
                 );
-                Provider.of<InformationNotifier>(context, listen: false).setInformationData(informations);
+               // Provider.of<InformationNotifier>(context, listen: false).update(informations);
                 print("age: ${information.old}");
-                PersonalDataScreen();
-                Navigator.of(context).pushNamed(Routes.weight_screen);
+                informationNotifier.saveInformationData('information_key', informations);
+                Navigator.of(context).pushNamed(Routes.personal_data);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

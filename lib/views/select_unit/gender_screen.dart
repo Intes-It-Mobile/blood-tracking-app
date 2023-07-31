@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/old_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
@@ -25,7 +28,14 @@ class _GenderScreenState extends State<GenderScreen> {
   int? value;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    InformationNotifier informationNotifier =
+    Provider.of<InformationNotifier>(context);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -74,6 +84,7 @@ class _GenderScreenState extends State<GenderScreen> {
                                 .information[index]
                                 .gender
                                 .toString(),
+                            style: AppTheme.Headline20Text.copyWith(fontWeight: FontWeight.w600,color: index == _selectedIndex ? Colors.white : AppColors.AppColor2 ),
                           ),
                         ),
                       ),
@@ -88,13 +99,11 @@ class _GenderScreenState extends State<GenderScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-
-                Information information = Information(
-                  gender: ListInformation().information[value!.toInt()].gender,
-                );
-                Provider.of<InformationNotifier>(context, listen: false).setInformationData(information);
-                PersonalDataScreen();
+                informations = Information(gender: ListInformation().information[value!.toInt()].gender);
+                informationNotifier.saveUserData('information_key', informations);
+             //   Provider.of<InformationNotifier>(context, listen: false).setInformationData(information);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => OldScreen()));
+
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

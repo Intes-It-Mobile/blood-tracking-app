@@ -5,7 +5,8 @@ import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
-import 'package:blood_sugar_tracking/views/language/language.dart';
+import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
+import 'package:blood_sugar_tracking/views/select_unit/gender_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
 void main() async {
+   // await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // transparent status bar
       statusBarIconBrightness: Brightness.dark // dark text for status bar
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<InformationNotifier>(
             create: (context) => InformationNotifier(),
-            child: const SplashScreen(),
+            child:  const GenderScreen(),
           ),
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
