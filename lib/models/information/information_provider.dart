@@ -8,7 +8,6 @@ class InformationNotifier extends ChangeNotifier {
   Information? _information;
    SharedPreferences? _prefs;
   Information informations = Information();
-
    List<Information> informationList = [];
 
   Information? get information => _information;
@@ -27,13 +26,15 @@ class InformationNotifier extends ChangeNotifier {
   void saveUserData(String key, Information information) {
     final jsonString = json.encode(information.toJson());
     _prefs?.setString(key, jsonString);
+    _information = information;
     notifyListeners();
   }
-  void saveInformationData(String key, Information information) {
-    final jsonString = json.encode(information.toJson());
-    _prefs?.setString(key, jsonString);
+
+  void addItem(Information newItem) {
+
     notifyListeners();
   }
+
 
   void _initSharedPreferences() async {
     _prefs = await SharedPreferences.getInstance();

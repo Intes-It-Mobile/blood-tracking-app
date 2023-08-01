@@ -146,4 +146,21 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(24),
     fontFamily: FontFamily.IBMPlexSans,
   );
+
+  static final edit20Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(20),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
+  static final unit20Text = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.w500,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(20),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
+import 'package:blood_sugar_tracking/views/personal_data/components/components_personal.dart';
 import 'package:blood_sugar_tracking/views/personal_data/item_personal_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
 import '../../utils/locale/appLocalizations.dart';
 
@@ -22,6 +24,7 @@ class PersonalDataScreen extends StatefulWidget {
 }
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
+  SugarInfoStore? sugarInfoStore;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +61,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         ),
       ),
       body: Consumer<InformationNotifier>(builder: (context, provider, _) {
-        InformationNotifier informationNotifier =
-        Provider.of<InformationNotifier>(context);
-        Information? information = provider.getUserData('information_key');
+        // InformationNotifier informationNotifier =
+        //     Provider.of<InformationNotifier>(context);
+        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+        sugarInfoStore?.information = provider.getUserData('information_key');
         return Column(
           children: [
             Padding(
@@ -90,15 +94,20 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 ),
                               ),
                               const Spacer(),
-                              SvgPicture.asset(Assets.iconEdit)
+                              InkWell(
+                                onTap: (){
+                                  Components().DialogGender(context);
+                                },
+                                child: SvgPicture.asset(Assets.iconEdit),
+                              ),
                             ],
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          information != null
+                          sugarInfoStore?.information != null
                               ? Text(
-                            informationNotifier.informationList[0].gender.toString(),
+                            '${sugarInfoStore?.information?.gender.toString()}',
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -137,12 +146,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          information != null ?  Text(
-                            informationNotifier.informationList[0].old.toString(),
-                            style: AppTheme.Headline20Text.copyWith(
-                                color: AppColors.AppColor4,
-                                fontWeight: FontWeight.w500),
-                          ) : const Text('error')
+                          sugarInfoStore?.information != null
+                              ? Text(
+                            '${sugarInfoStore?.information?.old.toString()}',
+                                  style: AppTheme.Headline20Text.copyWith(
+                                      color: AppColors.AppColor4,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              : const Text('error')
                         ],
                       ),
                     ),
@@ -183,12 +194,27 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          information != null ? Text(
-                            '${informationNotifier.informationList[2].weight.toString()}' + '(kg)',
-                            style: AppTheme.Headline20Text.copyWith(
-                                color: AppColors.AppColor4,
-                                fontWeight: FontWeight.w500),
-                          ) : const Text("error")
+                          sugarInfoStore?.information != null
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      '${sugarInfoStore?.information?.weight.toString()}',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: AppColors.AppColor4,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      '(kg)',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                )
+                              : const Text("error")
                         ],
                       ),
                     ),
@@ -222,12 +248,27 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                        information != null ?  Text(
-                          '${informationNotifier.informationList[2].tall.toString()}' + '(cm)',
-                            style: AppTheme.Headline20Text.copyWith(
-                                color: AppColors.AppColor4,
-                                fontWeight: FontWeight.w500),
-                          ) : const Text('error')
+                          sugarInfoStore?.information != null
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      '${sugarInfoStore?.information?.tall.toString()}',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: AppColors.AppColor4,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      '(cm)',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                )
+                              : const Text('error')
                         ],
                       ),
                     ),

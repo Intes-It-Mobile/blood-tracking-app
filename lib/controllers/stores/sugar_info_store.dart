@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -9,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../models/information/information.dart';
+import '../../models/information/information_provider.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
@@ -1041,4 +1044,15 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   bool? hasChangedRoot = false;
+  /////
+  @observable
+  Information? information = Information();
+  SharedPreferences? _prefs;
+  // Information? get information => _information;
+  //
+  // void saveUserData(String key, Information information) {
+  //   final jsonString = json.encode(information.toJson());
+  //   _prefs?.setString(key, jsonString);
+  //   _information = information;
+  // }
 }

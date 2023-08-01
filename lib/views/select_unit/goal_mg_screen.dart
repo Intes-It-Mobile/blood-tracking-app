@@ -10,20 +10,20 @@ import '../../models/information/information_provider.dart';
 import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
-class TallScreen extends StatefulWidget {
-  const TallScreen({super.key});
+class GoalmgScreen extends StatefulWidget {
+  const GoalmgScreen({super.key});
 
   @override
-  State<TallScreen> createState() => _TallScreenState();
+  State<GoalmgScreen> createState() => _GoalmgScreenState();
 }
 
-class _TallScreenState extends State<TallScreen> {
+class _GoalmgScreenState extends State<GoalmgScreen> {
   int currentValue = 25;
-  FixedExtentScrollController controllerWC = FixedExtentScrollController();
+  FixedExtentScrollController controller = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
-    controllerWC = FixedExtentScrollController(initialItem: currentValue);
+    controller = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
   @override
@@ -41,28 +41,27 @@ class _TallScreenState extends State<TallScreen> {
             children: [
               Center(
                 child: Text(
-                  "${AppLocalizations.of(context)!.getTranslate('How_tall_are_you')}",
+                  "${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}",
                   style: AppTheme.unit24Text,
                 ),
               ),
               Container(
                 height: 300,
-                child: WheelChooser.integer(
-                  onValueChanged: (value) {
-                    setState(() {
-                      int tall = controllerWC.initialItem;
-                      tall = value;
-                      sugarInfoStore?.information?.tall = tall;
-                      print("tuổi: ${tall}");
-                      print("dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
-                    });
-                  },
-                  maxValue: 400,
-                  minValue: 1,
-                  initValue: currentValue,
-                  selectTextStyle: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
-                  unSelectTextStyle: TextStyle(color: Colors.grey),
+                child: Row(
+                  children: [
+                    WheelChooser.integer(
+                      onValueChanged: (value) {
+
+                      },
+                      maxValue: 100,
+                      minValue: 1,
+                      initValue: currentValue,
+                      selectTextStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
+                      unSelectTextStyle: TextStyle(color: Colors.grey),
+                    ),
+                    Text('${AppLocalizations.of(context)!.getTranslate('mg/dL')}',style: AppTheme.unit20Text,)
+                  ],
                 ),
               ),
             ],
@@ -72,13 +71,9 @@ class _TallScreenState extends State<TallScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                sugarInfoStore?.information?.tall = sugarInfoStore?.information?.tall?.toInt();
-                // Provider.of<InformationNotifier>(context, listen: false).update(informations);
-                print("age: ${informationNotifier.informations.tall}");
-              //  informationNotifier.addItem(informationNotifier.informations);
-                informationNotifier.saveUserData('information_key', sugarInfoStore!.information!);
 
-                 Navigator.of(context).pushNamed(Routes.goal_mmol_screen);
+
+                Navigator.of(context).pushNamed(Routes.select_unit);
 
               },
               child: Text(

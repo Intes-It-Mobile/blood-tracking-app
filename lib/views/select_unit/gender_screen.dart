@@ -1,18 +1,14 @@
-import 'dart:convert';
 
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
-import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/old_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/information/information_item.dart';
+import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
-import '../../routes.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class GenderScreen extends StatefulWidget {
@@ -25,7 +21,7 @@ class GenderScreen extends StatefulWidget {
 class _GenderScreenState extends State<GenderScreen> {
   int _selectedIndex = -1;
   int? value;
-
+  SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
     super.initState();
@@ -35,6 +31,7 @@ class _GenderScreenState extends State<GenderScreen> {
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
     Provider.of<InformationNotifier>(context);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -98,9 +95,10 @@ class _GenderScreenState extends State<GenderScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                informationNotifier.informations = Information(gender: ListInformation().information[value!.toInt()].gender);
-                informationNotifier.informationList.add(informationNotifier.informations);
-                informationNotifier.saveUserData('information_key', informationNotifier.informations);
+                sugarInfoStore?.information?.gender = ListInformation().information[value!.toInt()].gender;
+              //  sugarInfoStore?.information = Information();
+               // informationNotifier.addItem(informationNotifier.informations);
+                informationNotifier.saveUserData('information_key', sugarInfoStore!.information!);
                 print("gender: ${informationNotifier.informations}");
              //   Provider.of<InformationNotifier>(context, listen: false).setInformationData(information);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => OldScreen()));
