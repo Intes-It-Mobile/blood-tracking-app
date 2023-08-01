@@ -24,6 +24,9 @@ class Assets {
   static const String intro_img = "assets/images/intro2_color.png";
   static const String intro_img1 = "assets/images/intro2_mol.png";
   static const String empty_chart = "assets/images/empty_chart.png";
+  static const String broken_heart = "assets/images/broken_heart.png";
+  static const String congrat = "assets/images/congrat.png";
+  static const String leadership = "assets/images/leadership.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";

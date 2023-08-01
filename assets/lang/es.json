@@ -122,6 +122,11 @@
   "save_changes_button":"Guardar cambios",
   "err_correct_value": "Por favor, introduzca el valor correcto.",
   "blood_sugar_txt": "Azúcar en sangre",
-	"heart_rate_txt": "Frecuencia cardiaca"
+	"heart_rate_txt": "Frecuencia cardiaca",
+  "goal_far_txt": "Aún está lejos de su objetivo. ¡Mejore la cantidad de azúcar en sangre!",
+	"goal_nearly_txt": "Ya casi ha alcanzado su objetivo. ¡Inténtelo un poco más!",
+	"goal_reach_txt": "¡Enhorabuena! Ha alcanzado su objetivo",
+  "popup_will_close": "Esta ventana emergente se cerrará en"
+
 
 }

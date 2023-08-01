@@ -117,8 +117,12 @@
     "next": "Tiếp",
     "no_alarms_set": "Không có báo thức nào",
     "All": "Tất cả",
-    "save_changes_button":"Lưu thay đổi",
+    "save_changes_button": "Lưu thay đổi",
     "err_correct_value": "Vui lòng nhập đúng giá trị!",
     "blood_sugar_txt": "Đường huyết",
-	"heart_rate_txt": "Nhịp tim"
+    "heart_rate_txt": "Nhịp tim",
+    "goal_far_txt": "Bạn vẫn còn cách xa mục tiêu của mình. Hãy cải thiện lượng đường trong máu!",
+    "goal_nearly_txt": "Bạn đã gần đạt được mục tiêu của mình. Chỉ cần cố gắng một chút!",
+    "goal_reach_txt": "Xin chúc mừng! Bạn đã đạt được mục tiêu",
+    "popup_will_close": "Thông báo này sẽ đóng sau"
 }

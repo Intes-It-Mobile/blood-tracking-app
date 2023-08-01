@@ -120,5 +120,10 @@
   "save_changes_button":"保存更改",
   "err_correct_value": "请输入正确的值！",
   "blood_sugar_txt": "血糖",
-	"heart_rate_txt": "心率"
+	"heart_rate_txt": "心率",
+  "goal_far_txt": "您离目标还很远。提高血糖含量！",
+	"goal_nearly_txt": "你几乎达到了目标。再试一次吧",
+	"goal_reach_txt": "祝贺你您已达到目标",
+  "popup_will_close": "该弹出窗口将在"
+
 }

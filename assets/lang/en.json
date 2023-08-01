@@ -122,5 +122,9 @@
   "save_changes_button": "Save changes",
   "err_correct_value": "Please enter the correct value!",
   "blood_sugar_txt":"Blood sugar",
-  "heart_rate_txt":"Heart rate"
+  "heart_rate_txt":"Heart rate",
+  "goal_far_txt":"You are still far from your goal. Improve the blood sugar amount!",
+  "goal_nearly_txt":"You have nearly reached your goal. Just try a little bit!",
+  "goal_reach_txt":"Congratulation! Your have reached your goal",
+  "popup_will_close": "This pop up will close in"
 }

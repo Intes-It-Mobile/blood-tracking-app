@@ -14,6 +14,9 @@ import '../../routes.dart';
 import 'package:excel/excel.dart';
 
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/goal_dialog/goal_far_dialog.dart';
+import '../../widgets/goal_dialog/goal_nearly_dialog.dart';
+import '../../widgets/goal_dialog/goal_reached_dialog.dart';
 import '../../widgets/share_local.dart';
 part 'sugar_info_store.g.dart';
 
@@ -334,17 +337,18 @@ abstract class _SugarInfoStoreBase with Store {
         id: id,
         dayTime: choosedDayTimeStr,
         hourTime: choosedDayHourStr,
-        status: currentStatus,
         sugarAmount: currentSugarAmount,
         conditionId: chooseCondition!.id,
-        conditionName: chooseCondition!.name));
+        status: findStatusForValueAndConditionId(rootSugarInfo!.conditions!,
+            currentSugarAmount!, chooseCondition!.id!),
+        conditionName: chooseCondition!.name,
+        informed: false));
     listRecords = ListRecord(listRecord: listRecord);
     choosedDayTimeStr = null;
     choosedDayHourStr = null;
     listRecordArrangedByTime = listRecord;
     setErrorText("");
     saveListRecord(listRecords);
-
     if (listRecordArrangedByTime!.length > 0) {
       listRecordArrangedByTime!.sort((b, a) =>
           (DateFormat('yyyy/MM/dd HH:mm').parse("${a.dayTime!} ${a.hourTime!}"))
@@ -352,6 +356,10 @@ abstract class _SugarInfoStoreBase with Store {
                   .parse("${b.dayTime!} ${b.hourTime!}")));
       getAverageNumber();
     }
+    print('popup');
+    Future.delayed(Duration(seconds: 1), () {
+      checkGoal();
+    });
     await Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
@@ -612,11 +620,13 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     }
     saveListRecord(listRecords);
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
       (route) => false,
     );
+    checkGoal();
   }
 
   @action
@@ -1092,4 +1102,90 @@ abstract class _SugarInfoStoreBase with Store {
 
   @observable
   bool? hasChangedRoot = false;
+  ////////////////////////////
+
+  @observable
+  late BuildContext homeScreenContext;
+
+  @observable
+  double? goalAmount = 100.0;
+
+  @action
+  checkGoal() {
+    SugarRecord checkingItem = listRecordArrangedByTime!.first;
+    int checkingItemId = listRecordArrangedByTime!.first.id!;
+    double calculate(double? value) {
+      return (value! - goalAmount!).abs();
+    }
+
+    if (checkingItem.informed == false) {
+      listRecords!.listRecord!
+          .where((e) => e.id == checkingItemId)
+          .first
+          .informed = true;
+      if (isSwapedToMol == false) {
+        switch (calculate(checkingItem.sugarAmount)) {
+          case > 20:
+            return showDiaLogFarGoal(homeScreenContext);
+          case < 1:
+            return showDiaLogReachGoal(homeScreenContext);
+          case <= 20:
+            return showDiaLogNearlyGoal(homeScreenContext);
+
+          default:
+            return "";
+        }
+      } else {
+        switch (calculate(checkingItem.sugarAmount)) {
+          case > 20 / 18:
+            return showDiaLogFarGoal(homeScreenContext);
+          case < 1 / 18:
+            return showDiaLogReachGoal(homeScreenContext);
+          case <= 20 / 18:
+            return showDiaLogNearlyGoal(homeScreenContext);
+
+          default:
+            return "";
+        }
+      }
+    }
+
+    saveListRecord(listRecords);
+  }
+
+  Future<String?> showDiaLogFarGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalFarDialog(),
+    );
+  }
+
+  Future<String?> showDiaLogNearlyGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalNearlyDialog(),
+    );
+  }
+
+  Future<String?> showDiaLogReachGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalReachedDialog(),
+    );
+  }
 }
