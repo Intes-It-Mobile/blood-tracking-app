@@ -85,7 +85,7 @@ class _LanguagePageState extends State<LanguagePage> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: (){
-                Navigator.of(context).pushNamed(Routes.select_unit);
+                Navigator.of(context).pushNamed(Routes.gender_screen);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

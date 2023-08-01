@@ -125,6 +125,13 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   ButtonWidget(
                     onTap: () {
+                      Navigator.of(context).pushNamed(Routes.personal_data);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "personal_data",
+                  ),
+                  ButtonWidget(
+                    onTap: () {
                       Navigator.of(context).pushNamed(Routes.abt_us);
                     },
                     btnColor: AppColors.AppColor2,
