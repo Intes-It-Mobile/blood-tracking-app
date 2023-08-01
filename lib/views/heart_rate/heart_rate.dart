@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:math';
-
+import 'package:image/image.dart' as img;
 import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/constants/font_family.dart';
@@ -28,9 +29,9 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   bool cameraIsInitialize = false;
   bool checkCamera = false;
   int time = 0;
-  Timer? _timer;
   int bmp = 0;
   int checkTap = 0;
+  XFile? xFile;
 
   @override
   void initState() {
@@ -69,39 +70,79 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   }
 
   Future<void> checkHeartBeat() async {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    int level = Random().nextInt(2);
+    bool isTakingPicture = false; // Biến để theo dõi xem camera có đang chụp ảnh hay không
+
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
       time++;
       if (time == 45) {
-        _timer?.cancel();
+        timer.cancel();
+        if (cameraController.value.isRecordingVideo) {
+          await cameraController.stopVideoRecording();
+        }
         cameraIsInitialize = false;
-        cameraController.setFlashMode(FlashMode.off);
+        await cameraController.setFlashMode(FlashMode.off);
         int re = bmp;
         setState(() {
           checkTap = 0;
           time = 0;
           bmp = 0;
         });
+
+        // Di chuyển điều hướng đến bên ngoài callback của setState
         Navigator.of(context).pushNamed(
           Routes.new_record_heart_rate,
           arguments: HeartRateInfo(date: DateTime.now(), indicator: re),
         );
       } else {
-        int level = Random().nextInt(2);
         setState(() {
           switch (level) {
             case 0:
-              bmp = 40 + Random().nextInt(30) + 1;
+              bmp = 40 + Random().nextInt(20) + 1;
               break;
             case 1:
-              bmp = 70 + Random().nextInt(50) + 1;
+              bmp = 60 + Random().nextInt(40) + 1;
               break;
             default:
-              bmp = 120 + Random().nextInt(80) + 1;
+              bmp = 100 + Random().nextInt(80) + 1;
           }
         });
+
+        if (!cameraController.value.isRecordingVideo && !isTakingPicture) {
+          isTakingPicture = true;
+          await cameraController.startVideoRecording();
+          XFile xFile = await cameraController.takePicture();
+          List<Color> colors = analyzeImageColors(xFile.path);
+          print("Colors: ${colors}");
+          isTakingPicture = false;
+        }
       }
     });
   }
+
+  List<Color> analyzeImageColors(String imagePath) {
+    List<Color> colors = [];
+
+    img.Image? image = img.decodeImage(File(imagePath).readAsBytesSync());
+
+    img.Image resizedImage = img.copyResize(image!, width: 100);
+
+    for (int y = 0; y < resizedImage.height; y++) {
+      for (int x = 0; x < resizedImage.width; x++) {
+        img.Pixel pixel = resizedImage.getPixel(x, y);
+        print("Pixel: $pixel");
+        //(156,12,12)
+        int red = img.uint32ToRed(pixel.);
+        int green = img.uint32ToGreen(pixel[0].toInt());
+        int blue = img.uint32ToBlue(pixel[0].toInt());
+
+        colors.add(Color.fromARGB(255, red, green, blue));
+      }
+    }
+
+    return colors;
+  }
+
 
   @override
   Widget build(BuildContext context) {
