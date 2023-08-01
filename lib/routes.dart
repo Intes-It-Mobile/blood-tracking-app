@@ -1,6 +1,7 @@
 import 'package:blood_sugar_tracking/views/edit_range/edit_range_screens.dart';
 import 'package:blood_sugar_tracking/views/history/record_history.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
+import 'package:blood_sugar_tracking/views/infomation/infomation_screen.dart';
 import 'package:blood_sugar_tracking/views/infomation/information_detail_screen.dart';
 import 'package:blood_sugar_tracking/views/language/language.dart';
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
@@ -45,10 +46,12 @@ class Routes {
   static const String tall_screen = "/tall_screen";
   static const String goal_mmol_screen = "/goal_mmol_screen";
   static const String goal_mg_screen = "/goal_mg_screen";
+  static const String info_screen = "/info_screen";
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
     home: (context) => HomeScreen(),
+    info_screen: (context) => InfomationScreen(),
     detail_info: (context) => DetailInformationScreen(),
     abt_us: (context) => AboutUsScreen(),
     new_record: (context) => NewRecordScreen(),

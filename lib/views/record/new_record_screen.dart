@@ -425,7 +425,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                               // Allow Decimal Number With Precision of 2 Only
                                               FilteringTextInputFormatter.allow(
                                                   RegExp(
-                                                      r'^\d{0,3}\.?\d{0,2}')),
+                                                      r'^\d{0,3}\.?\d{0,1}')),
                                             ],
                                             controller: sugarInfoStore!
                                                 .sugarAmountController,
@@ -670,7 +670,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 3);
+      String after = numberString.split('.').last.substring(0, 1);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";

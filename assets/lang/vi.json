@@ -125,6 +125,12 @@
     "how_old_are_you": "Bạn bao nhiêu tuổi?",
     "what_is_your_weight": "Cân nặng của bạn là bao nhiêu?",
     "How_tall_are_you": "Bạn cao bao nhiêu?",
-    "declare_your_goal": "Tuyên bố mục tiêu của bạn"
+    "declare_your_goal": "Tuyên bố mục tiêu của bạn",
 
+    "blood_sugar_txt": "Đường huyết",
+    "heart_rate_txt": "Nhịp tim",
+    "goal_far_txt": "Bạn vẫn còn cách xa mục tiêu của mình. Hãy cải thiện lượng đường trong máu!",
+    "goal_nearly_txt": "Bạn đã gần đạt được mục tiêu của mình. Chỉ cần cố gắng một chút!",
+    "goal_reach_txt": "Xin chúc mừng! Bạn đã đạt được mục tiêu",
+    "popup_will_close": "Thông báo này sẽ đóng sau"
 }

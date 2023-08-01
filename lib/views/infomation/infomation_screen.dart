@@ -22,11 +22,24 @@ class _InfomationScreenState extends State<InfomationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      //  toolbarHeight: 80,
+        //  toolbarHeight: 80,
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.AppColor2,
         title: Row(
           children: [
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                margin: EdgeInsets.only(right: 12),
+                child: SvgPicture.asset(
+                  Assets.iconBack,
+                  height: 44,
+                ),
+              ),
+            ),
             Container(
                 child: Image.asset(
               Assets.infomative,
@@ -36,13 +49,15 @@ class _InfomationScreenState extends State<InfomationScreen> {
                 margin: const EdgeInsets.only(left: 17),
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('infor')}",
-                  style: AppTheme.Headline20Text.copyWith(letterSpacing: 2.0,),
+                  style: AppTheme.Headline20Text.copyWith(
+                    letterSpacing: 2.0,
+                  ),
                 )),
           ],
         ),
       ),
       body: Container(
-        height: double.infinity,
+          height: double.infinity,
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(

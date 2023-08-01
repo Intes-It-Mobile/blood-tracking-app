@@ -138,5 +138,13 @@
     "how_old_are_you": "Quel âge as-tu?",
     "what_is_your_weight": "Quel est votre poids?",
     "How_tall_are_you": "Quelle est votre taille?",
-    "declare_your_goal": "Déclarez votre objectif"
+    "declare_your_goal": "Déclarez votre objectif",
+    "blood_sugar_txt": "Glycémie",
+	"heart_rate_txt": "Fréquence cardiaque",
+    "goal_far_txt": "Vous êtes encore loin de votre objectif. Améliorez la glycémie !",
+	"goal_nearly_txt": "Vous avez presque atteint votre objectif. Essayez encore un peu !",
+	"goal_reach_txt": "Félicitations ! Vous avez atteint votre objectif",
+    "popup_will_close": "Cette fenêtre se fermera dans"
+
+
 }

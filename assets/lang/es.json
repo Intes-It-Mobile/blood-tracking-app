@@ -127,6 +127,13 @@
   "how_old_are_you": "Cuántos años tiene?",
   "what_is_your_weight": "¿Cuál es tu peso?",
   "How_tall_are_you": "Que tan alto eres?",
-  "declare_your_goal": "Declara tu objetivo"
+  "declare_your_goal": "Declara tu objetivo",
+  "blood_sugar_txt": "Azúcar en sangre",
+	"heart_rate_txt": "Frecuencia cardiaca",
+  "goal_far_txt": "Aún está lejos de su objetivo. ¡Mejore la cantidad de azúcar en sangre!",
+	"goal_nearly_txt": "Ya casi ha alcanzado su objetivo. ¡Inténtelo un poco más!",
+	"goal_reach_txt": "¡Enhorabuena! Ha alcanzado su objetivo",
+  "popup_will_close": "Esta ventana emergente se cerrará en"
+
 
 }

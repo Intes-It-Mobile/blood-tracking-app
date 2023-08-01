@@ -5,7 +5,8 @@ class Assets {
   static const String diabetes_1 = "assets/images/diabetes_1.png";
   static const String diabetes_2 = "assets/images/diabetes_2.png";
   static const String forehead = "assets/images/forehead.png";
-  static const String gestational_diabetes = "assets/images/gestational_diabetes.png";
+  static const String gestational_diabetes =
+      "assets/images/gestational_diabetes.png";
   static const String high_temperature = "assets/images/high_temperature.png";
   static const String infomation = "assets/images/infomation.png";
   static const String low_energy = "assets/images/low_energy.png";
@@ -23,6 +24,9 @@ class Assets {
   static const String intro_img = "assets/images/intro2_color.png";
   static const String intro_img1 = "assets/images/intro2_mol.png";
   static const String empty_chart = "assets/images/empty_chart.png";
+  static const String broken_heart = "assets/images/broken_heart.png";
+  static const String congrat = "assets/images/congrat.png";
+  static const String leadership = "assets/images/leadership.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";
@@ -41,8 +45,10 @@ class Assets {
   static const String iconEditRecord = "assets/icons/ic_edit_record.svg";
   static const String icon = "assets/icons/ic_up_arrow.svg";
   static const String iconUpArrow = "assets/icons/ic_up_arrow.svg";
-  static const String iconDropdownDownArrow = "assets/icons/ic_dropdown_down_arrow.svg";
-  static const String iconDropdownUpArrow = "assets/icons/ic_dropdown_up_arrow.svg";
+  static const String iconDropdownDownArrow =
+      "assets/icons/ic_dropdown_down_arrow.svg";
+  static const String iconDropdownUpArrow =
+      "assets/icons/ic_dropdown_up_arrow.svg";
   static const String iconEditPen = "assets/icons/ic_edit_pen.svg";
   static const String iconSettingsNav = "assets/icons/ic_settings_nav.svg";
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";
@@ -51,6 +57,8 @@ class Assets {
 
   static const String iconSplash = "assets/icons/ic_splash_logo.svg";
   static const String iconEditRangeScreen = "assets/icons/edit_range_icon.svg";
+  static const String iconBloodSugar = "assets/icons/ic_blood_sugar.svg";
+  static const String iconHeartRate = "assets/icons/ic_heart_rate.svg";
 
   Assets._();
 }
