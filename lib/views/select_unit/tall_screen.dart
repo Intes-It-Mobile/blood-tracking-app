@@ -78,7 +78,7 @@ class _TallScreenState extends State<TallScreen> {
               //  informationNotifier.addItem(informationNotifier.informations);
                 informationNotifier.saveUserData('information_key', sugarInfoStore!.information!);
 
-                 Navigator.of(context).pushNamed(Routes.goal_mmol_screen);
+                 Navigator.of(context).pushNamed(Routes.select_unit);
 
               },
               child: Text(
