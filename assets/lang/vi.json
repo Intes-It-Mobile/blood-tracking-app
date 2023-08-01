@@ -120,5 +120,7 @@
     "bpm": "BPM",
     "status": "Trạng thái",
     "result": "Kết quả",
-    "enter_value": "Vui lòng nhập giá trị"
+    "enter_value": "Vui lòng nhập giá trị",
+    "check_finger" : "Right position. Do not move your finger!",
+    "show_error_heart_rate": "No result found. Measuring has been failed!"
 }

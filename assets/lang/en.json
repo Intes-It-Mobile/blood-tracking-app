@@ -122,5 +122,7 @@
   "bpm": "BPM",
   "status": "Status",
   "result": "Result",
-  "enter_value": "Please enter the value"
+  "enter_value": "Please enter the value",
+  "check_finger" : "Right position. Do not move your finger!",
+  "show_error_heart_rate": "No result found. Measuring has been failed!"
 }
