@@ -82,6 +82,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       );
       return Visibility(
         visible: sugarInfoStore?.information != null,
+        replacement:  const SizedBox(
+          height: 50,
+          width: 50,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+          ),
+        ),
         child: Column(
           children: [
             Padding(
@@ -309,17 +318,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               ),
             ),
           ],
-        ),
-        replacement:  SizedBox.shrink(
-          child: Container(
-            height: 50,
-            width: 50,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors.blue,
-              ),
-            ),
-          ),
         ),
       );
     });
