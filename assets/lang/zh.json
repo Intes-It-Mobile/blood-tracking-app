@@ -99,6 +99,7 @@
   "intro1": "快速数据输入和\n智能统计",
   "intro2": "灵活变更单位\n改变范围",
   "intro3": "提示您输入\n你的个人资料",
+  "intro4": "心率\n測量",
   "edit": "使固定",
   "replace": "代替",
   "add": "添加",
@@ -131,6 +132,10 @@
   "goal_far_txt": "您离目标还很远。提高血糖含量！",
 	"goal_nearly_txt": "你几乎达到了目标。再试一次吧",
 	"goal_reach_txt": "祝贺你您已达到目标",
-  "popup_will_close": "该弹出窗口将在"
+  "popup_will_close": "该弹出窗口将在",
+  "gender": "性別",
+  "age": "年齡",
+  "weight": "重量",
+  "height": "高度"
 
 }

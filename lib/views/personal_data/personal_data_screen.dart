@@ -28,9 +28,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   void initState() {
-    sugarInfoStore?.information?.old = 25;
-    sugarInfoStore?.information?.weight = 25;
-    sugarInfoStore?.information?.tall = 25;
     super.initState();
   }
   @override
@@ -71,7 +68,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       body: Consumer<InformationNotifier>(builder: (context, provider, _) {
         // InformationNotifier informationNotifier =
         //     Provider.of<InformationNotifier>(context);
-        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
         sugarInfoStore?.information = provider.getUserData('information_key');
         return Column(
           children: [
@@ -106,7 +103,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 onTap: () {
                                   Components().DialogGender(context);
                                 },
-                                child: SvgPicture.asset(Assets.iconEdit),
+                                child: SvgPicture.asset(Assets.iconEditRange),
                               ),
                             ],
                           ),
@@ -115,7 +112,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           sugarInfoStore?.information != null
                               ? Text(
-                                  '${sugarInfoStore?.information?.gender.toString()}',
+                                  '${sugarInfoStore?.information?.gender}',
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -152,7 +149,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 onTap: () {
                                   Components().DialogAge(context);
                                 },
-                                child: SvgPicture.asset(Assets.iconEdit),
+                                child: SvgPicture.asset(Assets.iconEditRange),
                               ),
                             ],
                           ),
@@ -161,7 +158,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           sugarInfoStore?.information != null
                               ? Text(
-                                  '${sugarInfoStore?.information?.old.toString()}',
+                                  '${sugarInfoStore?.information?.old}',
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -205,7 +202,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 onTap: () {
                                   Components().DialogWeight(context);
                                 },
-                                child: SvgPicture.asset(Assets.iconEdit),
+                                child: SvgPicture.asset(Assets.iconEditRange),
                               ),
                             ],
                           ),
@@ -216,7 +213,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ? Row(
                                   children: [
                                     Text(
-                                      '${sugarInfoStore?.information?.weight.toString()}',
+                                      '${sugarInfoStore?.information?.weight}',
                                       style: AppTheme.Headline20Text.copyWith(
                                           color: AppColors.AppColor4,
                                           fontWeight: FontWeight.w500),
@@ -226,7 +223,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     ),
                                     Text(
                                       '(kg)',
-                                      style: AppTheme.Headline20Text.copyWith(
+                                      style: AppTheme.Headline16Text.copyWith(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500),
                                     )
@@ -264,7 +261,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   onTap: (){
                                     Components().DialogHeight(context);
                                   },
-                                child: SvgPicture.asset(Assets.iconEdit),
+                                child: SvgPicture.asset(Assets.iconEditRange),
                               ),
                             ],
                           ),
@@ -275,7 +272,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ? Row(
                                   children: [
                                     Text(
-                                      '${sugarInfoStore?.information?.tall.toString()}',
+                                      '${sugarInfoStore?.information?.tall}',
                                       style: AppTheme.Headline20Text.copyWith(
                                           color: AppColors.AppColor4,
                                           fontWeight: FontWeight.w500),
@@ -285,7 +282,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     ),
                                     Text(
                                       '(cm)',
-                                      style: AppTheme.Headline20Text.copyWith(
+                                      style: AppTheme.Headline16Text.copyWith(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500),
                                     )

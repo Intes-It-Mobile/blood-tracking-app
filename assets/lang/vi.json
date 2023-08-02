@@ -99,6 +99,7 @@
     "intro1": "Nhập dữ liệu nhanh và\nthống kê thông minh",
     "intro2": "Đơn vị thay đổi linh hoạt\nthay đổi phạm vi",
     "intro3": "Nhắc bạn nhập\nhồ sơ của bạn",
+    "intro4": "Nhịp tim\nđo lường",
     "edit": "Sửa",
     "replace": "Thay thế",
     "add": "Thêm",
@@ -132,5 +133,9 @@
     "goal_far_txt": "Bạn vẫn còn cách xa mục tiêu của mình. Hãy cải thiện lượng đường trong máu!",
     "goal_nearly_txt": "Bạn đã gần đạt được mục tiêu của mình. Chỉ cần cố gắng một chút!",
     "goal_reach_txt": "Xin chúc mừng! Bạn đã đạt được mục tiêu",
-    "popup_will_close": "Thông báo này sẽ đóng sau"
+    "popup_will_close": "Thông báo này sẽ đóng sau",
+    "gender": "Giới tính",
+    "age": "Tuổi",
+    "weight": "Cân nặng",
+    "height": "Chiều cao"
 }

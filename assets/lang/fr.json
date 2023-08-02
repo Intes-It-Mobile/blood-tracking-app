@@ -110,6 +110,7 @@
     "intro1":"Saisie rapide des données\nstatistiques intelligentes",
     "intro2":"Changement d'unité flexible\nChangement d'intervalle",
     "intro3":"Vous rappeler de saisir\nvotre enregistrement",
+    "intro4": "Rythme cardiaque\nmesure",
     "edit":"Modifier",
     "replace": "Remplacer",
     "add": "Ajouter",
@@ -144,7 +145,11 @@
     "goal_far_txt": "Vous êtes encore loin de votre objectif. Améliorez la glycémie !",
 	"goal_nearly_txt": "Vous avez presque atteint votre objectif. Essayez encore un peu !",
 	"goal_reach_txt": "Félicitations ! Vous avez atteint votre objectif",
-    "popup_will_close": "Cette fenêtre se fermera dans"
+    "popup_will_close": "Cette fenêtre se fermera dans",
+    "gender": "Genre",
+    "age": "Âge",
+    "weight": "Lester",
+    "height": "Hauteur"
 
 
 }

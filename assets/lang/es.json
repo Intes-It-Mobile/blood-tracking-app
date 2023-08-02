@@ -101,6 +101,7 @@
   "intro1": "Ingreso rápido de datos y\nestadísticas inteligentes",
   "intro2": "Cambiador flexible\nCambio de rango",
   "intro3": "recordarte que entres\ntu record",
+  "intro4": "Ritmo cardiaco\nmedición",
   "edit": "Editar",
   "replace": "Reemplazar",
   "add": "Agregar",
@@ -133,7 +134,11 @@
   "goal_far_txt": "Aún está lejos de su objetivo. ¡Mejore la cantidad de azúcar en sangre!",
 	"goal_nearly_txt": "Ya casi ha alcanzado su objetivo. ¡Inténtelo un poco más!",
 	"goal_reach_txt": "¡Enhorabuena! Ha alcanzado su objetivo",
-  "popup_will_close": "Esta ventana emergente se cerrará en"
+  "popup_will_close": "Esta ventana emergente se cerrará en",
+  "gender": "Género",
+  "age": "Edad",
+  "weight": "Peso",
+  "height": "Altura"
 
 
 }
