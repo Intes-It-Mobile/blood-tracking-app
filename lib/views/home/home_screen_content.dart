@@ -152,14 +152,6 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                         Navigator.of(context).pushNamed(Routes.new_record);
                       },
                     ),
-                    Container(
-                      height: 100,
-                      width: 100,
-                      color: Colors.amber,
-                      child: InkWell(onTap: () {
-                        showDiaLogGoal(context);
-                      }),
-                    )
                   ],
                 );
               }),

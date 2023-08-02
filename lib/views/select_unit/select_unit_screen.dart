@@ -130,9 +130,9 @@ class _SelectUnitState extends State<SelectUnit> {
                 sugarInfoStore!.setSwapStatusToMol(isMol);
                 if (isMol == true) {
                   sugarInfoStore!.divisionListRootCondition();
-                  Navigator.of(context).pushNamed(Routes.intro);
+                  Navigator.of(context).pushNamed(Routes.goal_mmol_screen);
                 } else if (isMol == false)
-                  Navigator.of(context).pushNamed(Routes.intro);
+                  Navigator.of(context).pushNamed(Routes.goal_mg_screen);
               },
               child: Container(
                 decoration: BoxDecoration(),

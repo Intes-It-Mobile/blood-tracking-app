@@ -18,19 +18,27 @@ class GoalmgScreen extends StatefulWidget {
 }
 
 class _GoalmgScreenState extends State<GoalmgScreen> {
-  int currentValue = 25;
+  int currentValue = 80;
   FixedExtentScrollController controller = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
+  @override
+  void didChangeDependencies() {
+    Provider.of<InformationNotifier>(context);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
   @override
   void initState() {
     controller = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
-    Provider.of<InformationNotifier>(context);
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+        Provider.of<InformationNotifier>(context);
+    sugarInfoStore!.setGoalAmount(80, false);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -48,19 +56,28 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
               Container(
                 height: 300,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    WheelChooser.integer(
-                      onValueChanged: (value) {
-
-                      },
-                      maxValue: 100,
-                      minValue: 1,
-                      initValue: currentValue,
-                      selectTextStyle: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
-                      unSelectTextStyle: TextStyle(color: Colors.grey),
+                    SizedBox(
+                      width: 80,
+                      child: WheelChooser.integer(
+                        onValueChanged: (value) {
+                          sugarInfoStore!.goalAmount = value * 1.0;
+                        },
+                        maxValue: 630,
+                        minValue: 18,
+                        initValue: currentValue,
+                        selectTextStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 22),
+                        unSelectTextStyle: TextStyle(color: Colors.grey),
+                      ),
                     ),
-                    Text('${AppLocalizations.of(context)!.getTranslate('mg/dL')}',style: AppTheme.unit20Text,)
+                    Text(
+                      '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
+                      style: AppTheme.unit20Text,
+                    )
                   ],
                 ),
               ),
@@ -71,10 +88,8 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-
-
-                Navigator.of(context).pushNamed(Routes.select_unit);
-
+                sugarInfoStore!.saveGoalAmountToSharedPreferences();
+                Navigator.of(context).pushNamed(Routes.intro);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

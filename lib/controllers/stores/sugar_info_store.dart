@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../models/goal/goal_amount.dart';
 import '../../models/information/information.dart';
 import '../../models/information/information_provider.dart';
 import '../../models/sugar_info/sugar_info.dart';
@@ -77,11 +78,9 @@ abstract class _SugarInfoStoreBase with Store {
             for (var sugarAmount in condition.sugarAmount!) {
               if (sugarAmount.minValue != null) {
                 sugarAmount.minValue = sugarAmount.minValue! / 18;
-                print("Diivisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
               }
               if (sugarAmount.maxValue != null) {
                 sugarAmount.maxValue = sugarAmount.maxValue! / 18;
-                print("Diivisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
               }
             }
           }
@@ -1113,14 +1112,56 @@ abstract class _SugarInfoStoreBase with Store {
   late BuildContext homeScreenContext;
 
   @observable
-  double? goalAmount = 100.0;
+  GoalAmount? goalAmount = GoalAmount();
+
+  @action
+  setGoalAmount(double? value, bool? isMol) {
+    goalAmount!.amount = value;
+    goalAmount!.isMol = isMol;
+    saveGoalAmountToSharedPreferences();
+  }
+
+  @action
+  void saveGoalAmountToSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Chuyển đổi đối tượng GoalAmount thành JSON (Map<String, dynamic>)
+    final Map<String, dynamic> json = goalAmount!.toJson();
+
+    // Lưu vào SharedPreferences dưới dạng JSON String
+    await prefs.setString('goal_amount', jsonEncode(json));
+  }
+
+  @action
+  Future<GoalAmount?> getGoalAmountFromSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Lấy chuỗi JSON từ SharedPreferences
+    final String? jsonString = prefs.getString('goal_amount');
+
+    if (jsonString != null) {
+      // Nếu có dữ liệu, chuyển đổi JSON thành Map
+      final Map<String, dynamic> json = jsonDecode(jsonString);
+
+      // Tạo đối tượng GoalAmount từ Map
+      return GoalAmount.fromJson(json);
+    } else {
+      // Nếu không có dữ liệu, trả về null hoặc giá trị mặc định tùy trường hợp
+      return null;
+    }
+  }
+
+  @action
+  Future<void> fetchGoalAmountFromSharedPreferences() async {
+    goalAmount = await getGoalAmountFromSharedPreferences();
+  }
 
   @action
   checkGoal() {
     SugarRecord checkingItem = listRecordArrangedByTime!.first;
     int checkingItemId = listRecordArrangedByTime!.first.id!;
     double calculate(double? value) {
-      return (value! - goalAmount!).abs();
+      return (value! - goalAmount!.amount!).abs();
     }
 
     if (checkingItem.informed == false) {
