@@ -23,6 +23,7 @@ class _WeightScreenState extends State<WeightScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
+    sugarInfoStore?.information?.tall = 25;
     controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -47,22 +48,32 @@ class _WeightScreenState extends State<WeightScreen> {
               ),
               Container(
                 height: 300,
-                child: WheelChooser.integer(
-                  onValueChanged: (value) {
-                    setState(() {
-                      int weight = controllerWC.initialItem;
-                      weight = value;
-                      sugarInfoStore?.information?.weight = weight;
-                      print("cân nặng: ${weight}");
-                      print("dasdasddas: ${sugarInfoStore?.information?.weight?.toInt()}");
-                    });
-                  },
-                  maxValue: 400,
-                  minValue: 1,
-                  initValue: currentValue,
-                  selectTextStyle: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
-                  unSelectTextStyle: const TextStyle(color: Colors.grey),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 80,
+                      child: WheelChooser.integer(
+                        onValueChanged: (value) {
+                          setState(() {
+                            int weight = controllerWC.initialItem;
+                            weight = value;
+
+                            sugarInfoStore?.information?.weight = weight;
+                            print("cân nặng: ${weight}");
+                            print("dasdasddas: ${sugarInfoStore?.information?.weight?.toInt()}");
+                          });
+                        },
+                        maxValue: 400,
+                        minValue: 1,
+                        initValue: currentValue,
+                        selectTextStyle: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
+                        unSelectTextStyle: const TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    Text('Kg',style: AppTheme.unit20Text,)
+                  ],
                 ),
               ),
             ],

@@ -17,8 +17,65 @@ class Components {
           contentPadding: EdgeInsets.zero,
           content: SizedBox(
             width: 400,
-            height: MediaQuery.of(context).size.height * 0.27,
+            height: MediaQuery.of(context).size.height * 0.28,
              child: const EditPersonalData(),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> DialogAge(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            width: 400,
+            height: MediaQuery.of(context).size.height * 0.38,
+            child: const EditPersonalAge(),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> DialogWeight(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            width: 400,
+            height: MediaQuery.of(context).size.height * 0.38,
+            child: const EditPersonalWeight(),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> DialogHeight(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            width: 400,
+            height: MediaQuery.of(context).size.height * 0.38,
+            child: const EditPersonalHeight(),
           ),
         );
       },

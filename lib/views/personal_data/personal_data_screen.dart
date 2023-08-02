@@ -25,6 +25,14 @@ class PersonalDataScreen extends StatefulWidget {
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
   SugarInfoStore? sugarInfoStore;
+
+  @override
+  void initState() {
+    sugarInfoStore?.information?.old = 25;
+    sugarInfoStore?.information?.weight = 25;
+    sugarInfoStore?.information?.tall = 25;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +103,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               const Spacer(),
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   Components().DialogGender(context);
                                 },
                                 child: SvgPicture.asset(Assets.iconEdit),
@@ -107,7 +115,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           sugarInfoStore?.information != null
                               ? Text(
-                            '${sugarInfoStore?.information?.gender.toString()}',
+                                  '${sugarInfoStore?.information?.gender.toString()}',
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -140,7 +148,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 ),
                               ),
                               const Spacer(),
-                              SvgPicture.asset(Assets.iconEdit)
+                              InkWell(
+                                onTap: () {
+                                  Components().DialogAge(context);
+                                },
+                                child: SvgPicture.asset(Assets.iconEdit),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -148,7 +161,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           sugarInfoStore?.information != null
                               ? Text(
-                            '${sugarInfoStore?.information?.old.toString()}',
+                                  '${sugarInfoStore?.information?.old.toString()}',
                                   style: AppTheme.Headline20Text.copyWith(
                                       color: AppColors.AppColor4,
                                       fontWeight: FontWeight.w500),
@@ -188,7 +201,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 ),
                               ),
                               const Spacer(),
-                              SvgPicture.asset(Assets.iconEdit)
+                              InkWell(
+                                onTap: () {
+                                  Components().DialogWeight(context);
+                                },
+                                child: SvgPicture.asset(Assets.iconEdit),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -242,7 +260,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 ),
                               ),
                               const Spacer(),
-                              SvgPicture.asset(Assets.iconEdit)
+                              InkWell(
+                                  onTap: (){
+                                    Components().DialogHeight(context);
+                                  },
+                                child: SvgPicture.asset(Assets.iconEdit),
+                              ),
                             ],
                           ),
                           const SizedBox(

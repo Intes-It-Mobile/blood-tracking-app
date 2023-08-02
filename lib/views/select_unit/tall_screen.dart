@@ -23,6 +23,7 @@ class _TallScreenState extends State<TallScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
+    sugarInfoStore?.information?.tall = 25;
     controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -47,22 +48,31 @@ class _TallScreenState extends State<TallScreen> {
               ),
               Container(
                 height: 300,
-                child: WheelChooser.integer(
-                  onValueChanged: (value) {
-                    setState(() {
-                      int tall = controllerWC.initialItem;
-                      tall = value;
-                      sugarInfoStore?.information?.tall = tall;
-                      print("tuổi: ${tall}");
-                      print("dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
-                    });
-                  },
-                  maxValue: 400,
-                  minValue: 1,
-                  initValue: currentValue,
-                  selectTextStyle: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
-                  unSelectTextStyle: TextStyle(color: Colors.grey),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 80,
+                      child: WheelChooser.integer(
+                        onValueChanged: (value) {
+                          setState(() {
+                            int tall = controllerWC.initialItem;
+                            tall = value;
+                            sugarInfoStore?.information?.tall = tall;
+                            print("tuổi: ${tall}");
+                            print("dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
+                          });
+                        },
+                        maxValue: 400,
+                        minValue: 1,
+                        initValue: currentValue,
+                        selectTextStyle: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
+                        unSelectTextStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    Text('Cm',style: AppTheme.unit20Text,)
+                  ],
                 ),
               ),
             ],
