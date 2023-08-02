@@ -27,6 +27,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   SugarInfoStore? sugarInfoStore;
 
   @override
+  void initState() {
+    sugarInfoStore?.information?.old = 25;
+    sugarInfoStore?.information?.weight = 25;
+    sugarInfoStore?.information?.tall = 25;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

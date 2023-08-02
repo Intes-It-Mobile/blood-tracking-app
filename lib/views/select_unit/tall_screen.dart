@@ -23,6 +23,7 @@ class _TallScreenState extends State<TallScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
+    sugarInfoStore?.information?.tall = 25;
     controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }

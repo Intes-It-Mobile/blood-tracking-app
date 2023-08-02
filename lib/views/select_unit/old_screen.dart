@@ -27,6 +27,7 @@ class _OldScreenState extends State<OldScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
+    sugarInfoStore?.information?.tall = 25;
    controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -54,7 +55,7 @@ class _OldScreenState extends State<OldScreen> {
               Container(
                 height: 300,
                 child: WheelChooser.integer(
-                 // controller: controllerWC,
+               //  controller: controllerWC,
                   onValueChanged: (value) {
                     setState(() {
                       int age = controllerWC.initialItem;
@@ -68,6 +69,7 @@ class _OldScreenState extends State<OldScreen> {
                   minValue: 1,
                   initValue: currentValue,
                   step: 1,
+                  isInfinite: true,
                   selectTextStyle: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w800,fontSize: 22),
                   unSelectTextStyle: TextStyle(color: Colors.grey),

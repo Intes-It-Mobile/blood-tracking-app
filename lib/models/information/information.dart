@@ -8,9 +8,9 @@ class Information {
 
   Information({
     this.gender,
-    this.old,
-    this.weight,
-    this.tall,
+    this.old = 25,
+    this.weight = 25,
+    this.tall = 25,
     this.name,
 
   });

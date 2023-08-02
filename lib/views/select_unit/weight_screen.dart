@@ -23,6 +23,7 @@ class _WeightScreenState extends State<WeightScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
+    sugarInfoStore?.information?.tall = 25;
     controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -57,6 +58,7 @@ class _WeightScreenState extends State<WeightScreen> {
                           setState(() {
                             int weight = controllerWC.initialItem;
                             weight = value;
+
                             sugarInfoStore?.information?.weight = weight;
                             print("cân nặng: ${weight}");
                             print("dasdasddas: ${sugarInfoStore?.information?.weight?.toInt()}");
