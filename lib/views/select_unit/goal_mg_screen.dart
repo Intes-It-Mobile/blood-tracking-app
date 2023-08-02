@@ -38,7 +38,7 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
-    sugarInfoStore!.setGoalAmount(80, false);
+    sugarInfoStore!.setGoalAmount(80);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -62,7 +62,7 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
                       width: 80,
                       child: WheelChooser.integer(
                         onValueChanged: (value) {
-                          sugarInfoStore!.goalAmount = value * 1.0;
+                          sugarInfoStore!.goalAmount!.amount = value * 1.0;
                         },
                         maxValue: 630,
                         minValue: 18,
