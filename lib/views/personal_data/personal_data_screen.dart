@@ -28,277 +28,300 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   void initState() {
+    // sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
+    //   Provider.of<InformationNotifier>(context, listen: true).setInformationData(sugarInfoStore!.information!);
+    Future.delayed(const Duration(microseconds: 100), () {
+      setState(() {});
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 80,
-        backgroundColor: AppColors.AppColor2,
-        title: Column(
-          children: [
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 12),
-                    child: SvgPicture.asset(
-                      Assets.iconBack,
-                      height: 44,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          toolbarHeight: 80,
+          backgroundColor: AppColors.AppColor2,
+          title: Column(
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 12),
+                      child: SvgPicture.asset(
+                        Assets.iconBack,
+                        height: 44,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.getTranslate('personal_data')}",
-                    style: AppTheme
-                        .Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                  Expanded(
+                    child: Text(
+                      "${AppLocalizations.of(context)!.getTranslate('personal_data')}",
+                      style: AppTheme
+                          .Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ],
+          ),
+        ),
+        body: CheckDataInformation(context));
+  }
+
+  Widget CheckDataInformation(BuildContext context) {
+    return Consumer<InformationNotifier>(builder: (context, provider, _) {
+      sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
+      sugarInfoStore?.information = provider.getUserData(
+        'information_key',
+      );
+      return Visibility(
+        visible: sugarInfoStore?.information != null,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Components().DialogGender(context);
+                      },
+                      child: Container(
+                        height: 108,
+                        margin: const EdgeInsets.only(left: 15, right: 8),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Gender",
+                                  style: AppTheme.Headline16Text.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const Spacer(),
+                                SvgPicture.asset(Assets.iconEditRange),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            sugarInfoStore?.information != null
+                                ? Text(
+                                    '${sugarInfoStore?.information?.gender}',
+                                    style: AppTheme.Headline20Text.copyWith(
+                                        color: AppColors.AppColor4,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : const Text('error')
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Components().DialogAge(context);
+                      },
+                      child: Container(
+                        height: 108,
+                        margin: const EdgeInsets.only(right: 15, left: 8),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Age",
+                                  style: AppTheme.Headline16Text.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const Spacer(),
+                                SvgPicture.asset(Assets.iconEditRange),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            sugarInfoStore?.information != null
+                                ? Text(
+                                    '${sugarInfoStore?.information?.old}',
+                                    style: AppTheme.Headline20Text.copyWith(
+                                        color: AppColors.AppColor4,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : const Text('error')
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Components().DialogWeight(context);
+                      },
+                      child: Container(
+                        height: 108,
+                        margin: const EdgeInsets.only(left: 15, right: 8),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Weight',
+                                  style: AppTheme.Headline16Text.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const Spacer(),
+                                SvgPicture.asset(Assets.iconEditRange),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            sugarInfoStore?.information != null
+                                ? Row(
+                                    children: [
+                                      Text(
+                                        '${sugarInfoStore?.information?.weight}',
+                                        style: AppTheme.Headline20Text.copyWith(
+                                            color: AppColors.AppColor4,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        '(kg)',
+                                        style: AppTheme.Headline16Text.copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )
+                                : const Text("error")
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Components().DialogHeight(context);
+                      },
+                      child: Container(
+                        height: 108,
+                        margin: const EdgeInsets.only(right: 15, left: 8),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Height",
+                                  style: AppTheme.Headline16Text.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const Spacer(),
+                                SvgPicture.asset(Assets.iconEditRange),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            sugarInfoStore?.information != null
+                                ? Row(
+                                    children: [
+                                      Text(
+                                        '${sugarInfoStore?.information?.tall}',
+                                        style: AppTheme.Headline20Text.copyWith(
+                                            color: AppColors.AppColor4,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        '(cm)',
+                                        style: AppTheme.Headline16Text.copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )
+                                : const Text('error')
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-      ),
-      body: Consumer<InformationNotifier>(builder: (context, provider, _) {
-        // InformationNotifier informationNotifier =
-        //     Provider.of<InformationNotifier>(context);
-        sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
-        sugarInfoStore?.information = provider.getUserData('information_key');
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 108,
-                      margin: const EdgeInsets.only(left: 15, right: 8),
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Gender",
-                                style: AppTheme.Headline16Text.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  Components().DialogGender(context);
-                                },
-                                child: SvgPicture.asset(Assets.iconEditRange),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          sugarInfoStore?.information != null
-                              ? Text(
-                                  '${sugarInfoStore?.information?.gender}',
-                                  style: AppTheme.Headline20Text.copyWith(
-                                      color: AppColors.AppColor4,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              : const Text('error')
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 108,
-                      margin: const EdgeInsets.only(right: 15, left: 8),
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Age",
-                                style: AppTheme.Headline16Text.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  Components().DialogAge(context);
-                                },
-                                child: SvgPicture.asset(Assets.iconEditRange),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          sugarInfoStore?.information != null
-                              ? Text(
-                                  '${sugarInfoStore?.information?.old}',
-                                  style: AppTheme.Headline20Text.copyWith(
-                                      color: AppColors.AppColor4,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              : const Text('error')
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+        replacement:  SizedBox.shrink(
+          child: Container(
+            height: 50,
+            width: 50,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 108,
-                      margin: const EdgeInsets.only(left: 15, right: 8),
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Weight',
-                                style: AppTheme.Headline16Text.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  Components().DialogWeight(context);
-                                },
-                                child: SvgPicture.asset(Assets.iconEditRange),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          sugarInfoStore?.information != null
-                              ? Row(
-                                  children: [
-                                    Text(
-                                      '${sugarInfoStore?.information?.weight}',
-                                      style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      '(kg)',
-                                      style: AppTheme.Headline16Text.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                )
-                              : const Text("error")
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 108,
-                      margin: const EdgeInsets.only(right: 15, left: 8),
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: AppColors.AppColor3,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Height",
-                                style: AppTheme.Headline16Text.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                  onTap: (){
-                                    Components().DialogHeight(context);
-                                  },
-                                child: SvgPicture.asset(Assets.iconEditRange),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          sugarInfoStore?.information != null
-                              ? Row(
-                                  children: [
-                                    Text(
-                                      '${sugarInfoStore?.information?.tall}',
-                                      style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      '(cm)',
-                                      style: AppTheme.Headline16Text.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                )
-                              : const Text('error')
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      }),
-    );
+          ),
+        ),
+      );
+    });
   }
 }

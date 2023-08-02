@@ -2,6 +2,7 @@ import 'package:blood_sugar_tracking/AppLanguage.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
+import 'package:blood_sugar_tracking/models/information/information.dart';
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
@@ -30,8 +31,11 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   shareLocal = await ShareLocal.getInstance();
   await Alarm.init(showDebugLogs: true);
-  runApp(MyApp(
-    appLanguage: appLanguage,
+  runApp(ChangeNotifierProvider(
+    create: (context) => InformationNotifier(),
+    child: MyApp(
+      appLanguage: appLanguage,
+    ),
   ));
 }
 
@@ -61,7 +65,7 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<InformationNotifier>(
             create: (context) => InformationNotifier(),
-            child:  const GenderScreen(),
+            child: PersonalDataScreen(),
           ),
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
