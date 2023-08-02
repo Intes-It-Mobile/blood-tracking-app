@@ -1112,7 +1112,7 @@ abstract class _SugarInfoStoreBase with Store {
   late BuildContext homeScreenContext;
 
   @observable
-  GoalAmount? goalAmount;
+  GoalAmount? goalAmount = GoalAmount();
 
   @action
   setGoalAmount(double? value, bool? isMol) {

@@ -22,6 +22,13 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
   FixedExtentScrollController controller = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
   @override
+  void didChangeDependencies() {
+    Provider.of<InformationNotifier>(context);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     controller = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
@@ -31,7 +38,6 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     sugarInfoStore!.setGoalAmount(80, false);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
@@ -82,8 +88,8 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(Routes.intro);
                 sugarInfoStore!.saveGoalAmountToSharedPreferences();
+                Navigator.of(context).pushNamed(Routes.intro);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",
