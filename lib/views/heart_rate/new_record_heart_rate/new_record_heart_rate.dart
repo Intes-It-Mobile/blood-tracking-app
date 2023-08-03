@@ -115,14 +115,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
               },
             ),
           ),
-          if (checkEmpty)
-            Center(
-              child: Text(
-                AppLocalizations.of(context).getTranslate("enter_value"),
-                style: AppTheme.errorText,
-              ),
-            ),
-          if (!checkEmpty && checkError)
+          if (checkEmpty || checkError)
             Center(
               child: Text(
                 AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
@@ -148,14 +141,20 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
             checkError = ((info?.indicator??0) < 1 || (info?.indicator??0) > 120);
           });
           if (!checkError && !checkEmpty) {
-            await _saveRecord();
-            showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => SucessDialog());
-            Future.delayed(Duration(seconds: 1), () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            });
+            HeartRateStore heartRateStore = HeartRateStore();
+            HeartRateInfo? re = await heartRateStore.checkDateTime(date!);
+            if (re == null){
+              await _saveRecord();
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => SucessDialog());
+              Future.delayed(Duration(seconds: 1), () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              });
+            } else {
+              changedRecord(re);
+            }
           }
         },
         child: loadData
@@ -179,6 +178,34 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
       )
     );
     return true;
-    
+  }
+
+  void changedRecord(HeartRateInfo changed){
+    ShowDialogCustom().showDialogCustom(
+      context: context,
+      title: AppLocalizations.of(context).getTranslate('add_new_record'),
+      contentLeft: AppLocalizations.of(context).getTranslate('replace'),
+      contentRight: AppLocalizations.of(context).getTranslate('keep'),
+      onClickBtnRight: () {
+        Navigator.of(context).pop(false);
+      },
+      onClickBtnLeft: () {
+        Navigator.of(context).pop(true);
+      },
+    ).then((value) async {
+      if (value as bool == true){
+        HeartRateStore heartRateStore = HeartRateStore();
+        info!.date = date;
+        info!.id = changed.id;
+        await heartRateStore.editRecord(info!);
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => SucessDialog());
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
+        });
+      }
+    });
   }
 }

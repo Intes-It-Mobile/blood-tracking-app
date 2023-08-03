@@ -95,7 +95,6 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       getDataFromSharedPreferences();
     }
-    print("Load json");
   }
 
   @override

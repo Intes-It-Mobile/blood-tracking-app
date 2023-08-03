@@ -129,7 +129,7 @@ class _SortHeartRateState extends State<SortHeartRate> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: TextField(
+            child: TextFormField(
               controller: controller,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
@@ -141,6 +141,7 @@ class _SortHeartRateState extends State<SortHeartRate> {
                 ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                LengthLimitingTextInputFormatter(3),
               ],
               style: TextStyle(
                 fontSize: TextSizeConfig.getAdjustedFontSize(50),
@@ -150,6 +151,10 @@ class _SortHeartRateState extends State<SortHeartRate> {
                 color: Colors.black,
               ),
               onChanged: (value) {
+                // if (value.length>3){
+                //   value = value.substring(0, 3);
+                //   controller!.text = value;
+                // }
                 int n = 0;
                 if (value!="") {
                   n = int.tryParse(value)??0;

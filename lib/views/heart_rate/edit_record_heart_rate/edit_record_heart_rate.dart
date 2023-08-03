@@ -168,14 +168,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
                 },
               ),
             ),
-            if (checkEmpty)
-              Center(
-                child: Text(
-                  AppLocalizations.of(context).getTranslate("enter_value"),
-                  style: AppTheme.errorText,
-                ),
-              ),
-            if (!checkEmpty && checkError)
+            if (checkEmpty || checkError)
               Center(
                 child: Text(
                   AppLocalizations.of(context).getTranslate("errow_heart_rate_input_text"),
@@ -194,37 +187,19 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 30),
       child: InkWell(
-        onTap: () {
+        onTap: () async{
           setState(() {
             checkEmpty = (st == "" || st == null);
             checkError = ((info?.indicator??0) < 1 || (info?.indicator??0) > 120);
           });
           if (!checkError && !checkEmpty) {
-            ShowDialogCustom().showDialogCustom(
-              context: context,
-              title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
-              contentLeft: AppLocalizations.of(context).getTranslate('keep'),
-              contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
-              onClickBtnRight: () {
-                Navigator.of(context).pop(true);
-              },
-              onClickBtnLeft: () {
-                Navigator.of(context).pop(false);
-              },
-            ).then((value) async {
-              if (value as bool == true){
-                HeartRateStore heartRateStore = HeartRateStore();
-                info!.date = date;
-                await heartRateStore.editRecord(info!);
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => SucessDialog());
-                Future.delayed(Duration(seconds: 1), () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop(true);
-                });
-              }
-            });
+            HeartRateStore heartRateStore = HeartRateStore();
+            HeartRateInfo? re = await heartRateStore.checkDateTime(date!, id: info!.id);
+            if (re == null){
+              editRecord();
+            } else {
+              changedRecord(re);
+            }
           }
         },
         child: ButtonWidget(
@@ -236,5 +211,61 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
     );
   }
 
+  void editRecord(){
+    ShowDialogCustom().showDialogCustom(
+      context: context,
+      title: AppLocalizations.of(context).getTranslate('save_edit_dialog_content'),
+      contentLeft: AppLocalizations.of(context).getTranslate('keep'),
+      contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
+      onClickBtnRight: () {
+        Navigator.of(context).pop(true);
+      },
+      onClickBtnLeft: () {
+        Navigator.of(context).pop(false);
+      },
+    ).then((value) async {
+      if (value as bool == true){
+        HeartRateStore heartRateStore = HeartRateStore();
+        info!.date = date;
+        await heartRateStore.editRecord(info!);
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => SucessDialog());
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
+        });
+      }
+    });
+  }
+
+  void changedRecord(HeartRateInfo changed){
+    ShowDialogCustom().showDialogCustom(
+      context: context,
+      title: AppLocalizations.of(context).getTranslate('add_new_record'),
+      contentLeft: AppLocalizations.of(context).getTranslate('replace'),
+      contentRight: AppLocalizations.of(context).getTranslate('keep'),
+      onClickBtnRight: () {
+        Navigator.of(context).pop(false);
+      },
+      onClickBtnLeft: () {
+        Navigator.of(context).pop(true);
+      },
+    ).then((value) async {
+      if (value as bool == true){
+        HeartRateStore heartRateStore = HeartRateStore();
+        info!.date = date;
+        await heartRateStore.editRecord(info!);
+        await heartRateStore.deleteRecord(changed);
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => SucessDialog());
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
+        });
+      }
+    });
+  }
 
 }

@@ -124,5 +124,9 @@
   "result": "Result",
   "enter_value": "Please enter the value",
   "check_finger" : "Right position. Do not move your finger!",
-  "show_error_heart_rate": "No result found. Measuring has been failed!"
+  "show_error_heart_rate": "No result found. Measuring has been failed!",
+  "access_disabled" : "Access disabled!",
+  "request_open_permission":"Please go to settings to open permissions!",
+  "go_to_setting":"Go to setting",
+  "return" : "Return"
 }

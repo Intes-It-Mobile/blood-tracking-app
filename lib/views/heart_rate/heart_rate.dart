@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'dart:async';
 import 'dart:math';
@@ -33,15 +32,16 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   int checkTap = 0;
   int checkFingerTime = 0;
   bool checkFinger = false;
+  bool loadFinger = false;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     cameras = await availableCameras();
-    cameraController = CameraController(cameras[0], ResolutionPreset.max);
+    cameraController = CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
     cameraController.setFlashMode(FlashMode.always);
     setState(() {
       checkCamera = true;
@@ -64,24 +64,30 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
 
   Future<void> requestPermission() async {
     await Permission.camera.request().then((value) async {
-      if (value != PermissionStatus.denied) {
+      if (value != PermissionStatus.permanentlyDenied && value != PermissionStatus.denied) {
+        await getData();
         await initCamera();
+        setState(() {
+          checkTap = 1;
+          checkFinger = false;
+        });
+      } else {
+        showAccessDisabled();
       }
     });
   }
 
   Future<void> checkHeartBeat() async {
-    int level = Random().nextInt(2);
-    Timer.periodic(const Duration(seconds: 1), (timer) async {
+    DateTime dateOld = DateTime.now();
+    Timer.periodic(const Duration(milliseconds: 700), (timer) async {
+      DateTime dateNew = DateTime.now();
+      Duration diff = dateNew.difference(dateOld);
       bool checkFingerOld = checkFinger;
-      if (!cameraController.value.isRecordingVideo) {
-        await cameraController.startVideoRecording();
-      }
-      XFile xFile = await cameraController.takePicture();
-      checkFinger = checkFingerByCamera(xFile.path);
+      if (loadFinger == false)
+        checkFingerByCamera();
       if (!checkFinger){
-        checkFingerTime++;
-        if (checkFingerTime>15){
+        checkFingerTime += diff.inMilliseconds;
+        if (checkFingerTime>20000){
           timer.cancel();
           if (cameraController.value.isRecordingVideo) {
             await cameraController.stopVideoRecording();
@@ -89,14 +95,15 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           cameraIsInitialize = false;
           await cameraController.setFlashMode(FlashMode.off);
           showDialogError();
+          return;
         }
       }
       if (checkFinger != checkFingerOld){
         setState(() {});
       }
       if (checkFinger){
-        time++;
-        if (time == 35) {
+        time += diff.inMilliseconds;
+        if (time> 45000) {
           timer.cancel();
           if (cameraController.value.isRecordingVideo) {
             await cameraController.stopVideoRecording();
@@ -108,6 +115,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
             checkTap = 0;
             time = 0;
             bmp = 0;
+            checkFingerTime = 0;
+            checkFinger = false;
           });
           Navigator.of(context).pushNamed(
             Routes.new_record_heart_rate,
@@ -115,50 +124,79 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           );
           return;
         } else {
+          if (bmp==0) bmp = 60 + Random().nextInt(20) + 1;
+          int dau = Random().nextInt(2);
+          int t = Random().nextInt(6);
           setState(() {
-            switch (level) {
-              case 0:
-                bmp = Random().nextInt(60) + 1;
-                break;
-              case 1:
-                bmp = 60 + Random().nextInt(40);
-                break;
-              default:
-                bmp = 100 + Random().nextInt(20);
+            if (bmp<60 ||( dau==0 && bmp<114)){
+              bmp += t;
+            } else {
+              bmp -= t;
             }
           });
         }
       }
+      dateOld = dateNew;
     });
   }
 
-  bool checkFingerByCamera(String imagePath) {
+  Future<void> checkFingerByCamera() async {
+    setState(() {
+      loadFinger = true;
+    });
+    XFile xFile = await cameraController.takePicture();
+    String imagePath = xFile.path;
     img.Image? image = img.decodeImage(File(imagePath).readAsBytesSync());
-    img.Image resizedImage = img.copyResize(image!, width: 100);
-    int sum = resizedImage.height*resizedImage.width;
-    int count = 0;
-    for (int y = 0; y < resizedImage.height; y++) {
-      for (int x = 0; x < resizedImage.width; x++) {
-        img.Pixel pixel = resizedImage.getPixel(x, y);
-        int red = img.uint32ToRed(pixel[0].toInt());
-        int green = img.uint32ToGreen(pixel[0].toInt());
-        int blue = img.uint32ToBlue(pixel[0].toInt());
-        if (red>green && red>blue && red-green>100 && red-blue>100 && red>100)
-          count++;
+    img.Image resizedImage = img.copyResize(image!, width: 30, height: 30);
+    int sum = (resizedImage.height*resizedImage.width/4).toInt();
+    int pass = 0, fail = 0;
+    check(int x, int y) {
+      img.Pixel pixel = resizedImage.getPixel(x, y);
+      int red = img.uint32ToRed(pixel[0].toInt());
+      int green = img.uint32ToGreen(pixel[0].toInt());
+      int blue = img.uint32ToBlue(pixel[0].toInt());
+      // print("$red $green $blue");
+      if (red>green && red>blue && red-green>100 && red-blue>100 && red>130)
+        pass++;
+      else
+        fail++;
+    }
+
+    int height = resizedImage.height;
+    int width = resizedImage.width;
+    for (int y = 0; y < height; y++) {
+      for (int i=0;i<10;i++){
+        check(i,y);
+      }
+      for (int i=width-10;i<width;i++){
+        check(i,y);
       }
     }
-    return (count>sum*0.8);
+    for (int x = 0; x < width; x++) {
+      for (int i=0;i<10;i++){
+        check(x,i);
+      }
+      for (int i=height-10;i<height;i++){
+        check(x,i);
+      }
+    }
+    setState(() {
+      loadFinger = false;
+      checkFinger = (pass>fail*6);
+    });
   }
 
   Path _buildHeartPath() {
     return Path()
-      ..moveTo(55, 15)
-      ..cubicTo(55, 20, 50, 0, 30, 0) //(1st curve)
-      ..cubicTo(10, 0, 0, 10.5, 0, 37.5) // (2nd curve)
-      ..cubicTo(0, 57.5, 20, 77, 55, 100) // (3rd curve)
-      ..cubicTo(100, 77, 110, 57.5, 110, 37.5) // (4th curve)
-      ..cubicTo(110, 10.5, 100, 0, 80, 0) // (5th curve)
-      ..cubicTo(60, 0, 55, 20, 55, 15) // (6th curve)
+      ..moveTo(55, 101)
+      ..lineTo(47.4525, 93.7346)
+      ..cubicTo(18.87, 68.0305, 0, 51.0229, 0, 30.2725) 
+      ..cubicTo(0, 13.2648, 13.431, 0, 30.525, 0) 
+      ..cubicTo(40.182, 0, 49.4505, 4.45831, 55.5, 11.4485) 
+      ..cubicTo(61.5495, 4.45831, 70.818, 0, 80.475, 0) 
+      ..cubicTo(97.569, 0, 111, 13.2648, 111, 30.2725) 
+      ..cubicTo(111, 51.0229, 92.13, 68.0305, 63.5475, 93.7346) 
+      ..lineTo(55.5, 101)
       ..close();
   }
 
@@ -256,15 +294,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                     ? _buildRunHeartRate()
                     : Container(),
             onTap: () {
-              setState(() async {
-                if (checkTap == 0) {
-                  checkTap = 1;
-                  getData();
-                  requestPermission();
-                } else if (checkTap == 1) {
-                  null;
-                }
-              });
+              if (checkTap == 0) {
+                requestPermission();
+              } else if (checkTap == 1) {
+                null;
+              }
             },
           ),
           Container(
@@ -287,9 +321,9 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         children: [
           Center(
             child: LiquidCustomProgressIndicator(
-              value: time / 45,
-              valueColor: const AlwaysStoppedAnimation(Colors.pink),
-              backgroundColor: Colors.blue,
+              value: time / 45000,
+              valueColor: const AlwaysStoppedAnimation(Color(0xFFFD4755)),
+              backgroundColor: AppColors.AppColor4,
               direction: Axis.vertical,
               shapePath: _buildHeartPath(),
             ),
@@ -436,7 +470,75 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         checkTap = 0;
         time = 0;
         bmp = 0;
+        checkFingerTime = 0;
+        checkFinger = false;
       });
     });
+  }
+
+  void showAccessDisabled(){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        actions: [
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    decoration: const BoxDecoration(
+                        color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context).getTranslate("return"),
+                        style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 23),
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                    openAppSettings();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    decoration: const BoxDecoration(
+                        color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context).getTranslate("go_to_setting"),
+                        style: AppTheme.TextIntroline16Text,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        content: Text(
+          AppLocalizations.of(context).getTranslate("request_open_permission"),
+          style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w400, color: Colors.black, fontFamily: FontFamily.roboto),
+          textAlign: TextAlign.center,
+        ),
+        title: Text(
+          AppLocalizations.of(context).getTranslate("access_disabled"),
+          style: AppTheme.Headline20Text.copyWith(fontWeight: FontWeight.w600, color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+      )
+    );
   }
 }

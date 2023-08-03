@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:blood_sugar_tracking/models/heart_rate/heart_rate_info.dart';
+import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,5 +54,21 @@ class HeartRateStore {
       }
     });
     await saveListRecord(ListHeartRate(listHeartRate: updated));
+  }
+
+  Future<HeartRateInfo?> checkDateTime(DateTime date, {String? id}) async{
+    await getListRecords();
+    listRecord ??= [];
+    HeartRateInfo? re;
+    listRecord!.forEach((item) {
+      DateTime p = item.date!;
+      DateTime t1 = DateTime(p.year, p.month, p.day, p.hour, p.minute);
+      DateTime t2 = DateTime(date.year, date.month, date.day, date.hour, date.minute);
+      if (t1 == t2 && (id == null || (id !=null && id != item.id))){
+        re = item;
+        return;
+      }
+    });
+    return re;
   }
 }
