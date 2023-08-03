@@ -15,4 +15,8 @@ class GoalAmount {
     data['is_mol'] = this.isMol;
     return data;
   }
+    GoalAmount.fromGoalAmount(GoalAmount goalAmount) {
+    this.amount = goalAmount.amount;
+    this.isMol = goalAmount.isMol;
+  }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
-
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
@@ -20,7 +19,10 @@ class EditGoalMg extends StatefulWidget {
 
 class _EditGoalMgState extends State<EditGoalMg> {
   SugarInfoStore? sugarInfoStore;
-  int? currentValue;
+  int? currentFirstValue;
+  int? currentSecondValue;
+
+
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
@@ -29,7 +31,7 @@ class _EditGoalMgState extends State<EditGoalMg> {
     sugarInfoStore!.fetchGoalAmountFromSharedPreferences();
     controllerWC = FixedExtentScrollController(
         initialItem: sugarInfoStore!.goalAmount!.amount!.toInt());
-    currentValue = sugarInfoStore!.goalAmount!.amount!.toInt();
+    currentFirstValue = sugarInfoStore!.goalAmount!.amount!.toInt();
     super.didChangeDependencies();
   }
 
@@ -37,8 +39,11 @@ class _EditGoalMgState extends State<EditGoalMg> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    GoalAmount tempGoalAmount =
+        GoalAmount.fromGoalAmount(sugarInfoStore!.goalAmount!);
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -64,11 +69,11 @@ class _EditGoalMgState extends State<EditGoalMg> {
                   width: 80,
                   child: WheelChooser.integer(
                     onValueChanged: (value) {
-                      sugarInfoStore!.setGoalAmount(value * 1.0);
+                      tempGoalAmount.amount = value * 1.0;
                     },
                     maxValue: 630,
                     minValue: 18,
-                    initValue: currentValue,
+                    initValue: currentFirstValue,
                     selectTextStyle: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
@@ -119,8 +124,7 @@ class _EditGoalMgState extends State<EditGoalMg> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      sugarInfoStore!
-                          .setGoalAmount(sugarInfoStore!.goalAmount!.amount);
+                      sugarInfoStore!.setGoalAmount(tempGoalAmount.amount);
                       sugarInfoStore!.saveGoalAmountToSharedPreferences();
                       Navigator.pop(context);
                       //informationNotifier.saveUserData('information_key', updatedItem);
