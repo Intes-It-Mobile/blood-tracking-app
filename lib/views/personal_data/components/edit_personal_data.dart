@@ -174,7 +174,7 @@ class _EditPersonalAgeState extends State<EditPersonalAge> {
           height: 5,
         ),
         Text(
-          '${AppLocalizations.of(context)!.getTranslate('choose_your_gender')}',
+          '${AppLocalizations.of(context)!.getTranslate('how_old_are_you')}',
           style: AppTheme.edit20Text,
         ),
         const SizedBox(
@@ -294,7 +294,7 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
           height: 5,
         ),
         Text(
-          '${AppLocalizations.of(context)!.getTranslate('choose_your_gender')}',
+          '${AppLocalizations.of(context)!.getTranslate('what_is_your_weight')}',
           style: AppTheme.edit20Text,
         ),
         const SizedBox(
@@ -428,7 +428,7 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
           height: 5,
         ),
         Text(
-          '${AppLocalizations.of(context)!.getTranslate('choose_your_gender')}',
+          '${AppLocalizations.of(context)!.getTranslate('How_tall_are_you')}',
           style: AppTheme.edit20Text,
         ),
         const SizedBox(
@@ -453,7 +453,7 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
                           "dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
                     });
                   },
-                  maxValue: 115,
+                  maxValue: 400,
                   minValue: 1,
                   initValue: currentValue,
                   step: 1,

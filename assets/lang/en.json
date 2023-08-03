@@ -101,6 +101,7 @@
   "intro1": "Fast data entry and\nsmart statistics",
   "intro2": "Flexible changing unit\nChanging range",
   "intro3": "Remind you to enter\nyour record",
+  "intro4": "Heart rate\nmeasuring",
   "edit": "Edit",
   "replace": "Replace",
   "add": "Add",
@@ -136,5 +137,9 @@
   "goal_far_txt":"You are still far from your goal. Improve the blood sugar amount!",
   "goal_nearly_txt":"You have nearly reached your goal. Just try a little bit!",
   "goal_reach_txt":"Congratulation! Your have reached your goal",
-  "popup_will_close": "This pop up will close in"
+  "popup_will_close": "This pop up will close in",
+  "gender": "Gender",
+  "age": "Age",
+  "weight": "Weight",
+  "height": "Height"
 }

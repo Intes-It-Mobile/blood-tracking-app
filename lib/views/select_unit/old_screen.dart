@@ -27,7 +27,6 @@ class _OldScreenState extends State<OldScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
-    sugarInfoStore?.information?.tall = 25;
    controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -35,7 +34,7 @@ class _OldScreenState extends State<OldScreen> {
 
   @override
   Widget build(BuildContext context) {
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     InformationNotifier informationNotifier =
     Provider.of<InformationNotifier>(context);
     return Scaffold(
@@ -88,7 +87,6 @@ class _OldScreenState extends State<OldScreen> {
                 sugarInfoStore?.information = informationNotifier.information;
                 informationNotifier.saveUserData('information_key', sugarInfoStore!.information!,);
                 Navigator.of(context).pushNamed(Routes.weight_screen);
-                print('danh sach: ${informationNotifier.informationList.length}');
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

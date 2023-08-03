@@ -23,7 +23,6 @@ class _WeightScreenState extends State<WeightScreen> {
   SugarInfoStore? sugarInfoStore;
   @override
   void initState() {
-    sugarInfoStore?.information?.tall = 25;
     controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
@@ -31,7 +30,7 @@ class _WeightScreenState extends State<WeightScreen> {
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
     Provider.of<InformationNotifier>(context);
-    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(

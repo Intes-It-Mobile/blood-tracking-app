@@ -6,9 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class InformationNotifier extends ChangeNotifier {
   Information? _information;
-   SharedPreferences? _prefs;
+  SharedPreferences? _prefs;
   Information informations = Information();
-   List<Information> informationList = [];
 
   Information? get information => _information;
 
@@ -31,10 +30,8 @@ class InformationNotifier extends ChangeNotifier {
   }
 
   void addItem(Information newItem) {
-
     notifyListeners();
   }
-
 
   void _initSharedPreferences() async {
     _prefs = await SharedPreferences.getInstance();
