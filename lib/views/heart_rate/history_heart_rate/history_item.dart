@@ -118,10 +118,10 @@ class HistoryHeartRateRecord extends StatelessWidget {
         const SizedBox(width: 2),
         Text(
           info.indicator! > 100
-            ? "Fast"
+            ? AppLocalizations.of(context).getTranslate("fast")
             : info.indicator! > 60
-              ? "Normal"
-              : "Slow",
+              ? AppLocalizations.of(context).getTranslate("normal")
+              : AppLocalizations.of(context).getTranslate("slow"),
           style: TextStyle(
             fontSize: TextSizeConfig.getAdjustedFontSize(12),
             fontFamily: FontFamily.IBMPlexSans,

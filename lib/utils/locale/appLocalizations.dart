@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizationsDelegate.dart';
@@ -22,6 +21,8 @@ class AppLocalizations {
 
     Map<String, dynamic> _json = jsonDecode(_langFile);
     _valueText = _json.map((key, value) => MapEntry(key, value.toString()));
+
+    return true;
   }
 
   String getTranslate(String key) {

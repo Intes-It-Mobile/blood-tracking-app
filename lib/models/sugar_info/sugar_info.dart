@@ -11,6 +11,14 @@ class SugarInfo {
       });
     }
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.conditions != null) {
+      data['conditions'] = this.conditions!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Conditions {
@@ -30,6 +38,15 @@ class Conditions {
       });
     }
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    if (this.sugarAmount != null) {
+      data['sugar_amount'] = this.sugarAmount!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class SugarAmount {
@@ -38,13 +55,21 @@ class SugarAmount {
   double? minValue;
   double? maxValue;
 
-  SugarAmount({this.status, this.minValue, this.maxValue});
+  SugarAmount({this.status, this.minValue, this.maxValue, this.id});
 
   SugarAmount.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     status = json['status'];
     minValue = json['min_value'];
     maxValue = json['max_value'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['status'] = this.status;
+    data['min_value'] = this.minValue;
+    data['max_value'] = this.maxValue;
+    return data;
   }
 }
 
@@ -79,7 +104,7 @@ class SugarRecord {
   String? dayTime;
   String? hourTime;
   String? conditionName;
-
+  bool?  informed;
   SugarRecord(
       {this.status,
       this.sugarAmount,
@@ -87,7 +112,7 @@ class SugarRecord {
       this.hourTime,
       this.id,
       this.conditionId,
-      this.conditionName});
+      this.conditionName,this.informed});
 
   SugarRecord.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -97,6 +122,7 @@ class SugarRecord {
     id = json['id'];
     conditionId = json['condition_id'];
     conditionName = json['condition_name'];
+    informed = json['informed']??false;
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +134,7 @@ class SugarRecord {
     data['id'] = this.id;
     data['condition_id'] = this.conditionId;
     data['condition_name'] = this.conditionName;
+    data['informed'] = this.informed;
     return data;
   }
 }

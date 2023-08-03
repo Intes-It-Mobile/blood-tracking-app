@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -10,11 +10,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../models/goal/goal_amount.dart';
+import '../../models/information/information.dart';
+import '../../models/information/information_provider.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
 
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/goal_dialog/goal_far_dialog.dart';
+import '../../widgets/goal_dialog/goal_nearly_dialog.dart';
+import '../../widgets/goal_dialog/goal_reached_dialog.dart';
+import '../../widgets/share_local.dart';
 part 'sugar_info_store.g.dart';
 
 class SugarInfoStore = _SugarInfoStoreBase with _$SugarInfoStore;
@@ -45,29 +52,46 @@ abstract class _SugarInfoStoreBase with Store {
 
   get sugarInfoStore => null;
 
+  Future<void> checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Đây là lần đầu tiên người dùng vào ứng dụng, hãy lưu giá trị false vào SharedPreferences.
+    prefs.setBool('isFirstTime', false);
+  }
+
   @action
-  getRootSugarInfo(SugarInfo? fromSharepref) {
+  getRootSugarInfo(SugarInfo? fromSharepref) async {
+    bool isFirstTime;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    isFirstTime = prefs.getBool('isFirstTime') ?? true;
     rootSugarInfo = fromSharepref;
     if (isSwapedToMol == false) {
       listRootConditions = fromSharepref!.conditions;
       setValueToListFilter(listRootConditions);
     }
     if (isSwapedToMol == true) {
-      listRootConditions = fromSharepref!.conditions;
-      for (var condition in listRootConditions!) {
-        if (condition.sugarAmount != null) {
-          for (var sugarAmount in condition.sugarAmount!) {
-            if (sugarAmount.minValue != null) {
-              sugarAmount.minValue = sugarAmount.minValue! / 18;
-            }
-            if (sugarAmount.maxValue != null) {
-              sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+      if (isFirstTime != false) {
+        listRootConditions = fromSharepref!.conditions;
+        for (var condition in listRootConditions!) {
+          if (condition.sugarAmount != null) {
+            for (var sugarAmount in condition.sugarAmount!) {
+              if (sugarAmount.minValue != null) {
+                sugarAmount.minValue = sugarAmount.minValue! / 18;
+              }
+              if (sugarAmount.maxValue != null) {
+                sugarAmount.maxValue = sugarAmount.maxValue! / 18;
+              }
             }
           }
         }
+        setValueToListFilter(listRootConditions);
+      } else {
+        listRootConditions = fromSharepref!.conditions;
+        setValueToListFilter(listRootConditions);
       }
-      setValueToListFilter(listRootConditions);
     }
+    checkFirstTime();
   }
 
   @action
@@ -79,9 +103,7 @@ abstract class _SugarInfoStoreBase with Store {
   setChooseCondition(int chooseId) {
     chooseCondition =
         listRootConditions!.where((e) => e.id == chooseId).toList().first;
-    if (chooseCondition != null) {
-      print(chooseCondition!.name);
-    }
+    if (chooseCondition != null) {}
   }
 
   @action
@@ -108,24 +130,30 @@ abstract class _SugarInfoStoreBase with Store {
     //  Lớn hơn >= min, nhỏ hơn max
     if (isSwapedToMol == false) {
       if (inputAmount >= 18 || inputAmount <= 630) {
-        currentStatus = chooseCondition!.sugarAmount!
-            .where((e) =>
-                e.minValue! * 1.0 <= inputAmount &&
-                inputAmount < e.maxValue! * 1.0)
-            .first
-            .status;
+        if (inputAmount < 630) {
+          currentStatus = chooseCondition!.sugarAmount!
+              .where((e) =>
+                  e.minValue! * 1.0 <= inputAmount &&
+                  inputAmount < e.maxValue! * 1.0)
+              .first
+              .status;
+        } else {
+          currentStatus = "diabetes";
+        }
       }
-      print("Status: ${currentStatus}");
     } else if (isSwapedToMol == true) {
       if (inputAmount >= 1 || inputAmount <= 35) {
-        currentStatus = chooseCondition!.sugarAmount!
-            .where((e) =>
-                e.minValue! * 1.0 <= inputAmount &&
-                inputAmount < e.maxValue! * 1.0)
-            .first
-            .status;
+        if (inputAmount < 35) {
+          currentStatus = chooseCondition!.sugarAmount!
+              .where((e) =>
+                  e.minValue! * 1.0 <= inputAmount &&
+                  inputAmount < e.maxValue! * 1.0)
+              .first
+              .status;
+        } else {
+          currentStatus = "diabetes";
+        }
       }
-      print("Status: ${currentStatus}");
     }
   }
 
@@ -155,7 +183,6 @@ abstract class _SugarInfoStoreBase with Store {
     } else {
       legalInput = false;
     }
-    print("legalInput: ${legalInput}");
   }
 
   @observable
@@ -185,13 +212,13 @@ abstract class _SugarInfoStoreBase with Store {
     (choosedDayTimeStrDisplay =
         DateFormat('yyyy     MM     dd').format(choosedDayTime));
     choosedDayTimeStr = DateFormat('yyyy/MM/dd').format(choosedDayTime);
-    print(choosedDayTimeStr);
   }
 
   @action
   setchoosedDayHour(DateTime choosedDayHour) {
     choosedDayHourStrDisplay = DateFormat('HH : mm').format(choosedDayHour);
     choosedDayHourStr = DateFormat('HH:mm').format(choosedDayHour);
+
     print(choosedDayHourStr);
   }
 
@@ -312,17 +339,18 @@ abstract class _SugarInfoStoreBase with Store {
         id: id,
         dayTime: choosedDayTimeStr,
         hourTime: choosedDayHourStr,
-        status: currentStatus,
         sugarAmount: currentSugarAmount,
         conditionId: chooseCondition!.id,
-        conditionName: chooseCondition!.name));
+        status: findStatusForValueAndConditionId(rootSugarInfo!.conditions!,
+            currentSugarAmount!, chooseCondition!.id!),
+        conditionName: chooseCondition!.name,
+        informed: false));
     listRecords = ListRecord(listRecord: listRecord);
     choosedDayTimeStr = null;
     choosedDayHourStr = null;
     listRecordArrangedByTime = listRecord;
     setErrorText("");
     saveListRecord(listRecords);
-
     if (listRecordArrangedByTime!.length > 0) {
       listRecordArrangedByTime!.sort((b, a) =>
           (DateFormat('yyyy/MM/dd HH:mm').parse("${a.dayTime!} ${a.hourTime!}"))
@@ -330,11 +358,49 @@ abstract class _SugarInfoStoreBase with Store {
                   .parse("${b.dayTime!} ${b.hourTime!}")));
       getAverageNumber();
     }
+    print('popup');
+    Future.delayed(Duration(seconds: 1), () {
+      checkGoal();
+    });
     await Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
       (route) => false,
     );
+  }
+
+  String findStatusForValueAndConditionId(
+      List<Conditions> listRootConditions, double value, int conditionId) {
+    // Tìm điều kiện có id tương ứng
+    Conditions? condition;
+    for (var item in listRootConditions) {
+      if (item.id == conditionId) {
+        condition = item;
+        break;
+      }
+    }
+
+    if (condition != null && condition.sugarAmount != null) {
+      // Tìm SugarAmount tương ứng với giá trị value
+      for (var sugarAmount in condition.sugarAmount!) {
+        if (sugarAmount.minValue != null && sugarAmount.maxValue != null) {
+          if (isSwapedToMol == true) {
+            if (value == 35) {
+              return "diabetes";
+            }
+          } else {
+            if (value == 630) {
+              return "diabetes";
+            }
+          }
+          if (value >= sugarAmount.minValue! && value < sugarAmount.maxValue!) {
+            return sugarAmount.status ?? "Unknown";
+          }
+        }
+      }
+    }
+
+    return "Not Found";
   }
 
   @action
@@ -356,7 +422,7 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  checkValidateNewRecord() {
+  checkValidateNewRecord(BuildContext context) {
     if (choosedDayTimeStr != null &&
         choosedDayHourStr != null &&
         currentStatus != null &&
@@ -365,14 +431,16 @@ abstract class _SugarInfoStoreBase with Store {
         chooseCondition!.id != null) {
       if (isSwapedToMol == false) {
         if (currentSugarAmount! < 18 || currentSugarAmount! > 630) {
-          setErrorText("Please enter correct value between 18-630 mg/dL");
+          setErrorText(
+              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_mg_text')}");
         } else {
           setErrorText("");
         }
       }
       if (isSwapedToMol == true) {
         if (currentSugarAmount! < 1 || currentSugarAmount! > 35) {
-          setErrorText("Please enter correct value between 1-35 mmol/L");
+          setErrorText(
+              "${AppLocalizations.of(context)!.getTranslate('errow_sugar_input_mmol_text')}");
         } else {
           setErrorText("");
         }
@@ -384,14 +452,15 @@ abstract class _SugarInfoStoreBase with Store {
     if (listRecords != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String jsonString = json.encode(listRecords.toJson());
-      prefs.setString('myObjectKey', jsonString);
+      prefs.setString('list_record', jsonString);
+
       print("Save to shprf: ${listRecords.listRecord!.length} ");
     }
   }
 
   Future<ListRecord?> getListRecords() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('myObjectKey');
+    String? jsonString = prefs.getString('list_record');
 
     if (jsonString != null) {
       Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -405,18 +474,19 @@ abstract class _SugarInfoStoreBase with Store {
     } else {
       isListRecordsLoading = false;
     }
+    return null;
   }
 
   Future deleteData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('myObjectKey'); // Xóa đối tượng theo khóa 'myObjectKey'
+    prefs.remove('list_record'); // Xóa đối tượng theo khóa 'list_record'
     // Hoặc có thể sử dụng prefs.clear() để xóa tất cả dữ liệu trong SharedPreferences
   }
 
   Future<void> exportToExcel(BuildContext context) async {
     // Read data from the JSON file
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString('myObjectKey');
+    String? jsonString = prefs.getString('list_record');
     List<dynamic> jsonData = json.decode(jsonString!)['list_record'];
 
     // Create an Excel workbook and worksheet
@@ -471,6 +541,7 @@ abstract class _SugarInfoStoreBase with Store {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isSwapedToMol', isSwapedToMol);
     saveListRecord(listRecords);
+    saveRootConditionToSharedPreferences(rootSugarInfo!);
   }
 
   Future<void> getIsSwapedToMol() async {
@@ -543,18 +614,20 @@ abstract class _SugarInfoStoreBase with Store {
         editedRecord.conditionName;
     listRecordArrangedByTime = listRecord;
     if (listRecordArrangedByTime!.length > 0) {
-      listRecordArrangedByTime!.sort((b, a) => (DateFormat('yyyy/MM/dd HH:mm')
-              .parse("${a!.dayTime!} ${a!.hourTime!}"))
-          .compareTo(DateFormat('yyyy/MM/dd HH:mm')
-              .parse("${b!.dayTime!} ${b!.hourTime!}")));
+      listRecordArrangedByTime!.sort((b, a) =>
+          (DateFormat('yyyy/MM/dd HH:mm').parse("${a.dayTime!} ${a.hourTime!}"))
+              .compareTo(DateFormat('yyyy/MM/dd HH:mm')
+                  .parse("${b.dayTime!} ${b.hourTime!}")));
       getAverageNumber();
     }
     saveListRecord(listRecords);
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
       (route) => false,
     );
+    checkGoal();
   }
 
   @action
@@ -573,7 +646,7 @@ abstract class _SugarInfoStoreBase with Store {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
-                  "${AppLocalizations.of(context)!.getTranslate('edit_duplicate_dialog')}",
+                  "${AppLocalizations.of(context).getTranslate('edit_duplicate_dialog')}",
                   style: AppTheme.Headline16Text.copyWith(
                       fontWeight: FontWeight.w500, color: Colors.black),
                   textAlign: TextAlign.center,
@@ -595,7 +668,7 @@ abstract class _SugarInfoStoreBase with Store {
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
-                            "${AppLocalizations.of(context)!.getTranslate('replace')}",
+                            "${AppLocalizations.of(context).getTranslate('replace')}",
                             style: AppTheme.TextIntroline16Text.copyWith(
                                 color: AppColors.AppColor2),
                           ),
@@ -617,7 +690,7 @@ abstract class _SugarInfoStoreBase with Store {
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
-                            "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                            "${AppLocalizations.of(context).getTranslate('keep')}",
                             style: AppTheme.TextIntroline16Text,
                           ),
                         ),
@@ -650,7 +723,7 @@ abstract class _SugarInfoStoreBase with Store {
   getAverageNumber() {
     if (listRecordArrangedByTime != null &&
         listRecordArrangedByTime!.isNotEmpty) {
-      recentNumber = listRecordArrangedByTime!.first!.sugarAmount;
+      recentNumber = listRecordArrangedByTime!.first.sugarAmount;
 
       // print("Check Date: ${DateFormat('yyyy/MM/dd').parse(choosedDayTimeStr!)}");
       List<SugarRecord>? listThreeDaysNumber = listRecordArrangedByTime!
@@ -667,7 +740,7 @@ abstract class _SugarInfoStoreBase with Store {
           .where(
               (e) => DateFormat('yyyy/MM/dd').parse(e.dayTime!, true) != null)
           .where((e) {
-        DateTime recordTime = DateFormat('yyyy/MM/dd').parse(e.dayTime!, true)!;
+        DateTime recordTime = DateFormat('yyyy/MM/dd').parse(e.dayTime!, true);
         return recordTime.isAfter(now.subtract(Duration(days: now.weekday))) &&
             recordTime.isBefore(now.add(Duration(days: 7 - now.weekday)));
       }).toList();
@@ -734,17 +807,16 @@ abstract class _SugarInfoStoreBase with Store {
   filterListRecord() {
     listRecordArrangedByTime = [];
     if (filterConditionId != -1) {
-      listRecordArrangedByTime = listRecord!
-          .where((e) => e.conditionId == filterConditionId)!
-          .toList();
+      listRecordArrangedByTime =
+          listRecord!.where((e) => e.conditionId == filterConditionId).toList();
       listRecordArrangedByTime!.sort((b, a) =>
-          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+          (DateFormat('yyyy/MM/dd').parse(a.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b.dayTime!)));
     } else {
       listRecordArrangedByTime = listRecord!;
       listRecordArrangedByTime!.sort((b, a) =>
-          (DateFormat('yyyy/MM/dd').parse(a!.dayTime!))
-              .compareTo(DateFormat('yyyy/MM/dd').parse(b!.dayTime!)));
+          (DateFormat('yyyy/MM/dd').parse(a.dayTime!))
+              .compareTo(DateFormat('yyyy/MM/dd').parse(b.dayTime!)));
     }
     isChartLoading = true;
     Future.delayed(Duration(milliseconds: 500), () {
@@ -765,7 +837,7 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     } else {
       filterConditionId = -1;
-      filterConditionTitle = "all";
+      filterConditionTitle = "All";
       filterListRecord();
       isShouldRender = !isShouldRender!;
       getAverageNumber();
@@ -824,6 +896,7 @@ abstract class _SugarInfoStoreBase with Store {
         for (var sugarAmount in condition.sugarAmount!) {
           if (sugarAmount.minValue != null) {
             sugarAmount.minValue = sugarAmount.minValue! / 18;
+            print("divisionnnnnnnnnnnnnnnnnnnnnnnnnn");
           }
           if (sugarAmount.maxValue != null) {
             sugarAmount.maxValue = sugarAmount.maxValue! / 18;
@@ -840,12 +913,14 @@ abstract class _SugarInfoStoreBase with Store {
       multiplicationUnitListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
       saveListRecord(listRecords);
+      getGoalAmountFromSharedPreferences();
     }
     if (isSwapedToMol == true) {
       divisionnUnitListRecord();
       divisionListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
       saveListRecord(listRecords);
+      getGoalAmountFromSharedPreferences();
     }
   }
 
@@ -934,7 +1009,20 @@ abstract class _SugarInfoStoreBase with Store {
   List<SugarAmount> tempCondition = [];
   @observable
   List<SugarAmount> tempConditionDisplay = [];
+  List<SugarAmount> tempRootCondition = [];
+  List<SugarAmount> cloneConditionList(List<SugarAmount> originalList) {
+    return originalList
+        .map((e) => SugarAmount(
+            id: e.id,
+            // Clone các thuộc tính khác của Condition tại đây
+            maxValue: e.maxValue,
+            minValue: e.minValue,
+            status: e.status))
+        .toList();
+  }
 
+  @observable
+  int? tempConditionId;
   @action
   getTempCondition(int id) {
     tempCondition = rootSugarInfo!.conditions!
@@ -942,6 +1030,240 @@ abstract class _SugarInfoStoreBase with Store {
         .first
         .sugarAmount!
         .toList();
-    tempConditionDisplay = [...tempCondition];
+    tempConditionDisplay = cloneConditionList(tempCondition);
+  }
+
+  @action
+  setMaxValue(String? value, int? id) {
+    double doubleValue = double.parse(value!);
+    tempConditionDisplay.where((e) => e.id == id).first.maxValue = doubleValue;
+  }
+
+  bool? canSave() {
+    if (tempConditionDisplay == null || tempConditionDisplay.isEmpty) {
+      return false;
+    }
+
+    for (int i = 0; i < tempConditionDisplay.length; i++) {
+      double? minValue = tempConditionDisplay[i].minValue;
+      double? maxValue = tempConditionDisplay[i].maxValue;
+
+      if (minValue == null || maxValue == null || minValue >= maxValue) {
+        return false;
+      }
+
+      if (isSwapedToMol == true) {
+        if (minValue > 35 || maxValue > 35) {
+          print("Mol Error in : $i");
+          return false;
+        }
+      } else {
+        if (minValue > 630 || maxValue > 630) {
+          print("mg Error in : $i");
+          return false;
+        }
+      }
+
+      if (i > 0) {
+        double? prevMaxValue = tempConditionDisplay[i - 1].maxValue;
+        if (prevMaxValue == null || prevMaxValue > maxValue) {
+          print("error compare");
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  @action
+  setNewRootCondition(int editConditionId) {
+    adjustMinMaxValues(tempConditionDisplay);
+    rootSugarInfo!.conditions!
+        .where((e) => e.id == editConditionId)
+        .first
+        .sugarAmount = tempConditionDisplay;
+    // updateMaxValue(rootSugarInfo!.conditions!);
+    saveRootConditionToSharedPreferences(rootSugarInfo!);
+    hasChangedRoot = !hasChangedRoot!;
+    print("id                      ${tempConditionDisplay.first.id}");
+  }
+
+  Future<void> saveRootConditionToSharedPreferences(SugarInfo sugarInfo) async {
+    if (sugarInfo != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String jsonString = json.encode(sugarInfo.toJson());
+      prefs.setString('json_data', jsonString);
+    }
+  }
+
+  void adjustMinMaxValues(List<SugarAmount> tempConditionDisplay) {
+    for (int i = 1; i < tempConditionDisplay.length; i++) {
+      tempConditionDisplay[i].minValue = tempConditionDisplay[i - 1].maxValue;
+    }
+  }
+
+  @observable
+  bool? hasChangedRoot = false;
+  /////
+  @observable
+  Information? information = Information();
+
+  @observable
+  BuildContext? homeScreenContext;
+
+  @observable
+  GoalAmount? goalAmount = GoalAmount();
+
+  @observable
+  int? goalFirstMolValue;
+  @observable
+  int? goalSecondMolValue;
+  @action
+  setGoalMolAmount() {
+    goalAmount!.amount = matchValueMol(goalFirstMolValue, goalSecondMolValue);
+    goalAmount!.isMol = isSwapedToMol;
+  }
+
+  @action
+  double matchValueMol(int? firstValue, int? seconValue) {
+    String matchedValue = "${firstValue}.${seconValue}";
+    return double.parse(matchedValue);
+  }
+
+  @action
+  setGoalAmount(
+    double? value,
+  ) {
+    goalAmount = GoalAmount(amount: value, isMol: isSwapedToMol);
+
+    saveGoalAmountToSharedPreferences();
+  }
+
+  @action
+  saveGoalAmountToSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Chuyển đổi đối tượng GoalAmount thành JSON (Map<String, dynamic>)
+    final Map<String, dynamic> json = goalAmount!.toJson();
+
+    // Lưu vào SharedPreferences dưới dạng JSON String
+    await prefs.setString('goal_amount', jsonEncode(json));
+  }
+
+  @action
+  Future<GoalAmount?> getGoalAmountFromSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Lấy chuỗi JSON từ SharedPreferences
+    final String? jsonString = prefs.getString('goal_amount');
+
+    if (jsonString != null) {
+      // Nếu có dữ liệu, chuyển đổi JSON thành Map
+      final Map<String, dynamic> json = jsonDecode(jsonString);
+      goalAmount = GoalAmount.fromJson(json);
+      if (goalAmount!.isMol != isSwapedToMol) {
+        if (isSwapedToMol == true) {
+          if (goalAmount!.amount! > 1) {
+            goalAmount!.amount = goalAmount!.amount! / 18;
+            goalAmount!.isMol = isSwapedToMol;
+          }
+          saveGoalAmountToSharedPreferences();
+        } else if (isSwapedToMol == false) {
+          goalAmount!.amount = goalAmount!.amount! * 18;
+          goalAmount!.isMol = isSwapedToMol;
+          saveGoalAmountToSharedPreferences();
+        }
+      }
+      // Tạo đối tượng GoalAmount từ Map
+      return GoalAmount.fromJson(json);
+    } else {
+      // Nếu không có dữ liệu, trả về null hoặc giá trị mặc định tùy trường hợp
+      return null;
+    }
+  }
+
+  @action
+  Future<void> fetchGoalAmountFromSharedPreferences() async {
+    goalAmount = await getGoalAmountFromSharedPreferences();
+  }
+
+  @action
+  checkGoal() {
+    SugarRecord checkingItem = listRecordArrangedByTime!.first;
+    int checkingItemId = listRecordArrangedByTime!.first.id!;
+    double calculate(double? value) {
+      return (value! - goalAmount!.amount!).abs();
+    }
+
+    if (checkingItem.informed == false) {
+      listRecords!.listRecord!
+          .where((e) => e.id == checkingItemId)
+          .first
+          .informed = true;
+      if (isSwapedToMol == false) {
+        switch (calculate(checkingItem.sugarAmount)) {
+          case > 20:
+            return showDiaLogFarGoal(homeScreenContext!);
+          case < 1:
+            return showDiaLogReachGoal(homeScreenContext!);
+          case <= 20:
+            return showDiaLogNearlyGoal(homeScreenContext!);
+
+          default:
+            return "";
+        }
+      } else {
+        switch (calculate(checkingItem.sugarAmount)) {
+          case > 20 / 18:
+            return showDiaLogFarGoal(homeScreenContext!);
+          case < 1 / 18:
+            return showDiaLogReachGoal(homeScreenContext!);
+          case <= 20 / 18:
+            return showDiaLogNearlyGoal(homeScreenContext!);
+
+          default:
+            return "";
+        }
+      }
+    }
+
+    saveListRecord(listRecords);
+  }
+
+  Future<String?> showDiaLogFarGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalFarDialog(),
+    );
+  }
+
+  Future<String?> showDiaLogNearlyGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalNearlyDialog(),
+    );
+  }
+
+  Future<String?> showDiaLogReachGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalReachedDialog(),
+    );
   }
 }

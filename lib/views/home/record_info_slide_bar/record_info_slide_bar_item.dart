@@ -141,7 +141,7 @@ class _RecordInfoSliderItemWidgetState
                 Container(
                   child: Row(
                     children: [
-                      Text("Status : ",
+                      Text("${AppLocalizations.of(context)!.getTranslate('status')}" + ":",
                           style: AppTheme.appBodyTextStyle
                               .copyWith(color: Colors.black)),
                       Text(

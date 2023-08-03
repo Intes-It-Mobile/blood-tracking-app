@@ -9,6 +9,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
+import '../../widgets/goal_dialog/goal_far_dialog.dart';
 import 'chart_widget/chart_widget.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
@@ -39,6 +40,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     if (sugarInfoStore!.listRecord != null &&
         sugarInfoStore!.listRecord!.isNotEmpty) {
       sugarInfoStore!.getAverageNumber();
+      sugarInfoStore!.homeScreenContext = context;
       listRecords = sugarInfoStore!.listRecordArrangedByTime!;
     }
     if (isFirst = true) {
@@ -116,7 +118,8 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: sugarInfoStore!
-                                              .listRecordArrangedByTime! != null &&
+                                              .listRecordArrangedByTime! !=
+                                          null &&
                                       sugarInfoStore!
                                           .listRecordArrangedByTime!.isNotEmpty
                                   ? Container(
@@ -148,7 +151,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                       onTap: () {
                         Navigator.of(context).pushNamed(Routes.new_record);
                       },
-                    )
+                    ),
                   ],
                 );
               }),
@@ -157,5 +160,17 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         ],
       );
     });
+  }
+
+  Future<String?> showDiaLogGoal(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          GoalFarDialog(),
+    );
   }
 }

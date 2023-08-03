@@ -16,6 +16,7 @@ class SelectUnit extends StatefulWidget {
 
 class _SelectUnitState extends State<SelectUnit> {
   SugarInfoStore? sugarInfoStore;
+
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -24,6 +25,7 @@ class _SelectUnitState extends State<SelectUnit> {
   }
 
   bool? isMol = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +40,9 @@ class _SelectUnitState extends State<SelectUnit> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                    '${AppLocalizations.of(context)!.getTranslate('select_your_starting_unit')}',
-                    style: AppTheme.unit24Text),
+                    '${AppLocalizations.of(context)!.getTranslate(
+                        'select_your_starting_unit')}',
+                    textAlign: TextAlign.center, style: AppTheme.unit24Text),
                 const SizedBox(
                   height: 25,
                 ),
@@ -53,15 +56,19 @@ class _SelectUnitState extends State<SelectUnit> {
                   },
                   child: Container(
                     height: 44,
-                    width: MediaQuery.of(context).size.width * 0.57,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.57,
                     decoration: BoxDecoration(
                       color:
-                          isMol == false ? AppColors.AppColor2 : Colors.white,
+                      isMol == false ? AppColors.AppColor2 : Colors.white,
                       borderRadius: BorderRadius.circular(22),
                     ),
                     child: Center(
                       child: Text(
-                        '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
+                        '${AppLocalizations.of(context)!.getTranslate(
+                            'mg/dL')}',
                         style: AppTheme.Headline20Text.copyWith(
                             fontWeight: FontWeight.w600,
                             color: isMol == false
@@ -85,15 +92,19 @@ class _SelectUnitState extends State<SelectUnit> {
                   child: Center(
                     child: Container(
                       height: 44,
-                      width: MediaQuery.of(context).size.width * 0.57,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.57,
                       decoration: BoxDecoration(
                         color:
-                            isMol == true ? AppColors.AppColor2 : Colors.white,
+                        isMol == true ? AppColors.AppColor2 : Colors.white,
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Center(
                         child: Text(
-                          '${AppLocalizations.of(context)!.getTranslate('mmol/L')}',
+                          '${AppLocalizations.of(context)!.getTranslate(
+                              'mmol/L')}',
                           style: AppTheme.Headline20Text.copyWith(
                               fontWeight: FontWeight.w600,
                               color: isMol == true
@@ -109,21 +120,24 @@ class _SelectUnitState extends State<SelectUnit> {
           ),
           Positioned(
             right: 18,
-            top: MediaQuery.of(context).viewPadding.top + 7,
+            top: MediaQuery
+                .of(context)
+                .viewPadding
+                .top + 7,
             child: InkWell(
               onTap: () {
                 sugarInfoStore!.saveIsSwapedToMol(isMol!);
                 sugarInfoStore!.setSwapStatusToMol(isMol);
                 if (isMol == true) {
                   sugarInfoStore!.divisionListRootCondition();
-                  Navigator.of(context).pushNamed(Routes.intro); 
+                  Navigator.of(context).pushNamed(Routes.goal_mmol_screen);
                 } else if (isMol == false)
-                  Navigator.of(context).pushNamed(Routes.intro);
+                  Navigator.of(context).pushNamed(Routes.goal_mg_screen);
               },
               child: Container(
                 decoration: BoxDecoration(),
                 child: Text(
-                  '${AppLocalizations.of(context)!.getTranslate('done')}',
+                  '${AppLocalizations.of(context)!.getTranslate('next')}',
                   style: AppTheme.Headline20Text.copyWith(
                       fontWeight: FontWeight.w600, color: AppColors.AppColor4),
                 ),

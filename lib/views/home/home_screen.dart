@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Material(
-      
       color: Colors.transparent,
       child: Container(
         child: Stack(
@@ -68,15 +67,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             _buildNavItem(
-                              Assets.iconHomeNav,
+                              Assets.iconBloodSugar,
                               'A',
                               0,
-                              AppLocalizations.of(context)!.getTranslate('home_page_nav'),
+                              AppLocalizations.of(context)!
+                                  .getTranslate('blood_sugar_txt'),
                             ),
                             _buildNavItem(
-                                Assets.iconInfoNav, 'B', 1, AppLocalizations.of(context)!.getTranslate('info_nav')),
-                            _buildNavItem(Assets.iconSettingsNav, 'C', 2,
-                                AppLocalizations.of(context)!.getTranslate('setting_nav')),
+                                Assets.iconHeartRate,
+                                'B',
+                                1,
+                                AppLocalizations.of(context)!
+                                    .getTranslate('heart_rate_txt')),
+                            _buildNavItem(
+                                Assets.iconSettingsNav,
+                                'C',
+                                2,
+                                AppLocalizations.of(context)!
+                                    .getTranslate('setting_nav')),
                           ],
                         ),
                         // Container(width: double.infinity,height: 50,color: Colors.blue,)
@@ -90,7 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottom: 0,
                 child: hasAds
                     ? Container(
-                        width: screenWidth, height: 87, color: AppColors.AppColor2, child: Image.asset(Assets.adsBanner))
+                        width: screenWidth,
+                        height: 87,
+                        color: AppColors.AppColor2,
+                        child: Image.asset(Assets.adsBanner))
                     : Container(
                         width: screenWidth,
                         height: 39,
@@ -138,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: btnColor,
               borderRadius: borderRadius,
             ),
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+            padding: const EdgeInsets.fromLTRB(6, 12, 6, 12),
             child: Center(
               child: Column(
                 children: [
@@ -148,7 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     "${text}",
-                    style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: textColor, fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -164,9 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return HomeScreenContent();
       case 1:
-        return InfomationScreen();
-      case 2:
         return HeartRateScreen();
+      case 2:
+        return SettingScreen();
       default:
         return Container();
     }
@@ -179,7 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   insetPadding: EdgeInsets.symmetric(horizontal: 16),
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
                   content: Container(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -188,7 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 42),
                           child: Text(
                             "${AppLocalizations.of(context)!.getTranslate('wanna_exit')}",
-                            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                            style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -201,11 +218,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor3,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                      style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                                      style:
+                                          AppTheme.TextIntroline16Text.copyWith(
+                                              color: AppColors.AppColor2),
                                     ),
                                   ),
                                 ),
@@ -219,7 +240,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // margin: EdgeInsets.only(left: 23),
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor2,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('stay')}",

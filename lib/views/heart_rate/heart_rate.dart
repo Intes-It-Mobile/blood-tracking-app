@@ -231,7 +231,12 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         height: 32,
         width: 32,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        child: SvgPicture.asset(Assets.iconHearRate),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5)
+        ),
+        child: SvgPicture.asset(Assets.iconHistory, height: 16,),
       ),
     );
   }
@@ -254,7 +259,14 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
               ),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: AppColors.greyColor, fontFamily: FontFamily.IBMPlexSans, fontSize: 14, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: checkFinger 
+                  ? AppColors.greyColor 
+                  : Color(0xFFFD4755),
+                fontFamily: FontFamily.IBMPlexSans, 
+                fontSize: 14, 
+                fontWeight: FontWeight.w600
+              ),
             ),
           _buildButtonNewRecord(),
         ],
@@ -448,7 +460,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                   color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Center(
                   child: Text(
-                    "Try again",
+                    AppLocalizations.of(context).getTranslate("try_again"),
                     style: AppTheme.TextIntroline16Text.copyWith(color: Colors.white),
                   ),
                 ),

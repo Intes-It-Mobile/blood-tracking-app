@@ -85,10 +85,10 @@ class _SortHeartRateState extends State<SortHeartRate> {
   Widget _buildStatusString() {
     return Text(
       widget.indicator > 100
-        ? "Fast"
+        ? AppLocalizations.of(context).getTranslate("fast")
         : widget.indicator > 60
-          ? "Normal"
-          : "Slow",
+          ? AppLocalizations.of(context).getTranslate("normal")
+          : AppLocalizations.of(context).getTranslate("slow"),
       style: TextStyle(
         fontSize: TextSizeConfig.getAdjustedFontSize(12),
         fontFamily: FontFamily.IBMPlexSans,
