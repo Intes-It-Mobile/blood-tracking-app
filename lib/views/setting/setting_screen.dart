@@ -72,6 +72,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.edit_range);
               },
               child: Container(
+                height: 32,
+                width: 32,
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 decoration: const BoxDecoration(
@@ -85,6 +87,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.record_remind);
               },
               child: Container(
+                height: 32,
+                width: 32,
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                 decoration: const BoxDecoration(

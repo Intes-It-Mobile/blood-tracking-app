@@ -4,6 +4,7 @@ import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/constants/font_family.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
+import 'package:blood_sugar_tracking/views/heart_rate/heart_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -177,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return HomeScreenContent();
       case 1:
-        return InfomationScreen();
+        return HeartRateScreen();
       case 2:
         return SettingScreen();
       default:

@@ -39,7 +39,6 @@
     "share_app":"Partager l'application",
     "send_feedback":"Envoyer vos commentaires",
     "record_history":"Enregistrer l'historique",
-
     "bls_do_asw":"<p><strong>Qu'est-ce que la glycémie?</strong></p> <p>  La glycémie, également connue sous le nom de glucose, est la principale forme de sucre présente dans votre sang. Elle provient des aliments que vous mangez et constitue la principale source d'énergie pour votre corps. Votre sang transporte le glucose vers toutes les cellules de votre corps afin de l'utiliser comme carburant énergétique. </p> <p><strong>Comment puis-je vérifier ma glycémie? &nbsp;</strong></p> <p>Pour vérifier votre glycémie, utilisez un lecteur de glycémie (aussi appelé glucomètre) ou un moniteur de glucose en continu (CGM). Le lecteur de glycémie mesure la quantité de sucre dans un petit échantillon de sang, généralement prélevé au bout de votre doigt. Le CGM utilise un capteur inséré sous votre peau pour mesurer votre glycémie toutes les quelques minutes. Si vous utilisez le CGM, vous devrez toujours effectuer une vérification quotidienne avec un lecteur de glycémie pour vous assurer que les résultats du CGM sont précis.</p> <p><strong>Quand devrais-je vérifier ma glycémie?</strong></p> <p>  La fréquence à laquelle vous vérifiez votre glycémie dépend du type de diabète que vous avez et du fait que vous preniez des médicaments pour le diabète. Les moments typiques pour vérifier votre glycémie sont les suivants &nbsp;</p> <ul> <li> <p>Lorsque vous venez de vous réveiller, avant de manger ou de boire quoi que ce soit</p> </li> <li> <p>Avant un repas</p> </li> <li> <p>Deux heures après un repas</p> </li> <li> <p>À l'heure du coucher</p> </li> </ul>",
     "bls_low_what_asw": "<p><strong>Quels sont les causes de l'hypoglycémie?</strong></p> <p>  Le faible taux de sucre dans le sang (également appelé hypoglycémie) a de nombreuses causes, notamment le fait de sauter un repas, prendre trop d'insuline, prendre d'autres médicaments contre le diabète, faire plus d'exercice que d'habitude et consommer de l'alcool. Un taux de sucre dans le sang inférieur à 70 mg/dL est considéré comme faible. Les signes varient d'une personne à l'autre. Les symptôme courants comprennent:</p> <ul> <li> <p>Trembler.</p> </li> <li> <p>Suer.</p> </li> <li> <p>Se sentir nerveux ou anxieux.</p> </li> <li> <p>Se sentir irritable ou confusé .</p> </li> <li> <p>Se sentir étourdi.</p> </li> <li> <p>Avoir faim </p> </li> </ul> <p><strong>Comment puis-je traiter l'hypoglycémie?</strong></p> <p>  Emportez des outils pour traiter l'hypoglycémie. Si vous avez des tremblements, êtes en sueur, affamé ou présentez d'autres symptômes, vérifiez votre glycémie. Même si vous n'avez pas de symptôme mais que vous pensez avoir un hypoglycémie, vérifiez-le. Si votre glycémie est inférieur à 70 mg/dL, effectuez immédiatement l'une des actions suivantes:&nbsp;</p> <ul> <li> <p>Prenez quatre comprimés de glucose.</p> </li> <li> <p>Buvez quatre onces de jus de fruits.</p> </li> <li> <p>Buvez quatre onces de sode ordinaire, pas de soda diététique.</p> </li> <li> <p>Mangez quatre bonbons durs.</p> </li> </ul> <p>Patientez pendant 15 minutes, puis vérifiez de nouveau votre glycémie. Répétez l'une des traitements  ci-dessus jusqu'à ce que votre glycémie atteigne 70 mg/dL ou plus, et prenez une collation si votre prochain repas est prévu dans une heure ou plus.</p>",
     "bls_high_what_asw": "<p><strong>Quelles sont les causes d'une glycémie élevée?</strong></p> <p>  De nombreux facteurs peuvent provoquer une glycémie élevée (hyperglycémie), notamment être malade, être stressé, manger plus que prévu et ne pas s'administrer suffisamment d'insuline. Au fil du temps, une glycémie élevée peut entraîner des problèmes de santé graves et durables. Les symptômes de l'hyperglycémie comprennent: &nbsp;</p> <ul> <li> <p>Se sentir très fatigué.</p> </li> <li> <p>Ressentir la soif.</p> </li> <li> <p>Avoir une vision floue.</p> </li> <li> <p>Besoin d'uriner plus fréquemment.</p> </li> </ul> <p><strong>Comment puis-je traiter l'hyperglycémie?</strong></p> <p>  Veuillez consulter votre médecin pour savoir comment maintenir votre glycémie dans votre intervalle cible. Il peut vous suggérer les éléments suivants:</p> <ul> <li> <p>Soyez plus actif. L'exercice régulier peut aider à maintenir votre glycémie sous contrôle. Important : ne faites pas de l'exercice si des cétones sont présentes dans votre urine. Cela peut faire augmenter encore davantage votre taux de sucre dans le sang. </p> </li> <li> <p>Veuillez prendre le médicament comme indiqué. Si votre glycémie est souvent élevée, votre médecin peut modifier la quantité de médicament que vous prenez ou le moment où vous le prenez.</p> </li> <li> <p>Veuillez suivre votre plan de repas pour le diabète. Demandez l'aide de votre médecin ou d'un nutritionniste si vous avez du mal à vous y tenir. </p> </li> <li> <p>Veuillez vérifier votre glycémie selon les instructions de votre médecin. Vérifiez plus fréquemment si vous êtes malade ou si vous êtes préoccupé par une glycémie élevée ou basse. </p> </li> <li> <p>Veuillez consulter votre médecin concernant l'ajustement de la quantité d'insulin que vous prenez et des types d'insuline à utiliser (comme l'insuline à action rapide). </p> </li> </ul>",
@@ -51,9 +50,7 @@
     "prv_what_type_1_asw":"<p><strong>Quelles sont les causes du diabète de type 1?</strong></p> <p>  Le diabète de type 1 est considéré étant causé par une réaction auto-immune (le corps s'attaque par erreur). Cette réaction détruit les cellules du pancréas qui fabriquent l'insuline, appelées cellules bêta. Ce processus peut durer pendant des mois ou des années avant que des symptômes n'apparaissent.<br>Certaines personnes ont certains gènes (caractères hérités transmis des parents aux enfants) qui les rendent plus susceptible de développer le diabète de type 1. Cependant, beaucoup d'entre elles ne développent pas le diabète de type 1 même si elles ont ces gènes. Un déclencheur environnemental, comme un virus, peut également jouer un rôle dans le développement du diabète de type 1. Les habitudes alimentaires et le mode de vie ne causent pas cette maladie. </p> <p><strong>Symptômes et facteurs de risque</strong></p> <p>  Cela peut prendre des mois voire des années avant que les symptômes du diabète de type 1 ne se manifestent. Ils peuvent  apparaître en seulement quelques semaines ou quelques mois. Une fois qu'ils apparaissent, ils peuvent être graves. <br>Certains symptômes du diabète de type 1 sont similaires à ceux d'autres problèmes de santé. Ne faites pas de suppositions ! Si vous pensez être atteint de diabète de type 1, consultez votre médecin pour faire tester votre glycémie. Le diabète non traité peut entraîner des problèmes de santé très graves, voire mortels. Les facteurs de risque du diabète de type 1 ne sont pas aussi clairs que ceux du prédiabète et du diabète de type 2. Cependant, des études montrent que les antécédents familiaux jouent un rôle. </p>",
     "prv_what_type_2_asw":"<p><strong>Quelles sont les causes du diabète de type 2?</strong></p> <p>  L'insuline est une hormone produite par le pancréas qui agit comme une clé permettant au sucre dans le sang de pénétrer dans les cellules de votre corps afin d'être utilisé comme énergie. Si vous souffrez de diabète de type 2, les cellules ne répondent pas normalement à l'insuline, c'est ce qu'on appelle la résistance à l'insuline. Votre pancréas produit davantage d'insuline pour essayer de faire réagir les cellules. Finalement, votre pancréas ne peut plus suivre le rythme, et votre glycémie augmente, créant ainsi les conditions du prédiabète et du diabète de type 2. Une glycémie élevée est nocive pour le corps et peut causer d'autres problèmes de santé graves, comme des maladies cardiaques, la perte de vision et des maladies rénales.</p> <p><strong>Symptômes et facteurs de risque</strong></p> <p>  Les symptômes du diabète de type 2 se développent souvent sur plusieurs années et peuvent persister longtemps sans être remarqués (parfois, il n'y a aucun symptôme perceptible). Étant donné qu'ils peuvent être difficiles à repérer, il est important de connaître les facteurs de risque et de consulter votre médecin pour faire tester votre glycémie si vous en avez.</p>",
     "prv_ges_dia_asw":"<p><strong>Quelles sont les causes du diabète gestationnel?</strong></p> <p>  Le diabète gestationnel survient lorsque votre corps ne peut pas produire suffisamment d'insuline pendant votre grossesse. L'insuline est une hormone fabriquée par votre pancréas qui agit comme une clé permettant au sucre dans le sang de pénétrer dans les cellules de votre corps pour être utilisé comme énergie. Pendant la grossesse, votre corps produit davantage d'hormones et subit d'autres changements, tels que la prise de poids. Ces changements entraînent une utilisation moins efficace de l'insuline par les cellules de votre corps, ce qui s'appelle résistance à l'insuline. La résistance à l'insuline augmente les besoins en insuline de votre corps.</p> <p>Toutes les femmes enceintes ont une certaine résistance à l'insuline en fin de grossesse. Cependant, certaines femmes ont une résistance à l'insuline même avant de tomber enceintes. Elles commencent leur grossesse avec un besoin accru d'insuline et sont plus susceptibles de développer un diabète gestationnel. &nbsp;</p> <p><strong>Symptômes et facteurs de risque</strong></p> <p>  Le diabète gestationnel ne présente généralement aucun symptôme. Vos antécédents médicaux et les facteurs de risque peuvent suggérer à votre médecin que vous pourriez avoir un diabète gestationnel, mais un test sera nécessaire pour en être sûr.</p>",
-
     "about_us_content":" Avez-vous des problèmes avec votre glycémie ? Souhaitez-vous enregistrer et suivre les changements de votre glycémie à tout moment ? Le suivi de la glycémie est exactement ce dont vous avez besoin. Notre application est très facile à utiliser et vous permet de connaître en détail votre état de santé. Essayez-la dès maintenant.",
-
     "feedback_title":"Envoyer votre feedback.",
     "email_if_have":"E-mail (si vous en avez)",
     "email_label_txt":"Veuillez laisser votre adresse e-mail afin que nous puissions vous recontacter si nécessaire.",
@@ -61,8 +58,6 @@
     "feedback_write_dwn_label_txt":"Veuillez écrire au moins 6 caractères pour envoyer.",
     "feedback_help":"Votre feedback nous aidera à nous améliorer.",
     "feedback_send_btn":"Envoyer votre feedback.",
-
-    
     "date_and_time":"Date & heure",
     "condition":"Condition",
     "sugar amount":"Quantité de sucre",
@@ -72,8 +67,6 @@
     "notification":"L'intervalle de données de glycémie est personnel. Voici les normes internationnales par défaut pour la glycémie. Si vous souhaitez une intervalle de données de glycémie plus précise, veuillez consulter votre médecin. ",
     "new_alarm":"Nouvelle alarme",
     "Edit target range (mmol/L)":"Modifier l'intervalle cible (mmol/L)",
-
-
     "before_exercise":"Avant l'exercice",
     "before_meal":"Avant un repas.",
     "fasting":"Jeûne",
@@ -81,7 +74,6 @@
     "after_meal_2h":"Après un repas (2h)",
     "after_exercise":"Après l'exercice",
     "asleep":"Endormi",
-
     "errow_sugar_input_mg_text":"Veuillez entrer une valeur correcte entre 18 et 630 mg/dL.",
     "errow_sugar_input_mmol_text":"Veuillez entrer une valeur correcte entre 1-35 mmol/L.",
     "save_record":"Enregistrer",
@@ -91,8 +83,7 @@
     "sound":"Son",
     "vibrate":"Vibrer",
     "cancel":"Annuler",
-    "set":"Régler ",
-        
+    "set":"Régler ",      
     "edit_record": "Modifier l'enregistrement",
     "delete_record_alert":"Voulez-vous vraiment supprimer cet enregistrement ?",
     "stay":"Rester",
@@ -101,12 +92,9 @@
     "keep":"Garder",
     "you_have_not_record":"Vous n'avez pas encore créé d'enregistrement",
     "wanna_exit":"Voulez-vous vraiment sortir Blood Sugar Tracking ?",
-
-
     "skip_all":"Passer tout",
     "next_step":"Étape suivante",
     "homepage":"Page d'accueil",
-    
     "intro1":"Saisie rapide des données\nstatistiques intelligentes",
     "intro2":"Changement d'unité flexible\nChangement d'intervalle",
     "intro3":"Vous rappeler de saisir\nvotre enregistrement",
@@ -149,7 +137,20 @@
     "gender": "Genre",
     "age": "Âge",
     "weight": "Lester",
-    "height": "Hauteur"
-
-
+    "height": "Hauteur",
+    "heart_rate": "Fréquence cardiaque",
+    "heart_rate_tracking": "Suivi de la fréquence cardiaque",
+    "tap_to_measure" : "Appuyez pour mesurer",
+    "measuring" :  "Mesure...",
+    "put_your_finger_on_camera" : "Mettez votre doigt sur la caméra",
+    "bpm": "BPM",
+    "result": "Result",
+    "enter_value": "Please enter the value",
+    "check_finger" : "Right position. Do not move your finger!",
+    "show_error_heart_rate": "No result found. Measuring has been failed!",
+    "access_disabled" : "Access disabled!",
+    "request_open_permission":"Please go to settings to open permissions!",
+    "go_to_setting":"Go to setting",
+    "return" : "Return",
+    "try_again": "Rever"
 }

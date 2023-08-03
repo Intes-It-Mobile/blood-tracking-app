@@ -136,6 +136,23 @@
   "gender": "性別",
   "age": "年齡",
   "weight": "重量",
-  "height": "高度"
-
+  "height": "高度",
+  "errow_heart_rate_input_text": "请输入 1-120 之间的准确值",
+  "heart_rate": "心率",
+  "heart_rate_tracking": "心率追踪",
+  "tap_to_measure" : "点击进行测量",
+  "measuring" :  "测量...",
+  "put_your_finger_on_camera" : "将手指放在相机上",
+  "bpm": "BPM",
+  "result": "结果",
+  "enter_value": "请输入一个值",
+  "check_finger" : "位置正确。不要移动手指！",
+  "show_error_heart_rate": "未找到结果。测量失败！",
+  "access_disabled" : "访问已禁用！",
+  "request_open_permission":"请前往设置开放权限！",
+  "go_to_setting":"前往设置",
+  "return" : "返回",
+  "try_again": "再试一次",
+  "fast": "快速地",
+  "slow": "慢的"
 }
