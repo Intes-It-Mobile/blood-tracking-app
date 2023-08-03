@@ -25,6 +25,7 @@ class Assets {
   static const String intro_img = "assets/images/intro2_color.png";
   static const String intro_img1 = "assets/images/intro2_mol.png";
   static const String empty_chart = "assets/images/empty_chart.png";
+  static const String image_heart = "assets/images/image_heart.png";
   static const String broken_heart = "assets/images/broken_heart.png";
   static const String congrat = "assets/images/congrat.png";
   static const String leadership = "assets/images/leadership.png";
@@ -54,8 +55,8 @@ class Assets {
   static const String iconSettingsNav = "assets/icons/ic_settings_nav.svg";
   static const String iconInfoNav = "assets/icons/ic_info_nav.svg";
   static const String iconHomeNav = "assets/icons/ic_home_nav.svg";
+  static const String iconHearRate = "assets/icons/ic_heart_rate.svg";
   static const String icSelect = "assets/icons/ic_select.svg";
-
   static const String iconSplash = "assets/icons/ic_splash_logo.svg";
   static const String iconEditRangeScreen = "assets/icons/edit_range_icon.svg";
   static const String iconBloodSugar = "assets/icons/ic_blood_sugar.svg";

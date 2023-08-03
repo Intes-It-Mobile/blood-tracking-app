@@ -75,6 +75,8 @@
   "after_meal_2h": "After a meal (2h)",
   "after_exercise": "After exercise",
   "asleep": "Asleep",
+  "errow_sugar_input_text": "Please enter correct value between 18-630 mg/dL",
+  "errow_heart_rate_input_text": "Please enter correct value between 1-120",
   "errow_sugar_input_mg_text": "Please enter correct value between 18-630 mg/dL",
   "errow_sugar_input_mmol_text": "Please enter correct value between 1-35 mmol/L",
   "save_record": "Save Record",
@@ -87,8 +89,6 @@
   "set": "Set",
   "edit_record": "Edit Record",
   "delete_record_alert": "Do you really want to delete this record?",
-  "stay": "Stay",
-  "exit": "Exit",
   "delete": "Delete",
   "keep": "Keep",
   "you_have_not_record": "You have not created any record yet",
@@ -110,6 +110,20 @@
   "mmol/L": "mmol/L",
   "change_unit": "Change unit",
   "choose_this_unit": "Choose this unit",
+  "heart_rate": "Heart rate",
+  "heart_rate_tracking": "Heart rate tracking",
+  "tap_to_measure" : "Tap to measure",
+  "measuring" :  "Measuring...",
+  "put_your_finger_on_camera" : "Put your finger on camera",
+  "bpm": "BPM",
+  "result": "Result",
+  "enter_value": "Please enter the value",
+  "check_finger" : "Right position. Do not move your finger!",
+  "show_error_heart_rate": "No result found. Measuring has been failed!",
+  "access_disabled" : "Access disabled!",
+  "request_open_permission":"Please go to settings to open permissions!",
+  "go_to_setting":"Go to setting",
+  "return" : "Return",
   "change_btn": "Change",
   "save_edit_dialog_content": "Do you want to save changes for this record?",
   "done": "Done",
@@ -129,9 +143,6 @@
   "what_is_your_weight": "What is your weight?",
   "How_tall_are_you": "How tall are you?",
   "declare_your_goal": "Declare your goal",
-
-
-
   "blood_sugar_txt":"Blood sugar",
   "heart_rate_txt":"Heart rate",
   "goal_far_txt":"You are still far from your goal. Improve the blood sugar amount!",
@@ -141,5 +152,8 @@
   "gender": "Gender",
   "age": "Age",
   "weight": "Weight",
-  "height": "Height"
+  "height": "Height",
+  "try_again": "Try again",
+  "fast": "Fast",
+  "slow": "Slow"
 }
