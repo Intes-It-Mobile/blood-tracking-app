@@ -1111,7 +1111,7 @@ abstract class _SugarInfoStoreBase with Store {
   Information? information = Information();
 
   @observable
-  late BuildContext homeScreenContext;
+  BuildContext? homeScreenContext;
 
   @observable
   GoalAmount? goalAmount = GoalAmount();
@@ -1205,11 +1205,11 @@ abstract class _SugarInfoStoreBase with Store {
       if (isSwapedToMol == false) {
         switch (calculate(checkingItem.sugarAmount)) {
           case > 20:
-            return showDiaLogFarGoal(homeScreenContext);
+            return showDiaLogFarGoal(homeScreenContext!);
           case < 1:
-            return showDiaLogReachGoal(homeScreenContext);
+            return showDiaLogReachGoal(homeScreenContext!);
           case <= 20:
-            return showDiaLogNearlyGoal(homeScreenContext);
+            return showDiaLogNearlyGoal(homeScreenContext!);
 
           default:
             return "";
@@ -1217,11 +1217,11 @@ abstract class _SugarInfoStoreBase with Store {
       } else {
         switch (calculate(checkingItem.sugarAmount)) {
           case > 20 / 18:
-            return showDiaLogFarGoal(homeScreenContext);
+            return showDiaLogFarGoal(homeScreenContext!);
           case < 1 / 18:
-            return showDiaLogReachGoal(homeScreenContext);
+            return showDiaLogReachGoal(homeScreenContext!);
           case <= 20 / 18:
-            return showDiaLogNearlyGoal(homeScreenContext);
+            return showDiaLogNearlyGoal(homeScreenContext!);
 
           default:
             return "";
