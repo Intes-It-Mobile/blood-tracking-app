@@ -16,10 +16,10 @@ class Assets {
   static const String infomative = "assets/images/informative.png";
   static const String settings = "assets/images/settings.png";
   static const String splash = "assets/images/splash.png";
-  static const String intro1 = "assets/images/intro_bg_01.png";
-  static const String intro2 = "assets/images/intro_bg_02.png";
-  static const String intro3 = "assets/images/intro_bg_03.png";
-  static const String intro4 = "assets/images/intro_bg_04.png";
+  static const String intro1 = "assets/images/intro_bg_1.png";
+  static const String intro2 = "assets/images/intro_bg_2.png";
+  static const String intro3 = "assets/images/intro_bg_3.png";
+  static const String intro4 = "assets/images/into_bg_4.png";
   static const String about_us = "assets/images/img_about_us.png";
   static const String history_mpt = "assets/images/have_not_history.png";
   static const String intro_img = "assets/images/intro2_color.png";
