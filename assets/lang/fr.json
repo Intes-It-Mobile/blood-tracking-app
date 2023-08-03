@@ -152,5 +152,8 @@
     "request_open_permission":"Please go to settings to open permissions!",
     "go_to_setting":"Go to setting",
     "return" : "Return",
-    "try_again": "Rever"
+    "try_again": "Rever",
+    "goal": "But",
+    "male": "Mâle",
+    "female": "Femme"
 }
