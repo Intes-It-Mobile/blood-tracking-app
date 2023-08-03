@@ -18,7 +18,7 @@ class WeightScreen extends StatefulWidget {
 }
 
 class _WeightScreenState extends State<WeightScreen> {
-  int currentValue = 25;
+  int currentValue = 50;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
   @override

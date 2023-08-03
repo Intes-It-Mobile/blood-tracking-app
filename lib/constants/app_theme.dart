@@ -147,6 +147,14 @@ class AppTheme {
     fontFamily: FontFamily.IBMPlexSans,
   );
 
+  static final appBarTextStyle = TextStyle(
+    fontFamily: FontFamily.IBMPlexSans,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+    color: Colors.white,
+    letterSpacing: 1
+  );
   static final edit20Text = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w600,
@@ -158,6 +166,14 @@ class AppTheme {
   static final unit20Text = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w500,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(20),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
+  static final Intro20Text = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
     decoration: TextDecoration.none,
     // height: 0.95,
     fontSize: TextSizeConfig.getAdjustedFontSize(20),

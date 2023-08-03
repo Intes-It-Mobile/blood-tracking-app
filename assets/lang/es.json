@@ -138,7 +138,25 @@
   "gender": "Género",
   "age": "Edad",
   "weight": "Peso",
-  "height": "Altura"
-
+  "height": "Altura",
+  "errow_heart_rate_input_text": "Por favor ingrese un valor exacto entre 1-120",
+  "heart_rate": "Frecuencia cardíaca",
+  "heart_rate_tracking": "Seguimiento del ritmo cardíaco",
+  "tap_to_measure": "Tocar para medir",
+  "medir" : "medir...",
+  "put_your_finger_on_camera": "Pon tu dedo en la cámara",
+  "bpm": "BPM",
+  "estado": "Estado",
+  "resultado": "Resultado",
+  "enter_value": "Por favor ingrese un valor",
+  "check_finger": "La posición es correcta. ¡No muevas el dedo!",
+  "show_error_heart_rate": "No se encontraron resultados. ¡Falló la medición!",
+  "access_disabled": "¡Acceso deshabilitado!",
+  "request_open_permission": "¡Vaya a establecer el permiso de apertura!",
+  "go_to_setting": "Ir a configuración",
+  "regresar" : "Regresar",
+  "try_again": "Intentar de nuevo",
+  "fast": "rápidamente",
+  "slow":"despacio"
 
 }

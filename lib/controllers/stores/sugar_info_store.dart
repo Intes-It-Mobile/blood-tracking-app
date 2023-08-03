@@ -473,7 +473,6 @@ abstract class _SugarInfoStoreBase with Store {
       print("Load from sharedpref: ${listRecords!.listRecord!.first.dayTime}");
     } else {
       isListRecordsLoading = false;
-      print("abcd");
     }
     return null;
   }
