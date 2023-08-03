@@ -919,13 +919,13 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
       Atom(name: '_SugarInfoStoreBase.homeScreenContext', context: context);
 
   @override
-  BuildContext get homeScreenContext {
+  BuildContext? get homeScreenContext {
     _$homeScreenContextAtom.reportRead();
     return super.homeScreenContext;
   }
 
   @override
-  set homeScreenContext(BuildContext value) {
+  set homeScreenContext(BuildContext? value) {
     _$homeScreenContextAtom.reportWrite(value, super.homeScreenContext, () {
       super.homeScreenContext = value;
     });

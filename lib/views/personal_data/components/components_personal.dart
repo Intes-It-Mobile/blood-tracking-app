@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:blood_sugar_tracking/views/personal_data/components/edit_personal_data.dart';
+import 'package:blood_sugar_tracking/widgets/goal_dialog/goal_mol_edit_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/goal_dialog/goal_mg_edit_dialog.dart';
@@ -112,8 +113,8 @@ class Components {
           contentPadding: EdgeInsets.zero,
           content: SizedBox(
             width: 400,
-            height: MediaQuery.of(context).size.height * 0.38,
-            child: const EditGoalMg(),
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: const EditGoalMol(),
           ),
         );
       },

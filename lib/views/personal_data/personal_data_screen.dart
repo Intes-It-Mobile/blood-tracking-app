@@ -29,6 +29,7 @@ class PersonalDataScreen extends StatefulWidget {
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
   SugarInfoStore? sugarInfoStore;
   GoalAmount? goalAmount;
+
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -46,8 +47,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -90,10 +93,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       sugarInfoStore?.information = provider.getUserData(
         'information_key',
       );
-      return Observer(builder: (_){
+      return Observer(builder: (_) {
         return Visibility(
           visible: sugarInfoStore?.information != null,
-          replacement:  const SizedBox(
+          replacement: const SizedBox(
             height: 50,
             width: 50,
             child: Center(
@@ -114,7 +117,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           Components().DialogGender(context);
                         },
                         child: Container(
-                          height: 108,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -143,11 +146,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Text(
-                                '${sugarInfoStore?.information?.gender}',
-                                style: AppTheme.Headline20Text.copyWith(
-                                    color: AppColors.AppColor4,
-                                    fontWeight: FontWeight.w500),
-                              )
+                                      '${sugarInfoStore?.information?.gender}',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: AppColors.AppColor4,
+                                          fontWeight: FontWeight.w500),
+                                    )
                                   : const Text('error')
                             ],
                           ),
@@ -160,7 +163,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           Components().DialogAge(context);
                         },
                         child: Container(
-                          height: 108,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(right: 15, left: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -189,11 +192,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Text(
-                                '${sugarInfoStore?.information?.old}',
-                                style: AppTheme.Headline20Text.copyWith(
-                                    color: AppColors.AppColor4,
-                                    fontWeight: FontWeight.w500),
-                              )
+                                      '${sugarInfoStore?.information?.old}',
+                                      style: AppTheme.Headline20Text.copyWith(
+                                          color: AppColors.AppColor4,
+                                          fontWeight: FontWeight.w500),
+                                    )
                                   : const Text('error')
                             ],
                           ),
@@ -213,7 +216,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           Components().DialogWeight(context);
                         },
                         child: Container(
-                          height: 108,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -242,24 +245,26 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Row(
-                                children: [
-                                  Text(
-                                    '${sugarInfoStore?.information?.weight}',
-                                    style: AppTheme.Headline20Text.copyWith(
-                                        color: AppColors.AppColor4,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '(kg)',
-                                    style: AppTheme.Headline16Text.copyWith(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              )
+                                      children: [
+                                        Text(
+                                          '${sugarInfoStore?.information?.weight}',
+                                          style:
+                                              AppTheme.Headline20Text.copyWith(
+                                                  color: AppColors.AppColor4,
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '(kg)',
+                                          style:
+                                              AppTheme.Headline16Text.copyWith(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
                                   : const Text("error")
                             ],
                           ),
@@ -272,7 +277,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           Components().DialogHeight(context);
                         },
                         child: Container(
-                          height: 108,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(right: 15, left: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -301,31 +306,32 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Row(
-                                children: [
-                                  Text(
-                                    '${sugarInfoStore?.information?.tall}',
-                                    style: AppTheme.Headline20Text.copyWith(
-                                        color: AppColors.AppColor4,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '(cm)',
-                                    style: AppTheme.Headline16Text.copyWith(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              )
+                                      children: [
+                                        Text(
+                                          '${sugarInfoStore?.information?.tall}',
+                                          style:
+                                              AppTheme.Headline20Text.copyWith(
+                                                  color: AppColors.AppColor4,
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '(cm)',
+                                          style:
+                                              AppTheme.Headline16Text.copyWith(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
                                   : const Text('error')
                             ],
                           ),
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -400,7 +406,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     ),
                     Expanded(
                       child: Container(
-                        height: 108,
+                        height: MediaQuery.of(context).size.height * 0.14,
                         margin: const EdgeInsets.only(right: 15, left: 8),
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
@@ -432,24 +438,24 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             ),
                             sugarInfoStore?.information != null
                                 ? Row(
-                              children: [
-                                Text(
-                                  '${sugarInfoStore?.information?.tall.toString()}',
-                                  style: AppTheme.Headline20Text.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '(cm)',
-                                  style: AppTheme.Headline20Text.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ],
-                            )
+                                    children: [
+                                      Text(
+                                        '${sugarInfoStore?.information?.tall.toString()}',
+                                        style: AppTheme.Headline20Text.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        '(cm)',
+                                        style: AppTheme.Headline20Text.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )
                                 : const Text('error')
                           ],
                         ),
@@ -463,7 +469,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         );
       });
     });
-
   }
 
   String cutString(double number) {
