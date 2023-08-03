@@ -137,7 +137,7 @@ class _SelectUnitState extends State<SelectUnit> {
               child: Container(
                 decoration: BoxDecoration(),
                 child: Text(
-                  '${AppLocalizations.of(context)!.getTranslate('done')}',
+                  '${AppLocalizations.of(context)!.getTranslate('next')}',
                   style: AppTheme.Headline20Text.copyWith(
                       fontWeight: FontWeight.w600, color: AppColors.AppColor4),
                 ),

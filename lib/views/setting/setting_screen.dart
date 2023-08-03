@@ -16,7 +16,9 @@ import '../../widgets/button_widget.dart';
 import '../../widgets/change_unit_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key,});
+  const SettingScreen({
+    super.key,
+  });
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -35,6 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore!.fetchGoalAmountFromSharedPreferences();
     super.didChangeDependencies();
   }
 
@@ -70,7 +73,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                padding: const EdgeInsets.symmetric( vertical: 5,horizontal: 5),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),

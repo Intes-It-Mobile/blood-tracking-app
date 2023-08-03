@@ -914,12 +914,14 @@ abstract class _SugarInfoStoreBase with Store {
       multiplicationUnitListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
       saveListRecord(listRecords);
+      getGoalAmountFromSharedPreferences();
     }
     if (isSwapedToMol == true) {
       divisionnUnitListRecord();
       divisionListRootCondition();
       saveIsSwapedToMol(isSwapedToMol!);
       saveListRecord(listRecords);
+      getGoalAmountFromSharedPreferences();
     }
   }
 
@@ -1114,15 +1116,33 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   GoalAmount? goalAmount = GoalAmount();
 
+  @observable
+  int? goalFirstMolValue;
+  @observable
+  int? goalSecondMolValue;
   @action
-  setGoalAmount(double? value, bool? isMol) {
-    goalAmount!.amount = value;
-    goalAmount!.isMol = isMol;
+  setGoalMolAmount() {
+    goalAmount!.amount = matchValueMol(goalFirstMolValue, goalSecondMolValue);
+    goalAmount!.isMol = isSwapedToMol;
+  }
+
+  @action
+  double matchValueMol(int? firstValue, int? seconValue) {
+    String matchedValue = "${firstValue}.${seconValue}";
+    return double.parse(matchedValue);
+  }
+
+  @action
+  setGoalAmount(
+    double? value,
+  ) {
+    goalAmount = GoalAmount(amount: value, isMol: isSwapedToMol);
+
     saveGoalAmountToSharedPreferences();
   }
 
   @action
-  void saveGoalAmountToSharedPreferences() async {
+  saveGoalAmountToSharedPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // Chuyển đổi đối tượng GoalAmount thành JSON (Map<String, dynamic>)
@@ -1142,7 +1162,20 @@ abstract class _SugarInfoStoreBase with Store {
     if (jsonString != null) {
       // Nếu có dữ liệu, chuyển đổi JSON thành Map
       final Map<String, dynamic> json = jsonDecode(jsonString);
-
+      goalAmount = GoalAmount.fromJson(json);
+      if (goalAmount!.isMol != isSwapedToMol) {
+        if (isSwapedToMol == true) {
+          if (goalAmount!.amount! > 1) {
+            goalAmount!.amount = goalAmount!.amount! / 18;
+            goalAmount!.isMol = isSwapedToMol;
+          }
+          saveGoalAmountToSharedPreferences();
+        } else if (isSwapedToMol == false) {
+          goalAmount!.amount = goalAmount!.amount! * 18;
+          goalAmount!.isMol = isSwapedToMol;
+          saveGoalAmountToSharedPreferences();
+        }
+      }
       // Tạo đối tượng GoalAmount từ Map
       return GoalAmount.fromJson(json);
     } else {
