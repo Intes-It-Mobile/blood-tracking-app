@@ -18,9 +18,20 @@ class EditPersonalData extends StatefulWidget {
 }
 
 class _EditPersonalDataState extends State<EditPersonalData> {
-  int selectedIndex = -1;
+  int selectedIndex = 0;
   int value = 0;
   SugarInfoStore? sugarInfoStore;
+
+  @override
+  void initState() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
+      if(sugarInfoStore?.information?.gender == "Male"){
+        selectedIndex = 0;
+      }else if(sugarInfoStore?.information?.gender == "Female"){
+        selectedIndex = 1;
+      }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

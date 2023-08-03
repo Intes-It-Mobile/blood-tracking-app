@@ -18,7 +18,7 @@ class TallScreen extends StatefulWidget {
 }
 
 class _TallScreenState extends State<TallScreen> {
-  int currentValue = 25;
+  int currentValue = 170;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
   @override
