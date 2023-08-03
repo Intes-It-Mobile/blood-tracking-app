@@ -112,9 +112,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: AppColors.AppColor2,
-                                  ),
+
                                 ),
                                 child: Text(
                                   "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
