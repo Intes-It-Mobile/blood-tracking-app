@@ -193,7 +193,7 @@ class _IntroScreenState extends State<IntroScreen> {
             ],
           ),
           Container(
-              padding: EdgeInsets.only(left: 8),
+              padding: EdgeInsets.only(left: 18),
               margin: EdgeInsets.only(bottom: 50),
               alignment: Alignment.bottomLeft,
               child: Text(
