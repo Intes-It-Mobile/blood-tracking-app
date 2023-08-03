@@ -1126,6 +1126,17 @@ abstract class _SugarInfoStoreBase with Store {
     goalAmount!.isMol = isSwapedToMol;
   }
 
+  @observable
+  String? errorGoalText = "";
+  @action
+  checkValidateGoalMolAmount(double goalAmount) {
+    if (goalAmount > 35) {
+      errorGoalText = "errow_sugar_input_mmol_text";
+    } else {
+      errorGoalText = "";
+    }
+  }
+
   @action
   double matchValueMol(int? firstValue, int? seconValue) {
     String matchedValue = "${firstValue}.${seconValue}";

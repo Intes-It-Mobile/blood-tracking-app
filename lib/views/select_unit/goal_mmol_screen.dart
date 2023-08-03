@@ -43,7 +43,7 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
         Provider.of<InformationNotifier>(context);
     sugarInfoStore!.goalFirstMolValue = currentFirstValue;
     sugarInfoStore!.goalSecondMolValue = currentSecondValue;
-    
+
     sugarInfoStore!.setGoalMolAmount();
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
