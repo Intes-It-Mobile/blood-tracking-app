@@ -153,5 +153,8 @@
     "go_to_setting":"Go to setting",
     "return" : "Return",
     "try_again": "Rever",
-    "slow": "en retard"
+    "slow": "en retard",
+    "goal": "But",
+    "male": "Mâle",
+    "female": "Femme"
 }

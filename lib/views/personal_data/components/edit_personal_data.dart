@@ -18,9 +18,20 @@ class EditPersonalData extends StatefulWidget {
 }
 
 class _EditPersonalDataState extends State<EditPersonalData> {
-  int selectedIndex = -1;
+  int selectedIndex = 0;
   int value = 0;
   SugarInfoStore? sugarInfoStore;
+
+  @override
+  void initState() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
+      if(sugarInfoStore?.information?.gender == "Male"){
+        selectedIndex = 0;
+      }else if(sugarInfoStore?.information?.gender == "Female"){
+        selectedIndex = 1;
+      }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +80,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                       borderRadius: BorderRadius.circular(22)),
                   child: Center(
                     child: Text(
-                      ListInformation().information[index].gender.toString(),
+                      "${ListInformation().information[index].gender.toString()}",
                       style: AppTheme.Headline20Text.copyWith(
                         fontWeight: FontWeight.w600,
                         color: index == selectedIndex
@@ -430,11 +441,12 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
         Text(
           '${AppLocalizations.of(context)!.getTranslate('How_tall_are_you')}',
           style: AppTheme.edit20Text,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
           height: 180,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

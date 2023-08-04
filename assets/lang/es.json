@@ -157,6 +157,9 @@
   "regresar" : "Regresar",
   "try_again": "Intentar de nuevo",
   "fast": "rápidamente",
-  "slow":"despacio"
+  "slow":"despacio",
+  "goal": "Meta",
+  "male": "Masculino",
+  "female": "Femenino"
 
 }
