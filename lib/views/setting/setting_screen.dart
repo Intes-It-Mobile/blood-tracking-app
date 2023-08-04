@@ -114,6 +114,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "languages",
+
                   ),
                   ButtonWidget(
                     onTap: () {
