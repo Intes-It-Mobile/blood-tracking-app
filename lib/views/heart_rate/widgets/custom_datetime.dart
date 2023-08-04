@@ -45,7 +45,7 @@ class CustomDatetime extends StatelessWidget {
           },
           child: _buildDateCustom()
         ),
-        Spacer(),
+        const Spacer(),
         InkWell(
           onTap: () {
             _showDatePickerHour();
@@ -123,6 +123,7 @@ void _showDatePickerDay() {
 
   void _showDatePickerHour() {
     DatePicker.showDatePicker(
+      minDateTime: DateTime(date.year, date.month, date.day),
       maxDateTime: DateTime.now(),
       initialDateTime: date,
       dateFormat: "HH:mm",
