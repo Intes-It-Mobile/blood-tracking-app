@@ -53,7 +53,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             widget.btnText != null
                 ? Text(
                     "${AppLocalizations.of(context)!.getTranslate('${widget.btnText}')}",
-                    style: AppTheme.BtnText)
+                    style: AppTheme.BtnText.copyWith(fontWeight: FontWeight.w700))
                 : SizedBox(),
             widget.suffixIconPath != null
                 ? Row(
