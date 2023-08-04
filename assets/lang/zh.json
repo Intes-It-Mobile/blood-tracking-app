@@ -154,5 +154,8 @@
   "return" : "返回",
   "try_again": "再试一次",
   "fast": "快速地",
-  "slow": "慢的"
+  "slow": "慢的",
+  "goal": "目標",
+  "male": "男性",
+  "female": "女性"
 }

@@ -155,5 +155,8 @@
   "height": "Height",
   "try_again": "Try again",
   "fast": "Fast",
-  "slow": "Slow"
+  "slow": "Slow",
+  "goal": "Goal",
+  "male": "Male",
+  "female": "Female"
 }
