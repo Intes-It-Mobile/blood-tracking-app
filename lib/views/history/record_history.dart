@@ -46,7 +46,9 @@ class _RecordHistoryState extends State<RecordHistory> {
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
