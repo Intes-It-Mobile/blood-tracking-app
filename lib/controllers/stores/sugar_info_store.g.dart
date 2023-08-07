@@ -979,6 +979,38 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$errorGoalTextAtom =
+      Atom(name: '_SugarInfoStoreBase.errorGoalText', context: context);
+
+  @override
+  String? get errorGoalText {
+    _$errorGoalTextAtom.reportRead();
+    return super.errorGoalText;
+  }
+
+  @override
+  set errorGoalText(String? value) {
+    _$errorGoalTextAtom.reportWrite(value, super.errorGoalText, () {
+      super.errorGoalText = value;
+    });
+  }
+
+  late final _$sugarRecordGoalAtom =
+      Atom(name: '_SugarInfoStoreBase.sugarRecordGoal', context: context);
+
+  @override
+  SugarRecord? get sugarRecordGoal {
+    _$sugarRecordGoalAtom.reportRead();
+    return super.sugarRecordGoal;
+  }
+
+  @override
+  set sugarRecordGoal(SugarRecord? value) {
+    _$sugarRecordGoalAtom.reportWrite(value, super.sugarRecordGoal, () {
+      super.sugarRecordGoal = value;
+    });
+  }
+
   late final _$getRootSugarInfoAsyncAction =
       AsyncAction('_SugarInfoStoreBase.getRootSugarInfo', context: context);
 
@@ -1550,6 +1582,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
+  dynamic checkValidateGoalMolAmount(double goalAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkValidateGoalMolAmount');
+    try {
+      return super.checkValidateGoalMolAmount(goalAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   double matchValueMol(int? firstValue, int? seconValue) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.matchValueMol');
@@ -1572,11 +1615,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic checkGoal() {
+  dynamic checkGoal(double sugarAmount) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.checkGoal');
     try {
-      return super.checkGoal();
+      return super.checkGoal(sugarAmount);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1644,6 +1687,8 @@ homeScreenContext: ${homeScreenContext},
 goalAmount: ${goalAmount},
 goalFirstMolValue: ${goalFirstMolValue},
 goalSecondMolValue: ${goalSecondMolValue},
+errorGoalText: ${errorGoalText},
+sugarRecordGoal: ${sugarRecordGoal},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

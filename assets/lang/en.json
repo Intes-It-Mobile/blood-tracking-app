@@ -155,5 +155,6 @@
   "height": "Height",
   "try_again": "Try again",
   "fast": "Fast",
-  "slow": "Slow"
+  "slow": "Slow",
+  "error_goal_value":"Value must be between 1-35 mmol/L"
 }

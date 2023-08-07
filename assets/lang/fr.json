@@ -152,5 +152,7 @@
     "request_open_permission":"Please go to settings to open permissions!",
     "go_to_setting":"Go to setting",
     "return" : "Return",
-    "try_again": "Rever"
+    "try_again": "Rever",
+    "error_goal_value": "La valeur doit être comprise entre 1 et 35 mmol/L"
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
@@ -23,6 +24,7 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
   FixedExtentScrollController controller = FixedExtentScrollController();
   FixedExtentScrollController controller1 = FixedExtentScrollController();
   SugarInfoStore? sugarInfoStore;
+  String? errorText;
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -59,6 +61,12 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
                   style: AppTheme.unit24Text,
                 ),
               ),
+              Observer(builder: (_) {
+                return Text(
+                  "${AppLocalizations.of(context)!.getTranslate(sugarInfoStore!.errorGoalText!)}",
+                  style: AppTheme.errorText,
+                );
+              }),
               Container(
                 height: 300,
                 child: Row(
@@ -121,8 +129,12 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                sugarInfoStore!.saveGoalAmountToSharedPreferences();
-                Navigator.of(context).pushNamed(Routes.intro);
+                sugarInfoStore!.checkValidateGoalMolAmount(
+                    sugarInfoStore!.goalAmount!.amount!);
+                if (sugarInfoStore!.errorGoalText == "") {
+                  Navigator.of(context).pushNamed(Routes.intro);
+                  sugarInfoStore!.saveGoalAmountToSharedPreferences();
+                }
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

@@ -154,5 +154,7 @@
   "return" : "返回",
   "try_again": "再试一次",
   "fast": "快速地",
-  "slow": "慢的"
+  "slow": "慢的",
+  "error_goal_value": "数值必须在 1-35 mmol/L 之间"
+
 }

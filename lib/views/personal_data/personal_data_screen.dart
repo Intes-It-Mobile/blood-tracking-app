@@ -50,7 +50,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -340,67 +339,67 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        height: 108,
-                        margin: const EdgeInsets.only(left: 15, right: 8),
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: AppColors.AppColor3,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Goal',
-                                  style: AppTheme.Headline16Text.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                  onTap: () {
-                                    if (sugarInfoStore!.isSwapedToMol == true) {
-                                      Components().showDialogGoalMol(context);
-                                    } else {
-                                      Components().showDialogGoalMg(context);
-                                    }
-                                  },
-                                  child: SvgPicture.asset(Assets.iconEdit),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Observer(builder: (_) {
-                              return Row(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (sugarInfoStore!.isSwapedToMol == true) {
+                            Components().showDialogGoalMol(context);
+                          } else {
+                            Components().showDialogGoalMg(context);
+                          }
+                        },
+                        child: Container(
+                          height: 108,
+                          margin: const EdgeInsets.only(left: 15, right: 8),
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Observer(builder: (_) {
-                                    return Text(
-                                      '${cutString(sugarInfoStore!.goalAmount!.amount!)}',
-                                      style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4,
-                                          fontWeight: FontWeight.w500),
-                                    );
-                                  }),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
                                   Text(
-                                    "${sugarInfoStore!.isSwapedToMol == true ? "(mmol/L)" : "(mg/dL)"}",
+                                    'Goal',
                                     style: AppTheme.Headline16Text.copyWith(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500),
-                                  )
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  SvgPicture.asset(Assets.iconEditRange),
                                 ],
-                              );
-                            })
-                          ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Observer(builder: (_) {
+                                return Row(
+                                  children: [
+                                    Observer(builder: (_) {
+                                      return Text(
+                                        '${cutString(sugarInfoStore!.goalAmount!.amount!)}',
+                                        style: AppTheme.Headline20Text.copyWith(
+                                            color: AppColors.AppColor4,
+                                            fontWeight: FontWeight.w500),
+                                      );
+                                    }),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "${sugarInfoStore!.isSwapedToMol == true ? "(mmol/L)" : "(mg/dL)"}",
+                                      style: AppTheme.Headline16Text.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                );
+                              })
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -235,5 +235,6 @@
     "height": "Chiều cao",
     "try_again": "Thử lại",
     "fast": "Nhanh",
-    "slow": "Chậm"
+    "slow": "Chậm",
+    "error_goal_value":"Giá trị phải nằm trong khoảng 1-35 mmol/L"
 }
