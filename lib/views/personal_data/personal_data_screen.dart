@@ -146,7 +146,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Text(
-                                      '${sugarInfoStore?.information?.gender}',
+                                      '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore?.information?.gender}')}',
                                       style: AppTheme.Headline20Text.copyWith(
                                           color: AppColors.AppColor4,
                                           fontWeight: FontWeight.w500),
