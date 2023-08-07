@@ -359,14 +359,20 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     }
     print('popup');
-    Future.delayed(Duration(seconds: 1), () {
-      checkGoal();
-    });
-    await Navigator.pushNamedAndRemoveUntil(
+
+    if (listRecordArrangedByTime!.length == 1) {
+      sugarRecordGoal = listRecordArrangedByTime!.first;
+      saveSugarRecordGoal(sugarRecordGoal!);
+      Future.delayed(Duration(seconds: 2), () {
+        checkGoal(listRecordArrangedByTime!.first.sugarAmount!);
+      });
+    }
+    Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
       (route) => false,
     );
+    checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
 
   String findStatusForValueAndConditionId(
@@ -627,7 +633,8 @@ abstract class _SugarInfoStoreBase with Store {
       Routes.home,
       (route) => false,
     );
-    checkGoal();
+    // checkGoal();
+    checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
 
   @action
@@ -1125,6 +1132,18 @@ abstract class _SugarInfoStoreBase with Store {
     goalAmount!.isMol = isSwapedToMol;
   }
 
+  @observable
+  String? errorGoalText = "";
+  @action
+  checkValidateGoalMolAmount(double goalAmount) {
+    if (goalAmount > 35) {
+      errorGoalText = "error_goal_value";
+      print("Error goal: $errorGoalText");
+    } else {
+      errorGoalText = "";
+    }
+  }
+
   @action
   double matchValueMol(int? firstValue, int? seconValue) {
     String matchedValue = "${firstValue}.${seconValue}";
@@ -1189,46 +1208,36 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  checkGoal() {
-    SugarRecord checkingItem = listRecordArrangedByTime!.first;
-    int checkingItemId = listRecordArrangedByTime!.first.id!;
+  checkGoal(double sugarAmount) {
     double calculate(double? value) {
       return (value! - goalAmount!.amount!).abs();
     }
 
-    if (checkingItem.informed == false) {
-      listRecords!.listRecord!
-          .where((e) => e.id == checkingItemId)
-          .first
-          .informed = true;
-      if (isSwapedToMol == false) {
-        switch (calculate(checkingItem.sugarAmount)) {
-          case > 20:
-            return showDiaLogFarGoal(homeScreenContext!);
-          case < 1:
-            return showDiaLogReachGoal(homeScreenContext!);
-          case <= 20:
-            return showDiaLogNearlyGoal(homeScreenContext!);
+    if (isSwapedToMol == false) {
+      switch (calculate(sugarAmount)) {
+        case > 20:
+          return showDiaLogFarGoal(homeScreenContext!);
+        case <= 20 && > 1:
+          return showDiaLogNearlyGoal(homeScreenContext!);
+        case < 1:
+          return showDiaLogReachGoal(homeScreenContext!);
 
-          default:
-            return "";
-        }
-      } else {
-        switch (calculate(checkingItem.sugarAmount)) {
-          case > 20 / 18:
-            return showDiaLogFarGoal(homeScreenContext!);
-          case < 1 / 18:
-            return showDiaLogReachGoal(homeScreenContext!);
-          case <= 20 / 18:
-            return showDiaLogNearlyGoal(homeScreenContext!);
+        default:
+          return "";
+      }
+    } else {
+      switch (calculate(sugarAmount)) {
+        case > 20 / 18:
+          return showDiaLogFarGoal(homeScreenContext!);
+        case <= 20 / 18 && > 1 / 18:
+          return showDiaLogNearlyGoal(homeScreenContext!);
+        case < 1 / 18:
+          return showDiaLogReachGoal(homeScreenContext!);
 
-          default:
-            return "";
-        }
+        default:
+          return "";
       }
     }
-
-    saveListRecord(listRecords);
   }
 
   Future<String?> showDiaLogFarGoal(
@@ -1265,5 +1274,59 @@ abstract class _SugarInfoStoreBase with Store {
       ) =>
           GoalReachedDialog(),
     );
+  }
+
+  @observable
+  SugarRecord? sugarRecordGoal;
+
+  Future<void> saveSugarRecordGoal(SugarRecord sugarRecordGoal) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('sugarRecordGoal', sugarRecordGoal.toJson().toString());
+  }
+
+  Future<SugarRecord?> getSugarRecordGoal() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString('sugarRecordGoal');
+    if (jsonString != null) {
+      Map<String, dynamic> jsonData =
+          Map<String, dynamic>.from(json.decode(jsonString));
+      sugarRecordGoal = SugarRecord.fromJson(jsonData);
+
+      return SugarRecord.fromJson(jsonData);
+    }
+    return null; // Trả về null nếu không có dữ liệu trong Shared Preferences
+  }
+
+  void checkAndReplaceRecord(
+      List<SugarRecord> listRecord, SugarRecord sugarRecordGoal) {
+    bool found = false;
+
+    // Chuyển đổi thời gian của sugarRecordGoal từ chuỗi thành đối tượng DateTime
+    DateTime goalDateTime = DateFormat("yyyy/MM/dd")
+        .parse(sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
+    // DateTime.parse(
+    //     sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
+
+    for (int i = 0; i < listRecord.length; i++) {
+      // Chuyển đổi thời gian của mỗi record trong listRecord thành đối tượng DateTime
+      DateTime recordDateTime = DateFormat("yyyy/MM/dd")
+          .parse(listRecord[i].dayTime! + " " + listRecord[i].hourTime!);
+
+      // So sánh thời gian xảy ra của record với thời gian xảy ra của goal
+      if (recordDateTime.isAfter(goalDateTime)) {
+        checkGoal(listRecord[i].sugarAmount!);
+        sugarRecordGoal =
+            listRecord[i]; // Thay thế sugarRecordGoal bằng record tìm thấy
+        saveSugarRecordGoal(listRecord[i]);
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      print("yes");
+    } else {
+      print("no");
+    }
   }
 }

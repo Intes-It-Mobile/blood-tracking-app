@@ -117,7 +117,7 @@ class _EditGoalMolState extends State<EditGoalMol> {
     return Column(
       children: [
         const SizedBox(
-          height: 5,
+          height: 5, 
         ),
         Text(
           '${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}',

@@ -349,7 +349,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             }
                         },
                         child: Container(
-                          height: 108,
+                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(

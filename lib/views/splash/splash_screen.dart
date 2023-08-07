@@ -58,10 +58,10 @@ class _SplashScreenState extends State<SplashScreen> {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     sugarInfoStore!.getIsSwapedToMol();
     sugarInfoStore!.getListRecords();
+    sugarInfoStore!.getGoalAmountFromSharedPreferences();
     super.didChangeDependencies();
   }
 
-  
   Future<String> getJson() {
     return rootBundle.loadString(jsonPath);
   }
