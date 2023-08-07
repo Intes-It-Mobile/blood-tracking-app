@@ -58,7 +58,7 @@ class Components {
           contentPadding: EdgeInsets.zero,
           content: SizedBox(
             width: 400,
-            height: MediaQuery.of(context).size.height * 0.38,
+            height: MediaQuery.of(context).size.height * 0.41,
             child: const EditPersonalWeight(),
           ),
         );

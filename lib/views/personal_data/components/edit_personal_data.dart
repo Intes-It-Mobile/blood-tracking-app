@@ -285,7 +285,7 @@ class EditPersonalWeight extends StatefulWidget {
 
 class _EditPersonalWeightState extends State<EditPersonalWeight> {
   SugarInfoStore? sugarInfoStore;
-  int currentValue = 25;
+  int currentValue = 50;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
@@ -307,6 +307,7 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
         Text(
           '${AppLocalizations.of(context)!.getTranslate('what_is_your_weight')}',
           style: AppTheme.edit20Text,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 15,
@@ -419,7 +420,7 @@ class EditPersonalHeight extends StatefulWidget {
 
 class _EditPersonalHeightState extends State<EditPersonalHeight> {
   SugarInfoStore? sugarInfoStore;
-  int currentValue = 25;
+  int currentValue = 170;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
