@@ -338,9 +338,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               _showDatePickerHour();
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 9),
+                              decoration: const BoxDecoration(
                                   color: AppColors.AppColor3,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),

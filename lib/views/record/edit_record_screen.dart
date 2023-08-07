@@ -116,15 +116,17 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   }
 
   void _showDatePickerHour() {
+    DateTime hour = editRecordStore!.editingHourTime!;
+    DateTime day = editRecordStore!.editingDayTime!;
     DatePicker.showDatePicker(
       maxDateTime: DateTime.now(),
-      initialDateTime: editRecordStore!.editingHourTime!,
+      initialDateTime: DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
         setState(() {
           selectedHour = hour;
-          // sugarInfoStore!.setchoosedDayHour(hour);
+           //sugarInfoStore!.setchoosedDayHour(hour);
           editRecordStore!.setEditedHourTime(hour);
         });
       },
@@ -150,58 +152,64 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     }
   }
 
-  Widget customTextDate(String content){
+  Widget customTextDate(String content) {
     custom(String st) => Container(
-      height: 32,
-      width: 52,
-      alignment: Alignment.center,
-      child: Text(
-        st,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style:  AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w500),
-      ),
-    );
+          height: 32,
+          width: 52,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
 
     return Row(
       children: [
-        custom(content.substring(0,4)),
-        const SizedBox(width: 2,),
-        custom(content.substring(5,7)),
-        const SizedBox(width: 2,),
-        custom(content.substring(8,10)),
+        custom(content.substring(0, 4)),
+        const SizedBox(
+          width: 2,
+        ),
+        custom(content.substring(5, 7)),
+        const SizedBox(
+          width: 2,
+        ),
+        custom(content.substring(8, 10)),
       ],
     );
   }
-  Widget customTextHour(String content){
+
+  Widget customTextHour(String content) {
     custom(String st) => Container(
-      height: 32,
-      width: 33,
-      alignment: Alignment.center,
-      child: Text(
-        st,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style:  AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w500),
-      ),
-    );
+          height: 32,
+          width: 33,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
 
     return Row(
       children: [
-        custom(content.substring(0,2)),
-        const SizedBox(width: 8,),
-        Text(':',style: AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w700),),
-        const SizedBox(width: 8,),
-        custom(content.substring(3,5)),
+        custom(content.substring(0, 2)),
+        const SizedBox(
+          width: 8,
+        ),
+        Text(
+          ':',
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        custom(content.substring(3, 5)),
       ],
     );
   }
@@ -302,9 +310,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: customTextDate(DateFormat('yyyy/MM/dd')
-                                          .format(editRecordStore!.editingDayTime!)),
-
+                                      child: customTextDate(
+                                          DateFormat('yyyy/MM/dd').format(
+                                              editRecordStore!
+                                                  .editingDayTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -316,14 +325,14 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 9),
+                                          horizontal: 13, vertical: 9),
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: customTextHour(DateFormat('HH:mm')
-                                          .format(editRecordStore!.editingHourTime!)),
-
+                                      child: customTextHour(DateFormat('HH:mm').format(
+                                              editRecordStore!
+                                                  .editingHourTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -740,6 +749,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
 
 class StatusWidget extends StatefulWidget {
   EditRecordStore? editRecordStore;
+
   StatusWidget({super.key, this.editRecordStore});
 
   @override
@@ -987,6 +997,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     "asleep"
   ];
   bool showDropdown = false;
+
   String? getTitle(String? value) {
     return AppLocalizations.of(context)!.getTranslate('${value}');
   }
