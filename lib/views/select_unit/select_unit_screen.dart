@@ -126,10 +126,11 @@ class _SelectUnitState extends State<SelectUnit> {
                 .top + 7,
             child: InkWell(
               onTap: () {
-                sugarInfoStore!.saveIsSwapedToMol(isMol!);
-                sugarInfoStore!.setSwapStatusToMol(isMol);
+                // sugarInfoStore!.saveIsSwapedToMol(isMol!);
+                // sugarInfoStore!.setSwapStatusToMol(isMol);
+                sugarInfoStore!.setTempChooseUnitMol(isMol!);
                 if (isMol == true) {
-                  sugarInfoStore!.divisionListRootCondition();
+                 
                   Navigator.of(context).pushNamed(Routes.goal_mmol_screen);
                 } else if (isMol == false)
                   Navigator.of(context).pushNamed(Routes.goal_mg_screen);
