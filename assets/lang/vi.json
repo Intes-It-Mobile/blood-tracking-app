@@ -222,7 +222,7 @@
     "how_old_are_you": "Bạn bao nhiêu tuổi?",
     "what_is_your_weight": "Cân nặng của bạn là bao nhiêu?",
     "How_tall_are_you": "Bạn cao bao nhiêu?",
-    "declare_your_goal": "Tuyên bố mục tiêu của bạn",
+    "declare_your_goal": "Mục tiêu của bạn",
     "blood_sugar_txt": "Đường huyết",
     "heart_rate_txt": "Nhịp tim",
     "goal_far_txt": "Bạn vẫn còn cách xa mục tiêu của mình. Hãy cải thiện lượng đường trong máu!",
@@ -236,5 +236,8 @@
     "try_again": "Thử lại",
     "fast": "Nhanh",
     "slow": "Chậm",
-    "error_goal_value":"Giá trị phải nằm trong khoảng 1-35 mmol/L"
+    "error_goal_value":"Giá trị phải nằm trong khoảng 1-35 mmol/L",
+    "goal": "Mục tiêu",
+    "male": "Nam",
+    "female": "Nữ"
 }

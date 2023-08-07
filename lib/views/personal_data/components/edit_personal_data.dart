@@ -80,7 +80,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                       borderRadius: BorderRadius.circular(22)),
                   child: Center(
                     child: Text(
-                      ListInformation().information[index].gender.toString(),
+                      "${ListInformation().information[index].gender.toString()}",
                       style: AppTheme.Headline20Text.copyWith(
                         fontWeight: FontWeight.w600,
                         color: index == selectedIndex
@@ -441,11 +441,12 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
         Text(
           '${AppLocalizations.of(context)!.getTranslate('How_tall_are_you')}',
           style: AppTheme.edit20Text,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
           height: 180,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

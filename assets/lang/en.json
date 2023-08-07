@@ -156,5 +156,8 @@
   "try_again": "Try again",
   "fast": "Fast",
   "slow": "Slow",
-  "error_goal_value":"Value must be between 1-35 mmol/L"
+  "error_goal_value":"Value must be between 1-35 mmol/L",
+  "goal": "Goal",
+  "male": "Male",
+  "female": "Female"
 }

@@ -130,7 +130,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Gender",
+                                    "${AppLocalizations.of(context)!.getTranslate('gender')}",
                                     style: AppTheme.Headline16Text.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
@@ -176,7 +176,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Age",
+                                    "${AppLocalizations.of(context)!.getTranslate('age')}",
                                     style: AppTheme.Headline16Text.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
@@ -229,7 +229,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Weight',
+                                    '${AppLocalizations.of(context)!.getTranslate('weight')}',
                                     style: AppTheme.Headline16Text.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
@@ -290,7 +290,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Height",
+                                    "${AppLocalizations.of(context)!.getTranslate('height')}",
                                     style: AppTheme.Headline16Text.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
@@ -362,7 +362,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Goal',
+                                    '${AppLocalizations.of(context)!.getTranslate('goal')}',
                                     style: AppTheme.Headline16Text.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
@@ -419,7 +419,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Height",
+                                  "${AppLocalizations.of(context)!.getTranslate('height')}",
                                   style: AppTheme.appBodyTextStyle.copyWith(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,

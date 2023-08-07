@@ -33,6 +33,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   int checkFingerTime = 0;
   bool checkFinger = false;
   bool loadFinger = false;
+  bool start = false;
 
   @override
   void initState() {
@@ -77,9 +78,16 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     });
   }
 
+  bool outRunTime = false;
+
   Future<void> checkHeartBeat() async {
     DateTime dateOld = DateTime.now();
+    start = true;
     Timer.periodic(const Duration(milliseconds: 700), (timer) async {
+      if (outRunTime){
+        timer.cancel();
+        outRunTime = true;
+      }
       DateTime dateNew = DateTime.now();
       Duration diff = dateNew.difference(dateOld);
       bool checkFingerOld = checkFinger;
@@ -89,6 +97,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         checkFingerTime += diff.inMilliseconds;
         if (checkFingerTime>20000){
           timer.cancel();
+          start = false;
           if (cameraController.value.isRecordingVideo) {
             await cameraController.stopVideoRecording();
           }
@@ -105,12 +114,17 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         time += diff.inMilliseconds;
         if (time> 45000) {
           timer.cancel();
+          start = false;
           if (cameraController.value.isRecordingVideo) {
             await cameraController.stopVideoRecording();
           }
           cameraIsInitialize = false;
           await cameraController.setFlashMode(FlashMode.off);
           int re = bmp;
+          Navigator.of(context).pushNamed(
+            Routes.new_record_heart_rate,
+            arguments: HeartRateInfo(date: DateTime.now(), indicator: re),
+          );
           setState(() {
             checkTap = 0;
             time = 0;
@@ -118,10 +132,6 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
             checkFingerTime = 0;
             checkFinger = false;
           });
-          Navigator.of(context).pushNamed(
-            Routes.new_record_heart_rate,
-            arguments: HeartRateInfo(date: DateTime.now(), indicator: re),
-          );
           return;
         } else {
           if (bmp==0) bmp = 60 + Random().nextInt(20) + 1;
@@ -212,9 +222,12 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     return AppBar(
       toolbarHeight: 56,
       backgroundColor: AppColors.AppColor2,
-      title: Text(
-        AppLocalizations.of(context).getTranslate("heart_rate_tracking"),
-        style: AppTheme.appBarTextStyle,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 22),
+        child: Text(
+          AppLocalizations.of(context).getTranslate("heart_rate_tracking"),
+          style: AppTheme.appBarTextStyle,
+        ),
       ),
       actions: [
         _buildButtonHeartRateHistory()
@@ -224,7 +237,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
 
   Widget _buildButtonHeartRateHistory() {
     return InkWell(
-      onTap: () {
+      onTap: () async{
+        if (start) await reset();
         Navigator.of(context).pushNamed(Routes.history_heart_rate);
       },
       child: Container(
@@ -387,7 +401,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         AppLocalizations.of(context).getTranslate("tap_to_measure"),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 12, fontWeight: FontWeight.w600),
+        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
       );
     }
     if (checkTap == 1) {
@@ -395,20 +409,21 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         AppLocalizations.of(context).getTranslate("measuring"),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 12, fontWeight: FontWeight.w600),
+        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
       );
     }
     return Text(
       AppLocalizations.of(context).getTranslate("result"),
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 12, fontWeight: FontWeight.w600),
+      style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
     );
   }
 
   Widget _buildButtonNewRecord() {
     return InkWell(
-      onTap: () {
+      onTap: () async{
+        if (start) await reset();
         setState(() {
           checkTap = 0;
           time = 0;
@@ -552,5 +567,27 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         ),
       )
     );
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    if (start) reset();
+  }
+
+  Future<void> reset() async{
+    outRunTime = true;
+    if (cameraController.value.isRecordingVideo) {
+      await cameraController.stopVideoRecording();
+    }
+    cameraIsInitialize = false;
+    await cameraController.setFlashMode(FlashMode.off);
+    setState(() {
+      checkTap = 0;
+      time = 0;
+      bmp = 0;
+      checkFingerTime = 0;
+      checkFinger = false;
+    });
   }
 }
