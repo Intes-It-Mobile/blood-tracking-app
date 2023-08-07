@@ -158,5 +158,7 @@
   "error_goal_value": "数值必须在 1-35 mmol/L 之间",
   "goal": "目標",
   "male": "男性",
-  "female": "女性"
+  "female": "女性",
+  "send_feedback_success": "您的反馈已发送！"
+
 }

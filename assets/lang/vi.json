@@ -239,5 +239,6 @@
     "error_goal_value":"Giá trị phải nằm trong khoảng 1-35 mmol/L",
     "goal": "Mục tiêu",
     "male": "Nam",
-    "female": "Nữ"
+    "female": "Nữ",
+    "send_feedback_success":"Phản hồi của bạn đã được gửi!"
 }

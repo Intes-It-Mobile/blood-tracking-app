@@ -162,6 +162,8 @@
 
   "goal": "Meta",
   "male": "Masculino",
-  "female": "Femenino"
+  "female": "Femenino",
+  "send_feedback_success": "¡Su respuesta ha sido enviada!"
+
 
 }

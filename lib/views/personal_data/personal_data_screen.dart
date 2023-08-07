@@ -50,6 +50,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -340,15 +341,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () {
-                          if (sugarInfoStore!.isSwapedToMol == true) {
-                            Components().showDialogGoalMol(context);
-                          } else {
-                            Components().showDialogGoalMg(context);
-                          }
+                          onTap: () {
+                            if (sugarInfoStore!.isSwapedToMol == true) {
+                              Components().showDialogGoalMol(context);
+                            } else {
+                              Components().showDialogGoalMg(context);
+                            }
                         },
                         child: Container(
-                          height: 108,
+                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -369,11 +370,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     ),
                                   ),
                                   const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditRange),
+                                  SvgPicture.asset(Assets.iconEditPen),
                                 ],
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 15,
                               ),
                               Observer(builder: (_) {
                                 return Row(

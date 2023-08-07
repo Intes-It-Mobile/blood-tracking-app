@@ -156,5 +156,7 @@
     "slow": "en retard",
     "goal": "But",
     "male": "Mâle",
-    "female": "Femme"
+    "female": "Femme",
+    "send_feedback_success": "Votre commentaire a été envoyé !"
+
 }
