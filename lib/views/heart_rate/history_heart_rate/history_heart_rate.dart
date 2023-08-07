@@ -33,24 +33,24 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
     return Scaffold(
       appBar: _buildAppBarCustom(),
       body:  FutureBuilder(
-        future:  loadData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          if (snapshot.hasData) {
-            history = snapshot.data;
-            return _buildBody();
-          }
-          return Container();
-        },
-      ),
+              future:  loadData(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (snapshot.hasData) {
+                  history = snapshot.data;
+                  return _buildBody();
+                }
+                return Container();
+              },
+            ),
     );
   }
 
   AppBar _buildAppBarCustom(){ 
     return AppBar(
-      toolbarHeight: 56,
+      toolbarHeight: 68,
       backgroundColor: AppColors.AppColor2,
       title: Text(
         AppLocalizations.of(context).getTranslate("record_history"),
@@ -82,8 +82,8 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
       margin: EdgeInsets.fromLTRB(27, 16, 27, 16),
       child: GridView.count(
         childAspectRatio: 1.5,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 12,
         crossAxisCount: 2,
         children: List.generate(history.length, (index) {
             return HistoryHeartRateRecord(
