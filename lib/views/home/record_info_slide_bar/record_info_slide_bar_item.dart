@@ -97,18 +97,14 @@ class _RecordInfoSliderItemWidgetState
                 arguments: {"record_id": widget.id});
           },
           child: Container(
-            width: (MediaQuery.of(context).size.width / 350) * 144,
-            // padding: EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-            padding: EdgeInsets.fromLTRB(7, 5, 9, 5),
-            margin: EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(5),
                 ),
                 color: AppColors.AppColor3),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -128,9 +124,9 @@ class _RecordInfoSliderItemWidgetState
                         child: widget.sugarAmount.toString().length > 7
                             ? Text(
                                 "${getFormattedValue(widget.sugarAmount.toString())}",
-                                style: AppTheme.appBodyTextStyle26)
+                                style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32))
                             : Text("${widget.sugarAmount}",
-                                style: AppTheme.appBodyTextStyle26),
+                                style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32)),
                       ),
                       Text(
                           "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
@@ -141,7 +137,7 @@ class _RecordInfoSliderItemWidgetState
                 Container(
                   child: Row(
                     children: [
-                      Text("${AppLocalizations.of(context)!.getTranslate('status')}" + ":",
+                      Text("${AppLocalizations.of(context)!.getTranslate('status')}" + ": ",
                           style: AppTheme.appBodyTextStyle
                               .copyWith(color: Colors.black)),
                       Text(
@@ -159,7 +155,7 @@ class _RecordInfoSliderItemWidgetState
         ),
         Positioned(
           top: 8,
-          right: 20,
+          right: 8,
           child: SvgPicture.asset(Assets.iconEdit),
         ),
       ],

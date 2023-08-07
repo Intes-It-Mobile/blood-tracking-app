@@ -223,7 +223,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       toolbarHeight: 56,
       backgroundColor: AppColors.AppColor2,
       title: Padding(
-        padding: const EdgeInsets.only(left: 22),
+        padding: const EdgeInsets.only(left: 10),
         child: Text(
           AppLocalizations.of(context).getTranslate("heart_rate_tracking"),
           style: AppTheme.appBarTextStyle,
@@ -288,51 +288,49 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     );
   }
 
-  Container _buildButtonHeartRate() {
-    return Container(
-      height: 181,
-      width: 181,
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: AppColors.AppColor3,
-        borderRadius: BorderRadius.circular(100),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromRGBO(102, 136, 255, 0.70),
-            blurRadius: 40,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            child: (checkTap == 0)
-                ? Image.asset(
-                    Assets.image_heart,
-                    height: 91,
-                    width: 91,
-                    fit: BoxFit.contain,
-                  )
-                : (checkTap == 1 || checkTap == 2)
-                    ? _buildRunHeartRate()
-                    : Container(),
-            onTap: () {
-              if (checkTap == 0) {
-                requestPermission();
-              } else if (checkTap == 1) {
-                null;
-              }
-            },
-          ),
-          Container(
-            width: 110,
-            margin: const EdgeInsets.only(top: 8),
-            child: _buildTextStatus(),
-          )
-        ],
+  Widget _buildButtonHeartRate() {
+    return GestureDetector(
+      onTap: () {
+        if (checkTap == 0) {
+          requestPermission();
+        }
+      },
+      child: Container(
+        height: 181,
+        width: 181,
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: AppColors.AppColor3,
+          borderRadius: BorderRadius.circular(100),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(102, 136, 255, 0.70),
+              blurRadius: 40,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            (checkTap == 0)
+              ? Image.asset(
+                Assets.image_heart,
+                height: 91,
+                width: 91,
+                fit: BoxFit.contain,
+              )
+              : (checkTap == 1 || checkTap == 2)
+                ? _buildRunHeartRate()
+                : Container(),
+            Container(
+              width: 130,
+              margin: const EdgeInsets.only(top: 8),
+              child: _buildTextStatus(),
+            )
+          ],
+        ),
       ),
     );
   }

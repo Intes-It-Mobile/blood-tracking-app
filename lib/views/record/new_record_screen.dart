@@ -312,47 +312,42 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           color: AppColors.AppColor4),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _showDatePickerDay();
-                    },
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 30),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 9),
-                            decoration: BoxDecoration(
-                                color: AppColors.AppColor3,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: customTextDate(sugarInfoStore!.choosedDayTimeStr != null
-                                ? sugarInfoStore!.choosedDayTimeStr!
-                                : DateFormat('yyyy/MM/dd')
-                                .format(DateTime.now())),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              _showDatePickerHour();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 13, vertical: 9),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.AppColor3,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: customTextHour(sugarInfoStore!.choosedDayHourStr != null
-                                  ? sugarInfoStore!.choosedDayHourStr!
-                                  : DateFormat('HH:mm')
-                                  .format(DateTime.now())),
-                            ),
-                          ),
-                        ],
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerDay();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextDate(sugarInfoStore!.choosedDayTimeStr != null
+                              ? sugarInfoStore!.choosedDayTimeStr!
+                              : DateFormat('yyyy/MM/dd')
+                              .format(DateTime.now())),
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerHour();
+                        },
+                        child: Container(
+                          // padding: const EdgeInsets.symmetric(
+                          //     horizontal: 13, vertical: 9),
+                          decoration: const BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextHour(sugarInfoStore!.choosedDayHourStr != null
+                              ? sugarInfoStore!.choosedDayHourStr!
+                              : DateFormat('HH:mm')
+                              .format(DateTime.now())),
+                        ),
+                      ),
+                    ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
