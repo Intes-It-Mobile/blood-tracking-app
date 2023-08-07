@@ -150,6 +150,62 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     }
   }
 
+  Widget customTextDate(String content){
+    custom(String st) => Container(
+      height: 32,
+      width: 52,
+      alignment: Alignment.center,
+      child: Text(
+        st,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style:  AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w500),
+      ),
+    );
+
+    return Row(
+      children: [
+        custom(content.substring(0,4)),
+        const SizedBox(width: 2,),
+        custom(content.substring(5,7)),
+        const SizedBox(width: 2,),
+        custom(content.substring(8,10)),
+      ],
+    );
+  }
+  Widget customTextHour(String content){
+    custom(String st) => Container(
+      height: 32,
+      width: 33,
+      alignment: Alignment.center,
+      child: Text(
+        st,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style:  AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w500),
+      ),
+    );
+
+    return Row(
+      children: [
+        custom(content.substring(0,2)),
+        const SizedBox(width: 8,),
+        Text(':',style: AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700),),
+        const SizedBox(width: 8,),
+        custom(content.substring(3,5)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     editRecordStore!.errorText != null && editRecordStore!.errorText != ""
@@ -246,22 +302,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              "${DateFormat('yyyy/MM/dd').format(editRecordStore!.editingDayTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      child: customTextDate(DateFormat('yyyy/MM/dd')
+                                          .format(editRecordStore!.editingDayTime!)),
+
                                     ),
                                   )
                                 : Container(),
@@ -278,22 +321,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              "${DateFormat('HH:mm').format(editRecordStore!.editingHourTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      child: customTextHour(DateFormat('HH:mm')
+                                          .format(editRecordStore!.editingHourTime!)),
+
                                     ),
                                   )
                                 : Container(),
