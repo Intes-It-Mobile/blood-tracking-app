@@ -66,7 +66,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
               },
               child: SvgPicture.asset(
                 Assets.iconBack,
-                height: 44,
+                height: 40,
+                width: 40,
+                fit: BoxFit.scaleDown,
               ),
             ),
             Container(

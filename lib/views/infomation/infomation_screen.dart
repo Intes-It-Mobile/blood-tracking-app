@@ -32,12 +32,11 @@ class _InfomationScreenState extends State<InfomationScreen> {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Container(
-                margin: EdgeInsets.only(right: 12),
-                child: SvgPicture.asset(
-                  Assets.iconBack,
-                  height: 44,
-                ),
+              child: SvgPicture.asset(
+                Assets.iconBack,
+                height: 40,
+                width: 40,
+                fit: BoxFit.scaleDown,
               ),
             ),
             Container(

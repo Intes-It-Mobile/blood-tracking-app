@@ -166,6 +166,7 @@ class EditPersonalAge extends StatefulWidget {
 class _EditPersonalAgeState extends State<EditPersonalAge> {
   SugarInfoStore? sugarInfoStore;
   int currentValue = 25;
+  bool? isFirst = true;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
@@ -179,6 +180,12 @@ class _EditPersonalAgeState extends State<EditPersonalAge> {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (isFirst == true) {
+      currentValue = sugarInfoStore!.information!.old!;
+      setState(() {
+        isFirst = false;
+      });
+    }
     return Column(
       children: [
         const SizedBox(
@@ -196,11 +203,12 @@ class _EditPersonalAgeState extends State<EditPersonalAge> {
           child: WheelChooser.integer(
             // controller: controllerWC,
             onValueChanged: (value) {
+              currentValue = value;
               setState(() {
-                int age = controllerWC.initialItem;
-                age = value;
-                sugarInfoStore?.information?.old = age;
-                print("tuổi: ${age}");
+               // int age = controllerWC.initialItem;
+               // age = value;
+                sugarInfoStore?.information?.old = value;
+               // print("tuổi: ${age}");
                 print(
                     "dasdasddas: ${sugarInfoStore?.information?.old?.toInt()}");
               });
@@ -286,6 +294,7 @@ class EditPersonalWeight extends StatefulWidget {
 class _EditPersonalWeightState extends State<EditPersonalWeight> {
   SugarInfoStore? sugarInfoStore;
   int currentValue = 50;
+  bool? isFirst = true;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
@@ -299,6 +308,12 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (isFirst == true) {
+      currentValue = sugarInfoStore!.information!.weight!;
+      setState(() {
+        isFirst = false;
+      });
+    }
     return Column(
       children: [
         const SizedBox(
@@ -322,10 +337,10 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
                 child: WheelChooser.integer(
                   // controller: controllerWC,
                   onValueChanged: (value) {
+                    currentValue = value;
                     setState(() {
-                      int age = controllerWC.initialItem;
-                      age = value;
-                      sugarInfoStore?.information?.weight = age;
+                     // int age = controllerWC.initialItem;
+                      sugarInfoStore?.information?.weight = value;
                     });
                   },
                   maxValue: 115,
@@ -422,10 +437,10 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
   SugarInfoStore? sugarInfoStore;
   int currentValue = 170;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
-
+  bool? isFirst = true;
   @override
   void initState() {
-    controllerWC = FixedExtentScrollController(initialItem: currentValue);
+   // controllerWC = FixedExtentScrollController(initialItem: currentValue);
     super.initState();
   }
 
@@ -434,6 +449,12 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    if (isFirst == true) {
+      currentValue = sugarInfoStore!.information!.tall!;
+      setState(() {
+        isFirst = false;
+      });
+    }
     return Column(
       children: [
         const SizedBox(
@@ -457,14 +478,17 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
                 child: WheelChooser.integer(
                   // controller: controllerWC,
                   onValueChanged: (value) {
+                    currentValue = value;
                     setState(() {
-                      int age = controllerWC.initialItem;
-                      age = value;
-                      sugarInfoStore?.information?.tall = age;
-                      print("tuổi: ${age}");
+                    //  int age = controllerWC.initialItem;
+                    //  age = value;
+                      sugarInfoStore?.information?.tall = value;
+                   //   print("tuổi: ${age}");
                       print(
                           "dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
+
                     });
+
                   },
                   maxValue: 400,
                   minValue: 1,

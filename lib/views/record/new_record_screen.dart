@@ -274,7 +274,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       margin: const EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
