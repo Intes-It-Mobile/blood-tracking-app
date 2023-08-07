@@ -25,9 +25,9 @@ class _EditPersonalDataState extends State<EditPersonalData> {
   @override
   void initState() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
-      if(sugarInfoStore?.information?.gender == "Male"){
+      if(sugarInfoStore?.information?.gender == "male"){
         selectedIndex = 0;
-      }else if(sugarInfoStore?.information?.gender == "Female"){
+      }else if(sugarInfoStore?.information?.gender == "female"){
         selectedIndex = 1;
       }
     super.initState();
@@ -80,7 +80,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                       borderRadius: BorderRadius.circular(22)),
                   child: Center(
                     child: Text(
-                      "${ListInformation().information[index].gender.toString()}",
+                      "${AppLocalizations.of(context)!.getTranslate('${ListInformation().information[index].gender}')}",
                       style: AppTheme.Headline20Text.copyWith(
                         fontWeight: FontWeight.w600,
                         color: index == selectedIndex
@@ -285,7 +285,7 @@ class EditPersonalWeight extends StatefulWidget {
 
 class _EditPersonalWeightState extends State<EditPersonalWeight> {
   SugarInfoStore? sugarInfoStore;
-  int currentValue = 25;
+  int currentValue = 50;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override
@@ -307,6 +307,7 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
         Text(
           '${AppLocalizations.of(context)!.getTranslate('what_is_your_weight')}',
           style: AppTheme.edit20Text,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 15,
@@ -419,7 +420,7 @@ class EditPersonalHeight extends StatefulWidget {
 
 class _EditPersonalHeightState extends State<EditPersonalHeight> {
   SugarInfoStore? sugarInfoStore;
-  int currentValue = 25;
+  int currentValue = 170;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
   @override

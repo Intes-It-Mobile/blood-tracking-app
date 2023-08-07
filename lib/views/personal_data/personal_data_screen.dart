@@ -146,7 +146,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Text(
-                                      '${sugarInfoStore?.information?.gender}',
+                                      '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore?.information?.gender}')}',
                                       style: AppTheme.Headline20Text.copyWith(
                                           color: AppColors.AppColor4,
                                           fontWeight: FontWeight.w500),
@@ -349,7 +349,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             }
                         },
                         child: Container(
-                          height: 108,
+                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(

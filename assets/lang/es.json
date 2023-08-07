@@ -158,8 +158,12 @@
   "try_again": "Intentar de nuevo",
   "fast": "rápidamente",
   "slow":"despacio",
+  "error_goal_value": "El valor debe estar entre 1-35 mmol/L",
+
   "goal": "Meta",
   "male": "Masculino",
-  "female": "Femenino"
+  "female": "Femenino",
+  "send_feedback_success": "¡Su respuesta ha sido enviada!"
+
 
 }

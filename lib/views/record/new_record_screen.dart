@@ -196,6 +196,62 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     super.initState();
   }
 
+  Widget customTextDate(String content){
+    custom(String st) => Container(
+      height: 32,
+      width: 52,
+      alignment: Alignment.center,
+      child: Text(
+        st,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style:  AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w500),
+      ),
+    );
+
+    return Row(
+      children: [
+        custom(content.substring(0,4)),
+        const SizedBox(width: 2,),
+        custom(content.substring(5,7)),
+        const SizedBox(width: 2,),
+        custom(content.substring(8,10)),
+      ],
+    );
+  }
+  Widget customTextHour(String content){
+    custom(String st) => Container(
+      height: 32,
+      width: 33,
+      alignment: Alignment.center,
+      child: Text(
+        st,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style:  AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w500),
+      ),
+    );
+
+    return Row(
+      children: [
+        custom(content.substring(0,2)),
+        const SizedBox(width: 8,),
+        Text(':',style: AppTheme.appBodyTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700),),
+        const SizedBox(width: 8,),
+        custom(content.substring(3,5)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -271,23 +327,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                 color: AppColors.AppColor3,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5))),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    sugarInfoStore!.choosedDayTimeStr != null
-                                        ? sugarInfoStore!.choosedDayTimeStr!
-                                        : DateFormat('yyyy     MM     dd')
-                                            .format(DateTime.now()),
-                                    style: AppTheme.appBodyTextStyle.copyWith(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: customTextDate(sugarInfoStore!.choosedDayTimeStr != null
+                                ? sugarInfoStore!.choosedDayTimeStr!
+                                : DateFormat('yyyy/MM/dd')
+                                .format(DateTime.now())),
                           ),
                           const Spacer(),
                           GestureDetector(
@@ -295,29 +338,16 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               _showDatePickerHour();
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 9),
+                              decoration: const BoxDecoration(
                                   color: AppColors.AppColor3,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      sugarInfoStore!.choosedDayHourStr != null
-                                          ? sugarInfoStore!.choosedDayHourStr!
-                                          : DateFormat('HH:mm')
-                                              .format(DateTime.now()),
-                                      style: AppTheme.appBodyTextStyle.copyWith(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: customTextHour(sugarInfoStore!.choosedDayHourStr != null
+                                  ? sugarInfoStore!.choosedDayHourStr!
+                                  : DateFormat('HH:mm')
+                                  .format(DateTime.now())),
                             ),
                           ),
                         ],
@@ -997,6 +1027,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       ],
     );
   }
+
 }
 
 class MyDateTimePicker extends StatefulWidget {
