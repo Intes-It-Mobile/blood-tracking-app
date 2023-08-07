@@ -76,10 +76,7 @@ class _GenderScreenState extends State<GenderScreen> {
                                 : Colors.white),
                         child: Center(
                           child: Text(
-                            ListInformation()
-                                .information[index]
-                                .gender
-                                .toString(),
+                            "${AppLocalizations.of(context)!.getTranslate('${ListInformation().information[index].gender}')}",
                             style: AppTheme.Headline20Text.copyWith(fontWeight: FontWeight.w600,color: index == _selectedIndex ? Colors.white : AppColors.AppColor2 ),
                           ),
                         ),

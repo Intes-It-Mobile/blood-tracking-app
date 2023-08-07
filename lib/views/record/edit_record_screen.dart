@@ -315,9 +315,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       _showDatePickerHour();
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 25, vertical: 9),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),

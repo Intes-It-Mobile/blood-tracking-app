@@ -3,10 +3,10 @@ import '../../models/information/information.dart';
 class ListInformation{
   List<Information> information = [
     Information(
-      gender: 'Male',
+      gender: 'male',
     ),
     Information(
-      gender: 'Female',
+      gender: 'female',
     ),
   ];
 }

@@ -25,9 +25,9 @@ class _EditPersonalDataState extends State<EditPersonalData> {
   @override
   void initState() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
-      if(sugarInfoStore?.information?.gender == "Male"){
+      if(sugarInfoStore?.information?.gender == "male"){
         selectedIndex = 0;
-      }else if(sugarInfoStore?.information?.gender == "Female"){
+      }else if(sugarInfoStore?.information?.gender == "female"){
         selectedIndex = 1;
       }
     super.initState();
@@ -80,7 +80,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                       borderRadius: BorderRadius.circular(22)),
                   child: Center(
                     child: Text(
-                      "${ListInformation().information[index].gender.toString()}",
+                      "${AppLocalizations.of(context)!.getTranslate('${ListInformation().information[index].gender}')}",
                       style: AppTheme.Headline20Text.copyWith(
                         fontWeight: FontWeight.w600,
                         color: index == selectedIndex
