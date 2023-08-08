@@ -69,10 +69,10 @@ class _RecordHistoryState extends State<RecordHistory> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-        margin: EdgeInsets.fromLTRB(27, 16, 27, 16),
+        margin: EdgeInsets.fromLTRB(15, 16, 15, 16),
         child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
             ? GridView.count(
-                childAspectRatio: 1.5,
+                childAspectRatio: 1.8,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 12,
                 crossAxisCount: 2,
