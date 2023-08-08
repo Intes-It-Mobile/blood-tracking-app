@@ -82,9 +82,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
             GestureDetector(
               onTap: () {
                 FunctionLanguages(value, context, langCode!);
-
-                print("tangdasdsa: ${appLanguage.appLocal.languageCode}");
-                print("ssssss: ${langCode}");
                 // setState(() {
                 //   langCode = myLocale.toString();
                 //   print('dashdufs: ${myLocale.toString()}');
@@ -120,8 +117,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     _selectedIndex = index;
                   }
                 });
-                print('aaaaaaa: ${langCode}');
-                print('aaaaaaa: $appLanguage');
               },
               child: Container(
                 height: 45,

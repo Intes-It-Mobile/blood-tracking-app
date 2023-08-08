@@ -157,6 +157,7 @@
     "goal": "But",
     "male": "Mâle",
     "female": "Femme",
-    "send_feedback_success": "Votre commentaire a été envoyé !"
+    "send_feedback_success": "Votre commentaire a été envoyé !",
+    "fast": "vite"
 
 }
