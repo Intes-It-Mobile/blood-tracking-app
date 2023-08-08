@@ -40,11 +40,31 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
                 }
                 if (snapshot.hasData) {
                   history = snapshot.data;
+                  if (history.isEmpty)
+                    return noData(context);
                   return _buildBody();
                 }
-                return Container();
+                return noData(context);
               },
             ),
+    );
+  }
+
+  Container noData(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(Assets.history_mpt, width: 146, height: 146),
+          SizedBox(height: 30),
+          Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
+              textAlign: TextAlign.center,
+              style:
+                  AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
+        ],
+      ),
     );
   }
 
