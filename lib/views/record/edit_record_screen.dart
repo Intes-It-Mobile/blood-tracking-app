@@ -120,13 +120,14 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     DateTime day = editRecordStore!.editingDayTime!;
     DatePicker.showDatePicker(
       maxDateTime: DateTime.now(),
-      initialDateTime: DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
+      initialDateTime:
+          DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
         setState(() {
           selectedHour = hour;
-           //sugarInfoStore!.setchoosedDayHour(hour);
+          //sugarInfoStore!.setchoosedDayHour(hour);
           editRecordStore!.setEditedHourTime(hour);
         });
       },
@@ -327,9 +328,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: customTextHour(DateFormat('HH:mm').format(
-                                              editRecordStore!
-                                                  .editingHourTime!)),
+                                      child: customTextHour(DateFormat('HH:mm')
+                                          .format(editRecordStore!
+                                              .editingHourTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -797,17 +798,24 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
-    if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
-            .elementAt(level!)
-            .maxValue ==
-        630) {
-      print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()}");
-      return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+    if (sugarInfoStore!.isSwapedToMol == false) {
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
+        return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+      } else {
+        return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      }
     } else {
-      print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}");
-      return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
+        return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+      } else {
+        return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      }
     }
   }
 

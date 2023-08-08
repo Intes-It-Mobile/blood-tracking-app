@@ -363,8 +363,9 @@ abstract class _SugarInfoStoreBase with Store {
     if (listRecordArrangedByTime!.length == 1) {
       sugarRecordGoal = listRecordArrangedByTime!.first;
       saveSugarRecordGoal(sugarRecordGoal!);
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(Duration(milliseconds: 2500), () {
         checkGoal(listRecordArrangedByTime!.first.sugarAmount!);
+        print("Check Goal");
       });
     }
     Navigator.pushNamedAndRemoveUntil(
@@ -571,6 +572,13 @@ abstract class _SugarInfoStoreBase with Store {
   deleteRecord(int? id) {
     listRecord!.removeWhere((e) => e.id == id);
     saveListRecord(ListRecord(listRecord: listRecord));
+
+    if (listRecordArrangedByTime!.length > 0) {
+      sugarRecordGoal = listRecordArrangedByTime!.first;
+      saveGoalAmountToSharedPreferences();
+    } else {
+      sugarRecordGoal = null;
+    }
   }
 
   @observable
@@ -633,6 +641,10 @@ abstract class _SugarInfoStoreBase with Store {
       Routes.home,
       (route) => false,
     );
+    if (listRecordArrangedByTime!.length > 0) {
+      sugarRecordGoal = listRecordArrangedByTime!.first;
+      saveGoalAmountToSharedPreferences();
+    }
     // checkGoal();
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
@@ -1302,14 +1314,14 @@ abstract class _SugarInfoStoreBase with Store {
     bool found = false;
 
     // Chuyển đổi thời gian của sugarRecordGoal từ chuỗi thành đối tượng DateTime
-    DateTime goalDateTime = DateFormat("yyyy/MM/dd")
+    DateTime goalDateTime = DateFormat("yyyy/MM/dd HH:mm")
         .parse(sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
     // DateTime.parse(
     //     sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
 
     for (int i = 0; i < listRecord.length; i++) {
       // Chuyển đổi thời gian của mỗi record trong listRecord thành đối tượng DateTime
-      DateTime recordDateTime = DateFormat("yyyy/MM/dd")
+      DateTime recordDateTime = DateFormat("yyyy/MM/dd HH:mm")
           .parse(listRecord[i].dayTime! + " " + listRecord[i].hourTime!);
 
       // So sánh thời gian xảy ra của record với thời gian xảy ra của goal
@@ -1333,7 +1345,7 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   bool? tempChooseUnitMol = false;
   @action
-  setTempChooseUnitMol(bool value){
+  setTempChooseUnitMol(bool value) {
     tempChooseUnitMol = value;
   }
 }
