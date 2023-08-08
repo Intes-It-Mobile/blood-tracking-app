@@ -98,6 +98,7 @@ class _RecordInfoSliderItemWidgetState
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+            width: 144,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(5),

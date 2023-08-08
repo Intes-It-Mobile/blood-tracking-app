@@ -56,7 +56,6 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.38,
             width: 300,
             child: SingleChildScrollView(
               child: Column(
@@ -136,8 +135,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      height: 43,
+                      padding: EdgeInsets.symmetric(vertical: 6),
                       margin: const EdgeInsets.only(left: 50, right: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -147,10 +145,14 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                         child: Text(
                           '${AppLocalizations.of(context)!.getTranslate('save_changes_button')}',
                           style: AppTheme.TextIntroline16Text,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                 ],
               ),
             ),

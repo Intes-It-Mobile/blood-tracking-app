@@ -155,7 +155,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   Widget customTextDate(String content) {
     custom(String st) => Container(
           height: 32,
-          width: 52,
+          width: 60,
           alignment: Alignment.center,
           child: Text(
             st,
@@ -169,13 +169,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     return Row(
       children: [
         custom(content.substring(0, 4)),
-        const SizedBox(
-          width: 2,
-        ),
         custom(content.substring(5, 7)),
-        const SizedBox(
-          width: 2,
-        ),
         custom(content.substring(8, 10)),
       ],
     );
@@ -184,7 +178,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   Widget customTextHour(String content) {
     custom(String st) => Container(
           height: 32,
-          width: 33,
+          width: 60,
           alignment: Alignment.center,
           child: Text(
             st,
@@ -198,16 +192,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     return Row(
       children: [
         custom(content.substring(0, 2)),
-        const SizedBox(
-          width: 8,
-        ),
         Text(
           ':',
           style: AppTheme.appBodyTextStyle.copyWith(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(
-          width: 8,
         ),
         custom(content.substring(3, 5)),
       ],
