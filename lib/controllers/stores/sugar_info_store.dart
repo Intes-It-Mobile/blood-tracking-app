@@ -501,14 +501,19 @@ abstract class _SugarInfoStoreBase with Store {
     var sheet = excel['Sheet1'];
 
     // Assign column names
-    sheet.cell(CellIndex.indexByString("A1")).value = "${AppLocalizations.of(context).getTranslate('date')}";
-    sheet.cell(CellIndex.indexByString("B1")).value = "${AppLocalizations.of(context).getTranslate('time')}";
-    sheet.cell(CellIndex.indexByString("C1")).value =
-        isSwapedToMol == true ? "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mol')}" : "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mg')}";
+    sheet.cell(CellIndex.indexByString("A1")).value =
+        "${AppLocalizations.of(context).getTranslate('date')}";
+    sheet.cell(CellIndex.indexByString("B1")).value =
+        "${AppLocalizations.of(context).getTranslate('time')}";
+    sheet.cell(CellIndex.indexByString("C1")).value = isSwapedToMol == true
+        ? "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mol')}"
+        : "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mg')}";
 
     sheet.setColWidth(2, 25);
-    sheet.cell(CellIndex.indexByString("D1")).value = "${AppLocalizations.of(context).getTranslate('condition')}" ;
-    sheet.cell(CellIndex.indexByString("E1")).value = "${AppLocalizations.of(context).getTranslate('type')}" ;
+    sheet.cell(CellIndex.indexByString("D1")).value =
+        "${AppLocalizations.of(context).getTranslate('condition')}";
+    sheet.cell(CellIndex.indexByString("E1")).value =
+        "${AppLocalizations.of(context).getTranslate('type')}";
 
     // Write data to each column
     for (int i = 0; i < jsonData.length; i++) {
@@ -1096,16 +1101,70 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  setNewRootCondition(int editConditionId) {
+  setNewRootCondition(int editConditionId, BuildContext context) {
     adjustMinMaxValues(tempConditionDisplay);
-    rootSugarInfo!.conditions!
-        .where((e) => e.id == editConditionId)
-        .first
-        .sugarAmount = tempConditionDisplay;
-    // updateMaxValue(rootSugarInfo!.conditions!);
-    saveRootConditionToSharedPreferences(rootSugarInfo!);
-    hasChangedRoot = !hasChangedRoot!;
-    print("id                      ${tempConditionDisplay.first.id}");
+    if (canSave() == true) {
+      rootSugarInfo!.conditions!
+          .where((e) => e.id == editConditionId)
+          .first
+          .sugarAmount = tempConditionDisplay;
+      // updateMaxValue(rootSugarInfo!.conditions!);
+      saveRootConditionToSharedPreferences(rootSugarInfo!);
+      hasChangedRoot = !hasChangedRoot!;
+      print("id                      ${tempConditionDisplay.first.id}");
+      Navigator.of(context).pop();
+    } else {
+      showSnackbarOverlay(context,
+          "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
+    }
+  }
+
+  void showSnackbarOverlay(BuildContext context, String message) async {
+    final overlay = Overlay.of(context);
+    final opacityController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: Duration(milliseconds: 200),
+    );
+    // Create an OverlayEntry for the Snackbar
+    final overlayEntry = OverlayEntry(
+      builder: (context) {
+        return AnimatedBuilder(
+          animation: opacityController,
+          builder: (context, child) {
+            return Opacity(
+              opacity: opacityController.value,
+              child: snackbarContent(message),
+            );
+          },
+        );
+      },
+    );
+
+    overlay.insert(overlayEntry);
+
+    await opacityController.forward();
+    await Future.delayed(Duration(seconds: 2));
+    await opacityController.reverse();
+
+    overlayEntry.remove();
+    opacityController.dispose();
+  }
+
+  Widget snackbarContent(String message) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        margin: EdgeInsets.only(bottom: 65),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          child: Text(
+            message,
+            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> saveRootConditionToSharedPreferences(SugarInfo sugarInfo) async {

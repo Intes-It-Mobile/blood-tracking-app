@@ -1011,6 +1011,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$tempChooseUnitMolAtom =
+      Atom(name: '_SugarInfoStoreBase.tempChooseUnitMol', context: context);
+
+  @override
+  bool? get tempChooseUnitMol {
+    _$tempChooseUnitMolAtom.reportRead();
+    return super.tempChooseUnitMol;
+  }
+
+  @override
+  set tempChooseUnitMol(bool? value) {
+    _$tempChooseUnitMolAtom.reportWrite(value, super.tempChooseUnitMol, () {
+      super.tempChooseUnitMol = value;
+    });
+  }
+
   late final _$getRootSugarInfoAsyncAction =
       AsyncAction('_SugarInfoStoreBase.getRootSugarInfo', context: context);
 
@@ -1560,11 +1576,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setNewRootCondition(int editConditionId) {
+  dynamic setNewRootCondition(int editConditionId, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setNewRootCondition');
     try {
-      return super.setNewRootCondition(editConditionId);
+      return super.setNewRootCondition(editConditionId, context);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1620,6 +1636,17 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         name: '_SugarInfoStoreBase.checkGoal');
     try {
       return super.checkGoal(sugarAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTempChooseUnitMol(bool value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setTempChooseUnitMol');
+    try {
+      return super.setTempChooseUnitMol(value);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1689,6 +1716,7 @@ goalFirstMolValue: ${goalFirstMolValue},
 goalSecondMolValue: ${goalSecondMolValue},
 errorGoalText: ${errorGoalText},
 sugarRecordGoal: ${sugarRecordGoal},
+tempChooseUnitMol: ${tempChooseUnitMol},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

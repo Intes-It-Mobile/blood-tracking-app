@@ -25,6 +25,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
   List<SugarAmount> tempCondition = [];
   EditRangeStore? editRangeStore;
   FocusNode focusNode = FocusNode();
+
   bool? isMol;
   @override
   void didChangeDependencies() {
@@ -130,8 +131,8 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                             "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
                       } else if (sugarInfoStore!.canSave() == true) {
                         sugarInfoStore!
-                            .setNewRootCondition(widget.conditionId!);
-                        Navigator.of(context).pop();
+                            .setNewRootCondition(widget.conditionId!, context);
+                        // Navigator.of(context).pop();
                       }
                     },
                     child: Container(
@@ -193,6 +194,23 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
     opacityController.dispose();
   }
 
+  Widget snackbarContent(String message) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        margin: EdgeInsets.only(bottom: 65),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          child: Text(
+            message,
+            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+    );
+  }
+
   List<Widget> builsListItem() {
     return sugarInfoStore!.tempConditionDisplay.map((e) {
       return EditRangeItem(
@@ -206,21 +224,4 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
       );
     }).toList();
   }
-}
-
-Widget snackbarContent(String message) {
-  return Container(
-    alignment: Alignment.bottomCenter,
-    child: Card(
-      margin: EdgeInsets.only(bottom: 65),
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        child: Text(
-          message,
-          style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
-        ),
-      ),
-    ),
-  );
 }
