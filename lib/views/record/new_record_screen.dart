@@ -226,6 +226,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     custom(String st) => Container(
       height: 32,
       width: 33,
+
       alignment: Alignment.center,
       child: Text(
         st,
@@ -324,7 +325,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           Container(
                             margin: EdgeInsets.only(right: 30),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 9),
+                                horizontal: 15, ),
                             decoration: BoxDecoration(
                                 color: AppColors.AppColor3,
                                 borderRadius:
@@ -341,7 +342,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 13, vertical: 9),
+                                  horizontal: 13, ),
                               decoration: const BoxDecoration(
                                   color: AppColors.AppColor3,
                                   borderRadius:
@@ -388,7 +389,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                       Container(
                         padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: AppColors.AppColor3,
                           borderRadius: BorderRadius.all(
                             Radius.circular(5),
@@ -398,8 +399,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(5),
                                   ),

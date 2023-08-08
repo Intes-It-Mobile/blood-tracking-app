@@ -307,7 +307,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     child: Container(
                                       margin: const EdgeInsets.only(right: 30),
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 9),
+                                          horizontal: 15,),
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
@@ -327,7 +327,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 13, vertical: 9),
+                                          horizontal: 13, ),
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
