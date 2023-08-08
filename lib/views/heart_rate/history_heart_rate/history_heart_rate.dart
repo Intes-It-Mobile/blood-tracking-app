@@ -36,7 +36,7 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
               future:  loadData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 if (snapshot.hasData) {
                   history = snapshot.data;
@@ -58,7 +58,7 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(Assets.history_mpt, width: 146, height: 146),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
               textAlign: TextAlign.center,
               style:
@@ -99,9 +99,9 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
   Widget _buildBody(){
     history.sort((a, b) => b.date!.compareTo(a.date!));
     return Container(
-      margin: EdgeInsets.fromLTRB(27, 16, 27, 16),
+      margin: const EdgeInsets.fromLTRB(15, 16, 15, 16),
       child: GridView.count(
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.8,
         mainAxisSpacing: 16,
         crossAxisSpacing: 12,
         crossAxisCount: 2,

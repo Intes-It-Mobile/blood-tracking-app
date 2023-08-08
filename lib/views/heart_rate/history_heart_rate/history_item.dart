@@ -116,22 +116,25 @@ class HistoryHeartRateRecord extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 2),
-        Text(
-          info.indicator! > 100
-            ? AppLocalizations.of(context).getTranslate("fast")
-            : info.indicator! > 60
-              ? AppLocalizations.of(context).getTranslate("normal")
-              : AppLocalizations.of(context).getTranslate("slow"),
-          style: TextStyle(
-            fontSize: TextSizeConfig.getAdjustedFontSize(12),
-            fontFamily: FontFamily.IBMPlexSans,
-            fontWeight: FontWeight.w700,
-            fontStyle: FontStyle.normal,
-            color: info.indicator! > 100
-                      ? AppColors.DiabetesStt
-                      : info.indicator! > 60
-                        ? AppColors.NormalStt
-                        : AppColors.LowStt,
+        Expanded(
+          child: Text(
+            info.indicator! > 100
+              ? AppLocalizations.of(context).getTranslate("fast")
+              : info.indicator! > 60
+                ? AppLocalizations.of(context).getTranslate("normal")
+                : AppLocalizations.of(context).getTranslate("slow"),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: TextSizeConfig.getAdjustedFontSize(12),
+              fontFamily: FontFamily.IBMPlexSans,
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal,
+              color: info.indicator! > 100
+                        ? AppColors.DiabetesStt
+                        : info.indicator! > 60
+                          ? AppColors.NormalStt
+                          : AppColors.LowStt,
+            ),
           ),
         )
       ],

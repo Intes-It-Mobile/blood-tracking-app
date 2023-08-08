@@ -419,8 +419,13 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   }
 
   Widget _buildButtonNewRecord() {
-    return InkWell(
-      onTap: () async{
+    return Container(
+      height: 36,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      margin: const EdgeInsets.only(top: 24),
+      decoration: BoxDecoration(color: AppColors.AppColor4, borderRadius: BorderRadius.circular(5)),
+      child: InkWell(
+        onTap: () async{
         if (start) await reset();
         setState(() {
           checkTap = 0;
@@ -432,22 +437,17 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           arguments: HeartRateInfo(date: DateTime.now(), indicator: 70),
         );
       },
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-        margin: const EdgeInsets.only(top: 24),
-        decoration: BoxDecoration(color: AppColors.AppColor4, borderRadius: BorderRadius.circular(5)),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              AppLocalizations.of(context).getTranslate("new_record"),
-              style: TextStyle(color: Colors.white, fontFamily: FontFamily.IBMPlexSans, fontStyle: FontStyle.normal, fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
-            ),
-            const SizedBox(width: 8),
-            SvgPicture.asset(Assets.iconEditBtn)
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            AppLocalizations.of(context).getTranslate("new_record"),
+            style: TextStyle(color: Colors.white, fontFamily: FontFamily.IBMPlexSans, fontStyle: FontStyle.normal, fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
+          ),
+          const SizedBox(width: 8),
+          SvgPicture.asset(Assets.iconEditBtn)
+        ],
+      ),
       ),
     );
   }
