@@ -1231,7 +1231,7 @@ abstract class _SugarInfoStoreBase with Store {
           return showDiaLogFarGoal(homeScreenContext!);
         case <= 20 && > 1:
           return showDiaLogNearlyGoal(homeScreenContext!);
-        case < 1:
+        case <= 1:
           return showDiaLogReachGoal(homeScreenContext!);
 
         default:
@@ -1243,7 +1243,7 @@ abstract class _SugarInfoStoreBase with Store {
           return showDiaLogFarGoal(homeScreenContext!);
         case <= 20 / 18 && > 1 / 18:
           return showDiaLogNearlyGoal(homeScreenContext!);
-        case < 1 / 18:
+        case <= 1 / 18:
           return showDiaLogReachGoal(homeScreenContext!);
 
         default:
