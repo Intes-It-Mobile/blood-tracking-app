@@ -89,77 +89,83 @@ class _RecordInfoSliderItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(Routes.edit_record,
-                arguments: {"record_id": widget.id});
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-            width: 144,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-                color: AppColors.AppColor3),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Text(
-                    "${widget.dayTime}   ${widget.hourTime}",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTheme.timeText,
+    return Container(
+      width: 154,
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.edit_record,
+                  arguments: {"record_id": widget.id});
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              width: (MediaQuery.of(context).size.width-42)/2,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 7),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        child: widget.sugarAmount.toString().length > 7
-                            ? Text(
-                                "${getFormattedValue(widget.sugarAmount.toString())}",
-                                style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32))
-                            : Text("${widget.sugarAmount}",
-                                style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32)),
-                      ),
-                      Text(
-                          "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
-                          style: AppTheme.appBodyTextStyle),
-                    ],
+                  color: AppColors.AppColor3),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      "${widget.dayTime}   ${widget.hourTime}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTheme.timeText,
+                    ),
                   ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      Text("${AppLocalizations.of(context)!.getTranslate('status')}" + ": ",
-                          style: AppTheme.appBodyTextStyle
-                              .copyWith(color: Colors.black)),
-                      Text(
-                        "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
-                        // "abd",
-                        style: AppTheme.statusTxt
-                            .copyWith(color: SttTextColor(widget.status)),
-                      ),
-                    ],
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 7),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          child: widget.sugarAmount.toString().length > 7
+                              ? Text(
+                                  "${getFormattedValue(widget.sugarAmount.toString())}",
+                                  style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32))
+                              : Text("${widget.sugarAmount}",
+                                  style: AppTheme.appBodyTextStyle26.copyWith(fontSize: 32)),
+                        ),
+                        Text(
+                            "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
+                            style: AppTheme.appBodyTextStyle),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  Container(
+                    child: Row(
+                      children: [
+                        Text("${AppLocalizations.of(context)!.getTranslate('status')}" + ": ",
+                            style: AppTheme.appBodyTextStyle
+                                .copyWith(color: Colors.black)),
+                        Expanded(
+                          child: Text(
+                            "${AppLocalizations.of(context)!.getTranslate('${widget.status}')}",
+                            // "abd",
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTheme.statusTxt
+                                .copyWith(color: SttTextColor(widget.status)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned(
-          top: 8,
-          right: 8,
-          child: SvgPicture.asset(Assets.iconEdit),
-        ),
-      ],
+          Positioned(
+            top: 8,
+            right: 8,
+            child: SvgPicture.asset(Assets.iconEdit),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -161,17 +161,20 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
         ? Container()
         : Container(
           padding: EdgeInsets.symmetric(horizontal: 25),
-          width: 145,
           height: 36,
           decoration: BoxDecoration(
             color: AppColors.AppColor4,
             borderRadius: BorderRadius.circular(5)
           ),
-          alignment: Alignment.center,
-          child: Text(
-            AppLocalizations.of(context).getTranslate("save_record"),
-            textAlign: TextAlign.center,
-            style: AppTheme.BtnText.copyWith(fontWeight: FontWeight.w700)
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context).getTranslate("save_record"),
+                textAlign: TextAlign.center,
+                style: AppTheme.BtnText.copyWith(fontWeight: FontWeight.w700)
+              ),
+            ],
           ),
         )
       ),
