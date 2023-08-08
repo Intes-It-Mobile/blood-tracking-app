@@ -240,5 +240,10 @@
     "goal": "Mục tiêu",
     "male": "Nam",
     "female": "Nữ",
-    "send_feedback_success":"Phản hồi của bạn đã được gửi!"
+    "send_feedback_success":"Phản hồi của bạn đã được gửi!",
+    "date": "Ngày",
+    "time": "Giờ",
+    "blood_tlt_excel_mol": "Đường trong máu (mmol/L)",
+    "blood_tlt_excel_mg": "Đường trong máu (mg/dL)",
+    "type": "Loại"
 }

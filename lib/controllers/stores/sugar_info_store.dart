@@ -501,14 +501,14 @@ abstract class _SugarInfoStoreBase with Store {
     var sheet = excel['Sheet1'];
 
     // Assign column names
-    sheet.cell(CellIndex.indexByString("A1")).value = "Date";
-    sheet.cell(CellIndex.indexByString("B1")).value = "Time";
+    sheet.cell(CellIndex.indexByString("A1")).value = "${AppLocalizations.of(context).getTranslate('date')}";
+    sheet.cell(CellIndex.indexByString("B1")).value = "${AppLocalizations.of(context).getTranslate('time')}";
     sheet.cell(CellIndex.indexByString("C1")).value =
-        isSwapedToMol == true ? "Blood Sugar (mmol/L)" : "Blood Sugar (mg/dL)";
+        isSwapedToMol == true ? "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mol')}" : "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mg')}";
 
     sheet.setColWidth(2, 25);
-    sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
-    sheet.cell(CellIndex.indexByString("E1")).value = "Type";
+    sheet.cell(CellIndex.indexByString("D1")).value = "${AppLocalizations.of(context).getTranslate('condition')}" ;
+    sheet.cell(CellIndex.indexByString("E1")).value = "${AppLocalizations.of(context).getTranslate('type')}" ;
 
     // Write data to each column
     for (int i = 0; i < jsonData.length; i++) {

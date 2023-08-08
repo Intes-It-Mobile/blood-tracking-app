@@ -158,6 +158,11 @@
     "male": "Mâle",
     "female": "Femme",
     "send_feedback_success": "Votre commentaire a été envoyé !",
-    "fast": "vite"
+    "fast": "vite",
+    "date": "Date",
+	"time": "L'heure",
+	"blood_tlt_excel_mol": "Glycémie (mmol/L)",
+	"blood_tlt_excel_mg": "Glycémie (mg/dL)",
+	"type": "Type"
 
 }

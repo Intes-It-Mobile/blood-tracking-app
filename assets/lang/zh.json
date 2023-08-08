@@ -159,6 +159,10 @@
   "goal": "目標",
   "male": "男性",
   "female": "女性",
-  "send_feedback_success": "您的反馈已发送！"
-
+  "send_feedback_success": "您的反馈已发送！",
+  "date": "日期",
+  "time": "时间",
+  "blood_tlt_excel_mol": "血糖（毫摩尔/升）",
+  "blood_tlt_excel_mg": "血糖（毫克/分升）",
+  "type": "类型"
 }

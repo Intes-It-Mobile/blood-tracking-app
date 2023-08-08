@@ -160,5 +160,10 @@
   "goal": "Goal",
   "male": "Male",
   "female": "Female",
-  "send_feedback_success": "Your feedback was sent!"
+  "send_feedback_success": "Your feedback was sent!",
+  "date": "Date",
+  "time": "Time",
+  "blood_tlt_excel_mol": "Blood Sugar (mmol/L)",
+  "blood_tlt_excel_mg": "Blood Sugar (mg/dL)",
+  "type": "Type"
 }
