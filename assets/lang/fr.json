@@ -163,6 +163,7 @@
 	"time": "L'heure",
 	"blood_tlt_excel_mol": "Glycémie (mmol/L)",
 	"blood_tlt_excel_mg": "Glycémie (mg/dL)",
-	"type": "Type"
+	"type": "Type",
+    "errow_heart_rate_input_text": "Veuillez entrer la valeur correcte entre 1 et 120"
 
 }

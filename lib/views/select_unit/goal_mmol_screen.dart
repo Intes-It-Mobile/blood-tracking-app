@@ -140,6 +140,9 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
                 if (sugarInfoStore!.errorGoalText == "") {
                   sugarInfoStore!.divisionListRootCondition();
                   Navigator.of(context).pushNamed(Routes.intro);
+                  sugarInfoStore!.setSwapStatusToMol(true);
+                  sugarInfoStore!
+                      .setGoalAmount(sugarInfoStore!.goalAmount!.amount);
                   sugarInfoStore!.saveGoalAmountToSharedPreferences();
                 }
               },
