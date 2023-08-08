@@ -158,6 +158,7 @@
     "male": "Mâle",
     "female": "Femme",
     "send_feedback_success": "Votre commentaire a été envoyé !",
-    "fast": "vite"
+    "fast": "vite",
+    "errow_heart_rate_input_text": "Veuillez entrer la valeur correcte entre 1 et 120"
 
 }
