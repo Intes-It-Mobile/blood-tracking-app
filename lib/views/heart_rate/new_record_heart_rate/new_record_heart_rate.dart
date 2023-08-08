@@ -29,6 +29,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
   bool checkError = false;
   bool checkEmpty = false;
   String? st = " ";
+  bool back = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +114,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
                 }
                 setState(() {});
               },
+              back: back,
             ),
           ),
           if (checkEmpty || checkError)
@@ -143,6 +145,9 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
           if (!checkError && !checkEmpty) {
             HeartRateStore heartRateStore = HeartRateStore();
             HeartRateInfo? re = await heartRateStore.checkDateTime(date!);
+            setState(() {
+              back = true;
+            });
             if (re == null){
               await _saveRecord();
               showDialog<String>(

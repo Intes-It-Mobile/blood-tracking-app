@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SortHeartRate extends StatefulWidget {
-  SortHeartRate({super.key, required this.indicator, required this.onChangedIndicator});
+  SortHeartRate({super.key, required this.indicator, required this.onChangedIndicator, required this.back});
   int indicator;
   final Function(String?) onChangedIndicator;
+  bool back;
   @override
   State<SortHeartRate> createState() => _SortHeartRateState();
 }
@@ -129,11 +130,12 @@ class _SortHeartRateState extends State<SortHeartRate> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: TextFormField(
+            child: TextField(
               controller: controller,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               cursorColor: AppColors.AppColor2,
+              readOnly: widget.back,
               decoration:
                 const InputDecoration(
                   focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: AppColors.AppColor2)),
