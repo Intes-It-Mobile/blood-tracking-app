@@ -270,7 +270,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       margin: const EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -699,6 +701,7 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
+    if(sugarInfoStore!.isSwapedToMol! ==false){
     if (sugarInfoStore!.chooseCondition!.sugarAmount!
             .elementAt(level!)
             .maxValue ==
@@ -707,6 +710,18 @@ class _StatusWidgetState extends State<StatusWidget> {
     } else {
       return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
+    }
+    else{
+         if (sugarInfoStore!.chooseCondition!.sugarAmount!
+            .elementAt(level!)
+            .maxValue ==
+        35) {
+      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+    } else {
+      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+    }
+    }
+
   }
 
   Widget getLevelText(int level) {

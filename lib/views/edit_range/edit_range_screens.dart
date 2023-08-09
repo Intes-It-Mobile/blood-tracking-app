@@ -77,7 +77,9 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                         margin: const EdgeInsets.only(right: 12),
                         child: SvgPicture.asset(
                           Assets.iconBack,
-                          height: 44,
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
                     ),

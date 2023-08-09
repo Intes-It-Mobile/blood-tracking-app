@@ -363,8 +363,9 @@ abstract class _SugarInfoStoreBase with Store {
     if (listRecordArrangedByTime!.length == 1) {
       sugarRecordGoal = listRecordArrangedByTime!.first;
       saveSugarRecordGoal(sugarRecordGoal!);
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(Duration(milliseconds: 2500), () {
         checkGoal(listRecordArrangedByTime!.first.sugarAmount!);
+        print("Check Goal");
       });
     }
     Navigator.pushNamedAndRemoveUntil(
@@ -500,14 +501,19 @@ abstract class _SugarInfoStoreBase with Store {
     var sheet = excel['Sheet1'];
 
     // Assign column names
-    sheet.cell(CellIndex.indexByString("A1")).value = "Date";
-    sheet.cell(CellIndex.indexByString("B1")).value = "Time";
-    sheet.cell(CellIndex.indexByString("C1")).value =
-        isSwapedToMol == true ? "Blood Sugar (mmol/L)" : "Blood Sugar (mg/dL)";
+    sheet.cell(CellIndex.indexByString("A1")).value =
+        "${AppLocalizations.of(context).getTranslate('date')}";
+    sheet.cell(CellIndex.indexByString("B1")).value =
+        "${AppLocalizations.of(context).getTranslate('time')}";
+    sheet.cell(CellIndex.indexByString("C1")).value = isSwapedToMol == true
+        ? "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mol')}"
+        : "${AppLocalizations.of(context).getTranslate('blood_tlt_excel_mg')}";
 
     sheet.setColWidth(2, 25);
-    sheet.cell(CellIndex.indexByString("D1")).value = "Condition";
-    sheet.cell(CellIndex.indexByString("E1")).value = "Type";
+    sheet.cell(CellIndex.indexByString("D1")).value =
+        "${AppLocalizations.of(context).getTranslate('condition')}";
+    sheet.cell(CellIndex.indexByString("E1")).value =
+        "${AppLocalizations.of(context).getTranslate('type')}";
 
     // Write data to each column
     for (int i = 0; i < jsonData.length; i++) {
@@ -571,6 +577,13 @@ abstract class _SugarInfoStoreBase with Store {
   deleteRecord(int? id) {
     listRecord!.removeWhere((e) => e.id == id);
     saveListRecord(ListRecord(listRecord: listRecord));
+
+    if (listRecordArrangedByTime!.length > 0) {
+      sugarRecordGoal = listRecordArrangedByTime!.first;
+      saveGoalAmountToSharedPreferences();
+    } else {
+      sugarRecordGoal = null;
+    }
   }
 
   @observable
@@ -633,6 +646,10 @@ abstract class _SugarInfoStoreBase with Store {
       Routes.home,
       (route) => false,
     );
+    if (listRecordArrangedByTime!.length > 0) {
+      sugarRecordGoal = listRecordArrangedByTime!.first;
+      saveGoalAmountToSharedPreferences();
+    }
     // checkGoal();
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
@@ -1084,16 +1101,70 @@ abstract class _SugarInfoStoreBase with Store {
   }
 
   @action
-  setNewRootCondition(int editConditionId) {
+  setNewRootCondition(int editConditionId, BuildContext context) {
     adjustMinMaxValues(tempConditionDisplay);
-    rootSugarInfo!.conditions!
-        .where((e) => e.id == editConditionId)
-        .first
-        .sugarAmount = tempConditionDisplay;
-    // updateMaxValue(rootSugarInfo!.conditions!);
-    saveRootConditionToSharedPreferences(rootSugarInfo!);
-    hasChangedRoot = !hasChangedRoot!;
-    print("id                      ${tempConditionDisplay.first.id}");
+    if (canSave() == true) {
+      rootSugarInfo!.conditions!
+          .where((e) => e.id == editConditionId)
+          .first
+          .sugarAmount = tempConditionDisplay;
+      // updateMaxValue(rootSugarInfo!.conditions!);
+      saveRootConditionToSharedPreferences(rootSugarInfo!);
+      hasChangedRoot = !hasChangedRoot!;
+      print("id                      ${tempConditionDisplay.first.id}");
+      Navigator.of(context).pop();
+    } else {
+      showSnackbarOverlay(context,
+          "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
+    }
+  }
+
+  void showSnackbarOverlay(BuildContext context, String message) async {
+    final overlay = Overlay.of(context);
+    final opacityController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: Duration(milliseconds: 200),
+    );
+    // Create an OverlayEntry for the Snackbar
+    final overlayEntry = OverlayEntry(
+      builder: (context) {
+        return AnimatedBuilder(
+          animation: opacityController,
+          builder: (context, child) {
+            return Opacity(
+              opacity: opacityController.value,
+              child: snackbarContent(message),
+            );
+          },
+        );
+      },
+    );
+
+    overlay.insert(overlayEntry);
+
+    await opacityController.forward();
+    await Future.delayed(Duration(seconds: 2));
+    await opacityController.reverse();
+
+    overlayEntry.remove();
+    opacityController.dispose();
+  }
+
+  Widget snackbarContent(String message) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        margin: EdgeInsets.only(bottom: 65),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          child: Text(
+            message,
+            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> saveRootConditionToSharedPreferences(SugarInfo sugarInfo) async {
@@ -1219,7 +1290,7 @@ abstract class _SugarInfoStoreBase with Store {
           return showDiaLogFarGoal(homeScreenContext!);
         case <= 20 && > 1:
           return showDiaLogNearlyGoal(homeScreenContext!);
-        case < 1:
+        case <= 1:
           return showDiaLogReachGoal(homeScreenContext!);
 
         default:
@@ -1231,7 +1302,7 @@ abstract class _SugarInfoStoreBase with Store {
           return showDiaLogFarGoal(homeScreenContext!);
         case <= 20 / 18 && > 1 / 18:
           return showDiaLogNearlyGoal(homeScreenContext!);
-        case < 1 / 18:
+        case <= 1 / 18:
           return showDiaLogReachGoal(homeScreenContext!);
 
         default:
@@ -1302,14 +1373,14 @@ abstract class _SugarInfoStoreBase with Store {
     bool found = false;
 
     // Chuyển đổi thời gian của sugarRecordGoal từ chuỗi thành đối tượng DateTime
-    DateTime goalDateTime = DateFormat("yyyy/MM/dd")
+    DateTime goalDateTime = DateFormat("yyyy/MM/dd HH:mm")
         .parse(sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
     // DateTime.parse(
     //     sugarRecordGoal.dayTime! + " " + sugarRecordGoal.hourTime!);
 
     for (int i = 0; i < listRecord.length; i++) {
       // Chuyển đổi thời gian của mỗi record trong listRecord thành đối tượng DateTime
-      DateTime recordDateTime = DateFormat("yyyy/MM/dd")
+      DateTime recordDateTime = DateFormat("yyyy/MM/dd HH:mm")
           .parse(listRecord[i].dayTime! + " " + listRecord[i].hourTime!);
 
       // So sánh thời gian xảy ra của record với thời gian xảy ra của goal
@@ -1328,5 +1399,12 @@ abstract class _SugarInfoStoreBase with Store {
     } else {
       print("no");
     }
+  }
+
+  @observable
+  bool? tempChooseUnitMol = false;
+  @action
+  setTempChooseUnitMol(bool value) {
+    tempChooseUnitMol = value;
   }
 }

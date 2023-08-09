@@ -56,8 +56,8 @@
     "email_label_txt": "Veuillez laisser votre adresse e-mail afin que nous puissions vous recontacter si nécessaire.",
     "feedback_write_dwn": "Veuillez laisser votre feedback (*)",
     "feedback_write_dwn_label_txt": "Veuillez écrire au moins 6 caractères pour envoyer.",
-    "feedback_help": "Votre feedback nous aidera à nous améliorer.",
-    "feedback_send_btn": "Envoyer votre feedback.",
+    "feedback_help": "Votre feedback nous aidera à nous améliorer",
+    "feedback_send_btn": "Envoyer votre feedback",
     "date_and_time": "Date & heure",
     "condition": "Condition",
     "sugar amount": "Quantité de sucre",
@@ -159,6 +159,11 @@
     "female": "Femme",
     "send_feedback_success": "Votre commentaire a été envoyé !",
     "fast": "Vite",
+    "date": "Date",
+	"time": "L'heure",
+	"blood_tlt_excel_mol": "Glycémie (mmol/L)",
+	"blood_tlt_excel_mg": "Glycémie (mg/dL)",
+	"type": "Type",
     "errow_heart_rate_input_text": "Veuillez entrer la valeur correcte entre 1 et 120"
 
 }

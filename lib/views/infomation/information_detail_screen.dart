@@ -55,7 +55,9 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),

@@ -162,7 +162,12 @@
   "goal": "Meta",
   "male": "Masculino",
   "female": "Femenino",
-  "send_feedback_success": "¡Su respuesta ha sido enviada!"
+  "send_feedback_success": "¡Su respuesta ha sido enviada!",
+  "date": "Fecha",
+	"time": "Tiempo",
+	"blood_tlt_excel_mol": "Azúcar en sangre (mmol/L)",
+	"blood_tlt_excel_mg": "Azúcar en sangre (mg/dL)",
+	"type": "Tipo"
 
 
 }
