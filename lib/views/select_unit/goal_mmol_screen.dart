@@ -134,11 +134,10 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
                     .saveIsSwapedToMol(sugarInfoStore!.tempChooseUnitMol!);
                 sugarInfoStore!
                     .setSwapStatusToMol(sugarInfoStore!.tempChooseUnitMol!);
-
                 sugarInfoStore!.checkValidateGoalMolAmount(
                     sugarInfoStore!.goalAmount!.amount!);
                 if (sugarInfoStore!.errorGoalText == "") {
-                  sugarInfoStore!.divisionListRootCondition();
+                  // sugarInfoStore!.divisionListRootCondition();
                   Navigator.of(context).pushNamed(Routes.intro);
                   sugarInfoStore!.setSwapStatusToMol(true);
                   sugarInfoStore!

@@ -3,8 +3,10 @@
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/controllers/stores/sugar_info_store.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../utils/locale/appLocalizations.dart';
@@ -20,7 +22,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   int currentIndex = 0;
   int indexPage = 0;
-
+  SugarInfoStore? sugarInfoStore;
   PageController _pageController = PageController(
     initialPage: 0,
   );
@@ -35,6 +37,12 @@ class _IntroScreenState extends State<IntroScreen> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    super.didChangeDependencies();
   }
 
   @override
@@ -97,38 +105,52 @@ class _IntroScreenState extends State<IntroScreen> {
                             indexPage == 3
                                 ? Container()
                                 : GestureDetector(
-                              onTap: () {
-                                shareLocal.putBools("isFirst", true);
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  Routes.home,
-                                      (route) => false,
-                                );
-                              },
-                              child: Container(
-                                width: 120,
-                                height: 36,
-                                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-
-                                ),
-                                child: Text(
-                                  "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
-                                  textAlign: TextAlign.center,
-                                  style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
-                                ),
-                              ),
-                            ),
+                                    onTap: () {
+                                      shareLocal.putBools("isFirst", true);
+                                      if (sugarInfoStore!.isSwapedToMol ==
+                                          true) {
+                                        sugarInfoStore!
+                                            .divisionListRootCondition();
+                                        sugarInfoStore!.saveIsSwapedToMol(
+                                            sugarInfoStore!.isSwapedToMol!);
+                                      }
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        Routes.home,
+                                        (route) => false,
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 120,
+                                      height: 36,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
+                                        textAlign: TextAlign.center,
+                                        style: AppTheme.TextIntroline16Text
+                                            .copyWith(
+                                                color: AppColors.AppColor2),
+                                      ),
+                                    ),
+                                  ),
                             GestureDetector(
                               onTap: () async {
                                 if (indexPage == 3) {
                                   shareLocal.putBools("isFirst", true);
+                                  if (sugarInfoStore!.isSwapedToMol == true) {
+                                    sugarInfoStore!.divisionListRootCondition();
+                                    sugarInfoStore!.saveIsSwapedToMol(
+                                        sugarInfoStore!.isSwapedToMol!);
+                                  }
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     Routes.home,
-                                        (route) => false,
+                                    (route) => false,
                                   );
                                 }
                                 _pageController.nextPage(
@@ -140,13 +162,16 @@ class _IntroScreenState extends State<IntroScreen> {
                                 width: 120,
                                 height: 36,
                                 margin: EdgeInsets.only(left: 17),
-                                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 2, vertical: 6),
                                 decoration: BoxDecoration(
-                                  gradient:
-                                  LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
-                                    AppColors.AppColor4,
-                                    AppColors.AppColor2,
-                                  ]),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        AppColors.AppColor4,
+                                        AppColors.AppColor2,
+                                      ]),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
@@ -154,7 +179,8 @@ class _IntroScreenState extends State<IntroScreen> {
                                       ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
                                       : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
                                   textAlign: TextAlign.center,
-                                  style: AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w500),
+                                  style: AppTheme.TextIntroline16Text.copyWith(
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -176,7 +202,8 @@ class _IntroScreenState extends State<IntroScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill)),
+      decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill)),
       child: Stack(
         children: [
           Column(
@@ -184,10 +211,9 @@ class _IntroScreenState extends State<IntroScreen> {
             children: [
               indexPage == 4
                   ? Image.asset(
-                    image,
-                  )
+                      image,
+                    )
                   : SizedBox(),
-
             ],
           ),
           Container(

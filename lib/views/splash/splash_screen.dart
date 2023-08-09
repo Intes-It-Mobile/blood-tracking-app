@@ -59,6 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
     sugarInfoStore!.getIsSwapedToMol();
     sugarInfoStore!.getListRecords();
     sugarInfoStore!.getGoalAmountFromSharedPreferences();
+    sugarInfoStore!.getSugarRecordGoal();
     super.didChangeDependencies();
   }
 

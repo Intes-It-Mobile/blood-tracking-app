@@ -1350,20 +1350,25 @@ abstract class _SugarInfoStoreBase with Store {
   @observable
   SugarRecord? sugarRecordGoal;
 
+  // Future<void> saveSugarRecordGoal(SugarRecord sugarRecordGoal) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('sugarRecordGoal', sugarRecordGoal.toJson().toString());
+  // }
+
   Future<void> saveSugarRecordGoal(SugarRecord sugarRecordGoal) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('sugarRecordGoal', sugarRecordGoal.toJson().toString());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String sugarRecordString = json.encode(sugarRecordGoal.toJson());
+    await prefs.setString('sugarRecordGoal', sugarRecordString);
   }
 
   Future<SugarRecord?> getSugarRecordGoal() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString('sugarRecordGoal');
     if (jsonString != null) {
-      Map<String, dynamic> jsonData =
-          Map<String, dynamic>.from(json.decode(jsonString));
-      sugarRecordGoal = SugarRecord.fromJson(jsonData);
+      final Map<String, dynamic> json = jsonDecode(jsonString);
+      sugarRecordGoal = SugarRecord.fromJson(json);
 
-      return SugarRecord.fromJson(jsonData);
+      return SugarRecord.fromJson(json);
     }
     return null; // Trả về null nếu không có dữ liệu trong Shared Preferences
   }
