@@ -197,9 +197,6 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
           if (!checkError && !checkEmpty) {
             HeartRateStore heartRateStore = HeartRateStore();
             HeartRateInfo? re = await heartRateStore.checkDateTime(date!, id: info!.id);
-            setState(() {
-              back = true;
-            });
             if (re == null){
               editRecord();
             } else {
@@ -236,6 +233,9 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
       contentLeft: AppLocalizations.of(context).getTranslate('keep'),
       contentRight: AppLocalizations.of(context).getTranslate('change_btn'),
       onClickBtnRight: () {
+        setState(() {
+          back = true;
+        });
         Navigator.of(context).pop(true);
       },
       onClickBtnLeft: () {
@@ -267,6 +267,9 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
         Navigator.of(context).pop(false);
       },
       onClickBtnLeft: () {
+        setState(() {
+          back = true;
+        });
         Navigator.of(context).pop(true);
       },
     ).then((value) async {
