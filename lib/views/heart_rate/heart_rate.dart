@@ -86,7 +86,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     Timer.periodic(const Duration(milliseconds: 700), (timer) async {
       if (outRunTime){
         timer.cancel();
-        outRunTime = true;
+        outRunTime = false;
+        start = false;
       }
       DateTime dateNew = DateTime.now();
       Duration diff = dateNew.difference(dateOld);
@@ -427,11 +428,6 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       child: InkWell(
         onTap: () async{
         if (start) await reset();
-        setState(() {
-          checkTap = 0;
-          time = 0;
-          bmp = 0;
-        });
         Navigator.of(context).pushNamed(
           Routes.new_record_heart_rate,
           arguments: HeartRateInfo(date: DateTime.now(), indicator: 70),
@@ -490,14 +486,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           ),
         ),
       )
-    ).whenComplete(() {
-      setState(() {
-        checkTap = 0;
-        time = 0;
-        bmp = 0;
-        checkFingerTime = 0;
-        checkFinger = false;
-      });
+    ).whenComplete(() async {
+      await reset();
     });
   }
 
@@ -568,13 +558,13 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   }
 
   @override
-  void deactivate() {
+  void deactivate() async {
     super.deactivate();
-    if (start) reset();
+    if (start) await reset();
   }
 
   Future<void> reset() async{
-    outRunTime = true;
+    if (start) outRunTime = true;
     if (cameraController.value.isRecordingVideo) {
       await cameraController.stopVideoRecording();
     }
@@ -586,6 +576,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       bmp = 0;
       checkFingerTime = 0;
       checkFinger = false;
+      checkTap = 0;
     });
   }
 }

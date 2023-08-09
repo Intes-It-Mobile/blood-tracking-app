@@ -145,10 +145,10 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
           if (!checkError && !checkEmpty) {
             HeartRateStore heartRateStore = HeartRateStore();
             HeartRateInfo? re = await heartRateStore.checkDateTime(date!);
-            setState(() {
-              back = true;
-            });
             if (re == null){
+              setState(() {
+                back = true;
+              });
               await _saveRecord();
               showDialog<String>(
                   context: context,
@@ -208,6 +208,9 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
         Navigator.of(context).pop(false);
       },
       onClickBtnLeft: () {
+        setState(() {
+          back = true;
+        });
         Navigator.of(context).pop(true);
       },
     ).then((value) async {
