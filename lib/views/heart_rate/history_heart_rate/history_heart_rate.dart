@@ -36,15 +36,35 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
               future:  loadData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 if (snapshot.hasData) {
                   history = snapshot.data;
+                  if (history.isEmpty)
+                    return noData(context);
                   return _buildBody();
                 }
-                return Container();
+                return noData(context);
               },
             ),
+    );
+  }
+
+  Container noData(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(Assets.history_mpt, width: 146, height: 146),
+          const SizedBox(height: 30),
+          Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
+              textAlign: TextAlign.center,
+              style:
+                  AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
+        ],
+      ),
     );
   }
 
@@ -79,9 +99,9 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
   Widget _buildBody(){
     history.sort((a, b) => b.date!.compareTo(a.date!));
     return Container(
-      margin: EdgeInsets.fromLTRB(27, 16, 27, 16),
+      margin: const EdgeInsets.fromLTRB(15, 16, 15, 16),
       child: GridView.count(
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.8,
         mainAxisSpacing: 16,
         crossAxisSpacing: 12,
         crossAxisCount: 2,

@@ -25,6 +25,7 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
   List<SugarAmount> tempCondition = [];
   EditRangeStore? editRangeStore;
   FocusNode focusNode = FocusNode();
+
   bool? isMol;
   @override
   void didChangeDependencies() {
@@ -56,7 +57,6 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
         surfaceTintColor: Colors.white,
         content: StatefulBuilder(builder: (context, setModalState) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.38,
             width: 300,
             child: SingleChildScrollView(
               child: Column(
@@ -131,13 +131,12 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                             "${AppLocalizations.of(context)!.getTranslate("err_correct_value")}");
                       } else if (sugarInfoStore!.canSave() == true) {
                         sugarInfoStore!
-                            .setNewRootCondition(widget.conditionId!);
-                        Navigator.of(context).pop();
+                            .setNewRootCondition(widget.conditionId!, context);
+                        // Navigator.of(context).pop();
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      height: 43,
+                      padding: EdgeInsets.symmetric(vertical: 6),
                       margin: const EdgeInsets.only(left: 50, right: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -147,10 +146,14 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
                         child: Text(
                           '${AppLocalizations.of(context)!.getTranslate('save_changes_button')}',
                           style: AppTheme.TextIntroline16Text,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                 ],
               ),
             ),
@@ -191,6 +194,23 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
     opacityController.dispose();
   }
 
+  Widget snackbarContent(String message) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        margin: EdgeInsets.only(bottom: 65),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          child: Text(
+            message,
+            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+    );
+  }
+
   List<Widget> builsListItem() {
     return sugarInfoStore!.tempConditionDisplay.map((e) {
       return EditRangeItem(
@@ -204,21 +224,4 @@ class _ChangeTargetDialogState extends State<ChangeTargetDialog> {
       );
     }).toList();
   }
-}
-
-Widget snackbarContent(String message) {
-  return Container(
-    alignment: Alignment.bottomCenter,
-    child: Card(
-      margin: EdgeInsets.only(bottom: 65),
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        child: Text(
-          message,
-          style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
-        ),
-      ),
-    ),
-  );
 }

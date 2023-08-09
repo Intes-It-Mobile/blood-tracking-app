@@ -92,6 +92,8 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
                     .saveIsSwapedToMol(sugarInfoStore!.tempChooseUnitMol!);
                 sugarInfoStore!
                     .setSwapStatusToMol(sugarInfoStore!.tempChooseUnitMol!);
+                      sugarInfoStore!.setSwapStatusToMol(false);
+                       sugarInfoStore!.setGoalAmount( sugarInfoStore!.goalAmount!.amount);
                 sugarInfoStore!.saveGoalAmountToSharedPreferences();
                 Navigator.of(context).pushNamed(Routes.intro);
               },

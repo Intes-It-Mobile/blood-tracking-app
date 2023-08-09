@@ -199,7 +199,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   Widget customTextDate(String content){
     custom(String st) => Container(
       height: 32,
-      width: 52,
+      width: 60,
       alignment: Alignment.center,
       child: Text(
         st,
@@ -215,9 +215,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     return Row(
       children: [
         custom(content.substring(0,4)),
-        const SizedBox(width: 2,),
         custom(content.substring(5,7)),
-        const SizedBox(width: 2,),
         custom(content.substring(8,10)),
       ],
     );
@@ -225,8 +223,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   Widget customTextHour(String content){
     custom(String st) => Container(
       height: 32,
-      width: 33,
-
+      width: 60,
       alignment: Alignment.center,
       child: Text(
         st,
@@ -242,12 +239,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     return Row(
       children: [
         custom(content.substring(0,2)),
-        const SizedBox(width: 8,),
         Text(':',style: AppTheme.appBodyTextStyle.copyWith(
             color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w700),),
-        const SizedBox(width: 8,),
         custom(content.substring(3,5)),
       ],
     );
@@ -384,7 +379,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                       Container(
                         padding: EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppColors.AppColor3,
                           borderRadius: BorderRadius.all(
                             Radius.circular(5),
@@ -394,8 +389,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: const BoxDecoration(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(5),
                                   ),
@@ -706,6 +701,7 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
+    if(sugarInfoStore!.isSwapedToMol! ==false){
     if (sugarInfoStore!.chooseCondition!.sugarAmount!
             .elementAt(level!)
             .maxValue ==
@@ -714,6 +710,18 @@ class _StatusWidgetState extends State<StatusWidget> {
     } else {
       return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
     }
+    }
+    else{
+         if (sugarInfoStore!.chooseCondition!.sugarAmount!
+            .elementAt(level!)
+            .maxValue ==
+        35) {
+      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+    } else {
+      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+    }
+    }
+
   }
 
   Widget getLevelText(int level) {

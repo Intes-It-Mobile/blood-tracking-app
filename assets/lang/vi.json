@@ -200,7 +200,7 @@
     "show_error_heart_rate": "Không có kết quả nào. Đo lường đã thất bại!",
     "access_disabled" : "Truy cập bị vô hiệu hóa!",
     "request_open_permission":"Vui lòng vào cài đặt để mở quyền!",
-    "go_to_setting":"Chuyển đến cài đặt",
+    "go_to_setting":"Cài đặt",
     "return" : "Trở lại",
     "change_unit": "Đổi đơn vị",
     "choose_this_unit": "Chọn đơn vị này",
@@ -240,5 +240,10 @@
     "goal": "Mục tiêu",
     "male": "Nam",
     "female": "Nữ",
-    "send_feedback_success":"Phản hồi của bạn đã được gửi!"
+    "send_feedback_success":"Phản hồi của bạn đã được gửi!",
+    "date": "Ngày",
+    "time": "Giờ",
+    "blood_tlt_excel_mol": "Đường trong máu (mmol/L)",
+    "blood_tlt_excel_mg": "Đường trong máu (mg/dL)",
+    "type": "Loại"
 }

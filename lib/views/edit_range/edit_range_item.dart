@@ -25,8 +25,7 @@ class EditRangeItem extends StatefulWidget {
       this.minValue,
       this.status,
       this.onEdit,
-      this.isLastItem
-    });
+      this.isLastItem});
 
   @override
   State<EditRangeItem> createState() => _EditRangeItemState();
@@ -37,7 +36,6 @@ class _EditRangeItemState extends State<EditRangeItem> {
   EditRangeStore? editRangeStore;
   TextEditingController maxValueController = TextEditingController();
   List<SugarAmount> tempConditionDisplay = [];
-
 
   bool? can = false;
   @override
@@ -135,37 +133,44 @@ class _EditRangeItemState extends State<EditRangeItem> {
                             // color: Colors.amber,
                             child: Align(
                               alignment: Alignment.center,
-                              child: TextField(
-                                textAlignVertical: TextAlignVertical.top,
-                                // cursorHeight: 10,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  CustomInputFormatter(),
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d{0,3}\.?\d{0,1}')),
-                                ],
-                                // inputFormatters: [
-                                //   LengthLimitingTextInputFormatter(5),
-                                //   // Allow Decimal Number With Precision of 2 Only
-                                // FilteringTextInputFormatter.allow(
-                                //     RegExp(r'^\d{0,3}\.?\d{0,2}')),
-                                // ],
-                                controller: maxValueController,
-                                textAlign: TextAlign.center,
-                                onChanged: (value) {
-                                  setMaxValue(maxValueController.text);
+                              child: GestureDetector(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
                                 },
-                                onSubmitted: (value) {
-                                  setMaxValue(maxValueController.text);
-                                },
-                                decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 1),
-                                    border: InputBorder.none,
-                                    hintStyle: AppTheme.appBodyTextStyle
-                                        .copyWith(color: Colors.black)),
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.black),
+                                child: TextField(
+                                  cursorColor: AppColors.AppColor2,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  
+                                  // cursorHeight: 10,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    CustomInputFormatter(),
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d{0,3}\.?\d{0,1}')),
+                                  ],
+                                  // inputFormatters: [
+                                  //   LengthLimitingTextInputFormatter(5),
+                                  //   // Allow Decimal Number With Precision of 2 Only
+                                  // FilteringTextInputFormatter.allow(
+                                  //     RegExp(r'^\d{0,3}\.?\d{0,2}')),
+                                  // ],
+                                  controller: maxValueController,
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    setMaxValue(maxValueController.text);
+                                  },
+                                  onSubmitted: (value) {
+                                    setMaxValue(maxValueController.text);
+                                  },
+                                  decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 1),
+                                      border: InputBorder.none,
+                                      hintStyle: AppTheme.appBodyTextStyle
+                                          .copyWith(color: Colors.black)),
+                                  style: AppTheme.appBodyTextStyle
+                                      .copyWith(color: Colors.black),
+                                ),
                               ),
                             ),
                           )),
