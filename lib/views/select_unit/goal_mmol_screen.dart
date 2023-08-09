@@ -47,6 +47,7 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
     sugarInfoStore!.goalSecondMolValue = currentSecondValue;
 
     sugarInfoStore!.setGoalMolAmount();
+    sugarInfoStore!.errorGoalText = "";
     return Scaffold(
       backgroundColor: AppColors.AppColor1,
       body: Stack(
@@ -129,9 +130,15 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
+                sugarInfoStore!
+                    .saveIsSwapedToMol(sugarInfoStore!.tempChooseUnitMol!);
+                sugarInfoStore!
+                    .setSwapStatusToMol(sugarInfoStore!.tempChooseUnitMol!);
+
                 sugarInfoStore!.checkValidateGoalMolAmount(
                     sugarInfoStore!.goalAmount!.amount!);
                 if (sugarInfoStore!.errorGoalText == "") {
+                  sugarInfoStore!.divisionListRootCondition();
                   Navigator.of(context).pushNamed(Routes.intro);
                   sugarInfoStore!.saveGoalAmountToSharedPreferences();
                 }

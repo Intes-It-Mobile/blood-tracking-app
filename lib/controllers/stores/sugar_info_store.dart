@@ -1329,4 +1329,11 @@ abstract class _SugarInfoStoreBase with Store {
       print("no");
     }
   }
+
+  @observable
+  bool? tempChooseUnitMol = false;
+  @action
+  setTempChooseUnitMol(bool value){
+    tempChooseUnitMol = value;
+  }
 }

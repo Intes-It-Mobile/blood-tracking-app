@@ -88,6 +88,10 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
+                sugarInfoStore!
+                    .saveIsSwapedToMol(sugarInfoStore!.tempChooseUnitMol!);
+                sugarInfoStore!
+                    .setSwapStatusToMol(sugarInfoStore!.tempChooseUnitMol!);
                 sugarInfoStore!.saveGoalAmountToSharedPreferences();
                 Navigator.of(context).pushNamed(Routes.intro);
               },
