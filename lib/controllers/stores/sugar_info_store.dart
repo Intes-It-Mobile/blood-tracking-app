@@ -271,9 +271,91 @@ abstract class _SugarInfoStoreBase with Store {
     if (hasExistedEditRecord == true) {
       showDiaLogChange(context, sugarRecordEdit);
     } else if (hasExistedEditRecord == false) {
-      editRecord(id, sugarRecordEdit, context);
+      // editRecord(id, sugarRecordEdit, context);
+      showDiaLogChangeSimple(sugarRecordEdit, context, id);
     }
     print(hasExistedEditRecord);
+  }
+
+  showDiaLogChangeSimple(
+      SugarRecord sugarRecordEdit, BuildContext context, int id) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 8),
+              elevation: 0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              content: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 42),
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('save_edit_dialog_content')}",
+                        style: AppTheme.Headline16Text.copyWith(
+                            fontWeight: FontWeight.w500, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.AppColor3,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                  "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.AppColor2),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              editRecord(id, sugarRecordEdit, context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              // width: 144,
+                              // height: 36,
+                              decoration: BoxDecoration(
+                                  color: AppColors.AppColor2,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Center(
+                                child: Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('change_btn')}",
+                                    style: AppTheme.appBodyTextStyle.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.mainBgColor)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ));
   }
 
   @action
@@ -1071,19 +1153,23 @@ abstract class _SugarInfoStoreBase with Store {
     for (int i = 0; i < tempConditionDisplay.length; i++) {
       double? minValue = tempConditionDisplay[i].minValue;
       double? maxValue = tempConditionDisplay[i].maxValue;
+      for (int i = 1; i < tempConditionDisplay.length; i++) {
+        tempConditionDisplay[i].minValue = tempConditionDisplay[i - 1].maxValue;
+      }
 
       if (minValue == null || maxValue == null || minValue >= maxValue) {
+        print("mg Error in 1: $i");
         return false;
       }
 
       if (isSwapedToMol == true) {
         if (minValue > 35 || maxValue > 35) {
-          print("Mol Error in : $i");
+          print("Mol Error in 2: $i");
           return false;
         }
       } else {
         if (minValue > 630 || maxValue > 630) {
-          print("mg Error in : $i");
+          print("mg Error in 3: $i");
           return false;
         }
       }

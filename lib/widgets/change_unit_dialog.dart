@@ -123,7 +123,6 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                   if (sugarInfoStore!.isSwapedToMol != isChooseMol) {
                     sugarInfoStore!.setSwapStatusToMol(isChooseMol);
                     sugarInfoStore!.swapUnit();
-                    
                   }
                   Navigator.of(context).pop();
                 },

@@ -22,23 +22,12 @@ class _InfomationScreenState extends State<InfomationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //  toolbarHeight: 80,
+        toolbarHeight: 80,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.AppColor2,
         title: Row(
           children: [
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: SvgPicture.asset(
-                Assets.iconBack,
-                height: 40,
-                width: 40,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
             Container(
                 child: Image.asset(
               Assets.infomative,
@@ -65,56 +54,22 @@ class _InfomationScreenState extends State<InfomationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('info_title_1')}",
-                      style: AppTheme.Headline16Text.copyWith(
-                          color: AppColors.AppColor4)),
+                SizedBox(
+                  height: 7,
                 ),
                 InfoButtonWidget(
-                  title: "bls_do",
+                  title: "info_title_1",
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
+                        arguments: {"title": "info_title_1"});
+                  },
                 ),
                 InfoButtonWidget(
-                  title: "bls_low_what",
-                ),
-                InfoButtonWidget(
-                  title: "bls_high_what",
-                ),
-                InfoButtonWidget(
-                  title: "bls_monitor",
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('info_title_2')}",
-                      style: AppTheme.Headline16Text.copyWith(
-                          color: AppColors.AppColor4)),
-                ),
-                InfoButtonWidget(
-                  title: "prv_know_diabets",
-                ),
-                InfoButtonWidget(
-                  title: "prv_low_bls",
-                ),
-                InfoButtonWidget(
-                  title: "prv_treat_low_bls",
-                ),
-                InfoButtonWidget(
-                  title: "prv_change_type_2",
-                ),
-                InfoButtonWidget(
-                  title: "prv_what_type_1",
-                ),
-                InfoButtonWidget(
-                  title: "prv_what_type_2",
-                ),
-                InfoButtonWidget(
-                  title: "prv_ges_dia",
+                  title: "info_title_2",
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
+                        arguments: {"title": "info_title_2"});
+                  },
                 ),
               ],
             ),

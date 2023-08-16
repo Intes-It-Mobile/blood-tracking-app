@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
 import '../../widgets/goal_dialog/goal_far_dialog.dart';
+import '../../widgets/update_version_dialog.dart';
 import 'chart_widget/chart_widget.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
@@ -152,6 +153,16 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                         Navigator.of(context).pushNamed(Routes.new_record);
                       },
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     showDiaLogUpdateVersion(context);
+                    //   },
+                    //   child: Container(
+                    //     width: 20,
+                    //     height: 20,
+                    //     color: Colors.amber,
+                    //   ),
+                    // )
                   ],
                 );
               }),
@@ -160,6 +171,18 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
         ],
       );
     });
+  }
+
+  Future<String?> showDiaLogUpdateVersion(
+    BuildContext context,
+  ) {
+    return showDialog<String>(
+      context: context,
+      builder: (
+        BuildContext context,
+      ) =>
+          UpdateVersionDialog(),
+    );
   }
 
   Future<String?> showDiaLogGoal(

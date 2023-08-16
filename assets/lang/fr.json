@@ -164,6 +164,8 @@
 	"blood_tlt_excel_mol": "Glycémie (mmol/L)",
 	"blood_tlt_excel_mg": "Glycémie (mg/dL)",
 	"type": "Type",
-    "errow_heart_rate_input_text": "Veuillez entrer la valeur correcte entre 1 et 120"
+    "errow_heart_rate_input_text": "Veuillez entrer la valeur correcte entre 1 et 120",
+    "update_vrs_text": "Cette application vient de sortir une nouvelle version, voulez-vous mettre à jour la version la plus récente ?"
+
 
 }

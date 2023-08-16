@@ -29,6 +29,8 @@ class Assets {
   static const String broken_heart = "assets/images/broken_heart.png";
   static const String congrat = "assets/images/congrat.png";
   static const String leadership = "assets/images/leadership.png";
+  static const String knowBloodTitle = "assets/images/know_blood_sugar_title.png";
+  static const String knowDiabetesTitle = "assets/images/know_diabetes_title.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";

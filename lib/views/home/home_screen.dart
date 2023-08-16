@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
 import '../../widgets/customs_bottom_appbar.dart';
+import '../../widgets/update_version_dialog.dart';
 import '../../widgets/widget_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
@@ -80,9 +81,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 AppLocalizations.of(context)!
                                     .getTranslate('heart_rate_txt')),
                             _buildNavItem(
-                                Assets.iconSettingsNav,
+                                Assets.iconInfoNav,
                                 'C',
                                 2,
+                                AppLocalizations.of(context)!
+                                    .getTranslate('infor')),
+                            _buildNavItem(
+                                Assets.iconSettingsNav,
+                                'C',
+                                3,
                                 AppLocalizations.of(context)!
                                     .getTranslate('setting_nav')),
                           ],
@@ -157,13 +164,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon,
                     color: iconColor,
                   ),
-                  Text(
-                    "${text}",
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: textColor, fontWeight: FontWeight.w600),
-                  )
+                  Text("${text}",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style:
+                          AppTheme.appBodyTextStyle.copyWith(color: textColor)
+                      // TextStyle(
+                      //     color: textColor, fontWeight: FontWeight.w600),
+                      )
                 ],
               ),
             ),
@@ -180,6 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return HeartRateScreen();
       case 2:
+        return InfomationScreen();
+      case 3:
         return SettingScreen();
       default:
         return Container();
