@@ -25,7 +25,10 @@ import 'utils/locale/appLocalizations.dart';
 
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
+bool isShowInterAndReward = false;
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Map? configuration = await AppLovinMAX.initialize(AdsIdConfig.sdkKey);
   if (configuration != null) {
     isInitialized = true;
@@ -54,6 +57,9 @@ void main() async {
   );
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
+
+  MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
   runApp(ChangeNotifierProvider(
     create: (context) => InformationNotifier(),
     child: MyApp(

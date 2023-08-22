@@ -4,6 +4,7 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
@@ -37,11 +38,14 @@ class _SplashScreenState extends State<SplashScreen> {
               Routes.home,
               (route) => false,
             )
-          : Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.language_page,
-              (route) => false,
-            );
+          : () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.language_page,
+                (route) => false,
+              );
+              FirebaseAnalytics.instance.logEvent(name: 'first_open');
+            };
     });
   }
 

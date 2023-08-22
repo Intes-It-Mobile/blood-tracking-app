@@ -77,6 +77,8 @@ dependencies:
   applovin_max: ^3.1.1
   google_mobile_ads: ^3.0.0
   appsflyer_sdk: ^6.11.2
+  firebase_analytics: ^10.4.3
+
 
 #  just_audio: ^0.9.34
 
