@@ -32,6 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
   final String jsonPath = 'assets/json/default_conditions.json';
   nextPage() async {
     await Future.delayed(const Duration(seconds: 3), () {
+      print("${shareLocal.getBools("isFirst")}");
+
       shareLocal.getBools("isFirst") == true
           ? Navigator.pushNamedAndRemoveUntil(
               context,

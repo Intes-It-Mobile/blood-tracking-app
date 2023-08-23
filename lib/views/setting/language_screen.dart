@@ -104,58 +104,64 @@ class _LanguageScreenState extends State<LanguageScreen> {
       ),
       body: Column(
         children: [
-          Container(
-            height: screenHeight * 0.5,
-            padding: const EdgeInsets.only(top: 28),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: languages.length,
-              itemBuilder: (context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      value = index;
-                      langCode = appLanguage.appLocal.languageCode;
-                      if (_selectedIndex == index) {
-                        _selectedIndex = 0;
-                      } else {
-                        _selectedIndex = index;
-                      }
-                    });
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.26,
-                        right: MediaQuery.of(context).size.width * 0.26,
-                        top: 8),
-                    decoration: BoxDecoration(
-                      color: index == _selectedIndex
-                          ? AppColors.AppColor2
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(22),
-                    ),
-                    child: Center(
-                      child: Text(
-                        languages[index],
-                        style: AppTheme.TextInfomation14Text.copyWith(
-                          color: index == _selectedIndex
-                              ? Colors.white
-                              : AppColors.AppColor2,
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 36),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: languages.length,
+                itemBuilder: (context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        value = index;
+                        langCode = appLanguage.appLocal.languageCode;
+                        if (_selectedIndex == index) {
+                          _selectedIndex = 0;
+                        } else {
+                          _selectedIndex = index;
+                        }
+                      });
+                    },
+                    child: Container(
+                      height: 44,
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.26,
+                          right: MediaQuery.of(context).size.width * 0.26,
+                          top: 8),
+                      decoration: BoxDecoration(
+                        color: index == _selectedIndex
+                            ? AppColors.AppColor2
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      child: Center(
+                        child: Text(
+                          languages[index],
+                          style: AppTheme.TextInfomation14Text.copyWith(
+                            color: index == _selectedIndex
+                                ? Colors.white
+                                : AppColors.AppColor2,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
-          Center(child: const MRECAds()),
+          const Expanded(
+            flex: 1,
+            child:  Center(
+              child: MRECAds(),
+            ),
+          ),
         ],
       ),
     );
   }
-
 
   void FunctionLanguages(int index, context, String langCode) {
     var appLanguage = Provider.of<AppLanguage>(context, listen: false);
