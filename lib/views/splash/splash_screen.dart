@@ -38,14 +38,14 @@ class _SplashScreenState extends State<SplashScreen> {
               Routes.home,
               (route) => false,
             )
-          : () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                Routes.language_page,
-                (route) => false,
-              );
+          : Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.language_page,
+              (route) => false,
+            ).then((value) {
               FirebaseAnalytics.instance.logEvent(name: 'first_open');
-            };
+            });
+      ;
     });
   }
 
