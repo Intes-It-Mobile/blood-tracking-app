@@ -14,6 +14,7 @@ import '../../controllers/stores/edit_record_store.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -529,6 +530,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               btnText: "save_record",
                             ),
                           ),
+                          Center(child: const MRECAds()),
                         ],
                       ),
                     ],

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -32,17 +33,17 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   void initState() {
-    if(shareLocal.getString('language_code') == "vi"){
+    if (shareLocal.getString('language_code') == "vi") {
       _selectedIndex = 4;
-    }else if(shareLocal.getString('language_code') == "en"){
+    } else if (shareLocal.getString('language_code') == "en") {
       _selectedIndex = 0;
-    }else if(shareLocal.getString('language_code') == "zh"){
+    } else if (shareLocal.getString('language_code') == "zh") {
       _selectedIndex = 1;
-    }else if(shareLocal.getString('language_code') == "es"){
+    } else if (shareLocal.getString('language_code') == "es") {
       _selectedIndex = 2;
-    }else  if(shareLocal.getString('language_code') == "fr") {
+    } else if (shareLocal.getString('language_code') == "fr") {
       _selectedIndex = 3;
-    }else{
+    } else {
       _selectedIndex = 0;
     }
 
@@ -51,6 +52,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     var appLanguage = Provider.of<AppLanguage>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -100,50 +102,63 @@ class _LanguageScreenState extends State<LanguageScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 28),
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: languages.length,
-          itemBuilder: (context, int index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  value = index;
-                  langCode = appLanguage.appLocal.languageCode ;
-                  if (_selectedIndex == index) {
-                    _selectedIndex = 0;
-                  } else {
-                    _selectedIndex = index;
-                  }
-                });
-              },
-              child: Container(
-                height: 45,
-                margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.26,
-                    right: MediaQuery.of(context).size.width * 0.26,
-                    top: 8),
-                decoration: BoxDecoration(
-                  color: index == _selectedIndex
-                      ? AppColors.AppColor2
-                      : Colors.white,
-                  borderRadius: BorderRadius.circular(22),
-                ),
-                child: Center(
-                  child: Text(
-                    languages[index],
-                    style: AppTheme.TextInfomation14Text.copyWith(
-                      color: index == _selectedIndex
-                          ? Colors.white
-                          : AppColors.AppColor2,
+      body: Column(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 36),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: languages.length,
+                itemBuilder: (context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        value = index;
+                        langCode = appLanguage.appLocal.languageCode;
+                        if (_selectedIndex == index) {
+                          _selectedIndex = 0;
+                        } else {
+                          _selectedIndex = index;
+                        }
+                      });
+                    },
+                    child: Container(
+                      height: 44,
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.26,
+                          right: MediaQuery.of(context).size.width * 0.26,
+                          top: 8),
+                      decoration: BoxDecoration(
+                        color: index == _selectedIndex
+                            ? AppColors.AppColor2
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      child: Center(
+                        child: Text(
+                          languages[index],
+                          style: AppTheme.TextInfomation14Text.copyWith(
+                            color: index == _selectedIndex
+                                ? Colors.white
+                                : AppColors.AppColor2,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),
+          const Expanded(
+            flex: 1,
+            child:  Center(
+              child: MRECAds(),
+            ),
+          ),
+        ],
       ),
     );
   }

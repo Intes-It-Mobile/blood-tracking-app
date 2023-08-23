@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "929382641547",
+    "project_id": "blood-sugar-tracking-f8422",
+    "storage_bucket": "blood-sugar-tracking-f8422.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929382641547:android:44a80d17b5fbaf04b4898e",
+        "android_client_info": {
+          "package_name": "com.intes.sugartracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929382641547-pvqas9q8jqrop6e1cs92uevmmlvu070f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJvmkV7HwHxaRqSzaiJAtpV0coyPN7Vk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929382641547-pvqas9q8jqrop6e1cs92uevmmlvu070f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

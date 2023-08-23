@@ -4,6 +4,7 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/views/home/home_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_intro.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
   final String jsonPath = 'assets/json/default_conditions.json';
   nextPage() async {
     await Future.delayed(const Duration(seconds: 3), () {
+      print("${shareLocal.getBools("isFirst")}");
+
       shareLocal.getBools("isFirst") == true
           ? Navigator.pushNamedAndRemoveUntil(
               context,
@@ -41,7 +44,10 @@ class _SplashScreenState extends State<SplashScreen> {
               context,
               Routes.language_page,
               (route) => false,
-            );
+            ).then((value) {
+              FirebaseAnalytics.instance.logEvent(name: 'first_open');
+            });
+      ;
     });
   }
 
