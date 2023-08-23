@@ -13,6 +13,7 @@ import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -196,54 +197,52 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     super.initState();
   }
 
-  Widget customTextDate(String content){
+  Widget customTextDate(String content) {
     custom(String st) => Container(
-      height: 32,
-      width: 60,
-      alignment: Alignment.center,
-      child: Text(
-        st,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style:  AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w500),
-      ),
-    );
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
 
     return Row(
       children: [
-        custom(content.substring(0,4)),
-        custom(content.substring(5,7)),
-        custom(content.substring(8,10)),
+        custom(content.substring(0, 4)),
+        custom(content.substring(5, 7)),
+        custom(content.substring(8, 10)),
       ],
     );
   }
-  Widget customTextHour(String content){
+
+  Widget customTextHour(String content) {
     custom(String st) => Container(
-      height: 32,
-      width: 60,
-      alignment: Alignment.center,
-      child: Text(
-        st,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style:  AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w500),
-      ),
-    );
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
 
     return Row(
       children: [
-        custom(content.substring(0,2)),
-        Text(':',style: AppTheme.appBodyTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w700),),
-        custom(content.substring(3,5)),
+        custom(content.substring(0, 2)),
+        Text(
+          ':',
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        custom(content.substring(3, 5)),
       ],
     );
   }
@@ -321,10 +320,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               color: AppColors.AppColor3,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
-                          child: customTextDate(sugarInfoStore!.choosedDayTimeStr != null
-                              ? sugarInfoStore!.choosedDayTimeStr!
-                              : DateFormat('yyyy/MM/dd')
-                              .format(DateTime.now())),
+                          child: customTextDate(
+                              sugarInfoStore!.choosedDayTimeStr != null
+                                  ? sugarInfoStore!.choosedDayTimeStr!
+                                  : DateFormat('yyyy/MM/dd')
+                                      .format(DateTime.now())),
                         ),
                       ),
                       const Spacer(),
@@ -339,10 +339,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               color: AppColors.AppColor3,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
-                          child: customTextHour(sugarInfoStore!.choosedDayHourStr != null
-                              ? sugarInfoStore!.choosedDayHourStr!
-                              : DateFormat('HH:mm')
-                              .format(DateTime.now())),
+                          child: customTextHour(
+                              sugarInfoStore!.choosedDayHourStr != null
+                                  ? sugarInfoStore!.choosedDayHourStr!
+                                  : DateFormat('HH:mm').format(DateTime.now())),
                         ),
                       ),
                     ],
@@ -558,17 +558,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           btnText: "save_record",
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          sugarInfoStore!.deleteData();
-                        },
-                        child: Center(
-                            child: Container(
-                          width: 20,
-                          height: 20,
-                          color: Colors.white,
-                        )),
-                      )
+                      Center(child: const MRECAds()),
                     ],
                   ),
                 ],
@@ -701,27 +691,25 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
-    if(sugarInfoStore!.isSwapedToMol! ==false){
-    if (sugarInfoStore!.chooseCondition!.sugarAmount!
-            .elementAt(level!)
-            .maxValue ==
-        630) {
-      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+    if (sugarInfoStore!.isSwapedToMol! == false) {
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
+        return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+      } else {
+        return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      }
     } else {
-      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
+        return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+      } else {
+        return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      }
     }
-    }
-    else{
-         if (sugarInfoStore!.chooseCondition!.sugarAmount!
-            .elementAt(level!)
-            .maxValue ==
-        35) {
-      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
-    } else {
-      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
-    }
-    }
-
   }
 
   Widget getLevelText(int level) {
@@ -1033,7 +1021,6 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       ],
     );
   }
-
 }
 
 class MyDateTimePicker extends StatefulWidget {

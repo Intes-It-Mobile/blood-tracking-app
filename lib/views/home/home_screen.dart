@@ -24,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  bool hasAds = true;
+  bool hasAds = false;
 
   void onTabTapped(int index) {
     setState(() {

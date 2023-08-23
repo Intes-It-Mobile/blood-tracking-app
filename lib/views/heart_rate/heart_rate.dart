@@ -15,6 +15,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/ads/mrec_ads.dart';
+
 class HeartRateScreen extends StatefulWidget {
   const HeartRateScreen({super.key});
 
@@ -42,7 +44,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
 
   Future<void> getData() async {
     cameras = await availableCameras();
-    cameraController = CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
+    cameraController =
+        CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
     cameraController.setFlashMode(FlashMode.always);
     setState(() {
       checkCamera = true;
@@ -65,7 +68,8 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
 
   Future<void> requestPermission() async {
     await Permission.camera.request().then((value) async {
-      if (value != PermissionStatus.permanentlyDenied && value != PermissionStatus.denied) {
+      if (value != PermissionStatus.permanentlyDenied &&
+          value != PermissionStatus.denied) {
         await getData();
         await initCamera();
         setState(() {
@@ -84,7 +88,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     DateTime dateOld = DateTime.now();
     start = true;
     Timer.periodic(const Duration(milliseconds: 700), (timer) async {
-      if (outRunTime){
+      if (outRunTime) {
         timer.cancel();
         outRunTime = false;
         start = false;
@@ -92,11 +96,10 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       DateTime dateNew = DateTime.now();
       Duration diff = dateNew.difference(dateOld);
       bool checkFingerOld = checkFinger;
-      if (loadFinger == false)
-        checkFingerByCamera();
-      if (!checkFinger){
+      if (loadFinger == false) checkFingerByCamera();
+      if (!checkFinger) {
         checkFingerTime += diff.inMilliseconds;
-        if (checkFingerTime>20000){
+        if (checkFingerTime > 20000) {
           timer.cancel();
           start = false;
           if (cameraController.value.isRecordingVideo) {
@@ -108,12 +111,12 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           return;
         }
       }
-      if (checkFinger != checkFingerOld){
+      if (checkFinger != checkFingerOld) {
         setState(() {});
       }
-      if (checkFinger){
+      if (checkFinger) {
         time += diff.inMilliseconds;
-        if (time> 45000) {
+        if (time > 45000) {
           timer.cancel();
           start = false;
           if (cameraController.value.isRecordingVideo) {
@@ -135,11 +138,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           });
           return;
         } else {
-          if (bmp==0) bmp = 60 + Random().nextInt(20) + 1;
+          if (bmp == 0) bmp = 60 + Random().nextInt(20) + 1;
           int dau = Random().nextInt(2);
           int t = Random().nextInt(6);
           setState(() {
-            if (bmp<60 ||( dau==0 && bmp<114)){
+            if (bmp < 60 || (dau == 0 && bmp < 114)) {
               bmp += t;
             } else {
               bmp -= t;
@@ -159,7 +162,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     String imagePath = xFile.path;
     img.Image? image = img.decodeImage(File(imagePath).readAsBytesSync());
     img.Image resizedImage = img.copyResize(image!, width: 30, height: 30);
-    int sum = (resizedImage.height*resizedImage.width/4).toInt();
+    int sum = (resizedImage.height * resizedImage.width / 4).toInt();
     int pass = 0, fail = 0;
     check(int x, int y) {
       img.Pixel pixel = resizedImage.getPixel(x, y);
@@ -167,7 +170,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       int green = img.uint32ToGreen(pixel[0].toInt());
       int blue = img.uint32ToBlue(pixel[0].toInt());
       // print("$red $green $blue");
-      if (red>green && red>blue && red-green>100 && red-blue>100 && red>130)
+      if (red > green &&
+          red > blue &&
+          red - green > 100 &&
+          red - blue > 100 &&
+          red > 130)
         pass++;
       else
         fail++;
@@ -176,24 +183,24 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     int height = resizedImage.height;
     int width = resizedImage.width;
     for (int y = 0; y < height; y++) {
-      for (int i=0;i<10;i++){
-        check(i,y);
+      for (int i = 0; i < 10; i++) {
+        check(i, y);
       }
-      for (int i=width-10;i<width;i++){
-        check(i,y);
+      for (int i = width - 10; i < width; i++) {
+        check(i, y);
       }
     }
     for (int x = 0; x < width; x++) {
-      for (int i=0;i<10;i++){
-        check(x,i);
+      for (int i = 0; i < 10; i++) {
+        check(x, i);
       }
-      for (int i=height-10;i<height;i++){
-        check(x,i);
+      for (int i = height - 10; i < height; i++) {
+        check(x, i);
       }
     }
     setState(() {
       loadFinger = false;
-      checkFinger = (pass>fail*6);
+      checkFinger = (pass > fail * 6);
     });
   }
 
@@ -201,12 +208,12 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     return Path()
       ..moveTo(55, 101)
       ..lineTo(47.4525, 93.7346)
-      ..cubicTo(18.87, 68.0305, 0, 51.0229, 0, 30.2725) 
-      ..cubicTo(0, 13.2648, 13.431, 0, 30.525, 0) 
-      ..cubicTo(40.182, 0, 49.4505, 4.45831, 55.5, 11.4485) 
-      ..cubicTo(61.5495, 4.45831, 70.818, 0, 80.475, 0) 
-      ..cubicTo(97.569, 0, 111, 13.2648, 111, 30.2725) 
-      ..cubicTo(111, 51.0229, 92.13, 68.0305, 63.5475, 93.7346) 
+      ..cubicTo(18.87, 68.0305, 0, 51.0229, 0, 30.2725)
+      ..cubicTo(0, 13.2648, 13.431, 0, 30.525, 0)
+      ..cubicTo(40.182, 0, 49.4505, 4.45831, 55.5, 11.4485)
+      ..cubicTo(61.5495, 4.45831, 70.818, 0, 80.475, 0)
+      ..cubicTo(97.569, 0, 111, 13.2648, 111, 30.2725)
+      ..cubicTo(111, 51.0229, 92.13, 68.0305, 63.5475, 93.7346)
       ..lineTo(55.5, 101)
       ..close();
   }
@@ -230,15 +237,13 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           style: AppTheme.appBarTextStyle,
         ),
       ),
-      actions: [
-        _buildButtonHeartRateHistory()
-      ],
+      actions: [_buildButtonHeartRateHistory()],
     );
   }
 
   Widget _buildButtonHeartRateHistory() {
     return InkWell(
-      onTap: () async{
+      onTap: () async {
         if (start) await reset();
         Navigator.of(context).pushNamed(Routes.history_heart_rate);
       },
@@ -248,10 +253,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5)
+            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+        child: SvgPicture.asset(
+          Assets.iconHistory,
+          height: 16,
         ),
-        child: SvgPicture.asset(Assets.iconHistory, height: 16,),
       ),
     );
   }
@@ -268,22 +274,17 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           if (checkTap == 1)
             Text(
               AppLocalizations.of(context).getTranslate(
-                checkFinger 
-                  ? "check_finger"
-                  : "put_your_finger_on_camera"
-              ),
+                  checkFinger ? "check_finger" : "put_your_finger_on_camera"),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: checkFinger 
-                  ? AppColors.greyColor 
-                  : Color(0xFFFD4755),
-                fontFamily: FontFamily.IBMPlexSans, 
-                fontSize: 14, 
-                fontWeight: FontWeight.w600
-              ),
+                  color: checkFinger ? AppColors.greyColor : Color(0xFFFD4755),
+                  fontFamily: FontFamily.IBMPlexSans,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
             ),
           _buildButtonNewRecord(),
+          Center(child: const MRECAds()),
         ],
       ),
     );
@@ -316,15 +317,15 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             (checkTap == 0)
-              ? Image.asset(
-                Assets.image_heart,
-                height: 91,
-                width: 91,
-                fit: BoxFit.contain,
-              )
-              : (checkTap == 1 || checkTap == 2)
-                ? _buildRunHeartRate()
-                : Container(),
+                ? Image.asset(
+                    Assets.image_heart,
+                    height: 91,
+                    width: 91,
+                    fit: BoxFit.contain,
+                  )
+                : (checkTap == 1 || checkTap == 2)
+                    ? _buildRunHeartRate()
+                    : Container(),
             Container(
               width: 130,
               margin: const EdgeInsets.only(top: 8),
@@ -337,7 +338,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
   }
 
   Widget _buildRunHeartRate() {
-    TextStyle textStyle = TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: FontFamily.IBMPlexSans);
+    TextStyle textStyle = TextStyle(
+        fontSize: 20,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+        fontFamily: FontFamily.IBMPlexSans);
     return Container(
       width: 111,
       height: 101,
@@ -366,7 +371,9 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                     text: bmp.toString(),
                     style: textStyle,
                     children: <TextSpan>[
-                      TextSpan(text: ' BPM', style: textStyle.copyWith(fontSize: 16)),
+                      TextSpan(
+                          text: ' BPM',
+                          style: textStyle.copyWith(fontSize: 16)),
                     ],
                   ),
                 ),
@@ -400,7 +407,11 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         AppLocalizations.of(context).getTranslate("tap_to_measure"),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            color: AppColors.AppColor4,
+            fontFamily: FontFamily.IBMPlexSans,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
       );
     }
     if (checkTap == 1) {
@@ -408,14 +419,22 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
         AppLocalizations.of(context).getTranslate("measuring"),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            color: AppColors.AppColor4,
+            fontFamily: FontFamily.IBMPlexSans,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
       );
     }
     return Text(
       AppLocalizations.of(context).getTranslate("result"),
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(color: AppColors.AppColor4, fontFamily: FontFamily.IBMPlexSans, fontSize: 16, fontWeight: FontWeight.w600),
+      style: TextStyle(
+          color: AppColors.AppColor4,
+          fontFamily: FontFamily.IBMPlexSans,
+          fontSize: 16,
+          fontWeight: FontWeight.w600),
     );
   }
 
@@ -424,137 +443,161 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
       height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       margin: const EdgeInsets.only(top: 24),
-      decoration: BoxDecoration(color: AppColors.AppColor4, borderRadius: BorderRadius.circular(5)),
+      decoration: BoxDecoration(
+          color: AppColors.AppColor4, borderRadius: BorderRadius.circular(5)),
       child: InkWell(
-        onTap: () async{
-        if (start) await reset();
-        Navigator.of(context).pushNamed(
-          Routes.new_record_heart_rate,
-          arguments: HeartRateInfo(date: DateTime.now(), indicator: 70),
-        );
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            AppLocalizations.of(context).getTranslate("new_record"),
-            style: TextStyle(color: Colors.white, fontFamily: FontFamily.IBMPlexSans, fontStyle: FontStyle.normal, fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
-          ),
-          const SizedBox(width: 8),
-          SvgPicture.asset(Assets.iconEditBtn)
-        ],
-      ),
+        onTap: () async {
+          if (start) await reset();
+          Navigator.of(context).pushNamed(
+            Routes.new_record_heart_rate,
+            arguments: HeartRateInfo(date: DateTime.now(), indicator: 70),
+          );
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              AppLocalizations.of(context).getTranslate("new_record"),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: FontFamily.IBMPlexSans,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.8),
+            ),
+            const SizedBox(width: 8),
+            SvgPicture.asset(Assets.iconEditBtn)
+          ],
+        ),
       ),
     );
   }
 
-  void showDialogError(){
+  void showDialogError() {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-        elevation: 0,
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        actions: [
-          Center(
-            child: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 9),
-                width: 144,
-                decoration: const BoxDecoration(
-                  color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context).getTranslate("try_again"),
-                    style: AppTheme.TextIntroline16Text.copyWith(color: Colors.white),
+        context: context,
+        builder: (context) => AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+              elevation: 0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              actions: [
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 9),
+                      width: 144,
+                      decoration: const BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .getTranslate("try_again"),
+                          style: AppTheme.TextIntroline16Text.copyWith(
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
+              ],
+              content: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 42),
+                child: Text(
+                  AppLocalizations.of(context)
+                      .getTranslate("show_error_heart_rate"),
+                  style: AppTheme.Headline16Text.copyWith(
+                      fontWeight: FontWeight.w500, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ),
-        ],
-        content: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 42),
-          child: Text(
-            AppLocalizations.of(context).getTranslate("show_error_heart_rate"),
-            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      )
-    ).whenComplete(() async {
+            )).whenComplete(() async {
       await reset();
     });
   }
 
-  void showAccessDisabled(){
+  void showAccessDisabled() {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-        elevation: 0,
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        actions: [
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: const BoxDecoration(
-                        color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context).getTranslate("return"),
-                        style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+        context: context,
+        builder: (context) => AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+              elevation: 0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              actions: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          decoration: const BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .getTranslate("return"),
+                              style: AppTheme.TextIntroline16Text.copyWith(
+                                  color: AppColors.AppColor2),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 23),
-              Expanded(
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                    openAppSettings();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: const BoxDecoration(
-                        color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context).getTranslate("go_to_setting"),
-                        style: AppTheme.TextIntroline16Text,
+                    const SizedBox(width: 23),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          openAppSettings();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          decoration: const BoxDecoration(
+                              color: AppColors.AppColor2,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .getTranslate("go_to_setting"),
+                              style: AppTheme.TextIntroline16Text,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+              ],
+              content: Text(
+                AppLocalizations.of(context)
+                    .getTranslate("request_open_permission"),
+                style: AppTheme.Headline16Text.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontFamily: FontFamily.roboto),
+                textAlign: TextAlign.center,
               ),
-            ],
-          ),
-        ],
-        content: Text(
-          AppLocalizations.of(context).getTranslate("request_open_permission"),
-          style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w400, color: Colors.black, fontFamily: FontFamily.roboto),
-          textAlign: TextAlign.center,
-        ),
-        title: Text(
-          AppLocalizations.of(context).getTranslate("access_disabled"),
-          style: AppTheme.Headline20Text.copyWith(fontWeight: FontWeight.w600, color: Colors.black),
-          textAlign: TextAlign.center,
-        ),
-      )
-    );
+              title: Text(
+                AppLocalizations.of(context).getTranslate("access_disabled"),
+                style: AppTheme.Headline20Text.copyWith(
+                    fontWeight: FontWeight.w600, color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ));
   }
 
   @override
@@ -563,7 +606,7 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
     if (start) await reset();
   }
 
-  Future<void> reset() async{
+  Future<void> reset() async {
     if (start) outRunTime = true;
     if (cameraController.value.isRecordingVideo) {
       await cameraController.stopVideoRecording();

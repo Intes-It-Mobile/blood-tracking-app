@@ -22,41 +22,45 @@ class _MRECAdsState extends State<MRECAds> {
 
   @override
   Widget build(BuildContext context) {
-    return MaxAdView(
-      adUnitId: AdsIdConfig.mrecAdsId,
-      adFormat: AdFormat.mrec,
-      listener: AdViewAdListener(onAdLoadedCallback: (ad) {
-        debugPrint('MREC ad loaded from ${ad.networkName}');
-      }, onAdLoadFailedCallback: (adUnitId, error) {
-        debugPrint(
-            'MREC ad failed to load with error code ${error.code} and message: ${error.message}');
-      }, onAdClickedCallback: (ad) {
-        debugPrint('MREC ad clicked');
-      }, onAdExpandedCallback: (ad) {
-        debugPrint('MREC ad expanded');
-      }, onAdCollapsedCallback: (ad) {
-        debugPrint('MREC ad collapsed');
-      }, onAdRevenuePaidCallback: (ad) async {
-        debugPrint('MREC ad revenue paid: ${ad.revenue}');
-        // await FirebaseAnalytics.instance
-        //     .logEvent(name: 'ad_impression', parameters: {
-        //   'ad_platform': 'AppLovin',
-        //   'ad_source': ad.networkName,
-        //   'ad_unit_name': ad.adUnitId,
-        //   'ad_format': 'MREC Ad',
-        //   'value': ad.revenue,
-        //   'currency': 'USD'
-        // });
-        // await FirebaseAnalytics.instance
-        //     .logEvent(name: 'ad_impression_abi', parameters: {
-        //   'ad_platform': 'AppLovin',
-        //   'ad_source': ad.networkName,
-        //   'ad_unit_name': ad.adUnitId,
-        //   'ad_format': 'MREC Ad',
-        //   'value': ad.revenue,
-        //   'currency': 'USD'
-        // });
-      }),
+    return Container(
+      width: 300,
+      height: 250,
+      child: MaxAdView(
+        adUnitId: AdsIdConfig.mrecAdsId,
+        adFormat: AdFormat.mrec,
+        listener: AdViewAdListener(onAdLoadedCallback: (ad) {
+          debugPrint('MREC ad loaded from ${ad.networkName}');
+        }, onAdLoadFailedCallback: (adUnitId, error) {
+          debugPrint(
+              'MREC ad failed to load with error code ${error.code} and message: ${error.message}');
+        }, onAdClickedCallback: (ad) {
+          debugPrint('MREC ad clicked');
+        }, onAdExpandedCallback: (ad) {
+          debugPrint('MREC ad expanded');
+        }, onAdCollapsedCallback: (ad) {
+          debugPrint('MREC ad collapsed');
+        }, onAdRevenuePaidCallback: (ad) async {
+          debugPrint('MREC ad revenue paid: ${ad.revenue}');
+          // await FirebaseAnalytics.instance
+          //     .logEvent(name: 'ad_impression', parameters: {
+          //   'ad_platform': 'AppLovin',
+          //   'ad_source': ad.networkName,
+          //   'ad_unit_name': ad.adUnitId,
+          //   'ad_format': 'MREC Ad',
+          //   'value': ad.revenue,
+          //   'currency': 'USD'
+          // });
+          // await FirebaseAnalytics.instance
+          //     .logEvent(name: 'ad_impression_abi', parameters: {
+          //   'ad_platform': 'AppLovin',
+          //   'ad_source': ad.networkName,
+          //   'ad_unit_name': ad.adUnitId,
+          //   'ad_format': 'MREC Ad',
+          //   'value': ad.revenue,
+          //   'currency': 'USD'
+          // });
+        }),
+      ),
     );
   }
 }
