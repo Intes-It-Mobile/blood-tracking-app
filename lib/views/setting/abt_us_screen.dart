@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class AboutUsScreen extends StatefulWidget {
@@ -85,6 +86,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ),
             ),
             const Spacer(),
+            Align(alignment: Alignment.bottomCenter, child: const MRECAds()),
             RichText(
               text: TextSpan(
                 children: [

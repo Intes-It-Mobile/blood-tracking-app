@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../constants/app_theme.dart';
 import '../constants/colors.dart';
 import '../controllers/stores/sugar_info_store.dart';
+import '../utils/ads/mrec_ads.dart';
 import '../utils/locale/appLocalizations.dart';
 
 class ChageUnitDialog extends StatefulWidget {
@@ -35,7 +36,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.17,
+          height: MediaQuery.of(context).size.height * 0.49,
           width: 400,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +141,8 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                     ),
                   ),
                 ),
-              )
+              ),
+              Center(child: const MRECAds())
             ],
           ),
         );

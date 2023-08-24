@@ -13,6 +13,7 @@ import 'package:blood_sugar_tracking/widgets/sucess_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../utils/ads/applovin_function.dart';
 import '../../../utils/ads/mrec_ads.dart';
 
 class EditRecordHeartRateScreen extends StatefulWidget {
@@ -30,7 +31,10 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
   bool checkEmpty = false;
   String? st = ' ';
   bool back = false;
-
+  void initState() {
+   AppLovinFunction().initializeInterstitialAds();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -62,6 +66,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
   Widget _buildButtonBack() {
     return InkWell(
       onTap:() {
+        AppLovinFunction().showInterstitialAds();
         Navigator.pop(context, false);
       },
       child: SvgPicture.asset(
@@ -83,6 +88,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
           contentRight: AppLocalizations.of(context).getTranslate('keep'),
           onClickBtnRight: (){
             Navigator.of(context).pop(false);
+            AppLovinFunction().showInterstitialAds();
           },
           onClickBtnLeft: () {
             Navigator.of(context).pop(true);
@@ -97,6 +103,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
             Future.delayed(Duration(seconds: 1), () {
               Navigator.of(context).pop();
               Navigator.of(context).pop(true);
+              AppLovinFunction().showInterstitialAds();
             });
           }
         });
@@ -255,6 +262,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
         Future.delayed(Duration(seconds: 1), () {
           Navigator.of(context).pop();
           Navigator.of(context).pop(true);
+          AppLovinFunction().showInterstitialAds();
         });
       }
     });
@@ -274,6 +282,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
           back = true;
         });
         Navigator.of(context).pop(true);
+        
       },
     ).then((value) async {
       if (value as bool == true){
@@ -287,6 +296,7 @@ class _EditRecordHeartRateScreenState extends State<EditRecordHeartRateScreen> {
         Future.delayed(Duration(seconds: 1), () {
           Navigator.of(context).pop();
           Navigator.of(context).pop(true);
+          AppLovinFunction().showInterstitialAds();       
         });
       }
     });

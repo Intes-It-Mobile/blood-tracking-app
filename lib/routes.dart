@@ -65,7 +65,7 @@ class Routes {
     new_record: (context) => NewRecordScreen(),
     edit_record: (context) => EditRecordScreen(),
     edit_range: (context) => EditRangeScreens(),
-    record_remind: (context) => ExampleAlarmHomeScreen(),
+    record_remind: (context) => AlarmScreen(),
     intro: (context) => IntroScreen(),
     history: (context) => RecordHistory(),
     select_unit: (context) => SelectUnit(),

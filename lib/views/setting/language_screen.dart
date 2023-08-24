@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
@@ -46,7 +47,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     } else {
       _selectedIndex = 0;
     }
-
+    AppLovinFunction().initializeInterstitialAds();
     super.initState();
   }
 
@@ -64,6 +65,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           children: [
             InkWell(
               onTap: () {
+                AppLovinFunction().showInterstitialAds();
                 Navigator.of(context).pop();
               },
               child: SvgPicture.asset(
@@ -155,7 +157,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
       ),
     );
   }
-
 
   void FunctionLanguages(int index, context, String langCode) {
     var appLanguage = Provider.of<AppLanguage>(context, listen: false);

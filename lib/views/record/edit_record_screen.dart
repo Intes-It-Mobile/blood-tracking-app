@@ -14,6 +14,7 @@ import '../../controllers/stores/edit_record_store.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
@@ -46,6 +47,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
 
   @override
   void initState() {
+    AppLovinFunction().initializeInterstitialAds();
     isFirst = true;
     focusNode.addListener(() {
       setState(() {});
@@ -224,6 +226,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                       Navigator.of(context).pop();
                       print(sugarInfoStore!
                           .rootSugarInfo!.conditions!.first.name);
+                          AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),

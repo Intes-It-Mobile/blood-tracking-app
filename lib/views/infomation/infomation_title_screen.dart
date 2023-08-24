@@ -81,6 +81,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).pop();
+                 AppLovinFunction().showInterstitialAds();
               },
               child: Container(
                 margin: EdgeInsets.only(right: 12),

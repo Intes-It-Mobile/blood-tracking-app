@@ -15,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/ads/applovin_function.dart';
 import '../../../utils/ads/mrec_ads.dart';
 
 class NewRecordHeartRateScreen extends StatefulWidget {
@@ -32,7 +33,11 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
   bool checkEmpty = false;
   String? st = " ";
   bool back = false;
-
+  @override
+  void initState() {
+   AppLovinFunction().initializeInterstitialAds();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     info ??= ModalRoute.of(context)!.settings.arguments as HeartRateInfo;
@@ -62,6 +67,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
+         AppLovinFunction().showInterstitialAds();
       },
       child: SvgPicture.asset(
         Assets.iconBack,
@@ -159,6 +165,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
               Future.delayed(Duration(seconds: 1), () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
+                AppLovinFunction().showInterstitialAds();
               });
             } else {
               changedRecord(re);
@@ -228,6 +235,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
         Future.delayed(Duration(seconds: 1), () {
           Navigator.of(context).pop();
           Navigator.of(context).pop(true);
+          AppLovinFunction().showInterstitialAds();
         });
       }
     });

@@ -17,6 +17,7 @@ import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import 'package:excel/excel.dart';
 
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/goal_dialog/goal_far_dialog.dart';
 import '../../widgets/goal_dialog/goal_nearly_dialog.dart';
@@ -450,6 +451,7 @@ abstract class _SugarInfoStoreBase with Store {
         print("Check Goal");
       });
     }
+    AppLovinFunction().showInterstitialAds();
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
@@ -722,7 +724,7 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     }
     saveListRecord(listRecords);
-
+    AppLovinFunction().showInterstitialAds();
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,

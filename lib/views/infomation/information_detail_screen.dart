@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class DetailInformationScreen extends StatefulWidget {
@@ -24,6 +25,13 @@ class DetailInformationScreen extends StatefulWidget {
 
 class _DetailInformationScreenState extends State<DetailInformationScreen> {
   String? type;
+
+  @override
+  void initState() {
+    AppLovinFunction().initializeInterstitialAds();
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -50,6 +58,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),

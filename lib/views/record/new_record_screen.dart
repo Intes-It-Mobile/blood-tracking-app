@@ -13,6 +13,7 @@ import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
@@ -189,6 +190,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   @override
   void initState() {
+     AppLovinFunction().initializeInterstitialAds();
     _controller = TextEditingController(text: '80');
 
     focusNode.addListener(() {
@@ -204,7 +206,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
           alignment: Alignment.center,
           child: Text(
             st,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.center, 
             overflow: TextOverflow.ellipsis,
             style: AppTheme.appBodyTextStyle.copyWith(
                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
@@ -261,6 +263,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   InkWell(
                     onTap: () {
+                      AppLovinFunction().showInterstitialAds();
                       Navigator.of(context).pop();
                       print(sugarInfoStore!
                           .rootSugarInfo!.conditions!.first.name);

@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
+import '../../utils/ads/banner_ads.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../widgets/customs_bottom_appbar.dart';
 import '../../widgets/update_version_dialog.dart';
 import '../../widgets/widget_appbar.dart';
@@ -24,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  bool hasAds = false;
+  bool hasAds = true;
 
   void onTabTapped(int index) {
     setState(() {
@@ -54,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               bottomNavigationBar: Container(
                 color: Colors.transparent,
-                margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
+                margin: EdgeInsets.only(bottom: hasAds ? 45.0 : 30),
                 child: BottomAppBarCum(
                   color: Colors.transparent,
                   surfaceTintColor: Colors.transparent,
@@ -106,9 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: hasAds
                     ? Container(
                         width: screenWidth,
-                        height: 87,
+                        height: 52,
                         color: AppColors.AppColor2,
-                        child: Image.asset(Assets.adsBanner))
+                        child: BannerAds())
                     : Container(
                         width: screenWidth,
                         height: 39,
@@ -198,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
+            barrierColor: Colors.black.withOpacity(0.75),
             context: context,
             builder: (context) => AlertDialog(
                   insetPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -263,7 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        Center(child: const MRECAds()),
                       ],
                     ),
                   ),

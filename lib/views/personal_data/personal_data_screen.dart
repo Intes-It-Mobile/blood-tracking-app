@@ -13,6 +13,8 @@ import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
+import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class PersonalDataScreen extends StatefulWidget {
@@ -40,6 +42,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   void initState() {
+     AppLovinFunction().initializeInterstitialAds();
     // sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     //   Provider.of<InformationNotifier>(context, listen: true).setInformationData(sugarInfoStore!.information!);
     Future.delayed(const Duration(microseconds: 100), () {
@@ -50,7 +53,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -63,6 +65,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 12),
@@ -343,15 +346,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                          onTap: () {
-                            if (sugarInfoStore!.isSwapedToMol == true) {
-                              Components().showDialogGoalMol(context);
-                            } else {
-                              Components().showDialogGoalMg(context);
-                            }
+                        onTap: () {
+                          if (sugarInfoStore!.isSwapedToMol == true) {
+                            Components().showDialogGoalMol(context);
+                          } else {
+                            Components().showDialogGoalMg(context);
+                          }
                         },
                         child: Container(
-                           height: MediaQuery.of(context).size.height * 0.14,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
@@ -466,6 +469,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ],
                 ),
               ),
+              Align(alignment: Alignment.bottomCenter ,child: const MRECAds()),
             ],
           ),
         );

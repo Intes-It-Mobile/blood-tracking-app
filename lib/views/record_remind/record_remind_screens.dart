@@ -8,19 +8,20 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/tile.dart';
 import '../edit_alarm/edit_alarm.dart';
 
-class ExampleAlarmHomeScreen extends StatefulWidget {
-  ExampleAlarmHomeScreen({Key? key}) : super(key: key);
+class AlarmScreen extends StatefulWidget {
+  AlarmScreen({Key? key}) : super(key: key);
 
   @override
-  State<ExampleAlarmHomeScreen> createState() => _ExampleAlarmHomeScreenState();
+  State<AlarmScreen> createState() => _AlarmScreenState();
 }
 
-class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
+class _AlarmScreenState extends State<AlarmScreen> {
   late List<dynamic> alarms;
   DateTime? alarmTime;
   static StreamSubscription? subscription;
@@ -30,6 +31,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   void initState() {
     super.initState();
     loadAlarms();
+    AppLovinFunction().initializeInterstitialAds();
     // subscription ??= Alarm.ringStream.stream.listen(
     //   (alarmSettings) => navigateToRingScreen(alarmSettings),
     // );
@@ -100,6 +102,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
               children: [
                 InkWell(
                   onTap: () {
+                    AppLovinFunction().showInterstitialAds();
                     Navigator.of(context).pop();
                   },
                   child: Container(
