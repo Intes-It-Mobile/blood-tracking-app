@@ -11,6 +11,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/assets.dart';
 import '../../utils/ads/banner_ads.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
 import '../../widgets/customs_bottom_appbar.dart';
 import '../../widgets/update_version_dialog.dart';
 import '../../widgets/widget_appbar.dart';
@@ -25,13 +27,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late AppLifecycleReactor _appLifecycleReactor;
   int _currentIndex = 0;
   bool hasAds = true;
-
+  AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    _appLifecycleReactor =
+        AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+    _appLifecycleReactor.listenToAppStateChanges();
+    super.initState();
   }
 
   @override
@@ -56,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               bottomNavigationBar: Container(
                 color: Colors.transparent,
-                margin: EdgeInsets.only(bottom: hasAds ? 45.0 : 30),
+                margin: EdgeInsets.only(bottom: hasAds ? 44.0 : 30),
                 child: BottomAppBarCum(
                   color: Colors.transparent,
                   surfaceTintColor: Colors.transparent,
@@ -108,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: hasAds
                     ? Container(
                         width: screenWidth,
-                        height: 52,
+                        height: 50,
                         color: AppColors.AppColor2,
                         child: BannerAds())
                     : Container(

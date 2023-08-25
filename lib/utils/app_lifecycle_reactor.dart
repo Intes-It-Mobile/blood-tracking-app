@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../main.dart';
+import 'ads_handle.dart';
 
 class AppLifecycleReactor {
-  // final AppOpenAdManager appOpenAdManager;
+  final AppOpenAdManager appOpenAdManager;
 
-  // AppLifecycleReactor({required this.appOpenAdManager});
-  AppLifecycleReactor();
+  AppLifecycleReactor({required this.appOpenAdManager});
 
   void listenToAppStateChanges() {
     AppStateEventNotifier.startListening();
@@ -18,8 +21,9 @@ class AppLifecycleReactor {
   }
 
   void _onAppStateChanged(AppState appState) {
-    // log('New AppState state: $appState,$isShowInterAndReward');
-    // if (appState == AppState.foreground) {
-    //   appOpenAdManager.showAdIfAvailable();
+    log('New AppState state: $appState,$isShowInterAndReward');
+    if (appState == AppState.foreground) {
+      appOpenAdManager.showAdIfAvailable();
     }
   }
+}

@@ -73,13 +73,14 @@ class AppOpenAdManager {
   bool isShowingAd = false;
 
   void dispose() {
-    // if (_appOpenAd != null || isShowInterAndReward) {
-    //   _appOpenAd!.dispose();
-    // }
+    if (_appOpenAd != null || isShowInterAndReward) {
+      _appOpenAd!.dispose();
+    }
   }
 
   /// Load an [AppOpenAd].
   void loadAd() {
+
     AppOpenAd.load(
       adUnitId: AdsIdConfig.appOpenAdsId,
       orientation: AppOpenAd.orientationPortrait,

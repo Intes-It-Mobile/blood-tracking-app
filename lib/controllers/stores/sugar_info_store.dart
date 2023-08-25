@@ -443,6 +443,12 @@ abstract class _SugarInfoStoreBase with Store {
     }
     print('popup');
 
+    AppLovinFunction().showInterstitialAds();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.home,
+      (route) => false,
+    );
     if (listRecordArrangedByTime!.length == 1) {
       sugarRecordGoal = listRecordArrangedByTime!.first;
       saveSugarRecordGoal(sugarRecordGoal!);
@@ -451,12 +457,6 @@ abstract class _SugarInfoStoreBase with Store {
         print("Check Goal");
       });
     }
-    AppLovinFunction().showInterstitialAds();
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Routes.home,
-      (route) => false,
-    );
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
 

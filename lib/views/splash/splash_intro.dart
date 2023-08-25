@@ -5,6 +5,7 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/controllers/stores/sugar_info_store.dart';
 import 'package:blood_sugar_tracking/routes.dart';
+import 'package:blood_sugar_tracking/utils/ads/mrec_ads.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -192,6 +193,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ],
             ),
+            Center(child: MRECAds())
           ],
         ),
       ),

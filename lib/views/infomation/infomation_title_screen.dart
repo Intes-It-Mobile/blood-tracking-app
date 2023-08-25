@@ -27,9 +27,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
-    AppOpenAdManager()
-      ..loadAd()
-      ..showAdIfAvailable();
+    
     super.initState();
   }
   @override

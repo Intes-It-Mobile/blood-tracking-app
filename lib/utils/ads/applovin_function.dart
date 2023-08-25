@@ -118,6 +118,7 @@ class AppLovinFunction {
     }
   }
 
+
   void initializeRewardedAds() {
     AppLovinMAX.setRewardedAdListener(
         RewardedAdListener(onAdLoadedCallback: (ad) async {
