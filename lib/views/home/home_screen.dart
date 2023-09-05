@@ -53,7 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               bottomNavigationBar: Container(
+                decoration: BoxDecoration( 
                 color: Colors.transparent,
+                  boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2), // Màu của bóng và độ trong suốt
+          spreadRadius: 5, // Độ lan rộng của bóng
+          blurRadius: 10, // Độ mờ của bóng
+          offset: Offset(0, 3), // Độ dịch chuyển của bóng
+        ),
+      ],),
                 margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
                 child: BottomAppBarCum(
                   color: Colors.transparent,
@@ -65,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             _buildNavItem(
                               Assets.iconBloodSugar,
@@ -74,22 +83,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               AppLocalizations.of(context)!
                                   .getTranslate('blood_sugar_txt'),
                             ),
-                            _buildNavItem(
-                                Assets.iconHeartRate,
-                                'B',
-                                1,
-                                AppLocalizations.of(context)!
-                                    .getTranslate('heart_rate_txt')),
+                            // _buildNavItem(
+                            //     Assets.iconHeartRate,
+                            //     'B',
+                            //     1,
+                            //     AppLocalizations.of(context)!
+                            //         .getTranslate('heart_rate_txt')),
                             _buildNavItem(
                                 Assets.iconInfoNav,
                                 'C',
-                                2,
+                                1,
                                 AppLocalizations.of(context)!
                                     .getTranslate('infor')),
                             _buildNavItem(
                                 Assets.iconSettingsNav,
                                 'C',
-                                3,
+                                2,
                                 AppLocalizations.of(context)!
                                     .getTranslate('setting_nav')),
                           ],
@@ -127,36 +136,37 @@ class _HomeScreenState extends State<HomeScreen> {
     EdgeInsets margin;
 
     // Align button A to the left edge of the screen
-    margin = const EdgeInsets.only(left: 2.0, right: 1.0);
+    // margin = const EdgeInsets.only(left: 2.0, right: 1.0);
 
-    if (index == 1) {
-      margin = EdgeInsets.fromLTRB(2, isSelected ? 0 : 10, 2, 0);
-    } else {
-      margin = EdgeInsets.fromLTRB(0, isSelected ? 0 : 10, 0, 0);
-    }
+    // if (index == 1) {
+    //   margin = EdgeInsets.fromLTRB(2, 10, 2, 0);
+    // } else {
+    //   margin = EdgeInsets.fromLTRB(0, 10, 0, 0);
+    // }
     BorderRadius borderRadius;
 
-    Color textColor = isSelected ? AppColors.mainBgColor : AppColors.AppColor2;
-    Color iconColor = isSelected ? AppColors.mainBgColor : AppColors.AppColor2;
-    Color btnColor = isSelected ? AppColors.AppColor2 : AppColors.AppColor3;
+    Color textColor = isSelected ? AppColors.AppColor4 : Colors.white;
+    Color iconColor = isSelected ? AppColors.AppColor4 : Colors.white;
+    Color btnColor = isSelected ? Colors.white : AppColors.AppColor2;
 
-    borderRadius = const BorderRadius.only(
-      topLeft: Radius.circular(8.0),
-      topRight: Radius.circular(8.0),
-    );
+    // borderRadius = const BorderRadius.only(
+    //   topLeft: Radius.circular(8.0),
+    //   topRight: Radius.circular(8.0),
+    // );
 
     return Expanded(
       child: GestureDetector(
         onTap: () => onTabTapped(index),
         child: Container(
           // margin: margin,
-          padding: margin,
+          // padding: margin,
           child: Container(
             decoration: BoxDecoration(
+              
               color: btnColor,
-              borderRadius: borderRadius,
+              // borderRadius: borderRadius,
             ),
-            padding: const EdgeInsets.fromLTRB(6, 12, 6, 12),
+            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),  
             child: Center(
               child: Column(
                 children: [
@@ -185,11 +195,11 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (_currentIndex) {
       case 0:
         return HomeScreenContent();
+      // case 1:
+      //   return HeartRateScreen();
       case 1:
-        return HeartRateScreen();
-      case 2:
         return InfomationScreen();
-      case 3:
+      case 2:
         return SettingScreen();
       default:
         return Container();
