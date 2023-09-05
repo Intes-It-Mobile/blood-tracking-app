@@ -15,6 +15,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/ads/mrec_ads.dart';
+
 class NewRecordHeartRateScreen extends StatefulWidget {
   const NewRecordHeartRateScreen({super.key});
 
@@ -125,6 +127,7 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
               ),
             ),
           _buildBtnSaveRecord(),
+          Center(child: const MRECAds()),
         ]),
       ),
     );

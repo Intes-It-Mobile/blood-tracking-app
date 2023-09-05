@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
+import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -20,6 +24,14 @@ class InfomationTitleScreen extends StatefulWidget {
 class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   String? title;
   List<String>? listChildTitle = [];
+  @override
+  void initState() {
+    AppLovinFunction().initializeInterstitialAds();
+    AppOpenAdManager()
+      ..loadAd()
+      ..showAdIfAvailable();
+    super.initState();
+  }
   @override
   void didChangeDependencies() {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -116,8 +128,32 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   }
 
   List<Widget> getListChildWidget() {
-    return listChildTitle!.map((e) {
-      return InfoButtonWidget(title: e);
+    return listChildTitle!.asMap().entries.map((entry) {
+      int index = entry.key;
+      String title = entry.value;
+
+      if ((index + 1) % 3 == 0) {
+        return Container(
+          child: Column(
+            children: [
+              InfoButtonWidget(title: title),
+                          Container(
+              width: double.infinity,
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeAdsId,
+                  )),
+            ),// You can customize this container if needed
+            ],
+          ),
+        );
+      } else {
+        return InfoButtonWidget(title: title);
+      }
     }).toList();
   }
 }

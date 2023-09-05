@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:applovin_max/applovin_max.dart';
+import 'dart:math';
 
+import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -18,6 +22,15 @@ class InfomationScreen extends StatefulWidget {
 }
 
 class _InfomationScreenState extends State<InfomationScreen> {
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +84,7 @@ class _InfomationScreenState extends State<InfomationScreen> {
                         arguments: {"title": "info_title_2"});
                   },
                 ),
+                Center(child: const MRECAds())
               ],
             ),
           )),

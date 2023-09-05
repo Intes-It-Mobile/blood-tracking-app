@@ -1,5 +1,8 @@
+import 'package:applovin_max/applovin_max.dart';
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:blood_sugar_tracking/AppLanguage.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
+import 'package:blood_sugar_tracking/constants/config_ads_id.dart';
 import 'package:blood_sugar_tracking/models/alarm_info/menu_info.dart';
 import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/models/information/information.dart';
@@ -13,14 +16,25 @@ import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 
+late AppsflyerSdk appsflyerSdk;
+bool isInitialized = false;
+bool isShowInterAndReward = false;
+
 void main() async {
-   // await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  Map? configuration = await AppLovinMAX.initialize(AdsIdConfig.sdkKey);
+  if (configuration != null) {
+    isInitialized = true;
+    debugPrint('Max is Init');
+  }
+  // await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // transparent status bar
       statusBarIconBrightness: Brightness.dark // dark text for status bar
@@ -31,6 +45,21 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   shareLocal = await ShareLocal.getInstance();
   await Alarm.init(showDebugLogs: true);
+  final AppsFlyerOptions options = AppsFlyerOptions(
+    afDevKey: 'G3MBmMRHTuEpXbqyqSWGeK',
+    showDebug: true,
+  );
+  appsflyerSdk = AppsflyerSdk(options);
+
+  appsflyerSdk.initSdk(
+    registerConversionDataCallback: true,
+    registerOnAppOpenAttributionCallback: true,
+  );
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
+
+  MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
   runApp(ChangeNotifierProvider(
     create: (context) => InformationNotifier(),
     child: MyApp(
@@ -86,12 +115,13 @@ class MyApp extends StatelessWidget {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback: (Locale? deviceLocale,
-                    Iterable<Locale> supportedLocales) =>
-                deviceLocale != null &&
-                        ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
-                    ? deviceLocale
-                    : supportedLocales.first,
+            localeResolutionCallback:
+                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                    deviceLocale != null &&
+                            ['en', 'vi', 'fr', 'zh', 'es']
+                                .contains(deviceLocale.languageCode)
+                        ? deviceLocale
+                        : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(
