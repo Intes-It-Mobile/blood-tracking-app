@@ -14,6 +14,7 @@ import '../../controllers/stores/edit_record_store.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -116,15 +117,18 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   }
 
   void _showDatePickerHour() {
+    DateTime hour = editRecordStore!.editingHourTime!;
+    DateTime day = editRecordStore!.editingDayTime!;
     DatePicker.showDatePicker(
       maxDateTime: DateTime.now(),
-      initialDateTime: editRecordStore!.editingHourTime!,
+      initialDateTime:
+          DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
         setState(() {
           selectedHour = hour;
-          // sugarInfoStore!.setchoosedDayHour(hour);
+          //sugarInfoStore!.setchoosedDayHour(hour);
           editRecordStore!.setEditedHourTime(hour);
         });
       },
@@ -148,6 +152,56 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
       // Chuỗi đã có phần thập phân
       editRecordStore!.sugarAmountEditControllerEdit.text = value;
     }
+  }
+
+  Widget customTextDate(String content) {
+    custom(String st) => Container(
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
+
+    return Row(
+      children: [
+        custom(content.substring(0, 4)),
+        custom(content.substring(5, 7)),
+        custom(content.substring(8, 10)),
+      ],
+    );
+  }
+
+  Widget customTextHour(String content) {
+    custom(String st) => Container(
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
+
+    return Row(
+      children: [
+        custom(content.substring(0, 2)),
+        Text(
+          ':',
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        custom(content.substring(3, 5)),
+      ],
+    );
   }
 
   @override
@@ -175,7 +229,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -239,29 +295,14 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       _showDatePickerDay();
                                     },
                                     child: Container(
-                                      margin: const EdgeInsets.only(right: 30),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 9),
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              "${DateFormat('yyyy/MM/dd').format(editRecordStore!.editingDayTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      child: customTextDate(
+                                          DateFormat('yyyy/MM/dd').format(
+                                              editRecordStore!
+                                                  .editingDayTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -272,28 +313,13 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       _showDatePickerHour();
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 9),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              "${DateFormat('HH:mm').format(editRecordStore!.editingHourTime!)}",
-                                              style: AppTheme.appBodyTextStyle
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      child: customTextHour(DateFormat('HH:mm')
+                                          .format(editRecordStore!
+                                              .editingHourTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -401,7 +427,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                   // Allow Decimal Number With Precision of 2 Only
                                                   FilteringTextInputFormatter
                                                       .allow(RegExp(
-                                                          r'^\d{0,3}\.?\d{0,2}')),
+                                                          r'^\d{0,3}\.?\d{0,1}')),
                                                 ],
                                                 controller: editRecordStore!
                                                     .sugarAmountEditControllerEdit,
@@ -504,6 +530,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               btnText: "save_record",
                             ),
                           ),
+                          Center(child: const MRECAds()),
                         ],
                       ),
                     ],
@@ -710,6 +737,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
 
 class StatusWidget extends StatefulWidget {
   EditRecordStore? editRecordStore;
+
   StatusWidget({super.key, this.editRecordStore});
 
   @override
@@ -752,7 +780,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 3);
+      String after = numberString.split('.').last.substring(0, 1);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";
@@ -760,17 +788,24 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
-    if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
-            .elementAt(level!)
-            .maxValue ==
-        630) {
-      print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()}");
-      return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+    if (sugarInfoStore!.isSwapedToMol == false) {
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
+        return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+      } else {
+        return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      }
     } else {
-      print(
-          "abcd abcd abcd${widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!.toString()} ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}");
-      return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
+        return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
+      } else {
+        return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
+      }
     }
   }
 
@@ -957,6 +992,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     "asleep"
   ];
   bool showDropdown = false;
+
   String? getTitle(String? value) {
     return AppLocalizations.of(context)!.getTranslate('${value}');
   }

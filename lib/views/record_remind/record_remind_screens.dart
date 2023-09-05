@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/tile.dart';
 import '../edit_alarm/edit_alarm.dart';
 
@@ -93,7 +94,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: AppColors.AppColor2,
-
         title: Column(
           children: [
             Row(
@@ -106,17 +106,16 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                     margin: const EdgeInsets.only(right: 12),
                     child: SvgPicture.asset(
                       Assets.iconBack,
-                      height: 44,
+                      height: 40,
+                      width: 40,
+                      fit: BoxFit.scaleDown,
                     ),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
-                    style: AppTheme.Headline20Text,
-                    overflow: TextOverflow
-                        .ellipsis, // Hiển thị dấu chấm ba khi có tràn
-                    maxLines: 2,
+                    style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
                   ),
                 ),
               ],
@@ -204,30 +203,19 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                     )
                     : Center(
                         child: Text(
-                          "No alarms set",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          "${AppLocalizations.of(context)!.getTranslate('no_alarms_set')}",
+                          style: AppTheme.Headline20Text.copyWith(color: Colors.black), // Hiển thị dấu chấm ba khi có tràn
                         ),
                       ),
               ),
-              GestureDetector(
+              ButtonWidget(
+                mainAxisSizeMin: true,
+                btnText: "new_alarm",
+                btnColor: AppColors.AppColor2,
+             //   suffixIconPath: Assets.iconEditBtn,
                 onTap: () {
                   navigateToAlarmScreen(null);
                 },
-                child: Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 10),
-                  width: 150,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.AppColor2),
-                  child: Center(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('new_alarm')}",
-                      style: AppTheme.TextInfomation14Text.copyWith(
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
               ),
               const SizedBox(
                 height: 50,

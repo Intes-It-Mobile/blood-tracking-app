@@ -41,7 +41,7 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
                   children: sugarInfoStore!.listRecord != null &&
                           sugarInfoStore!.listRecord!.isNotEmpty
                       ? listRecordDisplay()
-                      : [Container()],
+                      : [],
                 )
               : Row(
                   children: <Widget>[
@@ -74,15 +74,18 @@ class _RecordInfoSlideBarWidgetState extends State<RecordInfoSlideBarWidget> {
 
   List<Widget> listRecordDisplay() {
     return sugarInfoStore!.listRecordArrangedByTime!.map((e) {
-      return RecordInfoSliderItemWidget(
-        id: e.id,
-        dayTime: e.dayTime,
-        hourTime: e.hourTime,
-        sugarAmount: e.sugarAmount,
-        status: sugarInfoStore!.findStatusForValueAndConditionId(
-            sugarInfoStore!.listRootConditions!,
-            e.sugarAmount!,
-            e.conditionId!),
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 6),
+        child: RecordInfoSliderItemWidget(
+          id: e.id,
+          dayTime: e.dayTime,
+          hourTime: e.hourTime,
+          sugarAmount: e.sugarAmount,
+          status: sugarInfoStore!.findStatusForValueAndConditionId(
+              sugarInfoStore!.listRootConditions!,
+              e.sugarAmount!,
+              e.conditionId!),
+        ),
       );
     }).toList();
   }

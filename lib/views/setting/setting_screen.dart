@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/views/setting/language_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,7 +16,9 @@ import '../../widgets/button_widget.dart';
 import '../../widgets/change_unit_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  const SettingScreen({
+    super.key,
+  });
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -23,6 +26,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   SugarInfoStore? sugarInfoStore;
+
   Future<void> share() async {
     await FlutterShare.share(
       title: 'Blood Sugar Tracking',
@@ -33,6 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    sugarInfoStore!.fetchGoalAmountFromSharedPreferences();
     super.didChangeDependencies();
   }
 
@@ -67,12 +72,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.edit_range);
               },
               child: Container(
+                height: 32,
+                width: 32,
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 decoration: const BoxDecoration(
                     color: AppColors.mainBgColor,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: SvgPicture.asset(Assets.iconInfoBook),
+                child: SvgPicture.asset(Assets.iconEditRangeScreen),
               ),
             ),
             InkWell(
@@ -80,6 +87,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pushNamed(Routes.record_remind);
               },
               child: Container(
+                height: 32,
+                width: 32,
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                 decoration: const BoxDecoration(
@@ -101,6 +110,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   ButtonWidget(
                     onTap: () {
+                      Navigator.of(context).pushNamed(Routes.languages);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "languages",
+
+                  ),
+                  ButtonWidget(
+                    onTap: () {
                       sugarInfoStore!.exportToExcel(context);
                     },
                     btnColor: AppColors.AppColor2,
@@ -113,6 +130,13 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     btnColor: AppColors.AppColor2,
                     btnText: "change_unit",
+                  ),
+                  ButtonWidget(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Routes.personal_data);
+                    },
+                    btnColor: AppColors.AppColor2,
+                    btnText: "personal_data",
                   ),
                   ButtonWidget(
                     onTap: () {

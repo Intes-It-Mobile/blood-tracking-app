@@ -31,7 +31,7 @@ class _RecordHistoryState extends State<RecordHistory> {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        toolbarHeight: 80,
+        toolbarHeight: 68,
         backgroundColor: AppColors.AppColor2,
         title: Container(
           child: Column(
@@ -46,7 +46,9 @@ class _RecordHistoryState extends State<RecordHistory> {
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -65,30 +67,32 @@ class _RecordHistoryState extends State<RecordHistory> {
         ),
       ),
       body: Container(
-          width: MediaQuery.of(context).size.width,
-          // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-          margin: EdgeInsets.fromLTRB(27, 16, 12, 16),
-          child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
-              ? GridView.count(
-                  childAspectRatio: 1.5,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 2,
-                  children: buildHistoryRecord(),
-                )
-              : Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(Assets.history_mpt, width: 146, height: 146),
-                      SizedBox(height: 30),
-                      Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
-                          style:
-                              AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
-                    ],
-                  ),
-                ) //Trường hợp chưa có record,
-          ),
+        width: MediaQuery.of(context).size.width,
+        // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+        margin: EdgeInsets.fromLTRB(15, 16, 15, 16),
+        child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
+            ? GridView.count(
+                childAspectRatio: 1.8,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 12,
+                crossAxisCount: 2,
+                children: buildHistoryRecord(),
+              )
+            : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(Assets.history_mpt, width: 146, height: 146),
+                    SizedBox(height: 30),
+                    Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
+                        textAlign: TextAlign.center,
+                        style:
+                            AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
+                  ],
+                ),
+              ) //Trường hợp chưa có record,
+        ),
     );
   }
 

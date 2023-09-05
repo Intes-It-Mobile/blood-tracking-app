@@ -13,6 +13,7 @@ import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -171,6 +172,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       sugarInfoStore!.setchoosedDayTime(timeNow!);
       sugarInfoStore!.setStatusLevel("low");
       sugarInfoStore!.setChooseCondition(0);
+      sugarInfoStore!.errorText = "";
       if (sugarInfoStore!.isSwapedToMol == false) {
         sugarInfoStore!.setInputSugarAmount(80);
         sugarInfoStore!.sugarAmountController.text = "80.0";
@@ -195,6 +197,56 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     super.initState();
   }
 
+  Widget customTextDate(String content) {
+    custom(String st) => Container(
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
+
+    return Row(
+      children: [
+        custom(content.substring(0, 4)),
+        custom(content.substring(5, 7)),
+        custom(content.substring(8, 10)),
+      ],
+    );
+  }
+
+  Widget customTextHour(String content) {
+    custom(String st) => Container(
+          height: 32,
+          width: 60,
+          alignment: Alignment.center,
+          child: Text(
+            st,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        );
+
+    return Row(
+      children: [
+        custom(content.substring(0, 2)),
+        Text(
+          ':',
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        custom(content.substring(3, 5)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -217,7 +269,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       margin: const EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
                         Assets.iconBack,
-                        height: 44,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.scaleDown,
                       ),
                     ),
                   ),
@@ -255,73 +309,43 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           color: AppColors.AppColor4),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _showDatePickerDay();
-                    },
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 30),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 9),
-                            decoration: BoxDecoration(
-                                color: AppColors.AppColor3,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    sugarInfoStore!.choosedDayTimeStr != null
-                                        ? sugarInfoStore!.choosedDayTimeStr!
-                                        : DateFormat('yyyy     MM     dd')
-                                            .format(DateTime.now()),
-                                    style: AppTheme.appBodyTextStyle.copyWith(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              _showDatePickerHour();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
-                              decoration: BoxDecoration(
-                                  color: AppColors.AppColor3,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      sugarInfoStore!.choosedDayHourStr != null
-                                          ? sugarInfoStore!.choosedDayHourStr!
-                                          : DateFormat('HH:mm')
-                                              .format(DateTime.now()),
-                                      style: AppTheme.appBodyTextStyle.copyWith(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerDay();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextDate(
+                              sugarInfoStore!.choosedDayTimeStr != null
+                                  ? sugarInfoStore!.choosedDayTimeStr!
+                                  : DateFormat('yyyy/MM/dd')
+                                      .format(DateTime.now())),
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerHour();
+                        },
+                        child: Container(
+                          // padding: const EdgeInsets.symmetric(
+                          //     horizontal: 13, vertical: 9),
+                          decoration: const BoxDecoration(
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextHour(
+                              sugarInfoStore!.choosedDayHourStr != null
+                                  ? sugarInfoStore!.choosedDayHourStr!
+                                  : DateFormat('HH:mm').format(DateTime.now())),
+                        ),
+                      ),
+                    ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -424,7 +448,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                               // Allow Decimal Number With Precision of 2 Only
                                               FilteringTextInputFormatter.allow(
                                                   RegExp(
-                                                      r'^\d{0,3}\.?\d{0,2}')),
+                                                      r'^\d{0,3}\.?\d{0,1}')),
                                             ],
                                             controller: sugarInfoStore!
                                                 .sugarAmountController,
@@ -439,17 +463,19 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                                   .setInputSugarAmount(
                                                       double.parse(value));
                                               sugarInfoStore!
-                                                  .checkValidateNewRecord();
+                                                  .checkValidateNewRecord(
+                                                      context);
                                             },
                                             textAlign: TextAlign.center,
                                             onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
                                               sugarInfoStore!
                                                   .setInputSugarAmount(
                                                       double.tryParse(value)!);
                                               sugarInfoStore!
-                                                  .checkValidateNewRecord();
+                                                  .checkValidateNewRecord(
+                                                      context);
                                               print(value);
-                                              FocusScope.of(context).unfocus();
                                               addZeroToDecimal();
                                               // Navigator.of(context).pop();
                                             },
@@ -499,7 +525,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             print("Check Saving:${sugarInfoStore!.isSaving}");
                             if (sugarInfoStore!.isSaving == false) {
                               sugarInfoStore!.isSaving = true;
-                              sugarInfoStore!.checkValidateNewRecord();
+                              sugarInfoStore!.checkValidateNewRecord(context);
                               Future.delayed(Duration(milliseconds: 200), () {
                                 if (sugarInfoStore!.errorText == null ||
                                     sugarInfoStore!.errorText == "") {
@@ -532,17 +558,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           btnText: "save_record",
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          sugarInfoStore!.deleteData();
-                        },
-                        child: Center(
-                            child: Container(
-                          width: 20,
-                          height: 20,
-                          color: Colors.white,
-                        )),
-                      )
+                      Center(child: const MRECAds()),
                     ],
                   ),
                 ],
@@ -667,7 +683,7 @@ class _StatusWidgetState extends State<StatusWidget> {
     if (number.toString().length > 6) {
       String numberString = number.toString();
       String before = numberString.split('.').first;
-      String after = numberString.split('.').last.substring(0, 3);
+      String after = numberString.split('.').last.substring(0, 1);
       return "${before}.${after}";
     } else {
       return "${number.toString()}";
@@ -675,13 +691,24 @@ class _StatusWidgetState extends State<StatusWidget> {
   }
 
   String? getAmountValue(int? level) {
-    if (sugarInfoStore!.chooseCondition!.sugarAmount!
-            .elementAt(level!)
-            .maxValue ==
-        630) {
-      return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+    if (sugarInfoStore!.isSwapedToMol! == false) {
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
+        return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+      } else {
+        return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      }
     } else {
-      return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
+        return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
+      } else {
+        return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
+      }
     }
   }
 

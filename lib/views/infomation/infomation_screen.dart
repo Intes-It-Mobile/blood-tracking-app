@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:applovin_max/applovin_max.dart';
+import 'dart:math';
 
+import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
+import '../../utils/ads/mrec_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -18,11 +22,21 @@ class InfomationScreen extends StatefulWidget {
 }
 
 class _InfomationScreenState extends State<InfomationScreen> {
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      //  toolbarHeight: 80,
+        toolbarHeight: 80,
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.AppColor2,
         title: Row(
@@ -36,13 +50,15 @@ class _InfomationScreenState extends State<InfomationScreen> {
                 margin: const EdgeInsets.only(left: 17),
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('infor')}",
-                  style: AppTheme.Headline20Text.copyWith(letterSpacing: 2.0,),
+                  style: AppTheme.Headline20Text.copyWith(
+                    letterSpacing: 2.0,
+                  ),
                 )),
           ],
         ),
       ),
       body: Container(
-        height: double.infinity,
+          height: double.infinity,
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
@@ -51,57 +67,24 @@ class _InfomationScreenState extends State<InfomationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('info_title_1')}",
-                      style: AppTheme.Headline16Text.copyWith(
-                          color: AppColors.AppColor4)),
+                SizedBox(
+                  height: 7,
                 ),
                 InfoButtonWidget(
-                  title: "bls_do",
+                  title: "info_title_1",
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
+                        arguments: {"title": "info_title_1"});
+                  },
                 ),
                 InfoButtonWidget(
-                  title: "bls_low_what",
+                  title: "info_title_2",
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
+                        arguments: {"title": "info_title_2"});
+                  },
                 ),
-                InfoButtonWidget(
-                  title: "bls_high_what",
-                ),
-                InfoButtonWidget(
-                  title: "bls_monitor",
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('info_title_2')}",
-                      style: AppTheme.Headline16Text.copyWith(
-                          color: AppColors.AppColor4)),
-                ),
-                InfoButtonWidget(
-                  title: "prv_know_diabets",
-                ),
-                InfoButtonWidget(
-                  title: "prv_low_bls",
-                ),
-                InfoButtonWidget(
-                  title: "prv_treat_low_bls",
-                ),
-                InfoButtonWidget(
-                  title: "prv_change_type_2",
-                ),
-                InfoButtonWidget(
-                  title: "prv_what_type_1",
-                ),
-                InfoButtonWidget(
-                  title: "prv_what_type_2",
-                ),
-                InfoButtonWidget(
-                  title: "prv_ges_dia",
-                ),
+                Center(child: const MRECAds())
               ],
             ),
           )),

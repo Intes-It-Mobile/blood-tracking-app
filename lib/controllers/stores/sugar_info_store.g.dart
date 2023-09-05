@@ -867,6 +867,22 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$tempConditionIdAtom =
+      Atom(name: '_SugarInfoStoreBase.tempConditionId', context: context);
+
+  @override
+  int? get tempConditionId {
+    _$tempConditionIdAtom.reportRead();
+    return super.tempConditionId;
+  }
+
+  @override
+  set tempConditionId(int? value) {
+    _$tempConditionIdAtom.reportWrite(value, super.tempConditionId, () {
+      super.tempConditionId = value;
+    });
+  }
+
   late final _$hasChangedRootAtom =
       Atom(name: '_SugarInfoStoreBase.hasChangedRoot', context: context);
 
@@ -883,6 +899,143 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
     });
   }
 
+  late final _$informationAtom =
+      Atom(name: '_SugarInfoStoreBase.information', context: context);
+
+  @override
+  Information? get information {
+    _$informationAtom.reportRead();
+    return super.information;
+  }
+
+  @override
+  set information(Information? value) {
+    _$informationAtom.reportWrite(value, super.information, () {
+      super.information = value;
+    });
+  }
+
+  late final _$homeScreenContextAtom =
+      Atom(name: '_SugarInfoStoreBase.homeScreenContext', context: context);
+
+  @override
+  BuildContext? get homeScreenContext {
+    _$homeScreenContextAtom.reportRead();
+    return super.homeScreenContext;
+  }
+
+  @override
+  set homeScreenContext(BuildContext? value) {
+    _$homeScreenContextAtom.reportWrite(value, super.homeScreenContext, () {
+      super.homeScreenContext = value;
+    });
+  }
+
+  late final _$goalAmountAtom =
+      Atom(name: '_SugarInfoStoreBase.goalAmount', context: context);
+
+  @override
+  GoalAmount? get goalAmount {
+    _$goalAmountAtom.reportRead();
+    return super.goalAmount;
+  }
+
+  @override
+  set goalAmount(GoalAmount? value) {
+    _$goalAmountAtom.reportWrite(value, super.goalAmount, () {
+      super.goalAmount = value;
+    });
+  }
+
+  late final _$goalFirstMolValueAtom =
+      Atom(name: '_SugarInfoStoreBase.goalFirstMolValue', context: context);
+
+  @override
+  int? get goalFirstMolValue {
+    _$goalFirstMolValueAtom.reportRead();
+    return super.goalFirstMolValue;
+  }
+
+  @override
+  set goalFirstMolValue(int? value) {
+    _$goalFirstMolValueAtom.reportWrite(value, super.goalFirstMolValue, () {
+      super.goalFirstMolValue = value;
+    });
+  }
+
+  late final _$goalSecondMolValueAtom =
+      Atom(name: '_SugarInfoStoreBase.goalSecondMolValue', context: context);
+
+  @override
+  int? get goalSecondMolValue {
+    _$goalSecondMolValueAtom.reportRead();
+    return super.goalSecondMolValue;
+  }
+
+  @override
+  set goalSecondMolValue(int? value) {
+    _$goalSecondMolValueAtom.reportWrite(value, super.goalSecondMolValue, () {
+      super.goalSecondMolValue = value;
+    });
+  }
+
+  late final _$errorGoalTextAtom =
+      Atom(name: '_SugarInfoStoreBase.errorGoalText', context: context);
+
+  @override
+  String? get errorGoalText {
+    _$errorGoalTextAtom.reportRead();
+    return super.errorGoalText;
+  }
+
+  @override
+  set errorGoalText(String? value) {
+    _$errorGoalTextAtom.reportWrite(value, super.errorGoalText, () {
+      super.errorGoalText = value;
+    });
+  }
+
+  late final _$sugarRecordGoalAtom =
+      Atom(name: '_SugarInfoStoreBase.sugarRecordGoal', context: context);
+
+  @override
+  SugarRecord? get sugarRecordGoal {
+    _$sugarRecordGoalAtom.reportRead();
+    return super.sugarRecordGoal;
+  }
+
+  @override
+  set sugarRecordGoal(SugarRecord? value) {
+    _$sugarRecordGoalAtom.reportWrite(value, super.sugarRecordGoal, () {
+      super.sugarRecordGoal = value;
+    });
+  }
+
+  late final _$tempChooseUnitMolAtom =
+      Atom(name: '_SugarInfoStoreBase.tempChooseUnitMol', context: context);
+
+  @override
+  bool? get tempChooseUnitMol {
+    _$tempChooseUnitMolAtom.reportRead();
+    return super.tempChooseUnitMol;
+  }
+
+  @override
+  set tempChooseUnitMol(bool? value) {
+    _$tempChooseUnitMolAtom.reportWrite(value, super.tempChooseUnitMol, () {
+      super.tempChooseUnitMol = value;
+    });
+  }
+
+  late final _$getRootSugarInfoAsyncAction =
+      AsyncAction('_SugarInfoStoreBase.getRootSugarInfo', context: context);
+
+  @override
+  Future getRootSugarInfo(SugarInfo? fromSharepref) {
+    return _$getRootSugarInfoAsyncAction
+        .run(() => super.getRootSugarInfo(fromSharepref));
+  }
+
   late final _$saveNewRecordAsyncAction =
       AsyncAction('_SugarInfoStoreBase.saveNewRecord', context: context);
 
@@ -892,19 +1045,38 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
         .run(() => super.saveNewRecord(id, context));
   }
 
-  late final _$_SugarInfoStoreBaseActionController =
-      ActionController(name: '_SugarInfoStoreBase', context: context);
+  late final _$saveGoalAmountToSharedPreferencesAsyncAction = AsyncAction(
+      '_SugarInfoStoreBase.saveGoalAmountToSharedPreferences',
+      context: context);
 
   @override
-  dynamic getRootSugarInfo(SugarInfo? fromSharepref) {
-    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
-        name: '_SugarInfoStoreBase.getRootSugarInfo');
-    try {
-      return super.getRootSugarInfo(fromSharepref);
-    } finally {
-      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
-    }
+  Future saveGoalAmountToSharedPreferences() {
+    return _$saveGoalAmountToSharedPreferencesAsyncAction
+        .run(() => super.saveGoalAmountToSharedPreferences());
   }
+
+  late final _$getGoalAmountFromSharedPreferencesAsyncAction = AsyncAction(
+      '_SugarInfoStoreBase.getGoalAmountFromSharedPreferences',
+      context: context);
+
+  @override
+  Future<GoalAmount?> getGoalAmountFromSharedPreferences() {
+    return _$getGoalAmountFromSharedPreferencesAsyncAction
+        .run(() => super.getGoalAmountFromSharedPreferences());
+  }
+
+  late final _$fetchGoalAmountFromSharedPreferencesAsyncAction = AsyncAction(
+      '_SugarInfoStoreBase.fetchGoalAmountFromSharedPreferences',
+      context: context);
+
+  @override
+  Future<void> fetchGoalAmountFromSharedPreferences() {
+    return _$fetchGoalAmountFromSharedPreferencesAsyncAction
+        .run(() => super.fetchGoalAmountFromSharedPreferences());
+  }
+
+  late final _$_SugarInfoStoreBaseActionController =
+      ActionController(name: '_SugarInfoStoreBase', context: context);
 
   @override
   dynamic setValueToListFilter(List<Conditions>? list) {
@@ -1095,11 +1267,11 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic checkValidateNewRecord() {
+  dynamic checkValidateNewRecord(BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.checkValidateNewRecord');
     try {
-      return super.checkValidateNewRecord();
+      return super.checkValidateNewRecord(context);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1404,11 +1576,77 @@ mixin _$SugarInfoStore on _SugarInfoStoreBase, Store {
   }
 
   @override
-  dynamic setNewRootCondition() {
+  dynamic setNewRootCondition(int editConditionId, BuildContext context) {
     final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
         name: '_SugarInfoStoreBase.setNewRootCondition');
     try {
-      return super.setNewRootCondition();
+      return super.setNewRootCondition(editConditionId, context);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setGoalMolAmount() {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setGoalMolAmount');
+    try {
+      return super.setGoalMolAmount();
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic checkValidateGoalMolAmount(double goalAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkValidateGoalMolAmount');
+    try {
+      return super.checkValidateGoalMolAmount(goalAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  double matchValueMol(int? firstValue, int? seconValue) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.matchValueMol');
+    try {
+      return super.matchValueMol(firstValue, seconValue);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setGoalAmount(double? value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setGoalAmount');
+    try {
+      return super.setGoalAmount(value);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic checkGoal(double sugarAmount) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.checkGoal');
+    try {
+      return super.checkGoal(sugarAmount);
+    } finally {
+      _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTempChooseUnitMol(bool value) {
+    final _$actionInfo = _$_SugarInfoStoreBaseActionController.startAction(
+        name: '_SugarInfoStoreBase.setTempChooseUnitMol');
+    try {
+      return super.setTempChooseUnitMol(value);
     } finally {
       _$_SugarInfoStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1469,7 +1707,16 @@ isChartLoading: ${isChartLoading},
 isShouldRender: ${isShouldRender},
 tempCondition: ${tempCondition},
 tempConditionDisplay: ${tempConditionDisplay},
+tempConditionId: ${tempConditionId},
 hasChangedRoot: ${hasChangedRoot},
+information: ${information},
+homeScreenContext: ${homeScreenContext},
+goalAmount: ${goalAmount},
+goalFirstMolValue: ${goalFirstMolValue},
+goalSecondMolValue: ${goalSecondMolValue},
+errorGoalText: ${errorGoalText},
+sugarRecordGoal: ${sugarRecordGoal},
+tempChooseUnitMol: ${tempChooseUnitMol},
 isButtonEnabled: ${isButtonEnabled},
 isButtonEnabledEdit: ${isButtonEnabledEdit}
     ''';

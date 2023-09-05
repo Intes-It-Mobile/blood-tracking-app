@@ -104,7 +104,7 @@ class SugarRecord {
   String? dayTime;
   String? hourTime;
   String? conditionName;
-
+  bool?  informed;
   SugarRecord(
       {this.status,
       this.sugarAmount,
@@ -112,7 +112,7 @@ class SugarRecord {
       this.hourTime,
       this.id,
       this.conditionId,
-      this.conditionName});
+      this.conditionName,this.informed});
 
   SugarRecord.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -122,6 +122,7 @@ class SugarRecord {
     id = json['id'];
     conditionId = json['condition_id'];
     conditionName = json['condition_name'];
+    informed = json['informed']??false;
   }
 
   Map<String, dynamic> toJson() {
@@ -133,6 +134,7 @@ class SugarRecord {
     data['id'] = this.id;
     data['condition_id'] = this.conditionId;
     data['condition_name'] = this.conditionName;
+    data['informed'] = this.informed;
     return data;
   }
 }

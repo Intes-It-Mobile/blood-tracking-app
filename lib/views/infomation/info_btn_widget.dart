@@ -10,8 +10,8 @@ import '../../utils/locale/appLocalizations.dart';
 
 class InfoButtonWidget extends StatelessWidget {
   String? title;
-
-  InfoButtonWidget({super.key, required this.title});
+  Function()? onTap;
+  InfoButtonWidget({super.key, required this.title, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,10 @@ class InfoButtonWidget extends StatelessWidget {
 
     String? getImagePath(String? value) {
       switch (value) {
+        case 'info_title_1':
+          return Assets.knowBloodTitle;
+        case 'info_title_2':
+          return Assets.knowDiabetesTitle;
         case 'bls_do':
           return Assets.blood_test;
         case 'bls_low_what':
@@ -50,6 +54,10 @@ class InfoButtonWidget extends StatelessWidget {
 
     Color? getBtnColor(String? value) {
       switch (value) {
+        case 'info_title_1':
+          return AppColors.infoBtnColor1;
+        case 'info_title_2':
+          return AppColors.infoBtnColor5;
         case 'bls_do':
           return AppColors.infoBtnColor1;
         case 'bls_low_what':
@@ -78,27 +86,37 @@ class InfoButtonWidget extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.detail_info, arguments: {"type": title});
-      },
+      onTap: onTap == null
+          ? () {
+              Navigator.of(context)
+                  .pushNamed(Routes.detail_info, arguments: {"type": title});
+            }
+          : onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6),
-        padding: const EdgeInsets.fromLTRB(21, 11, 18, 11),
-        decoration: BoxDecoration(color: getBtnColor(title), borderRadius: const BorderRadius.all(Radius.circular(10))),
+        padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
+        decoration: BoxDecoration(
+            color: getBtnColor(title),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: [
             Expanded(
               child: Row(
                 children: [
-                  Image.asset(
-                    "${getImagePath(title)}",
-                    height: 42,
+                  Container(
+                    padding: EdgeInsets.all(14),
+                    // color:Colors.amber,
+                    child: Image.asset(
+                      "${getImagePath(title)}",
+                      height: 64,
+                    ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Flexible(
-                    child: Text("${getTitle(title)}", style: AppTheme.TextInfomation14Text  ),
+                    child: Text("${getTitle(title)}",
+                        style: AppTheme.TextInfomation14Text),
                   ),
                 ],
               ),
@@ -106,7 +124,6 @@ class InfoButtonWidget extends StatelessWidget {
             const SizedBox(
               width: 65,
             ),
-            SvgPicture.asset(Assets.iconArrowInfoBtn)
           ],
         ),
       ),

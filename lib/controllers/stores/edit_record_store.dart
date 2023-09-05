@@ -53,8 +53,7 @@ abstract class _EditRecordStoreBase with Store {
   setEditChooseCondition(int eDitchooseId) {
     editChooseCondition =
         listRootConditions!.where((e) => e.id == eDitchooseId).toList().first;
-    if (editChooseCondition != null) {
-    }
+    if (editChooseCondition != null) {}
   }
 
   @action
@@ -74,13 +73,26 @@ abstract class _EditRecordStoreBase with Store {
   @action
   setCurrentEditStatus(double inputAmount) {
     //  Lớn hơn >= min, nhỏ hơn max
-    if ( inputAmount >= 18 || inputAmount <= 630) {
-      currentEditStatus = editChooseCondition!.sugarAmount!
-          .where((e) =>
-              e.minValue! * 1.0 <= inputAmount &&
-              inputAmount < e.maxValue! * 1.0)
-          .first
-          .status;
+    if (inputAmount >= 18 || inputAmount <= 630) {
+      if ((inputAmount == 35 && isSwapedToMol == true) ||
+          (inputAmount == 630 && isSwapedToMol == false)) {
+        if (isSwapedToMol == true) {
+          if (inputAmount == 35) {
+            currentEditStatus = "diabetes";
+          }
+        } else {
+          if (inputAmount == 630) {
+            currentEditStatus = "diabetes";
+          }
+        }
+      } else {
+        currentEditStatus = editChooseCondition!.sugarAmount!
+            .where((e) =>
+                e.minValue! * 1.0 <= inputAmount &&
+                inputAmount < e.maxValue! * 1.0)
+            .first
+            .status;
+      }
     }
   }
 
@@ -187,7 +199,7 @@ abstract class _EditRecordStoreBase with Store {
   @observable
   bool? setCondition = true;
   @action
-  activeNewCondition(){
+  activeNewCondition() {
     setCondition = !setCondition!;
   }
 }
