@@ -58,9 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.2), // Màu của bóng và độ trong suốt
-          spreadRadius: 5, // Độ lan rộng của bóng
+          // spreadRadius: 5, // Độ lan rộng của bóng
           blurRadius: 10, // Độ mờ của bóng
-          offset: Offset(0, 3), // Độ dịch chuyển của bóng
+          offset: Offset(0, 1), // Độ dịch chuyển của bóng
         ),
       ],),
                 margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),

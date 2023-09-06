@@ -63,25 +63,25 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                 children: [
                   Row(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.info_screen);
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              color: AppColors.mainBgColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          padding: const EdgeInsets.fromLTRB(9, 6, 9, 6),
-                          child: SvgPicture.asset(
-                            Assets.iconInfoBook,
-                            height: 20,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.of(context).pushNamed(Routes.info_screen);
+                      //   },
+                      //   child: Container(
+                      //     decoration: const BoxDecoration(
+                      //         color: AppColors.mainBgColor,
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(5))),
+                      //     padding: const EdgeInsets.fromLTRB(9, 6, 9, 6),
+                      //     child: SvgPicture.asset(
+                      //       Assets.iconInfoBook,
+                      //       height: 20,
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
                       InkWell(
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.record_remind);
