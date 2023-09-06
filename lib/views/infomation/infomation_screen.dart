@@ -84,7 +84,7 @@ class _InfomationScreenState extends State<InfomationScreen> {
                         arguments: {"title": "info_title_2"});
                   },
                 ),
-                Center(child: const MRECAds())
+                // Center(child: const MRECAds())
               ],
             ),
           )),

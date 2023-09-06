@@ -155,7 +155,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           const Expanded(
             flex: 1,
             child:  Center(
-              child: MRECAds(),
+              // child: MRECAds(),
             ),
           ),
         ],

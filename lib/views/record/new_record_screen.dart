@@ -558,7 +558,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           btnText: "save_record",
                         ),
                       ),
-                      Center(child: const MRECAds()),
+                      // Center(child: const MRECAds()),
                     ],
                   ),
                 ],

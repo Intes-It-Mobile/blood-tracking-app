@@ -530,7 +530,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               btnText: "save_record",
                             ),
                           ),
-                          Center(child: const MRECAds()),
+                          // Center(child: const MRECAds()),
                         ],
                       ),
                     ],
