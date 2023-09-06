@@ -16,7 +16,6 @@ import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
@@ -56,10 +55,8 @@ void main() async {
     registerOnAppOpenAttributionCallback: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
-
-
-  MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
+  // MobileAds.instance.initialize();
+  // MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
   runApp(ChangeNotifierProvider(
     create: (context) => InformationNotifier(),
     child: MyApp(
@@ -115,13 +112,10 @@ class MyApp extends StatelessWidget {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback:
-                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                    deviceLocale != null &&
-                            ['en', 'vi', 'fr', 'zh', 'es']
-                                .contains(deviceLocale.languageCode)
-                        ? deviceLocale
-                        : supportedLocales.first,
+            localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                deviceLocale != null && ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
+                    ? deviceLocale
+                    : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(

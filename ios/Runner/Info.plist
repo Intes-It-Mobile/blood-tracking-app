@@ -50,5 +50,7 @@
 
 	<key>NSMicrophoneUsageDescription</key>
     <string>Need microphone access for uploading audio</string>
+    <key>NSCameraUsageDescription</key>
+        <string>camera</string>
 </dict>
 </plist>
