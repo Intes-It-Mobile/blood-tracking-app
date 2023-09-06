@@ -30,7 +30,7 @@ class _AdsNativeState extends State<AdsNative> {
             isNativeAdReady = true;
           });
         }, onAdFailedToLoad: (ad, e) {
-          log('native ads error:$e');
+          log('native ads error:$e'); 
           isNativeAdReady = false;
           ad.dispose();
         }),
