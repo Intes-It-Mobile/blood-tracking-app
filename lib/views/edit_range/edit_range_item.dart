@@ -142,7 +142,7 @@ class _EditRangeItemState extends State<EditRangeItem> {
                                   textAlignVertical: TextAlignVertical.top,
                                   
                                   // cursorHeight: 10,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                                   inputFormatters: [
                                     CustomInputFormatter(),
                                     FilteringTextInputFormatter.allow(

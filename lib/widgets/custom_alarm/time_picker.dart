@@ -2262,7 +2262,7 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField>
               focusNode: focusNode,
               textAlign: TextAlign.center,
               textInputAction: widget.inputAction,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               style: effectiveStyle,
               controller: controller.value,
               decoration: inputDecoration,

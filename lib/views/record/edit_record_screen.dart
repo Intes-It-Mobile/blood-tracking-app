@@ -455,7 +455,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                                       .unfocus();
                                                 },
                                                 keyboardType:
-                                                    TextInputType.number,
+                                                   TextInputType.numberWithOptions(decimal: true),
                                                 style: AppTheme.sugarInputText,
                                               ),
                                             ),

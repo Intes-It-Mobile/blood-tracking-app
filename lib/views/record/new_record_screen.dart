@@ -479,7 +479,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                               addZeroToDecimal();
                                               // Navigator.of(context).pop();
                                             },
-                                            keyboardType: TextInputType.number,
+                                            keyboardType: TextInputType.numberWithOptions(decimal: true),
                                             style: AppTheme.sugarInputText,
                                           ),
                                         ),
