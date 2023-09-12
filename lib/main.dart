@@ -13,6 +13,7 @@ import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.da
 import 'package:blood_sugar_tracking/views/select_unit/gender_screen.dart';
 import 'package:blood_sugar_tracking/views/splash/splash_screen.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
+import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,12 +22,18 @@ import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
+import 'package:blood_sugar_tracking/widgets/flushbar.dart';
 
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
 bool isShowInterAndReward = false;
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
+  // Alarm.ringStream.stream.listen((_) {
+  //   print("Ringing main");
+  // });
   WidgetsFlutterBinding.ensureInitialized();
   Map? configuration = await AppLovinMAX.initialize(AdsIdConfig.sdkKey);
   if (configuration != null) {
@@ -62,17 +69,35 @@ void main() async {
     child: MyApp(
       appLanguage: appLanguage,
     ),
+    
   ));
+   
+}
+class GlobalContext {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  // Cập nhật GlobalKey khi ứng dụng khởi động
+  static void init(BuildContext? context) {
+    context = navigatorKey.currentContext;
+  }
 }
 
 class MyApp extends StatelessWidget {
+
+
   final AppLanguage appLanguage;
 
-  const MyApp({super.key, required this.appLanguage});
+   MyApp({super.key, required this.appLanguage});
+
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    GlobalContext.init(context);
+    Alarm.ringStream.stream.listen((_) {
+        FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
+      print("Ringing main");
+    });
     TextSizeConfig.init(context);
     return Center(
         child: ChangeNotifierProvider<AppLanguage>(
@@ -96,6 +121,7 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return MaterialApp(
+            
             locale: model.appLocal,
             routes: Routes.routes,
             debugShowCheckedModeBanner: false,
@@ -112,10 +138,13 @@ class MyApp extends StatelessWidget {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                deviceLocale != null && ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
-                    ? deviceLocale
-                    : supportedLocales.first,
+            localeResolutionCallback:
+                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                    deviceLocale != null &&
+                            ['en', 'vi', 'fr', 'zh', 'es']
+                                .contains(deviceLocale.languageCode)
+                        ? deviceLocale
+                        : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(
@@ -139,6 +168,8 @@ class MyApp extends StatelessWidget {
             ),
             //  home: SelectUnit(),
             home: const SplashScreen(),
+            scaffoldMessengerKey: scaffoldMessengerKey,
+            navigatorKey: GlobalContext.navigatorKey,
           );
         }),
       ),

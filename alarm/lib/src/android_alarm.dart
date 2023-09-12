@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:alarm/alarm.dart';
 import 'package:alarm/service/storage.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:vibration/vibration.dart';
@@ -14,7 +15,7 @@ import 'package:vibration/vibration.dart';
 class AndroidAlarm {
   static const ringPort = 'alarm-ring';
   static const stopPort = 'alarm-stop';
-
+  static bool ringing = false; 
   static const platform =
   MethodChannel('com.gdelataillade.alarm/notifOnAppKill');
 
@@ -24,8 +25,10 @@ class AndroidAlarm {
 
   /// Initializes AndroidAlarmManager dependency.
   static Future<void> init() => AndroidAlarmManager.initialize();
+  
 
   /// Creates isolate communication channel and set alarm at given [dateTime].
+  static bool get isRinging => ringing;
   static Future<bool> set(
       int id,
       DateTime dateTime,
@@ -52,6 +55,9 @@ class AndroidAlarm {
         alarmPrint('$message');
         if (message == 'ring') {
           onRing?.call();
+          ringing = true;
+          print("Alarmmmmmm");
+    
         } else {
           if (vibrate && message is String && message.startsWith('vibrate')) {
             final audioDuration = message.split('-').last;
@@ -224,6 +230,7 @@ class AndroidAlarm {
   /// Sends the message `stop` to the isolate so the audio player
   /// can stop playing and dispose.
   static Future<bool> stop(int id) async {
+    ringing = false;
     vibrationsActive = false;
 
     final send = IsolateNameServer.lookupPortByName(stopPort);
