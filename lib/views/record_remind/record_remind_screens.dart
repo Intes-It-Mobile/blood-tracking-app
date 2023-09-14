@@ -170,6 +170,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                               onDismissed: () {
                                 Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
+                                print("alarm id: ${alarms[index].id}");
                               },
                               loopAudio: alarms[index].loopAudio,
                               onDelete: () {
@@ -236,7 +237,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 btnColor: Colors.amber,
                 //   suffixIconPath: Assets.iconEditBtn,
                 onTap: () {
-                    FlushbarManager().showFlushbar(context);
+                  FlushbarManager().showFlushbar(context);
                 },
               ),
               const SizedBox(

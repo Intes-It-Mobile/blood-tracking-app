@@ -1,3 +1,4 @@
+import 'package:alarm/service/notification.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:blood_sugar_tracking/AppLanguage.dart';
@@ -17,19 +18,21 @@ import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 import 'package:blood_sugar_tracking/widgets/flushbar.dart';
+import 'dart:io' show Platform;
 
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
 bool isShowInterAndReward = false;
 GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
-
+final RouteObserver routeObserver = RouteObserver();
 void main() async {
   // Alarm.ringStream.stream.listen((_) {
   //   print("Ringing main");
@@ -69,12 +72,12 @@ void main() async {
     child: MyApp(
       appLanguage: appLanguage,
     ),
-    
   ));
-   
 }
+
 class GlobalContext {
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   // Cập nhật GlobalKey khi ứng dụng khởi động
   static void init(BuildContext? context) {
@@ -82,26 +85,81 @@ class GlobalContext {
   }
 }
 
-class MyApp extends StatelessWidget {
-
-
+class MyApp extends StatefulWidget {
   final AppLanguage appLanguage;
 
-   MyApp({super.key, required this.appLanguage});
+  MyApp({super.key, required this.appLanguage});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  late AppLifecycleState? appState;
+  bool? isRingingAlarm = false;
   // This widget is the root of your application.
+  Future<void> requestNotificationPermission() async {
+    final PermissionStatus status = await Permission.notification.request();
+    if (status.isGranted) {
+      // Quyền đã được cấp
+      // Bạn có thể thực hiện các tác vụ liên quan đến thông báo ở đây
+    } else {
+      // Người dùng từ chối cấp quyền, bạn có thể hiển thị thông báo hoặc hướng dẫn người dùng cấp quyền thông báo.
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    requestNotificationPermission();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  String? getPreviousRouteName() {
+    if (routeObserver.history.length >= 2) {
+      // Lấy routeName của màn hình trước đó
+      final previousRoute =
+          routeObserver.history[routeObserver.history.length - 2];
+      return previousRoute.settings.name;
+    }
+    return null; // Nếu không có màn hình trước đó
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    setState(() {
+      appState = state;
+    });
+    if (state == AppLifecycleState.resumed) {
+      print('Ứng dụng đang ở chế độ foreground');
+    }
+    debugPrint('app state:${state.toString()}');
+    super.didChangeAppLifecycleState(state);
+  }
+
   @override
   Widget build(BuildContext context) {
     GlobalContext.init(context);
-    Alarm.ringStream.stream.listen((_) {
-        FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
-      print("Ringing main");
-    });
+    if (Platform.isIOS) {
+      Alarm.ringStream.stream.listen((_) {
+        isRingingAlarm = true;
+       
+        FlushbarManager()
+            .showFlushbar(GlobalContext.navigatorKey.currentContext!);
+        print("Ringing main");
+      });
+    }
+
     TextSizeConfig.init(context);
     return Center(
         child: ChangeNotifierProvider<AppLanguage>(
-      create: (_) => appLanguage,
+      create: (_) => widget.appLanguage,
       child: MultiProvider(
         providers: [
           Provider<SugarInfoStore>(
@@ -121,7 +179,6 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return MaterialApp(
-            
             locale: model.appLocal,
             routes: Routes.routes,
             debugShowCheckedModeBanner: false,
@@ -170,9 +227,28 @@ class MyApp extends StatelessWidget {
             home: const SplashScreen(),
             scaffoldMessengerKey: scaffoldMessengerKey,
             navigatorKey: GlobalContext.navigatorKey,
+            navigatorObservers: [routeObserver],
           );
         }),
       ),
     ));
+  }
+}
+
+class RouteObserver extends NavigatorObserver {
+  List<Route<dynamic>> _history = [];
+
+  List<Route<dynamic>> get history => _history;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPush(route, previousRoute);
+    _history.add(route);
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPop(route, previousRoute);
+    _history.remove(route);
   }
 }

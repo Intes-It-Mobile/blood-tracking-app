@@ -33,9 +33,10 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   String assetAudioOff = '.';
   @override
   void didUpdateWidget(covariant ExampleAlarmEditScreen oldWidget) {
-   saveAlarm();
+    saveAlarm();
     super.didUpdateWidget(oldWidget);
   }
+
   @override
   void initState() {
     super.initState();
@@ -76,7 +77,6 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   //   if (res != null) setState(() => alarmTime = res);
   // }
 
-
   AlarmSettings buildAlarmSettings() {
     final now = DateTime.now();
     final id = creating
@@ -101,10 +101,10 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       dateTime: dateTime,
       loopAudio: loopAudio,
       vibrate: vibrate,
-     // notificationTitle: loopAudio ? 'Enter a record' : null,
-    //  notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
+      notificationTitle: loopAudio ? 'Enter a record' : null,
+      notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
       assetAudioPath: showNotification ? assetAudio : '.',
-    //  soundAudio: showNotification,
+      soundAudio: showNotification,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
@@ -183,11 +183,13 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               return CupertinoSwitch(
                                 onChanged: (bool value) {
                                   setModalState(() {
-                                    widget.alarmSettings?.soundAudio = showNotification;
+                                    widget.alarmSettings?.soundAudio =
+                                        showNotification;
                                     showNotification = value;
                                   });
                                 },
-                                value: widget.alarmSettings?.soundAudio ?? showNotification,
+                                value: widget.alarmSettings?.soundAudio ??
+                                    showNotification,
                                 trackColor: AppColors.AppColor1,
                                 activeColor: AppColors.AppColor2,
                               );
@@ -269,7 +271,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                     child: creating == false
                         ? InkWell(
                             onTap: () {
-                               saveAlarm();
+                              saveAlarm();
                             },
                             child: Container(
                               width: double.infinity,

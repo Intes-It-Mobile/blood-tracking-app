@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -12,13 +13,15 @@ class AlarmNotification {
 
   final localNotif = FlutterLocalNotificationsPlugin();
 
+  AppLifecycleState? appLifecycleState;
+
   AlarmNotification._();
 
   /// Adds configuration for local notifications and initialize service.
   Future<void> init() async {
     const initializationSettingsAndroid = AndroidInitializationSettings(
       '@mipmap/ic_launcher',
-    );
+    );   
     const initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestSoundPermission: false,
@@ -94,8 +97,10 @@ class AlarmNotification {
     required DateTime dateTime,
     required String title,
     required String body,
-  }) async {
-    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+  }) async{
+    if(appLifecycleState != AppLifecycleState.resumed){
+
+      const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       presentAlert: false,
       presentBadge: false,
       presentSound: false,
@@ -109,6 +114,7 @@ class AlarmNotification {
       priority: Priority.max,
       playSound: false,
       enableLights: true,
+      onlyAlertOnce: true
     );
 
     const platformChannelSpecifics = NotificationDetails(
@@ -139,6 +145,10 @@ class AlarmNotification {
     } catch (e) {
       throw AlarmException('Schedule notification with id $id error: $e');
     }
+    }else{
+      print("checkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    }
+   
   }
 
   /// Cancels notification. Called when the alarm is cancelled or
