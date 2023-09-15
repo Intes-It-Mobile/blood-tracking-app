@@ -13,8 +13,6 @@ PODS:
   - AppsFlyerFramework/Main (6.11.2)
   - audio_session (0.0.1):
     - Flutter
-  - camera_avfoundation (0.0.1):
-    - Flutter
   - Firebase/Analytics (10.12.0):
     - Firebase/Core
   - Firebase/Core (10.12.0):
@@ -138,7 +136,6 @@ DEPENDENCIES:
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
   - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
-  - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -178,8 +175,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/appsflyer_sdk/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
-  camera_avfoundation:
-    :path: ".symlinks/plugins/camera_avfoundation/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
@@ -216,7 +211,6 @@ SPEC CHECKSUMS:
   appsflyer_sdk: 301fff96f8ba453ea23156e8fded79ab8853742a
   AppsFlyerFramework: e22e8f0e746b4f568d9bb0b078180c6ad95e2609
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
-  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
   firebase_analytics: 3bdcd8b68b7b8ccf28bbcdcfb994309f6232f873
   firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
