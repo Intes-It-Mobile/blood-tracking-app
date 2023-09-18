@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../utils/locale/appLocalizations.dart';
+import 'dart:io' show Platform;
 
 class ExampleAlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
@@ -103,7 +104,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showNotification ? assetAudio : '.',
+      assetAudioPath: showNotification ? assetAudio : Platform.isIOS?'assets/silent.mp3':'.',
       soundAudio: showNotification,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
