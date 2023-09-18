@@ -54,8 +54,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
       //   print("Ringing");
       // });
 
-      alarms.sort((a, b) =>
-          (savedDateString(a.dateTime)).compareTo(savedDateString(b.dateTime)));
+      alarms.sort((a, b) => (savedDateString(a.dateTime)).compareTo(savedDateString(b.dateTime)));
     });
   }
 
@@ -74,8 +73,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
               width: 400,
@@ -126,8 +124,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 Expanded(
                   child: Text(
                     "${AppLocalizations.of(context)!.getTranslate('record_remind')}",
-                    style: AppTheme
-                        .Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                    style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
                   ),
                 ),
               ],
@@ -147,20 +144,17 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                         itemCount: alarms.length,
                         separatorBuilder: (context, index) => Container(),
                         itemBuilder: (context, index) {
-                          var alarmTime = DateFormat('HH:mm')
-                              .format(alarms[index].dateTime);
+                          var alarmTime = DateFormat('HH:mm').format(alarms[index].dateTime);
                           print("aaaaaa: ${alarmTime}");
 
                           print("looAudio: ${alarms[index].loopAudio}");
                           // print("loopAudio: ${loopAudio}");
                           return Container(
                             height: MediaQuery.of(context).size.height * 0.13,
-                            margin: const EdgeInsets.only(
-                                top: 15, left: 17, right: 17),
+                            margin: const EdgeInsets.only(top: 15, left: 17, right: 17),
                             width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: AppColors.AppColor3),
+                            decoration:
+                                BoxDecoration(borderRadius: BorderRadius.circular(15), color: AppColors.AppColor3),
                             child: ExampleAlarmTile(
                               key: Key(alarms[index].id.toString()),
                               title: alarmTime,
@@ -168,19 +162,16 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 navigateToAlarmScreen(alarms[index]);
                               },
                               onDismissed: () {
-                                Alarm.stopDelete(alarms[index].id)
-                                    .then((_) => loadAlarms());
+                                Alarm.stopDelete(alarms[index].id).then((_) => loadAlarms());
                                 print("alarm id: ${alarms[index].id}");
                               },
                               loopAudio: alarms[index].loopAudio,
                               onDelete: () {
-                                Alarm.stopDelete(alarms[index].id)
-                                    .then((_) => loadAlarms());
+                                Alarm.stopDelete(alarms[index].id).then((_) => loadAlarms());
                               },
                               onLoopAudioChanged: (loopAudio) {
                                 alarms[index].loopAudio = loopAudio;
-                                var _alarmSettings =
-                                    Alarm.getAlarm(alarms[index].id);
+                                var _alarmSettings = Alarm.getAlarm(alarms[index].id);
                                 if (_alarmSettings != null) {
                                   Alarm.set(
                                       alarmSettings: AlarmSettings(
@@ -189,12 +180,8 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     loopAudio: loopAudio,
                                     soundAudio: _alarmSettings.soundAudio,
                                     vibrate: _alarmSettings.vibrate,
-                                    notificationTitle: loopAudio
-                                        ? _alarmSettings.notificationTitle
-                                        : null,
-                                    notificationBody: loopAudio
-                                        ? _alarmSettings.notificationBody
-                                        : null,
+                                    notificationTitle: loopAudio ? _alarmSettings.notificationTitle : null,
+                                    notificationBody: loopAudio ? _alarmSettings.notificationBody : null,
                                     assetAudioPath: '.',
                                     fadeDuration: 3.0,
                                     stopOnNotificationOpen: true,
@@ -216,9 +203,8 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                     : Center(
                         child: Text(
                           "${AppLocalizations.of(context)!.getTranslate('no_alarms_set')}",
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: Colors
-                                  .black), // Hiển thị dấu chấm ba khi có tràn
+                          style:
+                              AppTheme.Headline20Text.copyWith(color: Colors.black), // Hiển thị dấu chấm ba khi có tràn
                         ),
                       ),
               ),
@@ -229,15 +215,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                 //   suffixIconPath: Assets.iconEditBtn,
                 onTap: () {
                   navigateToAlarmScreen(null);
-                },
-              ),
-              ButtonWidget(
-                mainAxisSizeMin: true,
-                btnText: "new_alarm",
-                btnColor: Colors.amber,
-                //   suffixIconPath: Assets.iconEditBtn,
-                onTap: () {
-                  FlushbarManager().showFlushbar(context);
                 },
               ),
               const SizedBox(
@@ -253,10 +230,8 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   Widget hourMinute12H(AlarmSettings alarmSettings) {
     return TimePickerSpinner(
       itemHeight: 30,
-      highlightedTextStyle: AppTheme.hintText
-          .copyWith(fontWeight: FontWeight.w700, color: Colors.black),
-      normalTextStyle: AppTheme.hintText.copyWith(
-          fontWeight: FontWeight.w700, color: Colors.black.withOpacity(0.5)),
+      highlightedTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700, color: Colors.black),
+      normalTextStyle: AppTheme.hintText.copyWith(fontWeight: FontWeight.w700, color: Colors.black.withOpacity(0.5)),
       is24HourMode: true,
       onTimeChange: (time) {
         setState(() {

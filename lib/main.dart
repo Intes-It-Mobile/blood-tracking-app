@@ -17,6 +17,7 @@ import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +31,40 @@ import 'dart:io' show Platform;
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
 bool isShowInterAndReward = false;
-GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-    GlobalKey<ScaffoldMessengerState>();
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 final RouteObserver routeObserver = RouteObserver();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 void main() async {
   // Alarm.ringStream.stream.listen((_) {
   //   print("Ringing main");
   // });
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      print("noti permission deny");
+      Permission.notification.request();
+    }
+  });
+
+  flutterLocalNotificationsPlugin.getActiveNotifications();
+
+  var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  // final initializationSettingsIOS = IOSInitializationSettings(
+  //   requestSoundPermission: true,
+  //   requestBadgePermission: true,
+  //   requestAlertPermission: true,
+  // );
+
+  // var initializationSettings =
+  //     InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+  // flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  AlarmNotification.instance.requestPermission();
+
   Map? configuration = await AppLovinMAX.initialize(AdsIdConfig.sdkKey);
   if (configuration != null) {
     isInitialized = true;
@@ -49,7 +76,6 @@ void main() async {
       statusBarIconBrightness: Brightness.dark // dark text for status bar
       ));
   AppLanguage appLanguage = AppLanguage();
-  WidgetsFlutterBinding.ensureInitialized();
   await appLanguage.fetchLocale();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   shareLocal = await ShareLocal.getInstance();
@@ -58,13 +84,13 @@ void main() async {
     afDevKey: 'G3MBmMRHTuEpXbqyqSWGeK',
     showDebug: true,
   );
+
   appsflyerSdk = AppsflyerSdk(options);
 
   appsflyerSdk.initSdk(
     registerConversionDataCallback: true,
     registerOnAppOpenAttributionCallback: true,
   );
-  WidgetsFlutterBinding.ensureInitialized();
   // MobileAds.instance.initialize();
   // MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
   runApp(ChangeNotifierProvider(
@@ -76,8 +102,7 @@ void main() async {
 }
 
 class GlobalContext {
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // Cập nhật GlobalKey khi ứng dụng khởi động
   static void init(BuildContext? context) {
@@ -98,21 +123,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late AppLifecycleState? appState;
   bool? isRingingAlarm = false;
   // This widget is the root of your application.
-  Future<void> requestNotificationPermission() async {
-    final PermissionStatus status = await Permission.notification.request();
-    if (status.isGranted) {
-      // Quyền đã được cấp
-      // Bạn có thể thực hiện các tác vụ liên quan đến thông báo ở đây
-    } else {
-      // Người dùng từ chối cấp quyền, bạn có thể hiển thị thông báo hoặc hướng dẫn người dùng cấp quyền thông báo.
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    requestNotificationPermission();
   }
 
   @override
@@ -124,8 +139,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? getPreviousRouteName() {
     if (routeObserver.history.length >= 2) {
       // Lấy routeName của màn hình trước đó
-      final previousRoute =
-          routeObserver.history[routeObserver.history.length - 2];
+      final previousRoute = routeObserver.history[routeObserver.history.length - 2];
       return previousRoute.settings.name;
     }
     return null; // Nếu không có màn hình trước đó
@@ -146,15 +160,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     GlobalContext.init(context);
-    if (Platform.isIOS) {
-      Alarm.ringStream.stream.listen((_) {
-        isRingingAlarm = true;
-       
-        FlushbarManager()
-            .showFlushbar(GlobalContext.navigatorKey.currentContext!);
-        print("Ringing main");
-      });
-    }
+    Future.delayed(Duration(seconds: 2)).then((value) => {
+          if (Platform.isIOS)
+            {
+              Alarm.ringStream.stream.listen((_) {
+                isRingingAlarm = true;
+
+                FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
+                print("Ringing main");
+              })
+            }
+        });
 
     TextSizeConfig.init(context);
     return Center(
@@ -195,13 +211,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback:
-                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                    deviceLocale != null &&
-                            ['en', 'vi', 'fr', 'zh', 'es']
-                                .contains(deviceLocale.languageCode)
-                        ? deviceLocale
-                        : supportedLocales.first,
+            localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                deviceLocale != null && ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
+                    ? deviceLocale
+                    : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(

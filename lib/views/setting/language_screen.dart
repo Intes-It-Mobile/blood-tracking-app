@@ -92,9 +92,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               child: Container(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                   child: Center(
                     child: SvgPicture.asset(Assets.icSelect),
                   )),
@@ -131,18 +129,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           right: MediaQuery.of(context).size.width * 0.26,
                           top: 8),
                       decoration: BoxDecoration(
-                        color: index == _selectedIndex
-                            ? AppColors.AppColor2
-                            : Colors.white,
+                        color: index == _selectedIndex ? AppColors.AppColor2 : Colors.white,
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Center(
                         child: Text(
                           languages[index],
-                          style: AppTheme.TextInfomation14Text.copyWith(
-                            color: index == _selectedIndex
-                                ? Colors.white
-                                : AppColors.AppColor2,
+                          style: AppTheme.Headline20Text.copyWith(
+                            color: index == _selectedIndex ? Colors.white : AppColors.AppColor2,
                           ),
                         ),
                       ),
@@ -154,9 +148,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
           ),
           const Expanded(
             flex: 1,
-            child:  Center(
-              // child: MRECAds(),
-            ),
+            child: Center(
+                // child: MRECAds(),
+                ),
           ),
         ],
       ),
