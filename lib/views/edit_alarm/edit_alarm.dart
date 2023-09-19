@@ -31,6 +31,8 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   late bool vibrate;
   late bool showNotification;
   late String assetAudio;
+  late String assetAudioSilent= 'assets/silent.mp3';
+  late bool showAudio;
   String assetAudioOff = '.';
   @override
   void didUpdateWidget(covariant ExampleAlarmEditScreen oldWidget) {
@@ -48,7 +50,9 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       loopAudio = true;
       vibrate = true;
       showNotification = true;
+      showAudio =true;
       assetAudio = 'assets/marimba.mp3';
+      assetAudioSilent = 'assets/silent.mp3';
     } else {
       alarmTime = DateTime(
         widget.alarmSettings!.dateTime.hour,
@@ -56,12 +60,12 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       );
       loopAudio = widget.alarmSettings!.loopAudio;
       vibrate = widget.alarmSettings!.vibrate;
-      showNotification = widget.alarmSettings!.soundAudio;
+      showAudio = widget.alarmSettings!.soundAudio;
       showNotification = widget.alarmSettings!.notificationTitle != null &&
           widget.alarmSettings!.notificationTitle!.isNotEmpty &&
           widget.alarmSettings!.notificationBody != null &&
           widget.alarmSettings!.notificationBody!.isNotEmpty;
-      assetAudio = widget.alarmSettings!.assetAudioPath;
+      assetAudio =showAudio== true? widget.alarmSettings!.assetAudioPath: assetAudioSilent;
     }
   }
 
@@ -104,8 +108,12 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showNotification ? assetAudio : Platform.isIOS?'assets/silent.mp3':'.',
-      soundAudio: showNotification,
+      assetAudioPath: showAudio==true?(showNotification
+          ? assetAudio
+          : Platform.isIOS
+              ? 'assets/silent.mp3'
+              : '.'):'assets/silent.mp3',
+      soundAudio: showAudio,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
@@ -184,13 +192,13 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               return CupertinoSwitch(
                                 onChanged: (bool value) {
                                   setModalState(() {
+                                    showAudio = value;
                                     widget.alarmSettings?.soundAudio =
-                                        showNotification;
-                                    showNotification = value;
+                                        showAudio;
                                   });
                                 },
                                 value: widget.alarmSettings?.soundAudio ??
-                                    showNotification,
+                                    showAudio,
                                 trackColor: AppColors.AppColor1,
                                 activeColor: AppColors.AppColor2,
                               );
