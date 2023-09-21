@@ -316,7 +316,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               ),
                             ),
                           ),
-                  ),
+                  ), 
                 ),
               ),
             ],
@@ -326,3 +326,4 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     );
   }
 }
+                              
