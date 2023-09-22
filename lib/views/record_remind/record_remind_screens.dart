@@ -27,6 +27,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   static StreamSubscription? subscription;
   bool check = false;
   bool isRinging = false;
+  AlarmSettings? editAlarms;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -184,12 +185,6 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                 var _alarmSettings =
                                     Alarm.getAlarm(alarms[index].id);
                                 if (_alarmSettings != null) {
-                                  print(
-                                      "timenow: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now())}");
-                                  print(
-                                      "timenow alarmtime: ${DateFormat("yyyy-MM-dd HH:mm").format(_alarmSettings.dateTime)}");
-                                  print(
-                                      "is equal: ${(checkIsAfterNow(_alarmSettings.dateTime))}");
                                   Alarm.set(
                                       alarmSettings: AlarmSettings(
                                     id: _alarmSettings.id,
@@ -203,10 +198,10 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                                     soundAudio: _alarmSettings.soundAudio,
                                     vibrate: _alarmSettings.vibrate,
                                     notificationTitle: loopAudio
-                                        ? _alarmSettings.notificationTitle
+                                        ? alarms[index].notificationTitle
                                         : null,
                                     notificationBody: loopAudio
-                                        ? _alarmSettings.notificationBody
+                                        ? alarms[index].notificationBody
                                         : null,
                                     assetAudioPath: loopAudio ? assetAudio : assetAudioSilent,
                                     fadeDuration: 3.0,
@@ -252,6 +247,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
         ),
       ),
     );
+    
   }
 
   Widget hourMinute12H(AlarmSettings alarmSettings) {

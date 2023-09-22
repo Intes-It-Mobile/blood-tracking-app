@@ -57,6 +57,7 @@ class _DialogFeedbackState extends State<DialogFeedback> {
                   Navigator.of(context).pop();
                 },
                 child: Container(
+                  // width: ,
                   padding: const EdgeInsets.all(10),
                   child: SvgPicture.asset(
                     Assets.iconX,
