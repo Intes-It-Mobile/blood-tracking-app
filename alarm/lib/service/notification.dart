@@ -112,7 +112,7 @@ class AlarmNotification {
       channelDescription: 'Alarm plugin',
       importance: Importance.max,
       priority: Priority.max,
-      playSound: false,
+      playSound: true,
       enableLights: true,
       onlyAlertOnce: true
     );

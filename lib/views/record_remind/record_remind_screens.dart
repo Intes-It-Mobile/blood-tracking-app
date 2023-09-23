@@ -99,9 +99,9 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
     super.dispose();
   }
   String  assetAudio = 'assets/marimba.mp3';
-     String assetAudioSilent = 'assets/silent.mp3';
+    String assetAudioSilent = 'assets/silent.mp3';
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
