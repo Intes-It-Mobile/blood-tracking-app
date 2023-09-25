@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:blood_sugar_tracking/constants/app_theme.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:image/image.dart' as img;
@@ -15,7 +16,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../constants/config_ads_id.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 
 class HeartRateScreen extends StatefulWidget {
   const HeartRateScreen({super.key});
@@ -284,7 +287,12 @@ class _HeartRateScreenState extends State<HeartRateScreen> {
                   fontWeight: FontWeight.w600),
             ),
           _buildButtonNewRecord(),
-          Center(child: const MRECAds()),
+          Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
         ],
       ),
     );

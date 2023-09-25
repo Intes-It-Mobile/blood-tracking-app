@@ -7,9 +7,12 @@ import 'package:blood_sugar_tracking/controllers/stores/sugar_info_store.dart';
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/ads/mrec_ads.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../constants/config_ads_id.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/share_local.dart';
 
@@ -193,7 +196,12 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ],
             ),
-            Center(child: MRECAds())
+            Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),)
           ],
         ),
       ),

@@ -9,9 +9,12 @@ import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
 import 'package:blood_sugar_tracking/views/heart_rate/history_heart_rate/history_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../constants/config_ads_id.dart';
 import '../../../utils/ads/applovin_function.dart';
 import '../../../utils/ads/mrec_ads.dart';
+import '../../../utils/ads_handle.dart';
 
 class HistoryHeartRateScreen extends StatefulWidget {
   const HistoryHeartRateScreen({super.key});
@@ -70,7 +73,12 @@ class _HistoryHeartRateScreenState extends State<HistoryHeartRateScreen> {
               textAlign: TextAlign.center,
               style: AppTheme.TextIntroline16Text.copyWith(
                   fontWeight: FontWeight.w700, color: Colors.black)),
-          Center(child: const MRECAds()),
+          Center(child: const Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
         ],
       ),
     );

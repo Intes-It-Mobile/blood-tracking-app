@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class PersonalDataScreen extends StatefulWidget {
@@ -469,7 +472,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ],
                 ),
               ),
-              Align(alignment: Alignment.bottomCenter ,child: const MRECAds()),
+              Align(alignment: Alignment.bottomCenter ,child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
             ],
           ),
         );

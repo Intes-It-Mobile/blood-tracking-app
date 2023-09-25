@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:applovin_max/applovin_max.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:math';
 
 import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -84,7 +86,12 @@ class _InfomationScreenState extends State<InfomationScreen> {
                         arguments: {"title": "info_title_2"});
                   },
                 ),
-                Center(child: const MRECAds())
+                Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),)
               ],
             ),
           )),

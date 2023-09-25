@@ -4,18 +4,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/edit_record_store.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -533,7 +536,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               btnText: "save_record",
                             ),
                           ),
-                          Center(child: const MRECAds()),
+                          Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
                         ],
                       ),
                     ],

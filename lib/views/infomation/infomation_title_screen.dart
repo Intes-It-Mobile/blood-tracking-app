@@ -144,7 +144,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
                   padding: const EdgeInsets.all(8),
                   child: AdsNative(
                     templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeAdsId,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
                   )),
             ),// You can customize this container if needed
             ],

@@ -8,7 +8,9 @@ import 'package:blood_sugar_tracking/views/heart_rate/heart_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../constants/assets.dart';
+import '../../constants/config_ads_id.dart';
 import '../../utils/ads/banner_ads.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
@@ -278,7 +280,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Center(child: const MRECAds()),
+                        Center(child: const Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
                       ],
                     ),
                   ),

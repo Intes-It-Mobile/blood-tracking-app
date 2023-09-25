@@ -2,14 +2,17 @@ import 'package:blood_sugar_tracking/AppLanguage.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../constants/config_ads_id.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -152,7 +155,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
               },
             ),
           ),
-          Center(child: const MRECAds()),
+          Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
         ],
       ),
     );

@@ -13,10 +13,13 @@ import 'package:blood_sugar_tracking/widgets/sucess_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants/config_ads_id.dart';
 import '../../../utils/ads/applovin_function.dart';
 import '../../../utils/ads/mrec_ads.dart';
+import '../../../utils/ads_handle.dart';
 
 class NewRecordHeartRateScreen extends StatefulWidget {
   const NewRecordHeartRateScreen({super.key});
@@ -133,7 +136,12 @@ class _NewRecordHeartRateScreenState extends State<NewRecordHeartRateScreen> {
               ),
             ),
           _buildBtnSaveRecord(),
-          Center(child: const MRECAds()),
+          Center(child: const Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
         ]),
       ),
     );

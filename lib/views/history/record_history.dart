@@ -3,11 +3,14 @@ import 'package:blood_sugar_tracking/constants/assets.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../home/record_info_slide_bar/record_info_slide_bar_item.dart';
 
@@ -101,7 +104,12 @@ class _RecordHistoryState extends State<RecordHistory> {
                           style: AppTheme.TextIntroline16Text.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Colors.black)),
-                      Center(child: const MRECAds()),
+                      Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),),
                     ],
                   ),
                 ) //Trường hợp chưa có record,
