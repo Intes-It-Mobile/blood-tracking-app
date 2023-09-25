@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/app_theme.dart';
 import '../constants/colors.dart';
+import '../constants/config_ads_id.dart';
 import '../controllers/stores/sugar_info_store.dart';
 import '../utils/ads/mrec_ads.dart';
+import '../utils/ads_handle.dart';
 import '../utils/locale/appLocalizations.dart';
 
 class ChageUnitDialog extends StatefulWidget {
@@ -135,7 +138,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                     color: AppColors.AppColor2,
                   ),
                   child: Center(
-                    child: Text(
+                    child: Text( 
                       '${AppLocalizations.of(context)!.getTranslate('change_btn')}',
                       style: AppTheme.TextIntroline16Text,
                     ),
@@ -143,7 +146,12 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                 ),
               ),
               SizedBox(height: 55,),
-              Center(child: const MRECAds())
+              Center(child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                  )),)
             ],
           ),
         );

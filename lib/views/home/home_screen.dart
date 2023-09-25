@@ -15,6 +15,7 @@ import '../../utils/ads/banner_ads.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
 import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../widgets/customs_bottom_appbar.dart';
 import '../../widgets/update_version_dialog.dart';
 import '../../widgets/widget_appbar.dart';
@@ -280,12 +281,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Center(child: const Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),),
+                        // Center(
+                        //   child: const Padding(
+                        //     padding: const EdgeInsets.all(8),
+                        //     child: AdsNative(
+                        //       templateType: TemplateType.medium,
+                        //       nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

@@ -10,6 +10,7 @@ import 'package:blood_sugar_tracking/models/information/information_provider.dar
 import 'package:blood_sugar_tracking/routes.dart';
 import 'package:blood_sugar_tracking/utils/ads/applovin_function.dart';
 import 'package:blood_sugar_tracking/utils/ads_handle.dart';
+import 'package:blood_sugar_tracking/utils/ads_ios/ads.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/gender_screen.dart';
@@ -105,14 +106,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeDependencies();
   }
 
-  // @override
-  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-  //   if (state == AppLifecycleState.resumed && isShowInterAndReward == false) {
-  //     appOpenAdManager.showAdIfAvailable();
-  //   }
-  //   debugPrint('app state:${state.toString()}');
-  //   super.didChangeAppLifecycleState(state);
-  // }
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed && isShowInterAndReward == false) {
+      appOpenAdManager.showAdIfAvailable();
+    }
+    debugPrint('app state:${state.toString()}');
+    super.didChangeAppLifecycleState(state);
+  }
 
   // This widget is the root of your application.
   @override
@@ -191,4 +192,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ),
     ));
   }
+}
+
+void logAdRevenue(String eventName, String adFormat, double revenueAmount, String currencyCode) async {
+  final Map<String, dynamic> eventValues = {
+    "ad_platform": 'AdMob',
+    "ad_unit_name": eventName,
+    'ad_format': adFormat,
+    "af_revenue": revenueAmount / 1000000,
+    "af_currency": currencyCode,
+  };
+  await appsflyerSdk.logEvent('ad_impression', eventValues);
+  // await analytics.logEvent(name: 'ad_impression', parameters: eventValues);
 }

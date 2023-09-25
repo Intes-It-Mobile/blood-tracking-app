@@ -18,6 +18,8 @@ import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/sucess_dialog.dart';
@@ -566,10 +568,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                       Center(child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),),
+                  child: AdsNativeIos(templateType:TemplateType.medium,unitId: AdHelper.nativeInAppAdUnitId,)),),
                     ],
                   ),
                 ],
