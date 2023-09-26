@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:applovin_max/applovin_max.dart';
 import '../../constants/config_ads_id.dart';
 import '../ads_handle.dart';
+import '../ads_ios/ads.dart';
 import '/main.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
@@ -101,6 +102,7 @@ class AppLovinFunction {
       AppLovinMAX.loadInterstitial(AdsIdConfig.interstitialAdsId);
     }
   }
+
 
   void initializeRewardedAds() {
     AppLovinMAX.setRewardedAdListener(RewardedAdListener(onAdLoadedCallback: (ad) async {

@@ -5,11 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -26,9 +29,6 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
-    // AppOpenAdManager()
-    //   ..loadAd()
-    //   ..showAdIfAvailable();
     super.initState();
   }
 
@@ -76,6 +76,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).pop();
+                AppLovinFunction().showInterstitialAds();
               },
               child: Container(
                 margin: EdgeInsets.only(right: 12),
@@ -126,7 +127,31 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
     return listChildTitle!.asMap().entries.map((entry) {
       int index = entry.key;
       String title = entry.value;
-      return InfoButtonWidget(title: title);
+
+      if ((index + 1) % 3 == 0) {
+        return Container(
+          child: Column(
+            children: [
+              InfoButtonWidget(title: title),
+              Container(
+                width: double.infinity,
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                ),
+              ), // You can customize this container if needed
+            ],
+          ),
+        );
+      } else {
+        return InfoButtonWidget(title: title);
+      }
     }).toList();
   }
 }

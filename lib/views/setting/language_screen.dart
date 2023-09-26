@@ -2,13 +2,19 @@ import 'package:blood_sugar_tracking/AppLanguage.dart';
 import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../constants/config_ads_id.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -46,7 +52,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     } else {
       _selectedIndex = 0;
     }
-
+    AppLovinFunction().initializeInterstitialAds();
     super.initState();
   }
 
@@ -64,6 +70,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           children: [
             InkWell(
               onTap: () {
+                AppLovinFunction().showInterstitialAds();
                 Navigator.of(context).pop();
               },
               child: SvgPicture.asset(
@@ -92,9 +99,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               child: Container(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                   child: Center(
                     child: SvgPicture.asset(Assets.icSelect),
                   )),
@@ -157,6 +162,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
             child:  Center(
               // child: MRECAds(),
             ),
+          ),
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: AdsNative(
+                  templateType: TemplateType.medium,
+                  unitId: AdHelper.nativeInAppAdUnitId,
+                )),
           ),
         ],
       ),

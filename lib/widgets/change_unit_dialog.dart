@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/app_theme.dart';
 import '../constants/colors.dart';
+import '../constants/config_ads_id.dart';
 import '../controllers/stores/sugar_info_store.dart';
+import '../utils/ads/mrec_ads.dart';
+import '../utils/ads_handle.dart';
+import '../utils/ads_helper.dart';
+import '../utils/ads_ios/ads.dart';
 import '../utils/locale/appLocalizations.dart';
 
 class ChageUnitDialog extends StatefulWidget {
@@ -29,13 +35,12 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.17,
+          height: MediaQuery.of(context).size.height * 0.49,
           width: 400,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -43,8 +48,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.getTranslate('change_unit')}',
-                style: AppTheme.hintText.copyWith(
-                    color: AppColors.AppColor4, fontWeight: FontWeight.w600),
+                style: AppTheme.hintText.copyWith(color: AppColors.AppColor4, fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 15,
@@ -67,9 +71,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                         return Container(
                           height: 35,
                           decoration: BoxDecoration(
-                              color: isChooseMol == false
-                                  ? AppColors.AppColor3
-                                  : Colors.white,
+                              color: isChooseMol == false ? AppColors.AppColor3 : Colors.white,
                               border: Border.all(color: AppColors.AppColor3),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
@@ -99,9 +101,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                         return Container(
                           height: 35,
                           decoration: BoxDecoration(
-                              color: isChooseMol == true
-                                  ? AppColors.AppColor3
-                                  : Colors.white,
+                              color: isChooseMol == true ? AppColors.AppColor3 : Colors.white,
                               border: Border.all(color: AppColors.AppColor3),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
@@ -140,7 +140,18 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                     ),
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 55,
+              ),
+              Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AdsNative(
+                      templateType: TemplateType.medium,
+                      unitId: AdHelper.nativeInAppAdUnitId,
+                    )),
+              ),
             ],
           ),
         );

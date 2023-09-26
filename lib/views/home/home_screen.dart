@@ -8,7 +8,14 @@ import 'package:blood_sugar_tracking/views/heart_rate/heart_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../constants/assets.dart';
+import '../../constants/config_ads_id.dart';
+import '../../utils/ads/banner_ads.dart';
+import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../widgets/customs_bottom_appbar.dart';
 import '../../widgets/update_version_dialog.dart';
 import '../../widgets/widget_appbar.dart';
@@ -23,13 +30,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late AppLifecycleReactor _appLifecycleReactor;
   int _currentIndex = 0;
-  bool hasAds = false;
-
+  bool hasAds = true;
+  AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    _appLifecycleReactor =
+        AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+    _appLifecycleReactor.listenToAppStateChanges();
+    super.initState();
   }
 
   @override
@@ -115,9 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: hasAds
                     ? Container(
                         width: screenWidth,
-                        height: 87,
+                        height: 50,
                         color: AppColors.AppColor2,
-                        child: Image.asset(Assets.adsBanner))
+                        child: BannerAds())
                     : Container(
                         width: screenWidth,
                         height: 39,
@@ -208,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
+            barrierColor: Colors.black.withOpacity(0.75),
             context: context,
             builder: (context) => AlertDialog(
                   insetPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -273,7 +290,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        // Center(
+                        //   child: const Padding(
+                        //     padding: const EdgeInsets.all(8),
+                        //     child: AdsNative(
+                        //       templateType: TemplateType.medium,
+                        //       nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

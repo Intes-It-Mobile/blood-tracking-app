@@ -10,6 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads/banner_ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class DetailInformationScreen extends StatefulWidget {
@@ -24,6 +26,13 @@ class DetailInformationScreen extends StatefulWidget {
 
 class _DetailInformationScreenState extends State<DetailInformationScreen> {
   String? type;
+
+  @override
+  void initState() {
+    AppLovinFunction().initializeInterstitialAds();
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -36,6 +45,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -50,6 +60,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
@@ -76,49 +87,66 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
           ),
         ),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Center(
-              child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 15),
-                  height: 78,
-                  child: Image.asset(
-                    "${getImagePath(type)}",
-                    fit: BoxFit.fitHeight,
-                  )),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 15),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Html(
-                data: """
-                        ${getContent(type)}
-                      """,
-                style: {
-                  'p': Style(
-                      textAlign: TextAlign.justify,
-                      fontFamily: FontFamily
-                          .IBMPlexSans), // Áp dụng một style cho thẻ <p>
-                  'strong': Style(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: FontFamily
-                          .IBMPlexSans), // Áp dụng một style cho thẻ <strong>
-                },
-              ),
-              // child:
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                height: screenHeight * 0.8,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Column(children: [
+                      Center(
+                        child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 15),
+                            height: 78,
+                            child: Image.asset(
+                              "${getImagePath(type)}",
+                              fit: BoxFit.fitHeight,
+                            )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Html(
+                          data: """
+                                ${getContent(type)}
+                              """,
+                          style: {
+                            'p': Style(
+                                textAlign: TextAlign.justify,
+                                fontFamily: FontFamily
+                                    .IBMPlexSans), // Áp dụng một style cho thẻ <p>
+                            'strong': Style(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: FontFamily
+                                    .IBMPlexSans), // Áp dụng một style cho thẻ <strong>
+                          },
+                        ),
+                        // child:
 
-              //  HtmlWidget(
-              //   "${getContent(type)}",
-              //   textStyle: AppTheme.appBodyTextStyle.copyWith(
-              //       color: Colors.black,
-              //       fontWeight: FontWeight.w400,
-              //       fontSize: 16,),
-              // )
-            )
-          ]),
-        ),
+                        //  HtmlWidget(
+                        //   "${getContent(type)}",
+                        //   textStyle: AppTheme.appBodyTextStyle.copyWith(
+                        //       color: Colors.black,
+                        //       fontWeight: FontWeight.w400,
+                        //       fontSize: 16,),
+                        // )
+                      ),
+                    ])
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              )
+            ],
+          ),
+          Positioned(
+            bottom: 0,
+            child: Align(alignment: Alignment.bottomCenter , child: BannerAds()))
+        ],
       ),
     );
   }

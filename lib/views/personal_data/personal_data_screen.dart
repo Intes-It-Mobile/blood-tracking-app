@@ -6,13 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
+import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads/mrec_ads.dart';
+import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class PersonalDataScreen extends StatefulWidget {
@@ -40,6 +47,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   void initState() {
+    AppLovinFunction().initializeInterstitialAds();
     // sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     //   Provider.of<InformationNotifier>(context, listen: true).setInformationData(sugarInfoStore!.information!);
     Future.delayed(const Duration(microseconds: 100), () {
@@ -50,7 +58,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -63,6 +70,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 12),
@@ -77,8 +85,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   Expanded(
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('personal_data')}",
-                      style: AppTheme
-                          .Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                      style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
                     ),
                   ),
                 ],
@@ -122,9 +129,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,8 +155,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   ? Text(
                                       '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore?.information?.gender}')}',
                                       style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4,
-                                          fontWeight: FontWeight.w500),
+                                          color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                     )
                                   : const Text('error')
                             ],
@@ -168,9 +172,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(right: 15, left: 8),
                           padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,8 +198,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   ? Text(
                                       '${sugarInfoStore?.information?.old}',
                                       style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4,
-                                          fontWeight: FontWeight.w500),
+                                          color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                     )
                                   : const Text('error')
                             ],
@@ -221,9 +222,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,20 +249,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       children: [
                                         Text(
                                           '${sugarInfoStore?.information?.weight}',
-                                          style:
-                                              AppTheme.Headline20Text.copyWith(
-                                                  color: AppColors.AppColor4,
-                                                  fontWeight: FontWeight.w500),
+                                          style: AppTheme.Headline20Text.copyWith(
+                                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                         ),
                                         const SizedBox(
                                           width: 10,
                                         ),
                                         Text(
                                           '(kg)',
-                                          style:
-                                              AppTheme.Headline16Text.copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500),
+                                          style: AppTheme.Headline16Text.copyWith(
+                                              color: Colors.black, fontWeight: FontWeight.w500),
                                         )
                                       ],
                                     )
@@ -282,9 +277,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(right: 15, left: 8),
                           padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,20 +304,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       children: [
                                         Text(
                                           '${sugarInfoStore?.information?.tall}',
-                                          style:
-                                              AppTheme.Headline20Text.copyWith(
-                                                  color: AppColors.AppColor4,
-                                                  fontWeight: FontWeight.w500),
+                                          style: AppTheme.Headline20Text.copyWith(
+                                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                         ),
                                         const SizedBox(
                                           width: 10,
                                         ),
                                         Text(
                                           '(cm)',
-                                          style:
-                                              AppTheme.Headline16Text.copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500),
+                                          style: AppTheme.Headline16Text.copyWith(
+                                              color: Colors.black, fontWeight: FontWeight.w500),
                                         )
                                       ],
                                     )
@@ -343,20 +332,18 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                          onTap: () {
-                            if (sugarInfoStore!.isSwapedToMol == true) {
-                              Components().showDialogGoalMol(context);
-                            } else {
-                              Components().showDialogGoalMg(context);
-                            }
+                        onTap: () {
+                          if (sugarInfoStore!.isSwapedToMol == true) {
+                            Components().showDialogGoalMol(context);
+                          } else {
+                            Components().showDialogGoalMg(context);
+                          }
                         },
                         child: Container(
-                           height: MediaQuery.of(context).size.height * 0.14,
+                          height: MediaQuery.of(context).size.height * 0.14,
                           margin: const EdgeInsets.only(left: 15, right: 8),
                           padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: AppColors.AppColor3,
-                              borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,8 +372,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       return Text(
                                         '${cutString(sugarInfoStore!.goalAmount!.amount!)}',
                                         style: AppTheme.Headline20Text.copyWith(
-                                            color: AppColors.AppColor4,
-                                            fontWeight: FontWeight.w500),
+                                            color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                       );
                                     }),
                                     const SizedBox(
@@ -395,8 +381,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     Text(
                                       "${sugarInfoStore!.isSwapedToMol == true ? "(mmol/L)" : "(mg/dL)"}",
                                       style: AppTheme.Headline16Text.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500),
+                                          color: Colors.black, fontWeight: FontWeight.w500),
                                     )
                                   ],
                                 );
@@ -411,9 +396,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                         height: MediaQuery.of(context).size.height * 0.14,
                         margin: const EdgeInsets.only(right: 15, left: 8),
                         padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -444,8 +427,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       Text(
                                         '${sugarInfoStore?.information?.tall.toString()}',
                                         style: AppTheme.Headline20Text.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
+                                            color: Colors.white, fontWeight: FontWeight.w500),
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -453,8 +435,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       Text(
                                         '(cm)',
                                         style: AppTheme.Headline20Text.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
+                                            color: Colors.white, fontWeight: FontWeight.w500),
                                       )
                                     ],
                                   )
@@ -464,6 +445,17 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
                 ),
               ),
             ],

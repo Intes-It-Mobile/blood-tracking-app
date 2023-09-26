@@ -26,6 +26,7 @@ class _BannerAdsState extends State<BannerAds> {
   @override
   Widget build(BuildContext context) {
     return MaxAdView(
+      
       adUnitId: AdsIdConfig.bannerAdsId,
       adFormat: AdFormat.banner,
       isAutoRefreshEnabled: true,

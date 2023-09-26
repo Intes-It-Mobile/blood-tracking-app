@@ -12,6 +12,7 @@ import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
+import '../../utils/ads/applovin_function.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'package:flutter/services.dart' as rootBundle;
 
@@ -39,6 +40,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
 
   @override
   void initState() {
+    AppLovinFunction().initializeInterstitialAds(); 
     super.initState();
   }
 
@@ -72,6 +74,7 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).pop();
+                        AppLovinFunction().showInterstitialAds();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 12),

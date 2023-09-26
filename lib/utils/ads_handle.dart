@@ -1,17 +1,16 @@
-// import 'dart:developer';
-//
-// import '../constants/config_ads_id.dart';
-// import '../main.dart';
-// import 'package:flutter/material.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
-//
-// import 'ads_helper.dart';
+import 'dart:developer';
+
+import '../constants/config_ads_id.dart';
+import '../main.dart';
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import 'ads_helper.dart';
 //
 // class AdsNative extends StatefulWidget {
 //   final TemplateType templateType;
 //   final String nativeAdUnitId;
-//   const AdsNative(
-//       {super.key, required this.templateType, required this.nativeAdUnitId});
+//   const AdsNative({super.key, required this.templateType, required this.nativeAdUnitId});
 //
 //   @override
 //   State<AdsNative> createState() => _AdsNativeState();
@@ -37,8 +36,7 @@
 //         request: const AdRequest(
 //           nonPersonalizedAds: true,
 //         ),
-//         nativeTemplateStyle:
-//             NativeTemplateStyle(templateType: widget.templateType))
+//         nativeTemplateStyle: NativeTemplateStyle(templateType: widget.templateType))
 //       ..load();
 //     super.initState();
 //   }
@@ -47,12 +45,10 @@
 //   Widget build(BuildContext context) {
 //     return ConstrainedBox(
 //         constraints: BoxConstraints(
-//           minWidth:
-//               MediaQuery.of(context).size.width, // minimum recommended width
+//           minWidth: MediaQuery.of(context).size.width, // minimum recommended width
 //           minHeight: widget.templateType == TemplateType.medium
 //               ? MediaQuery.of(context).size.height * 0.35
-//               : MediaQuery.of(context).size.height *
-//                   0.14, // minimum recommended height
+//               : MediaQuery.of(context).size.height * 0.14, // minimum recommended height
 //           maxWidth: MediaQuery.of(context).size.width,
 //           maxHeight: widget.templateType == TemplateType.medium
 //               ? MediaQuery.of(context).size.height * 0.35
@@ -61,25 +57,26 @@
 //         child: isNativeAdReady ? AdWidget(ad: _nativeAd) : const SizedBox());
 //   }
 // }
-//
+
 // class AppOpenAdManager {
 //   /// Maximum duration allowed between loading and showing the ad.
 //   final Duration maxCacheDuration = const Duration(hours: 4);
-//
+
 //   /// Keep track of load time so we don't show an expired ad.
 //   DateTime? _appOpenLoadTime;
-//
+
 //   AppOpenAd? _appOpenAd;
 //   bool isShowingAd = false;
-//
+
 //   void dispose() {
-//     // if (_appOpenAd != null || isShowInterAndReward) {
-//     //   _appOpenAd!.dispose();
-//     // }
+//     if (_appOpenAd != null || isShowInterAndReward) {
+//       _appOpenAd!.dispose();
+//     }
 //   }
-//
+
 //   /// Load an [AppOpenAd].
 //   void loadAd() {
+
 //     AppOpenAd.load(
 //       adUnitId: AdsIdConfig.appOpenAdsId,
 //       orientation: AppOpenAd.orientationPortrait,
@@ -96,12 +93,10 @@
 //       ),
 //     );
 //   }
-//
 //   /// Whether an ad is available to be shown.
 //   bool get isAdAvailable {
 //     return _appOpenAd != null;
 //   }
-//
 //   /// Shows the ad, if one exists and is not already being shown.
 //   ///
 //   /// If the previously cached ad has expired, this just loads and caches a

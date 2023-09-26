@@ -8,6 +8,9 @@ import 'package:blood_sugar_tracking/models/enums.dart';
 import 'package:blood_sugar_tracking/models/information/information.dart';
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/routes.dart';
+import 'package:blood_sugar_tracking/utils/ads/applovin_function.dart';
+import 'package:blood_sugar_tracking/utils/ads_handle.dart';
+import 'package:blood_sugar_tracking/utils/ads_ios/ads.dart';
 import 'package:blood_sugar_tracking/utils/device/size_config.dart';
 import 'package:blood_sugar_tracking/views/personal_data/personal_data_screen.dart';
 import 'package:blood_sugar_tracking/views/select_unit/gender_screen.dart';
@@ -17,6 +20,7 @@ import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
@@ -40,6 +44,7 @@ void main() async {
     isInitialized = true;
     debugPrint('Max is Init');
   }
+
   // await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // transparent status bar
@@ -62,8 +67,11 @@ void main() async {
     registerOnAppOpenAttributionCallback: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
-  // MobileAds.instance.initialize();
-  // MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
+  MobileAds.instance.initialize();
+
+  MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
+      testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
+
   runApp(ChangeNotifierProvider(
     create: (context) => InformationNotifier(),
     child: MyApp(
@@ -82,13 +90,48 @@ class GlobalContext {
   }
 }
 
-class MyApp extends StatelessWidget {
-
-
+class MyApp extends StatefulWidget {
   final AppLanguage appLanguage;
 
    MyApp({super.key, required this.appLanguage});
 
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  AppOpenAdManager appOpenAdManager = AppOpenAdManager();
+  late AppLifecycleState app;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    AppLovinFunction().initializeInterstitialAds();
+    appOpenAdManager.loadAd();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement
+    super.didChangeDependencies();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed && isShowInterAndReward == false) {
+      appOpenAdManager.showAdIfAvailable();
+    }
+    debugPrint('app state:${state.toString()}');
+    super.didChangeAppLifecycleState(state);
+  }
 
   // This widget is the root of your application.
   @override
@@ -101,7 +144,7 @@ class MyApp extends StatelessWidget {
     TextSizeConfig.init(context);
     return Center(
         child: ChangeNotifierProvider<AppLanguage>(
-      create: (_) => appLanguage,
+      create: (_) => widget.appLanguage,
       child: MultiProvider(
         providers: [
           Provider<SugarInfoStore>(
@@ -175,4 +218,16 @@ class MyApp extends StatelessWidget {
       ),
     ));
   }
+}
+
+void logAdRevenue(String eventName, String adFormat, double revenueAmount, String currencyCode) async {
+  final Map<String, dynamic> eventValues = {
+    "ad_platform": 'AdMob',
+    "ad_unit_name": eventName,
+    'ad_format': adFormat,
+    "af_revenue": revenueAmount / 1000000,
+    "af_currency": currencyCode,
+  };
+  await appsflyerSdk.logEvent('ad_impression', eventValues);
+  // await analytics.logEvent(name: 'ad_impression', parameters: eventValues);
 }

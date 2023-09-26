@@ -16,6 +16,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/sugar_info/sugar_info.dart';
+import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads_handle.dart';
 import '../../widgets/share_local.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -47,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ).then((value) {
               FirebaseAnalytics.instance.logEvent(name: 'first_open');
             });
-      ;
+   
     });
   }
 
