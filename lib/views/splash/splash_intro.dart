@@ -13,6 +13,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constants/config_ads_id.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/share_local.dart';
 
@@ -111,12 +113,9 @@ class _IntroScreenState extends State<IntroScreen> {
                                 : GestureDetector(
                                     onTap: () {
                                       shareLocal.putBools("isFirst", true);
-                                      if (sugarInfoStore!.isSwapedToMol ==
-                                          true) {
-                                        sugarInfoStore!
-                                            .divisionListRootCondition();
-                                        sugarInfoStore!.saveIsSwapedToMol(
-                                            sugarInfoStore!.isSwapedToMol!);
+                                      if (sugarInfoStore!.isSwapedToMol == true) {
+                                        sugarInfoStore!.divisionListRootCondition();
+                                        sugarInfoStore!.saveIsSwapedToMol(sugarInfoStore!.isSwapedToMol!);
                                       }
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
@@ -127,8 +126,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                     child: Container(
                                       width: 120,
                                       height: 36,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 6),
+                                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(5),
@@ -136,9 +134,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                       child: Text(
                                         "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
                                         textAlign: TextAlign.center,
-                                        style: AppTheme.TextIntroline16Text
-                                            .copyWith(
-                                                color: AppColors.AppColor2),
+                                        style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
                                       ),
                                     ),
                                   ),
@@ -148,8 +144,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                   shareLocal.putBools("isFirst", true);
                                   if (sugarInfoStore!.isSwapedToMol == true) {
                                     sugarInfoStore!.divisionListRootCondition();
-                                    sugarInfoStore!.saveIsSwapedToMol(
-                                        sugarInfoStore!.isSwapedToMol!);
+                                    sugarInfoStore!.saveIsSwapedToMol(sugarInfoStore!.isSwapedToMol!);
                                   }
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
@@ -166,16 +161,13 @@ class _IntroScreenState extends State<IntroScreen> {
                                 width: 120,
                                 height: 36,
                                 margin: EdgeInsets.only(left: 17),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 6),
+                                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
                                 decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        AppColors.AppColor4,
-                                        AppColors.AppColor2,
-                                      ]),
+                                  gradient:
+                                      LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                                    AppColors.AppColor4,
+                                    AppColors.AppColor2,
+                                  ]),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
@@ -183,8 +175,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                       ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
                                       : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
                                   textAlign: TextAlign.center,
-                                  style: AppTheme.TextIntroline16Text.copyWith(
-                                      fontWeight: FontWeight.w500),
+                                  style: AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -196,12 +187,14 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ],
             ),
-            Center(child: Padding(
+            Center(
+              child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: AdsNative(
                     templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),)
+                    unitId: AdHelper.nativeInAppAdUnitId,
+                  )),
+            ),
           ],
         ),
       ),
@@ -212,8 +205,7 @@ class _IntroScreenState extends State<IntroScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill)),
+      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill)),
       child: Stack(
         children: [
           Column(

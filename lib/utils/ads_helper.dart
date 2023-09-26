@@ -16,7 +16,9 @@ class AdHelper {
       return 'ca-app-pub-9819920607806935/1180522328';
       // return 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/5555032909';
+      // return 'ca-app-pub-9819920607806935/5555032909';
+
+      /*test*/ return 'ca-app-pub-9819920607806935/5555032909';
     } else {
       throw UnsupportedError("no Platform");
     }
@@ -27,7 +29,8 @@ class AdHelper {
       return 'ca-app-pub-9819920607806935/6049705628';
       // return 'ca-app-pub-3940256099942544/3419835294';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/9789791382';
+      // return 'ca-app-pub-9819920607806935/9789791382';
+      /*test*/ return 'ca-app-pub-3940256099942544/5662855259';
     } else {
       throw UnsupportedError("no Platform");
     }
@@ -38,7 +41,8 @@ class AdHelper {
       return 'ca-app-pub-9819920607806935/8240754692';
       // return 'ca-app-pub-3940256099942544/1033173712';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/9494277910';
+      // return 'ca-app-pub-9819920607806935/9494277910';
+      /*test*/ return 'ca-app-pub-3940256099942544/4411468910';
     } else {
       throw UnsupportedError("no Platform");
     }
@@ -49,27 +53,32 @@ class AdHelper {
       return 'ca-app-pub-9819920607806935/8497519961';
       // return 'ca-app-pub-3940256099942544/2247696110';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/2302183608';
+      // return 'ca-app-pub-9819920607806935/2302183608';
+      /*test*/ return 'ca-app-pub-3940256099942544/3986624511';
     } else {
       throw UnsupportedError("no Platform");
     }
   }
+
   static String get nativeExitAdUnitId {
     if (Platform.isAndroid) {
       return 'ca-app-pub-9819920607806935/8497519961';
       // return 'ca-app-pub-3940256099942544/2247696110';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/1065123550';
+      // return 'ca-app-pub-9819920607806935/1065123550';
+      /*test*/ return 'ca-app-pub-3940256099942544/3986624511';
     } else {
       throw UnsupportedError("no Platform");
     }
   }
+
   static String get nativeIntroAdUnitId {
     if (Platform.isAndroid) {
       return 'ca-app-pub-9819920607806935/8497519961';
       // return 'ca-app-pub-3940256099942544/2247696110';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-9819920607806935/5004368568';
+      // return 'ca-app-pub-9819920607806935/5004368568';
+      /*test*/ return 'ca-app-pub-3940256099942544/3986624511';
     } else {
       throw UnsupportedError("no Platform");
     }
@@ -81,6 +90,7 @@ class AdHelper {
       // return 'ca-app-pub-3940256099942544/5224354917';
     } else if (Platform.isIOS) {
       return 'ca-app-pub-9819920607806935/1256695242';
+      /*test*/ return 'ca-app-pub-3940256099942544/1712485313';
     } else {
       throw UnsupportedError("no Platform");
     }
@@ -135,4 +145,3 @@ class AppLifecycleReactor {
     }
   }
 }
-

@@ -13,6 +13,8 @@ import '../../constants/config_ads_id.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -97,9 +99,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               child: Container(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                   child: Center(
                     child: SvgPicture.asset(Assets.icSelect),
                   )),
@@ -135,18 +135,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         right: MediaQuery.of(context).size.width * 0.26,
                         top: 8),
                     decoration: BoxDecoration(
-                      color: index == _selectedIndex
-                          ? AppColors.AppColor2
-                          : Colors.white,
+                      color: index == _selectedIndex ? AppColors.AppColor2 : Colors.white,
                       borderRadius: BorderRadius.circular(22),
                     ),
                     child: Center(
                       child: Text(
                         languages[index],
                         style: AppTheme.TextInfomation14Text.copyWith(
-                          color: index == _selectedIndex
-                              ? Colors.white
-                              : AppColors.AppColor2,
+                          color: index == _selectedIndex ? Colors.white : AppColors.AppColor2,
                         ),
                       ),
                     ),
@@ -155,12 +151,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
               },
             ),
           ),
-          Center(child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),),
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: AdsNative(
+                  templateType: TemplateType.medium,
+                  unitId: AdHelper.nativeInAppAdUnitId,
+                )),
+          ),
         ],
       ),
     );

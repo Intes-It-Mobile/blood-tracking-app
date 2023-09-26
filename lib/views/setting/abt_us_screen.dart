@@ -9,6 +9,8 @@ import '../../constants/colors.dart';
 import '../../constants/config_ads_id.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class AboutUsScreen extends StatefulWidget {
@@ -47,8 +49,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('about_us')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -81,46 +82,40 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 AppLocalizations.of(context)!.getTranslate('about_us_content'),
-                style: AppTheme.hintText.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: Colors.black),
+                style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: Colors.black),
                 textAlign: TextAlign.justify,
               ),
             ),
             const Spacer(),
-            Align(alignment: Alignment.bottomCenter, child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                // padding: const EdgeInsets.all(8),
+                child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                ),
+              ),
+            ),
             RichText(
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text:
-                        '${AppLocalizations.of(context)!.getTranslate('app_name_about_us')}',
-                    style: AppTheme.hintText.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        color: AppColors.AppColor2),
+                    text: '${AppLocalizations.of(context)!.getTranslate('app_name_about_us')}',
+                    style: AppTheme.hintText
+                        .copyWith(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.AppColor2),
                   ),
                   TextSpan(
-                    text:
-                        '${AppLocalizations.of(context)!.getTranslate('version')}',
-                    style: AppTheme.hintText.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: Colors.black),
+                    text: '${AppLocalizations.of(context)!.getTranslate('version')}',
+                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: Colors.black),
                   ),
                   TextSpan(
-                    text:
-                        '${AppLocalizations.of(context)!.getTranslate('1.0.0')}',
-                    style: AppTheme.hintText.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
+                    text: '${AppLocalizations.of(context)!.getTranslate('1.0.0')}',
+                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
                   )
                 ],
               ),

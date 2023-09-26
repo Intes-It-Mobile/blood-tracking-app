@@ -9,6 +9,8 @@ import '../constants/config_ads_id.dart';
 import '../controllers/stores/sugar_info_store.dart';
 import '../utils/ads/mrec_ads.dart';
 import '../utils/ads_handle.dart';
+import '../utils/ads_helper.dart';
+import '../utils/ads_ios/ads.dart';
 import '../utils/locale/appLocalizations.dart';
 
 class ChageUnitDialog extends StatefulWidget {
@@ -33,8 +35,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
@@ -47,8 +48,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.getTranslate('change_unit')}',
-                style: AppTheme.hintText.copyWith(
-                    color: AppColors.AppColor4, fontWeight: FontWeight.w600),
+                style: AppTheme.hintText.copyWith(color: AppColors.AppColor4, fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 15,
@@ -71,9 +71,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                         return Container(
                           height: 35,
                           decoration: BoxDecoration(
-                              color: isChooseMol == false
-                                  ? AppColors.AppColor3
-                                  : Colors.white,
+                              color: isChooseMol == false ? AppColors.AppColor3 : Colors.white,
                               border: Border.all(color: AppColors.AppColor3),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
@@ -103,9 +101,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                         return Container(
                           height: 35,
                           decoration: BoxDecoration(
-                              color: isChooseMol == true
-                                  ? AppColors.AppColor3
-                                  : Colors.white,
+                              color: isChooseMol == true ? AppColors.AppColor3 : Colors.white,
                               border: Border.all(color: AppColors.AppColor3),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
@@ -138,20 +134,24 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                     color: AppColors.AppColor2,
                   ),
                   child: Center(
-                    child: Text( 
+                    child: Text(
                       '${AppLocalizations.of(context)!.getTranslate('change_btn')}',
                       style: AppTheme.TextIntroline16Text,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 55,),
-              Center(child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),)
+              SizedBox(
+                height: 55,
+              ),
+              Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AdsNative(
+                      templateType: TemplateType.medium,
+                      unitId: AdHelper.nativeInAppAdUnitId,
+                    )),
+              ),
             ],
           ),
         );

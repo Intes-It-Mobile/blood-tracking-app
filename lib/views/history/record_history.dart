@@ -11,6 +11,8 @@ import '../../controllers/stores/sugar_info_store.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../home/record_info_slide_bar/record_info_slide_bar_item.dart';
 
@@ -67,8 +69,7 @@ class _RecordHistoryState extends State<RecordHistory> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_history')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow
-                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -82,8 +83,7 @@ class _RecordHistoryState extends State<RecordHistory> {
           width: MediaQuery.of(context).size.width,
           // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
           margin: EdgeInsets.fromLTRB(15, 16, 15, 16),
-          child: sugarInfoStore!.listRecord != null &&
-                  sugarInfoStore!.listRecord!.isNotEmpty
+          child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
               ? GridView.count(
                   childAspectRatio: 1.8,
                   mainAxisSpacing: 16,
@@ -98,18 +98,23 @@ class _RecordHistoryState extends State<RecordHistory> {
                     children: [
                       Image.asset(Assets.history_mpt, width: 146, height: 146),
                       SizedBox(height: 30),
-                      Text(
-                          "${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
+                      Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
                           textAlign: TextAlign.center,
-                          style: AppTheme.TextIntroline16Text.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black)),
-                      Center(child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),),
+                          style:
+                              AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Center(
+                            child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: AdsNative(
+                                  templateType: TemplateType.medium,
+                                  unitId: AdHelper.nativeInAppAdUnitId,
+                                )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ) //Trường hợp chưa có record,

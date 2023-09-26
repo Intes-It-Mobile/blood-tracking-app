@@ -28,8 +28,7 @@ class _AdsBannerState extends State<AdsBanner> {
   Future<void> _loadAd() async {
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
     final AnchoredAdaptiveBannerAdSize? size =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-            MediaQuery.of(context).size.width.truncate());
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(MediaQuery.of(context).size.width.truncate());
 
     if (size == null) {
       print('Unable to get height of anchored banner.');
@@ -58,8 +57,7 @@ class _AdsBannerState extends State<AdsBanner> {
           onAdClosed: (Ad ad) {},
           // Called when an impression occurs on the ad.
           onAdImpression: (Ad ad) {},
-          onPaidEvent: (Ad ad, double valueMicros, PrecisionType precision,
-              String currencyCode) {
+          onPaidEvent: (Ad ad, double valueMicros, PrecisionType precision, String currencyCode) {
             logAdRevenue(ad.adUnitId, 'bannerAd', valueMicros, currencyCode);
           }),
     );
@@ -80,16 +78,16 @@ class _AdsBannerState extends State<AdsBanner> {
 
 bool isShowAOA = true;
 
-class AdsNativeIos extends StatefulWidget {
+class AdsNative extends StatefulWidget {
   final TemplateType templateType;
   String? unitId;
-  AdsNativeIos({super.key, required this.templateType, this.unitId});
+  AdsNative({super.key, required this.templateType, this.unitId});
 
   @override
-  State<AdsNativeIos> createState() => _AdsNativeIosState();
+  State<AdsNative> createState() => _AdsNativeState();
 }
 
-class _AdsNativeIosState extends State<AdsNativeIos> {
+class _AdsNativeState extends State<AdsNative> {
   late NativeAd _nativeAd;
   bool isNativeAdReady = false;
 
@@ -105,15 +103,13 @@ class _AdsNativeIosState extends State<AdsNativeIos> {
           print(e);
           isNativeAdReady = false;
           ad.dispose();
-        }, onPaidEvent: (Ad ad, double valueMicros, PrecisionType precision,
-            String currencyCode) {
+        }, onPaidEvent: (Ad ad, double valueMicros, PrecisionType precision, String currencyCode) {
           logAdRevenue(ad.adUnitId, 'nativeAd', valueMicros, currencyCode);
         }),
         request: const AdRequest(
           nonPersonalizedAds: true,
         ),
-        nativeTemplateStyle:
-            NativeTemplateStyle(templateType: widget.templateType))
+        nativeTemplateStyle: NativeTemplateStyle(templateType: widget.templateType))
       ..load();
     super.initState();
   }
@@ -122,12 +118,10 @@ class _AdsNativeIosState extends State<AdsNativeIos> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth:
-              MediaQuery.of(context).size.width, // minimum recommended width
+          minWidth: MediaQuery.of(context).size.width, // minimum recommended width
           minHeight: widget.templateType == TemplateType.medium
               ? MediaQuery.of(context).size.height * 0.39
-              : MediaQuery.of(context).size.height *
-                  0.14, // minimum recommended height
+              : MediaQuery.of(context).size.height * 0.14, // minimum recommended height
           maxWidth: MediaQuery.of(context).size.width,
           maxHeight: widget.templateType == TemplateType.medium
               ? MediaQuery.of(context).size.height * 0.39
@@ -179,10 +173,8 @@ class ShowInterstitialAdsController {
             appsflyerSdk.logEvent('af_inters_api_called', {});
             interstitialAd = ad;
 
-            ad.onPaidEvent = (Ad ad, double valueMicros,
-                PrecisionType precision, String currencyCode) {
-              logAdRevenue(
-                  ad.adUnitId, 'interstitialAd', valueMicros, currencyCode);
+            ad.onPaidEvent = (Ad ad, double valueMicros, PrecisionType precision, String currencyCode) {
+              logAdRevenue(ad.adUnitId, 'interstitialAd', valueMicros, currencyCode);
             };
           },
           // Called when an ad request failed.

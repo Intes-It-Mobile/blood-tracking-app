@@ -6,61 +6,57 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ads_helper.dart';
-
-class AdsNative extends StatefulWidget {
-  final TemplateType templateType;
-  final String nativeAdUnitId;
-  const AdsNative(
-      {super.key, required this.templateType, required this.nativeAdUnitId});
-
-  @override
-  State<AdsNative> createState() => _AdsNativeState();
-}
-
-class _AdsNativeState extends State<AdsNative> {
-  late NativeAd _nativeAd;
-  bool isNativeAdReady = false;
-
-  @override
-  void initState() {
-    _nativeAd = NativeAd(
-        adUnitId: widget.nativeAdUnitId,
-        listener: NativeAdListener(onAdLoaded: (_) {
-          setState(() {
-            isNativeAdReady = true;
-          });
-        }, onAdFailedToLoad: (ad, e) {
-          log('native ads error:$e');
-          isNativeAdReady = false;
-          ad.dispose();
-        }),
-        request: const AdRequest(
-          nonPersonalizedAds: true,
-        ),
-        nativeTemplateStyle:
-            NativeTemplateStyle(templateType: widget.templateType))
-      ..load();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth:
-              MediaQuery.of(context).size.width, // minimum recommended width
-          minHeight: widget.templateType == TemplateType.medium
-              ? MediaQuery.of(context).size.height * 0.35
-              : MediaQuery.of(context).size.height *
-                  0.14, // minimum recommended height
-          maxWidth: MediaQuery.of(context).size.width,
-          maxHeight: widget.templateType == TemplateType.medium
-              ? MediaQuery.of(context).size.height * 0.35
-              : MediaQuery.of(context).size.height * 0.14,
-        ),
-        child: isNativeAdReady ? AdWidget(ad: _nativeAd) : const SizedBox());
-  }
-}
+//
+// class AdsNative extends StatefulWidget {
+//   final TemplateType templateType;
+//   final String nativeAdUnitId;
+//   const AdsNative({super.key, required this.templateType, required this.nativeAdUnitId});
+//
+//   @override
+//   State<AdsNative> createState() => _AdsNativeState();
+// }
+//
+// class _AdsNativeState extends State<AdsNative> {
+//   late NativeAd _nativeAd;
+//   bool isNativeAdReady = false;
+//
+//   @override
+//   void initState() {
+//     _nativeAd = NativeAd(
+//         adUnitId: widget.nativeAdUnitId,
+//         listener: NativeAdListener(onAdLoaded: (_) {
+//           setState(() {
+//             isNativeAdReady = true;
+//           });
+//         }, onAdFailedToLoad: (ad, e) {
+//           log('native ads error:$e');
+//           isNativeAdReady = false;
+//           ad.dispose();
+//         }),
+//         request: const AdRequest(
+//           nonPersonalizedAds: true,
+//         ),
+//         nativeTemplateStyle: NativeTemplateStyle(templateType: widget.templateType))
+//       ..load();
+//     super.initState();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ConstrainedBox(
+//         constraints: BoxConstraints(
+//           minWidth: MediaQuery.of(context).size.width, // minimum recommended width
+//           minHeight: widget.templateType == TemplateType.medium
+//               ? MediaQuery.of(context).size.height * 0.35
+//               : MediaQuery.of(context).size.height * 0.14, // minimum recommended height
+//           maxWidth: MediaQuery.of(context).size.width,
+//           maxHeight: widget.templateType == TemplateType.medium
+//               ? MediaQuery.of(context).size.height * 0.35
+//               : MediaQuery.of(context).size.height * 0.14,
+//         ),
+//         child: isNativeAdReady ? AdWidget(ad: _nativeAd) : const SizedBox());
+//   }
+// }
 
 // class AppOpenAdManager {
 //   /// Maximum duration allowed between loading and showing the ad.

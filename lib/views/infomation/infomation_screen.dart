@@ -13,6 +13,8 @@ import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -24,10 +26,6 @@ class InfomationScreen extends StatefulWidget {
 }
 
 class _InfomationScreenState extends State<InfomationScreen> {
-
-
-
-
   @override
   void initState() {
     super.initState();
@@ -75,23 +73,23 @@ class _InfomationScreenState extends State<InfomationScreen> {
                 InfoButtonWidget(
                   title: "info_title_1",
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
-                        arguments: {"title": "info_title_1"});
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen, arguments: {"title": "info_title_1"});
                   },
                 ),
                 InfoButtonWidget(
                   title: "info_title_2",
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.infoTitleScreen,
-                        arguments: {"title": "info_title_2"});
+                    Navigator.of(context).pushNamed(Routes.infoTitleScreen, arguments: {"title": "info_title_2"});
                   },
                 ),
-                Center(child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),)
+                Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                ),
               ],
             ),
           )),

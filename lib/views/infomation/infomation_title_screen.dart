@@ -11,6 +11,8 @@ import '../../constants/config_ads_id.dart';
 import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_handle.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'info_btn_widget.dart';
 
@@ -27,9 +29,10 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
-    
+
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -44,12 +47,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   getListChildTitle(String value) {
     switch (value) {
       case "info_title_1":
-        listChildTitle = [
-          "bls_do",
-          "bls_low_what",
-          "bls_high_what",
-          "bls_monitor"
-        ];
+        listChildTitle = ["bls_do", "bls_low_what", "bls_high_what", "bls_monitor"];
         break;
       case "info_title_2":
         listChildTitle = [
@@ -79,7 +77,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                 AppLovinFunction().showInterstitialAds();
+                AppLovinFunction().showInterstitialAds();
               },
               child: Container(
                 margin: EdgeInsets.only(right: 12),
@@ -136,17 +134,19 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
           child: Column(
             children: [
               InfoButtonWidget(title: title),
-                          Container(
-              width: double.infinity,
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: AdsNative(
-                    templateType: TemplateType.medium,
-                    nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                  )),
-            ),// You can customize this container if needed
+              Container(
+                width: double.infinity,
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                ),
+              ), // You can customize this container if needed
             ],
           ),
         );
