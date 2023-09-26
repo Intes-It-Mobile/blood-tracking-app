@@ -25,9 +25,11 @@ class RecordHistory extends StatefulWidget {
 
 class _RecordHistoryState extends State<RecordHistory> {
   SugarInfoStore? sugarInfoStore;
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   @override
   void initState() {
+    showInterstitialAdsController.loadAd();
     AppLovinFunction().initializeInterstitialAds();
   }
 
@@ -53,7 +55,8 @@ class _RecordHistoryState extends State<RecordHistory> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      AppLovinFunction().showInterstitialAds();
+                      showInterstitialAdsController.showAlert();
+                      // AppLovinFunction().showInterstitialAds();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),

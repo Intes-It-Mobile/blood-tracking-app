@@ -42,6 +42,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   String? type;
   DateTime? selectedDate;
   int? id = (DateTime.now()).millisecondsSinceEpoch;
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   TextEditingController? _controller;
 
@@ -163,9 +164,19 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   }
 
   @override
+  void initState() {
+    showInterstitialAdsController.loadAd();
+    // AppLovinFunction().initializeInterstitialAds();
+    _controller = TextEditingController(text: '80');
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-
     if (isFirst == true) {
       sugarInfoStore!.setchoosedDayHour(timeNow!);
       sugarInfoStore!.setchoosedDayTime(timeNow!);
@@ -185,16 +196,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       });
     }
   }
-
-  @override
-  void initState() {
-    AppLovinFunction().initializeInterstitialAds();
-    _controller = TextEditingController(text: '80');
-
-    focusNode.addListener(() {
-      setState(() {});
-    });
-    super.initState();
+    @override
+  void dispose() {
+    showInterstitialAdsController.dispose();
+    super.dispose();
   }
 
   Widget customTextDate(String content) {
@@ -258,7 +263,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      AppLovinFunction().showInterstitialAds();
+                      // AppLovinFunction().showInterstitialAds();
+                      showInterstitialAdsController.showAlert();
                       Navigator.of(context).pop();
                       print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
                     },
@@ -514,14 +520,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           btnText: "save_record",
                         ),
                       ),
-                      Center(
-                        child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: AdsNative(
-                              templateType: TemplateType.medium,
-                              unitId: AdHelper.nativeInAppAdUnitId,
-                            )),
-                      ),
+                      // Center(
+                      //   child: Padding(
+                      //       padding: const EdgeInsets.all(8),
+                      //       child: AdsNative(
+                      //         templateType: TemplateType.medium,
+                      //         unitId: AdHelper.nativeInAppAdUnitId,
+                      //       )),
+                      // ),
                     ],
                   ),
                 ],

@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/flushbar.dart';
@@ -29,6 +30,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
   bool check = false;
   bool isRinging = false;
   AlarmSettings? editAlarms;
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -40,6 +43,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
     super.initState();
     loadAlarms();
     AppLovinFunction().initializeInterstitialAds();
+    showInterstitialAdsController.loadAd();
     // subscription ??= Alarm.ringStream.stream.listen(
     //   (alarmSettings) => navigateToRingScreen(alarmSettings),
     // );
@@ -116,7 +120,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    AppLovinFunction().showInterstitialAds();
+                    // AppLovinFunction().showInterstitialAds();
+                    showInterstitialAdsController.showAlert();
                     Navigator.of(context).pop();
                   },
                   child: Container(

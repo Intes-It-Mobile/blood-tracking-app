@@ -12,6 +12,7 @@ import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/banner_ads.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class DetailInformationScreen extends StatefulWidget {
@@ -26,10 +27,12 @@ class DetailInformationScreen extends StatefulWidget {
 
 class _DetailInformationScreenState extends State<DetailInformationScreen> {
   String? type;
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
+    showInterstitialAdsController.loadAd();
     super.initState();
   }
 
@@ -60,7 +63,8 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      AppLovinFunction().showInterstitialAds();
+                      // AppLovinFunction().showInterstitialAds();
+                      showInterstitialAdsController.showAlert();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),

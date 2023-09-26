@@ -43,8 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _appLifecycleReactor =
-        AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+      isShowAOA =true;
+
+    appOpenAdManager.loadAd();
+    _appLifecycleReactor = AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
     _appLifecycleReactor.listenToAppStateChanges();
     super.initState();
   }
@@ -83,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 margin: EdgeInsets.only(
                     bottom: hasAds
-                        ? 75.0
+                        ? 35.0
                         : Platform.isAndroid
                             ? 30
                             : 0),
@@ -127,12 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
                 bottom: 0,
                 child: hasAds
-                    ? Container(
-                        width: screenWidth,
-                        height: 50,
-                        color: AppColors.AppColor2,
-                        child: BannerAds())
-                    : Container(
+                    ? Container(width: screenWidth, height: 70, color: AppColors.AppColor2, child: const AdsBanner(),
+)                   : Container(
                         width: screenWidth,
                         height: 39,
                         color: AppColors.AppColor2,

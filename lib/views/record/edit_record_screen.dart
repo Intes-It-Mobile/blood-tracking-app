@@ -48,10 +48,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   String? errorText = "";
   bool? canTap = true;
   TextEditingController _controller = TextEditingController();
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
+    showInterstitialAdsController.loadAd();
     isFirst = true;
     focusNode.addListener(() {
       setState(() {});
@@ -215,7 +217,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                     onTap: () {
                       Navigator.of(context).pop();
                       print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
-                      AppLovinFunction().showInterstitialAds();
+                      // AppLovinFunction().showInterstitialAds();
+                      showInterstitialAdsController.showAlert();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),

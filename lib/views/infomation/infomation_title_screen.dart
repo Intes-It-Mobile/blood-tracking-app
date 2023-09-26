@@ -26,9 +26,12 @@ class InfomationTitleScreen extends StatefulWidget {
 class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   String? title;
   List<String>? listChildTitle = [];
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+
   @override
   void initState() {
     AppLovinFunction().initializeInterstitialAds();
+    showInterstitialAdsController.loadAd();
     super.initState();
   }
 
@@ -76,7 +79,8 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                AppLovinFunction().showInterstitialAds();
+                // AppLovinFunction().showInterstitialAds();
+                showInterstitialAdsController.showAlert();
               },
               child: Container(
                 margin: EdgeInsets.only(right: 12),

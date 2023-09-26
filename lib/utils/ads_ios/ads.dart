@@ -42,6 +42,7 @@ class _AdsBannerState extends State<AdsBanner> {
       listener: BannerAdListener(
           onAdLoaded: (Ad ad) {
             setState(() {
+              print("banner loaded");
               // When the ad is loaded, get the ad size and use it to set
               // the height of the ad container.
               _bannerAd = ad as BannerAd;
@@ -137,8 +138,8 @@ class ShowInterstitialAdsController {
   void showAlert() {
     //Todo: off inter
     if (interstitialAd != null) {
-      appsflyerSdk.logEvent('af_inters_displayed', {});
-      // interstitialAd?.show();
+      // appsflyerSdk.logEvent('af_inters_displayed', {});
+      interstitialAd?.show();
       isShowAOA = false;
     }
   }
@@ -150,6 +151,7 @@ class ShowInterstitialAdsController {
         adLoadCallback: InterstitialAdLoadCallback(
           // Called when an ad is successfully received.
           onAdLoaded: (ad) {
+            print("inter loaded");
             ad.fullScreenContentCallback = FullScreenContentCallback(
                 // Called when the ad showed the full screen content.
                 onAdShowedFullScreenContent: (ad) {

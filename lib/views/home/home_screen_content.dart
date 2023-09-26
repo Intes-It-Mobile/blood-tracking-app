@@ -9,6 +9,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/assets.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../widgets/goal_dialog/goal_far_dialog.dart';
 import '../../widgets/update_version_dialog.dart';
 import 'chart_widget/chart_widget.dart';
@@ -29,7 +30,7 @@ class HomeScreenContent extends StatefulWidget {
 
 class _HomeScreenContentState extends State<HomeScreenContent> {
   SugarInfoStore? sugarInfoStore;
-  bool? isFirst = true;
+  bool? isFirst = false;
   List<SugarRecord>? listRecords = [];
   @override
   void didChangeDependencies() {
@@ -153,6 +154,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
                         Navigator.of(context).pushNamed(Routes.new_record);
                       },
                     ),
+                    // const AdsBanner() 
                     // GestureDetector(
                     //   onTap: () {
                     //     showDiaLogUpdateVersion(context);

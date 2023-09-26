@@ -36,6 +36,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   int value = 0;
   String? langCode;
   AppLanguage appLanguage = AppLanguage();
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       _selectedIndex = 0;
     }
     AppLovinFunction().initializeInterstitialAds();
+    showInterstitialAdsController.loadAd();
     super.initState();
   }
 
@@ -70,7 +72,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
           children: [
             InkWell(
               onTap: () {
-                AppLovinFunction().showInterstitialAds();
+                // AppLovinFunction().showInterstitialAds();
+                showInterstitialAdsController.showAlert();
                 Navigator.of(context).pop();
               },
               child: SvgPicture.asset(

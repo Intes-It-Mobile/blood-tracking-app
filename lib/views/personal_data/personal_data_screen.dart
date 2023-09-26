@@ -36,6 +36,7 @@ class PersonalDataScreen extends StatefulWidget {
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
   SugarInfoStore? sugarInfoStore;
   GoalAmount? goalAmount;
+  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
 
   @override
   void didChangeDependencies() {
@@ -47,6 +48,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   void initState() {
+    showInterstitialAdsController.loadAd();
     AppLovinFunction().initializeInterstitialAds();
     // sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     //   Provider.of<InformationNotifier>(context, listen: true).setInformationData(sugarInfoStore!.information!);
@@ -70,7 +72,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      AppLovinFunction().showInterstitialAds();
+                      // AppLovinFunction().showInterstitialAds();
+                      showInterstitialAdsController.showAlert();
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 12),

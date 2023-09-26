@@ -156,14 +156,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeDependencies();
   }
 
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed && isShowInterAndReward == false) {
-      appOpenAdManager.showAdIfAvailable();
-    }
-    debugPrint('app state:${state.toString()}');
-    super.didChangeAppLifecycleState(state);
-  }
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (state == AppLifecycleState.resumed && isShowInterAndReward == false) {
+  //     appOpenAdManager.showAdIfAvailable();
+  //   }
+  //   debugPrint('app state:${state.toString()}');
+  //   super.didChangeAppLifecycleState(state);
+  // }
 
   // This widget is the root of your application.
 

@@ -18,6 +18,7 @@ import '../../routes.dart';
 import 'package:excel/excel.dart';
 
 import '../../utils/ads/applovin_function.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/goal_dialog/goal_far_dialog.dart';
 import '../../widgets/goal_dialog/goal_nearly_dialog.dart';
@@ -443,7 +444,9 @@ abstract class _SugarInfoStoreBase with Store {
     }
     print('popup');
 
-    AppLovinFunction().showInterstitialAds();
+    // AppLovinFunction().showInterstitialAds();
+        displayInterAds();
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
@@ -458,6 +461,14 @@ abstract class _SugarInfoStoreBase with Store {
       });
     }
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
+  }
+  void displayInterAds(){
+      ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+      showInterstitialAdsController.loadAd();
+      Future.delayed(Duration(milliseconds: 1000),(){
+showInterstitialAdsController.showAlert();
+      });
+
   }
 
   String findStatusForValueAndConditionId(
@@ -724,7 +735,8 @@ abstract class _SugarInfoStoreBase with Store {
       getAverageNumber();
     }
     saveListRecord(listRecords);
-    AppLovinFunction().showInterstitialAds();
+    // AppLovinFunction().showInterstitialAds();
+    displayInterAds();
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
