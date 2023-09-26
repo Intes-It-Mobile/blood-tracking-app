@@ -29,7 +29,7 @@ class IOSAlarm {
   ) async {
     final delay = dateTime.difference(DateTime.now());
 
-    final res = await methodChannel.invokeMethod<bool?>(
+    final res = await methodChannel.invokeMethod<bool?>( 
           'setAlarm',
           {
             'id': id,

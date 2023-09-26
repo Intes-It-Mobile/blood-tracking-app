@@ -24,7 +24,7 @@ class AppTheme {
     color: AppColors.AppColor4,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.none,
-    fontSize: TextSizeConfig.getAdjustedFontSize(12),
+    fontSize: TextSizeConfig.getAdjustedFontSize(13),
     fontFamily: FontFamily.IBMPlexSans,
   );
   static final TextStyle appBodyTextStyle36 = TextStyle(
@@ -148,13 +148,12 @@ class AppTheme {
   );
 
   static final appBarTextStyle = TextStyle(
-    fontFamily: FontFamily.IBMPlexSans,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w700,
-    fontSize: 20,
-    color: Colors.white,
-    letterSpacing: 1
-  );
+      fontFamily: FontFamily.IBMPlexSans,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      fontSize: 20,
+      color: Colors.white,
+      letterSpacing: 1);
   static final edit20Text = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w600,

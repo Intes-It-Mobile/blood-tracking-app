@@ -137,7 +137,7 @@ class AlarmSettings {
   Map<String, dynamic> toJson() => {
         'id': id,
         'dateTime': dateTime.microsecondsSinceEpoch,
-        'assetAudioPath': assetAudioPath,
+        'assetAudioPath':soundAudio==true? assetAudioPath:'assets/silent.mp3',
         'loopAudio': loopAudio,
         'soundAudio': soundAudio,
         'vibrate': vibrate,

@@ -22,6 +22,7 @@ import '../../widgets/widget_appbar.dart';
 import '../infomation/infomation_screen.dart';
 import '../setting/setting_screen.dart';
 import 'home_screen_content.dart';
+import 'dart:io' show Platform;
 // import '../../utils/locale/app_localization.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,17 +70,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               bottomNavigationBar: Container(
-                decoration: BoxDecoration( 
-                color: Colors.transparent,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
                   boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2), // Màu của bóng và độ trong suốt
-          // spreadRadius: 5, // Độ lan rộng của bóng
-          blurRadius: 10, // Độ mờ của bóng
-          offset: Offset(0, 1), // Độ dịch chuyển của bóng
-        ),
-      ],),
-                margin: EdgeInsets.only(bottom: hasAds ? 75.0 : 30),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2), // Màu của bóng và độ trong suốt
+                      // spreadRadius: 5, // Độ lan rộng của bóng
+                      blurRadius: 10, // Độ mờ của bóng
+                      offset: Offset(0, 1), // Độ dịch chuyển của bóng
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.only(
+                    bottom: hasAds
+                        ? 75.0
+                        : Platform.isAndroid
+                            ? 30
+                            : 0),
                 child: BottomAppBarCum(
                   color: Colors.transparent,
                   surfaceTintColor: Colors.transparent,
@@ -96,8 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Assets.iconBloodSugar,
                               'A',
                               0,
-                              AppLocalizations.of(context)!
-                                  .getTranslate('blood_sugar_txt'),
+                              AppLocalizations.of(context)!.getTranslate('blood_sugar_txt'),
                             ),
                             // _buildNavItem(
                             //     Assets.iconHeartRate,
@@ -106,17 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             //     AppLocalizations.of(context)!
                             //         .getTranslate('heart_rate_txt')),
                             _buildNavItem(
-                                Assets.iconInfoNav,
-                                'C',
-                                1,
-                                AppLocalizations.of(context)!
-                                    .getTranslate('infor')),
-                            _buildNavItem(
-                                Assets.iconSettingsNav,
-                                'C',
-                                2,
-                                AppLocalizations.of(context)!
-                                    .getTranslate('setting_nav')),
+                                Assets.iconInfoNav, 'C', 1, AppLocalizations.of(context)!.getTranslate('infor')),
+                            _buildNavItem(Assets.iconSettingsNav, 'C', 2,
+                                AppLocalizations.of(context)!.getTranslate('setting_nav')),
                           ],
                         ),
                         // Container(width: double.infinity,height: 50,color: Colors.blue,)
@@ -178,11 +176,10 @@ class _HomeScreenState extends State<HomeScreen> {
           // padding: margin,
           child: Container(
             decoration: BoxDecoration(
-              
               color: btnColor,
               // borderRadius: borderRadius,
             ),
-            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),  
+            padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
             child: Center(
               child: Column(
                 children: [
@@ -193,8 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("${text}",
                       maxLines: 2,
                       textAlign: TextAlign.center,
-                      style:
-                          AppTheme.appBodyTextStyle.copyWith(color: textColor)
+                      style: AppTheme.appBodyTextStyle.copyWith(color: textColor)
                       // TextStyle(
                       //     color: textColor, fontWeight: FontWeight.w600),
                       )
@@ -230,8 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   insetPadding: EdgeInsets.symmetric(horizontal: 16),
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   content: Container(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -240,9 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 42),
                           child: Text(
                             "${AppLocalizations.of(context)!.getTranslate('wanna_exit')}",
-                            style: AppTheme.Headline16Text.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
+                            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -255,15 +248,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor3,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                      style:
-                                          AppTheme.TextIntroline16Text.copyWith(
-                                              color: AppColors.AppColor2),
+                                      style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
                                     ),
                                   ),
                                 ),
@@ -277,9 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // margin: EdgeInsets.only(left: 23),
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor2,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('stay')}",

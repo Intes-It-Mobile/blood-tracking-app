@@ -221,7 +221,7 @@ class CustomInputFormatter extends TextInputFormatter {
         // Nếu nhập quá 5 ký tự, không cho phép cập nhật giá trị
         return oldValue;
       }
-    } else {
+    } else { 
       // Nếu không có dấu ".", giới hạn tối đa 4 ký tự
       if (text.length <= 4) {
         return newValue;

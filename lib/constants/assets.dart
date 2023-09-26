@@ -31,6 +31,7 @@ class Assets {
   static const String leadership = "assets/images/leadership.png";
   static const String knowBloodTitle = "assets/images/know_blood_sugar_title.png";
   static const String knowDiabetesTitle = "assets/images/know_diabetes_title.png";
+  static const String alarmClock = "assets/images/alarm_clock.png";
 
 /////////////////////////
   static const String iconAlarm = "assets/icons/ic_alarm.svg";

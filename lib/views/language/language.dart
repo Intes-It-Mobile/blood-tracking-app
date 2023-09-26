@@ -47,8 +47,8 @@ class _LanguagePageState extends State<LanguagePage> {
                     itemCount: languages.length,
                     itemBuilder: (context, int index) {
                       return GestureDetector(
-                        onTap: (){
-                          FunctionLanguages(index,context);
+                        onTap: () {
+                          FunctionLanguages(index, context);
                           setState(() {
                             if (_selectedIndex == index) {
                               _selectedIndex = 0;
@@ -65,13 +65,13 @@ class _LanguagePageState extends State<LanguagePage> {
                               top: 14),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(22),
-                              color: index == _selectedIndex ? AppColors.AppColor2 :Colors.white),
+                              color: index == _selectedIndex ? AppColors.AppColor2 : Colors.white),
                           child: Center(
                             child: Text(
                               languages[index],
                               style: AppTheme.Headline20Text.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  color: index == _selectedIndex ? Colors.white:AppColors.AppColor2),
+                                  color: index == _selectedIndex ? Colors.white : AppColors.AppColor2),
                             ),
                           ),
                         ),
@@ -84,13 +84,12 @@ class _LanguagePageState extends State<LanguagePage> {
             right: 20,
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pushNamed(Routes.gender_screen);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",
-                style:
-                    AppTheme.Headline20Text.copyWith(color: AppColors.AppColor4),
+                style: AppTheme.Headline20Text.copyWith(color: AppColors.AppColor4),
               ),
             ),
           ),
@@ -98,9 +97,10 @@ class _LanguagePageState extends State<LanguagePage> {
       ),
     );
   }
-  void FunctionLanguages(int index,context){
-    var appLanguage = Provider.of<AppLanguage>(context,listen: false);
-    switch(index){
+
+  void FunctionLanguages(int index, context) {
+    var appLanguage = Provider.of<AppLanguage>(context, listen: false);
+    switch (index) {
       case 0:
         appLanguage.changeLanguage(const Locale("en"));
         break;

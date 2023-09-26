@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../utils/locale/appLocalizations.dart';
+import 'dart:io' show Platform;
 
 class ExampleAlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
@@ -30,12 +31,15 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   late bool vibrate;
   late bool showNotification;
   late String assetAudio;
+  late String assetAudioSilent= 'assets/silent.mp3';
+  late bool showAudio;
   String assetAudioOff = '.';
   @override
   void didUpdateWidget(covariant ExampleAlarmEditScreen oldWidget) {
-   saveAlarm();
+    saveAlarm();
     super.didUpdateWidget(oldWidget);
   }
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +50,9 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       loopAudio = true;
       vibrate = true;
       showNotification = true;
+      showAudio =true;
       assetAudio = 'assets/marimba.mp3';
+      assetAudioSilent = 'assets/silent.mp3';
     } else {
       alarmTime = DateTime(
         widget.alarmSettings!.dateTime.hour,
@@ -54,12 +60,12 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       );
       loopAudio = widget.alarmSettings!.loopAudio;
       vibrate = widget.alarmSettings!.vibrate;
-      showNotification = widget.alarmSettings!.soundAudio;
+      showAudio = widget.alarmSettings!.soundAudio;
       showNotification = widget.alarmSettings!.notificationTitle != null &&
           widget.alarmSettings!.notificationTitle!.isNotEmpty &&
           widget.alarmSettings!.notificationBody != null &&
           widget.alarmSettings!.notificationBody!.isNotEmpty;
-      assetAudio = widget.alarmSettings!.assetAudioPath;
+      assetAudio =showAudio== true? widget.alarmSettings!.assetAudioPath: assetAudioSilent;
     }
   }
 
@@ -75,7 +81,6 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   //   );
   //   if (res != null) setState(() => alarmTime = res);
   // }
-
 
   AlarmSettings buildAlarmSettings() {
     final now = DateTime.now();
@@ -101,10 +106,14 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       dateTime: dateTime,
       loopAudio: loopAudio,
       vibrate: vibrate,
-     // notificationTitle: loopAudio ? 'Enter a record' : null,
-    //  notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showNotification ? assetAudio : '.',
-    //  soundAudio: showNotification,
+      notificationTitle: loopAudio ? 'Enter a record' : null,
+      notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
+      assetAudioPath: showAudio==true?(showNotification
+          ? assetAudio
+          : Platform.isIOS
+              ? 'assets/silent.mp3'
+              : '.'):'assets/silent.mp3',
+      soundAudio: showAudio,
       fadeDuration: 3.0,
       stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
@@ -183,11 +192,13 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               return CupertinoSwitch(
                                 onChanged: (bool value) {
                                   setModalState(() {
-                                    widget.alarmSettings?.soundAudio = showNotification;
-                                    showNotification = value;
+                                    showAudio = value;
+                                    widget.alarmSettings?.soundAudio =
+                                        showAudio;
                                   });
                                 },
-                                value: widget.alarmSettings?.soundAudio ?? showNotification,
+                                value: widget.alarmSettings?.soundAudio ??
+                                    showAudio,
                                 trackColor: AppColors.AppColor1,
                                 activeColor: AppColors.AppColor2,
                               );
@@ -269,7 +280,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                     child: creating == false
                         ? InkWell(
                             onTap: () {
-                               saveAlarm();
+                              saveAlarm();
                             },
                             child: Container(
                               width: double.infinity,
@@ -305,7 +316,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               ),
                             ),
                           ),
-                  ),
+                  ), 
                 ),
               ),
             ],
@@ -315,3 +326,4 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     );
   }
 }
+                              

@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:vibration/vibration.dart';
+import 'dart:io' show Platform;
+
 
 /// For Android support, [AndroidAlarmManager] is used to set an alarm
 /// and trigger a callback when the given time is reached.

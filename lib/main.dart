@@ -1,3 +1,4 @@
+import 'package:alarm/service/notification.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:blood_sugar_tracking/AppLanguage.dart';
@@ -19,26 +20,55 @@ import 'package:blood_sugar_tracking/widgets/share_local.dart';
 import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
 import 'controllers/stores/edit_record_store.dart';
 import 'controllers/stores/sugar_info_store.dart';
 import 'utils/locale/appLocalizations.dart';
 import 'package:blood_sugar_tracking/widgets/flushbar.dart';
+import 'dart:io' show Platform;
 
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
 bool isShowInterAndReward = false;
-GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-    GlobalKey<ScaffoldMessengerState>();
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final RouteObserver routeObserver = RouteObserver();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   // Alarm.ringStream.stream.listen((_) {
   //   print("Ringing main");
   // });
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      print("noti permission deny");
+      Permission.notification.request();
+    }
+  });
+
+  flutterLocalNotificationsPlugin.getActiveNotifications();
+
+  var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  // final initializationSettingsIOS = IOSInitializationSettings(
+  //   requestSoundPermission: true,
+  //   requestBadgePermission: true,
+  //   requestAlertPermission: true,
+  // );
+
+  // var initializationSettings =
+  //     InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+  // flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  AlarmNotification.instance.requestPermission();
+
   Map? configuration = await AppLovinMAX.initialize(AdsIdConfig.sdkKey);
   if (configuration != null) {
     isInitialized = true;
@@ -51,7 +81,6 @@ void main() async {
       statusBarIconBrightness: Brightness.dark // dark text for status bar
       ));
   AppLanguage appLanguage = AppLanguage();
-  WidgetsFlutterBinding.ensureInitialized();
   await appLanguage.fetchLocale();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   shareLocal = await ShareLocal.getInstance();
@@ -60,6 +89,7 @@ void main() async {
     afDevKey: 'G3MBmMRHTuEpXbqyqSWGeK',
     showDebug: true,
   );
+
   appsflyerSdk = AppsflyerSdk(options);
 
   appsflyerSdk.initSdk(
@@ -72,15 +102,16 @@ void main() async {
   MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
       testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
 
+  // MobileAds.instance.initialize();
+  // MobileAds.instance.updateRequestConfiguration( RequestConfiguration(testDeviceIds: ["A5A709EEACA677615871633DD27AC3DC"]));
   runApp(ChangeNotifierProvider(
     create: (context) => InformationNotifier(),
     child: MyApp(
       appLanguage: appLanguage,
     ),
-    
   ));
-   
 }
+
 class GlobalContext {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -93,16 +124,21 @@ class GlobalContext {
 class MyApp extends StatefulWidget {
   final AppLanguage appLanguage;
 
-   MyApp({super.key, required this.appLanguage});
-
+  MyApp({super.key, required this.appLanguage});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   late AppLifecycleState app;
+  late AppLifecycleState? appState;
+  bool? isRingingAlarm = false;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -112,11 +148,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+
 
   @override
   void didChangeDependencies() {
@@ -134,13 +166,51 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   // This widget is the root of your application.
+
+ 
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  String? getPreviousRouteName() {
+    if (routeObserver.history.length >= 2) {
+      // Lấy routeName của màn hình trước đó
+      final previousRoute = routeObserver.history[routeObserver.history.length - 2];
+      return previousRoute.settings.name;
+    }
+    return null; // Nếu không có màn hình trước đó
+  }
+
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   setState(() {
+  //     appState = state;
+  //   });
+  //   if (state == AppLifecycleState.resumed) {
+  //     print('Ứng dụng đang ở chế độ foreground');
+  //   }
+  //   debugPrint('app state:${state.toString()}');
+  //   super.didChangeAppLifecycleState(state);
+  // }
+
   @override
   Widget build(BuildContext context) {
     GlobalContext.init(context);
-    Alarm.ringStream.stream.listen((_) {
-        FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
-      print("Ringing main");
-    });
+    Future.delayed(Duration(seconds: 2)).then((value) => {
+          if (Platform.isIOS)
+            {
+              Alarm.ringStream.stream.listen((_) {
+                isRingingAlarm = true;
+
+                FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
+                print("Ringing main");
+              })
+            }
+        });
+
     TextSizeConfig.init(context);
     return Center(
         child: ChangeNotifierProvider<AppLanguage>(
@@ -164,7 +234,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ],
         child: Consumer<AppLanguage>(builder: (context, model, child) {
           return MaterialApp(
-            
             locale: model.appLocal,
             routes: Routes.routes,
             debugShowCheckedModeBanner: false,
@@ -181,13 +250,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback:
-                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                    deviceLocale != null &&
-                            ['en', 'vi', 'fr', 'zh', 'es']
-                                .contains(deviceLocale.languageCode)
-                        ? deviceLocale
-                        : supportedLocales.first,
+            localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                deviceLocale != null && ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
+                    ? deviceLocale
+                    : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(
@@ -213,6 +279,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             home: const SplashScreen(),
             scaffoldMessengerKey: scaffoldMessengerKey,
             navigatorKey: GlobalContext.navigatorKey,
+            navigatorObservers: [routeObserver],
           );
         }),
       ),
@@ -230,4 +297,21 @@ void logAdRevenue(String eventName, String adFormat, double revenueAmount, Strin
   };
   await appsflyerSdk.logEvent('ad_impression', eventValues);
   // await analytics.logEvent(name: 'ad_impression', parameters: eventValues);
+}
+class RouteObserver extends NavigatorObserver {
+  List<Route<dynamic>> _history = [];
+
+  List<Route<dynamic>> get history => _history;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPush(route, previousRoute);
+    _history.add(route);
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPop(route, previousRoute);
+    _history.remove(route);
+  }
 }

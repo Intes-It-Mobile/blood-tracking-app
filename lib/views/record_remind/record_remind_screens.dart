@@ -28,6 +28,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
   static StreamSubscription? subscription;
   bool check = false;
   bool isRinging = false;
+  AlarmSettings? editAlarms;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -99,8 +100,10 @@ class _AlarmScreenState extends State<AlarmScreen> {
     subscription?.cancel();
     super.dispose();
   }
+  String  assetAudio = 'assets/marimba.mp3';
+    String assetAudioSilent = 'assets/silent.mp3';
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -173,6 +176,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                               onDismissed: () {
                                 Alarm.stopDelete(alarms[index].id)
                                     .then((_) => loadAlarms());
+                                print("alarm id: ${alarms[index].id}");
                               },
                               loopAudio: alarms[index].loopAudio,
                               onDelete: () {
@@ -187,17 +191,22 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                   Alarm.set(
                                       alarmSettings: AlarmSettings(
                                     id: _alarmSettings.id,
-                                    dateTime: _alarmSettings.dateTime,
+                                    dateTime: checkIsAfterNow(
+                                                _alarmSettings.dateTime) ==
+                                            true
+                                        ? _alarmSettings.dateTime
+                                        : _alarmSettings.dateTime
+                                            .add(Duration(days: 1)),
                                     loopAudio: loopAudio,
                                     soundAudio: _alarmSettings.soundAudio,
                                     vibrate: _alarmSettings.vibrate,
                                     notificationTitle: loopAudio
-                                        ? _alarmSettings.notificationTitle
+                                        ? alarms[index].notificationTitle
                                         : null,
                                     notificationBody: loopAudio
-                                        ? _alarmSettings.notificationBody
+                                        ? alarms[index].notificationBody
                                         : null,
-                                    assetAudioPath: '.',
+                                    assetAudioPath: loopAudio ? assetAudio : assetAudioSilent,
                                     fadeDuration: 3.0,
                                     stopOnNotificationOpen: true,
                                     enableNotificationOnKill: true,
@@ -233,15 +242,6 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   navigateToAlarmScreen(null);
                 },
               ),
-              ButtonWidget(
-                mainAxisSizeMin: true,
-                btnText: "new_alarm",
-                btnColor: Colors.amber,
-                //   suffixIconPath: Assets.iconEditBtn,
-                onTap: () {
-                    FlushbarManager().showFlushbar(context);
-                },
-              ),
               const SizedBox(
                 height: 50,
               )
@@ -250,6 +250,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
         ),
       ),
     );
+    
   }
 
   Widget hourMinute12H(AlarmSettings alarmSettings) {
@@ -266,5 +267,17 @@ class _AlarmScreenState extends State<AlarmScreen> {
         });
       },
     );
+  }
+
+  bool checkIsAfterNow(DateTime datetime) {
+    DateTime now = DateFormat("yyyy-MM-dd hh:mm")
+        .parse(DateFormat("yyyy-MM-dd HH:mm").format(DateTime.now()));
+    DateTime formatedTime = DateFormat("yyyy-MM-dd hh:mm")
+        .parse(DateFormat("yyyy-MM-dd HH:mm").format(datetime));
+    if (formatedTime.isAfter(now)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
