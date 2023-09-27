@@ -96,7 +96,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
           Column(
             children: [
               Container(
-                height: screenHeight * 0.8,
+                height: screenHeight * 0.87,
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
@@ -129,7 +129,6 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                           },
                         ),
                         // child:
-
                         //  HtmlWidget(
                         //   "${getContent(type)}",
                         //   textStyle: AppTheme.appBodyTextStyle.copyWith(
@@ -142,14 +141,11 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 50,
-              )
             ],
           ),
           Positioned(
             bottom: 0,
-            child: Align(alignment: Alignment.bottomCenter , child: BannerAds()))
+            child: Container(child: Align(alignment: Alignment.bottomCenter , child: AdsBanner())))
         ],
       ),
     );

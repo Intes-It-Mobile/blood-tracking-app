@@ -108,36 +108,36 @@ class _IntroScreenState extends State<IntroScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            indexPage == 3
-                                ? Container()
-                                : GestureDetector(
-                                    onTap: () {
-                                      shareLocal.putBools("isFirst", true);
-                                      if (sugarInfoStore!.isSwapedToMol == true) {
-                                        sugarInfoStore!.divisionListRootCondition();
-                                        sugarInfoStore!.saveIsSwapedToMol(sugarInfoStore!.isSwapedToMol!);
-                                      }
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        Routes.home,
-                                        (route) => false,
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 120,
-                                      height: 36,
-                                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Text(
-                                        "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
-                                        textAlign: TextAlign.center,
-                                        style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
-                                      ),
-                                    ),
-                                  ),
+                            // indexPage == 3
+                            //     ? Container()
+                            //     : GestureDetector(
+                            //         onTap: () {
+                            //           shareLocal.putBools("isFirst", true);
+                            //           if (sugarInfoStore!.isSwapedToMol == true) {
+                            //             sugarInfoStore!.divisionListRootCondition();
+                            //             sugarInfoStore!.saveIsSwapedToMol(sugarInfoStore!.isSwapedToMol!);
+                            //           }
+                            //           Navigator.pushNamedAndRemoveUntil(
+                            //             context,
+                            //             Routes.home,
+                            //             (route) => false,
+                            //           );
+                            //         },
+                            //         child: Container(
+                            //           width: 120,
+                            //           height: 36,
+                            //           padding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                            //           decoration: BoxDecoration(
+                            //             color: Colors.white,
+                            //             borderRadius: BorderRadius.circular(5),
+                            //           ),
+                            //           child: Text(
+                            //             "${AppLocalizations.of(context)!.getTranslate('skip_all')}",
+                            //             textAlign: TextAlign.center,
+                            //             style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                            //           ),
+                            //         ),
+                            //       ),
                             GestureDetector(
                               onTap: () async {
                                 if (indexPage == 3) {
@@ -192,7 +192,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   padding: const EdgeInsets.all(8),
                   child: AdsNative(
                     templateType: TemplateType.medium,
-                    unitId: AdHelper.nativeInAppAdUnitId,
+                    unitId: AdHelper.nativeIntroAdUnitId,
                   )),
             ),
           ],

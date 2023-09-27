@@ -156,12 +156,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
               ),
             ),
           ),
-          const Expanded(
-            flex: 1,
-            child: Center(
-                // child: MRECAds(),
-                ),
-          ),
+          // const Expanded(
+          //   flex: 1,
+          //   child: Center(
+          //       // child: MRECAds(),
+          //       ),
+          // ),
           Center(
             child: Padding(
                 padding: const EdgeInsets.all(8),

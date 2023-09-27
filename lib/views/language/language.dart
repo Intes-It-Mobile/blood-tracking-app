@@ -3,9 +3,12 @@ import 'package:blood_sugar_tracking/constants/app_theme.dart';
 import 'package:blood_sugar_tracking/constants/colors.dart';
 import 'package:blood_sugar_tracking/utils/locale/appLocalizations.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({super.key});
@@ -77,7 +80,15 @@ class _LanguagePageState extends State<LanguagePage> {
                         ),
                       );
                     }),
-              )
+              ),
+              Center(
+            child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: AdsNative(
+                  templateType: TemplateType.medium,
+                  unitId: AdHelper.nativeInAppAdUnitId,
+                )),
+          ),
             ],
           ),
           Positioned(
@@ -85,7 +96,7 @@ class _LanguagePageState extends State<LanguagePage> {
             top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(Routes.gender_screen);
+                Navigator.of(context).pushNamed(Routes.select_unit);
               },
               child: Text(
                 "${AppLocalizations.of(context)!.getTranslate('next')}",

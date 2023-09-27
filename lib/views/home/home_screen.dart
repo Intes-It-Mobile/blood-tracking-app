@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 margin: EdgeInsets.only(
                     bottom: hasAds
-                        ? 35.0
+                        ? 70.0
                         : Platform.isAndroid
                             ? 30
                             : 0),
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
                 bottom: 0,
                 child: hasAds
-                    ? Container(width: screenWidth, height: 70, color: AppColors.AppColor2, child: const AdsBanner(),
+                    ? Container(width: screenWidth, height: 75, color: AppColors.AppColor2, child: const AdsBanner(),
 )                   : Container(
                         width: screenWidth,
                         height: 39,
@@ -276,15 +276,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        // Center(
-                        //   child: const Padding(
-                        //     padding: const EdgeInsets.all(8),
-                        //     child: AdsNative(
-                        //       templateType: TemplateType.medium,
-                        //       nativeAdUnitId: AdsIdConfig.nativeInAppAdsId,
-                        //     ),
-                        //   ),
-                        // ),
+                        Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AdsNative(
+                      templateType: TemplateType.medium,
+                      unitId: AdHelper.nativeInAppAdUnitId,
+                    )),
+              ),
                       ],
                     ),
                   ),

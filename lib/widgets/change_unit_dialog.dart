@@ -40,7 +40,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.49,
+          height: MediaQuery.of(context).size.height * 0.55,
           width: 400,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -141,9 +141,9 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 55,
-              ),
+              // SizedBox(
+              //   height: 55,
+              // ),
               Center(
                 child: Padding(
                     padding: const EdgeInsets.all(8),

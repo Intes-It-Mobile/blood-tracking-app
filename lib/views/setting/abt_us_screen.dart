@@ -64,7 +64,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.only(top: 20),
-          child: Column(children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
             Center(
               child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 20),
@@ -77,6 +77,26 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             const SizedBox(
               height: 8,
             ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${AppLocalizations.of(context)!.getTranslate('app_name_about_us')}',
+                    style: AppTheme.hintText
+                        .copyWith(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.AppColor2),
+                  ),
+                  TextSpan(
+                    text: '${AppLocalizations.of(context)!.getTranslate('version')}',
+                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: Colors.black),
+                  ),
+                  TextSpan(
+                    text: '${AppLocalizations.of(context)!.getTranslate('1.0.0')}',
+                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
+                  )
+                ],
+              ),
+            ),
+            
             Container(
               margin: const EdgeInsets.symmetric(vertical: 15),
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -101,28 +121,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 ),
               ),
             ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${AppLocalizations.of(context)!.getTranslate('app_name_about_us')}',
-                    style: AppTheme.hintText
-                        .copyWith(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.AppColor2),
-                  ),
-                  TextSpan(
-                    text: '${AppLocalizations.of(context)!.getTranslate('version')}',
-                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.w400, fontSize: 12, color: Colors.black),
-                  ),
-                  TextSpan(
-                    text: '${AppLocalizations.of(context)!.getTranslate('1.0.0')}',
-                    style: AppTheme.hintText.copyWith(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            )
+           
           ]),
         ),
       ),
