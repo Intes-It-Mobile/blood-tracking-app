@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/views/setting/language_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,10 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    InformationNotifier informationNotifier =
+    Provider.of<InformationNotifier>(context);
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,

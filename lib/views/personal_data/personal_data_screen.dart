@@ -36,7 +36,9 @@ class PersonalDataScreen extends StatefulWidget {
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
   SugarInfoStore? sugarInfoStore;
   GoalAmount? goalAmount;
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
+  InformationNotifier? informationNotifier;
 
   @override
   void didChangeDependencies() {
@@ -60,43 +62,51 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 80,
-          backgroundColor: AppColors.AppColor2,
-          title: Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      // AppLovinFunction().showInterstitialAds();
-                      showInterstitialAdsController.showAlert();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 12),
-                      child: SvgPicture.asset(
-                        Assets.iconBack,
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.scaleDown,
+    sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+    return ChangeNotifierProvider<InformationNotifier>(
+      create: (_) => InformationNotifier(),
+      builder: (context, _) {
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 80,
+            backgroundColor: AppColors.AppColor2,
+            title: Column(
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        // AppLovinFunction().showInterstitialAds();
+                        showInterstitialAdsController.showAlert();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        child: SvgPicture.asset(
+                          Assets.iconBack,
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('personal_data')}",
-                      style: AppTheme.Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                    Expanded(
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('personal_data')}",
+                        style: AppTheme
+                            .Headline20Text, // Hiển thị dấu chấm ba khi có tràn
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        body: CheckDataInformation(context));
+          body: CheckDataInformation(context),
+        );
+      },
+    );
   }
 
   Widget CheckDataInformation(BuildContext context) {
@@ -105,366 +115,365 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       sugarInfoStore?.information = provider.getUserData(
         'information_key',
       );
-      return Observer(builder: (_) {
-        return Visibility(
-          visible: sugarInfoStore?.information != null,
-          replacement: const SizedBox(
-            height: 50,
-            width: 50,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors.blue,
-              ),
-            ),
+      return Column(
+        children: [
+          SizedBox(
+            height: 15,
           ),
-          child: Column(
+          Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Components().DialogGender(context);
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          margin: const EdgeInsets.only(left: 15, right: 8),
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('gender')}",
-                                    style: AppTheme.Headline16Text.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditRange),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              sugarInfoStore?.information != null
-                                  ? Text(
-                                      '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore?.information?.gender}')}',
-                                      style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                                    )
-                                  : const Text('error')
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Components().DialogAge(context);
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          margin: const EdgeInsets.only(right: 15, left: 8),
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('age')}",
-                                    style: AppTheme.Headline16Text.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditRange),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              sugarInfoStore?.information != null
-                                  ? Text(
-                                      '${sugarInfoStore?.information?.old}',
-                                      style: AppTheme.Headline20Text.copyWith(
-                                          color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                                    )
-                                  : const Text('error')
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Components().DialogWeight(context);
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          margin: const EdgeInsets.only(left: 15, right: 8),
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '${AppLocalizations.of(context)!.getTranslate('weight')}',
-                                    style: AppTheme.Headline16Text.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditRange),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              sugarInfoStore?.information != null
-                                  ? Row(
-                                      children: [
-                                        Text(
-                                          '${sugarInfoStore?.information?.weight}',
-                                          style: AppTheme.Headline20Text.copyWith(
-                                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          '(kg)',
-                                          style: AppTheme.Headline16Text.copyWith(
-                                              color: Colors.black, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    )
-                                  : const Text("error")
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Components().DialogHeight(context);
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          margin: const EdgeInsets.only(right: 15, left: 8),
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('height')}",
-                                    style: AppTheme.Headline16Text.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditRange),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              sugarInfoStore?.information != null
-                                  ? Row(
-                                      children: [
-                                        Text(
-                                          '${sugarInfoStore?.information?.tall}',
-                                          style: AppTheme.Headline20Text.copyWith(
-                                              color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          '(cm)',
-                                          style: AppTheme.Headline16Text.copyWith(
-                                              color: Colors.black, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    )
-                                  : const Text('error')
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          if (sugarInfoStore!.isSwapedToMol == true) {
-                            Components().showDialogGoalMol(context);
-                          } else {
-                            Components().showDialogGoalMg(context);
-                          }
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          margin: const EdgeInsets.only(left: 15, right: 8),
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '${AppLocalizations.of(context)!.getTranslate('goal')}',
-                                    style: AppTheme.Headline16Text.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(Assets.iconEditPen),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Observer(builder: (_) {
-                                return Row(
-                                  children: [
-                                    Observer(builder: (_) {
-                                      return Text(
-                                        '${cutString(sugarInfoStore!.goalAmount!.amount!)}',
-                                        style: AppTheme.Headline20Text.copyWith(
-                                            color: AppColors.AppColor4, fontWeight: FontWeight.w500),
-                                      );
-                                    }),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      "${sugarInfoStore!.isSwapedToMol == true ? "(mmol/L)" : "(mg/dL)"}",
-                                      style: AppTheme.Headline16Text.copyWith(
-                                          color: Colors.black, fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                );
-                              })
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.14,
-                        margin: const EdgeInsets.only(right: 15, left: 8),
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Components().DialogGender(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    margin: const EdgeInsets.only(left: 15, right: 8),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${AppLocalizations.of(context)!.getTranslate('height')}",
-                                  style: AppTheme.appBodyTextStyle.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const Spacer(),
-                                SvgPicture.asset(
-                                  Assets.iconEdit,
-                                  color: Colors.white,
-                                ),
-                              ],
+                            Text(
+                              "${AppLocalizations.of(context)!.getTranslate('gender')}",
+                              style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            sugarInfoStore?.information != null
-                                ? Row(
-                                    children: [
-                                      Text(
-                                        '${sugarInfoStore?.information?.tall.toString()}',
-                                        style: AppTheme.Headline20Text.copyWith(
-                                            color: Colors.white, fontWeight: FontWeight.w500),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '(cm)',
-                                        style: AppTheme.Headline20Text.copyWith(
-                                            color: Colors.white, fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )
-                                : const Text('error')
+                            const Spacer(),
+                            SvgPicture.asset(Assets.iconEditRange),
                           ],
                         ),
-                      ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          '${provider.informations.gender}',
+                          style: AppTheme.Headline20Text.copyWith(
+                              color: AppColors.AppColor4,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Center(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: AdsNative(
-                        templateType: TemplateType.medium,
-                        unitId: AdHelper.nativeInAppAdUnitId,
-                      )),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Components().DialogAge(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    margin: const EdgeInsets.only(right: 15, left: 8),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.getTranslate('age')}",
+                              style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(Assets.iconEditRange),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          '${provider.informations.old}',
+                          style: AppTheme.Headline20Text.copyWith(
+                              color: AppColors.AppColor4,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-        );
-      });
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Components().DialogWeight(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    margin: const EdgeInsets.only(left: 15, right: 8),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${AppLocalizations.of(context)!.getTranslate('weight')}',
+                              style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(Assets.iconEditRange),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '${provider.informations.weight}',
+                              style: AppTheme.Headline20Text.copyWith(
+                                  color: AppColors.AppColor4,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '(kg)',
+                              style: AppTheme.Headline16Text.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Components().DialogHeight(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    margin: const EdgeInsets.only(right: 15, left: 8),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: AppColors.AppColor3,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.getTranslate('height')}",
+                              style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(Assets.iconEditRange),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '${provider.informations.tall}',
+                              style: AppTheme.Headline20Text.copyWith(
+                                  color: AppColors.AppColor4,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '(cm)',
+                              style: AppTheme.Headline16Text.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (sugarInfoStore!.isSwapedToMol == true) {
+                        Components().showDialogGoalMol(context);
+                      } else {
+                        Components().showDialogGoalMg(context);
+                      }
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.14,
+                      margin: const EdgeInsets.only(left: 15, right: 8),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${AppLocalizations.of(context)!.getTranslate('goal')}',
+                                style: AppTheme.Headline16Text.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const Spacer(),
+                              SvgPicture.asset(Assets.iconEditPen),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Observer(builder: (_) {
+                            return Row(
+                              children: [
+                                Observer(builder: (_) {
+                                  return Text(
+                                    '${cutString(sugarInfoStore!.goalAmount!.amount!)}',
+                                    style: AppTheme.Headline20Text.copyWith(
+                                        color: AppColors.AppColor4,
+                                        fontWeight: FontWeight.w500),
+                                  );
+                                }),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "${sugarInfoStore!.isSwapedToMol == true ? "(mmol/L)" : "(mg/dL)"}",
+                                  style: AppTheme.Headline16Text.copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            );
+                          })
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    margin: const EdgeInsets.only(right: 15, left: 8),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.getTranslate('height')}",
+                              style: AppTheme.appBodyTextStyle.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(
+                              Assets.iconEdit,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                         Row(
+                                children: [
+                                  Text(
+                                    '${sugarInfoStore?.information?.tall.toString()}',
+                                    style: AppTheme.Headline20Text.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '(cm)',
+                                    style: AppTheme.Headline20Text.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              )
+
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Center(
+              child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: AdsNative(
+                    templateType: TemplateType.medium,
+                    unitId: AdHelper.nativeInAppAdUnitId,
+                  )),
+            ),
+          ),
+        ],
+      );
     });
   }
 

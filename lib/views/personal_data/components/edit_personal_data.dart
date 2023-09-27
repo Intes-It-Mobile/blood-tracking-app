@@ -165,7 +165,7 @@ class EditPersonalAge extends StatefulWidget {
 
 class _EditPersonalAgeState extends State<EditPersonalAge> {
   SugarInfoStore? sugarInfoStore;
-  int currentValue = 25;
+  int currentValue = 26;
   bool? isFirst = true;
   FixedExtentScrollController controllerWC = FixedExtentScrollController();
 
@@ -178,109 +178,114 @@ class _EditPersonalAgeState extends State<EditPersonalAge> {
   @override
   Widget build(BuildContext context) {
     InformationNotifier informationNotifier =
-        Provider.of<InformationNotifier>(context);
+    Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
-    if (isFirst == true) {
-      currentValue = sugarInfoStore!.information!.old!;
-      setState(() {
-        isFirst = false;
-      });
-    }
-    return Column(
-      children: [
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          '${AppLocalizations.of(context)!.getTranslate('how_old_are_you')}',
-          style: AppTheme.edit20Text,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          height: 180,
-          child: WheelChooser.integer(
-            // controller: controllerWC,
-            onValueChanged: (value) {
-              currentValue = value;
-              setState(() {
-               // int age = controllerWC.initialItem;
-               // age = value;
-                sugarInfoStore?.information?.old = value;
-               // print("tuổi: ${age}");
-                print(
-                    "dasdasddas: ${sugarInfoStore?.information?.old?.toInt()}");
-              });
-            },
-            maxValue: 115,
-            minValue: 1,
-            initValue: currentValue,
-            step: 1,
-            selectTextStyle: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w800, fontSize: 22),
-            unSelectTextStyle: TextStyle(color: Colors.grey),
+    // if (isFirst == true) {
+    //   currentValue = informationNotifier.information!.old!;
+    //   setState(() {
+    //     isFirst = false;
+    //   });
+    // }
+    return ChangeNotifierProvider<InformationNotifier>(
+      create: (_) => InformationNotifier(),
+    builder: (context, _) {
+    return  Consumer<InformationNotifier>(builder: (context, provider, _){
+      return Column(
+        children: [
+          const SizedBox(
+            height: 5,
           ),
-        ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 15, right: 12),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFCFF3FF),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        '${AppLocalizations.of(context)!.getTranslate('cancel')}',
-                        style: AppTheme.Headline16Text.copyWith(
-                            color: AppColors.AppColor2),
+          Text(
+            '${AppLocalizations.of(context)!.getTranslate('how_old_are_you')}',
+            style: AppTheme.edit20Text,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            height: 180,
+            child: WheelChooser.integer(
+              // controller: controllerWC,
+              onValueChanged: (value) {
+                currentValue = value;
+                setState(() {
+                  // int age = controllerWC.initialItem;
+                  // age = value;
+                  provider.informations.old = value;
+                  // print("tuổi: ${age}");
+                });
+              },
+              maxValue: 115,
+              minValue: 1,
+              initValue: currentValue,
+              step: 1,
+              selectTextStyle: TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.w800, fontSize: 22),
+              unSelectTextStyle: TextStyle(color: Colors.grey),
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 15, right: 12),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFCFF3FF),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          '${AppLocalizations.of(context)!.getTranslate('cancel')}',
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      sugarInfoStore?.information?.old =
-                          sugarInfoStore?.information?.old;
-                    });
-                    informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
-                    Navigator.pop(context);
-                    //informationNotifier.saveUserData('information_key', updatedItem);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 12, right: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor2,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                          '${AppLocalizations.of(context)!.getTranslate('done')}',
-                          style: AppTheme.Headline16Text),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        currentValue =
+                        provider.informations.old!;
+                      });
+                      informationNotifier.saveUserData(
+                          'information_key', provider.informations);
+                      Navigator.pop(context);
+                      //informationNotifier.saveUserData('information_key', updatedItem);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 12, right: 15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                            '${AppLocalizations.of(context)!.getTranslate('done')}',
+                            style: AppTheme.Headline16Text),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
+              ],
+            ),
+          )
+        ],
+      );
+    });
+    }
+  );
   }
 }
 
@@ -314,115 +319,117 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
         isFirst = false;
       });
     }
-    return Column(
-      children: [
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          '${AppLocalizations.of(context)!.getTranslate('what_is_your_weight')}',
-          style: AppTheme.edit20Text,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          height: 180,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 80,
-                child: WheelChooser.integer(
-                  // controller: controllerWC,
-                  onValueChanged: (value) {
-                    currentValue = value;
-                    setState(() {
-                     // int age = controllerWC.initialItem;
-                      sugarInfoStore?.information?.weight = value;
-                    });
-                  },
-                  maxValue: 115,
-                  minValue: 1,
-                  initValue: currentValue,
-                  step: 1,
-                  selectTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 22),
-                  unSelectTextStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                'Kg',
-                style: AppTheme.unit20Text,
-              )
-            ],
+    return Consumer<InformationNotifier>(builder: (context, provider, _){
+      return Column(
+        children: [
+          const SizedBox(
+            height: 5,
           ),
-        ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 15, right: 12),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFCFF3FF),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        '${AppLocalizations.of(context)!.getTranslate('cancel')}',
-                        style: AppTheme.Headline16Text.copyWith(
-                            color: AppColors.AppColor2),
+          Text(
+            '${AppLocalizations.of(context)!.getTranslate('what_is_your_weight')}',
+            style: AppTheme.edit20Text,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            height: 180,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 80,
+                  child: WheelChooser.integer(
+                    // controller: controllerWC,
+                    onValueChanged: (value) {
+                      currentValue = value;
+                      setState(() {
+                        // int age = controllerWC.initialItem;
+                        provider.informations.weight = value;
+                      });
+                    },
+                    maxValue: 115,
+                    minValue: 1,
+                    initValue: currentValue,
+                    step: 1,
+                    selectTextStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 22),
+                    unSelectTextStyle: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Kg',
+                  style: AppTheme.unit20Text,
+                )
+              ],
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 15, right: 12),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFCFF3FF),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          '${AppLocalizations.of(context)!.getTranslate('cancel')}',
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      sugarInfoStore?.information?.weight =
-                          sugarInfoStore?.information?.weight;
-                    });
-                    informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
-                    Navigator.pop(context);
-                    //informationNotifier.saveUserData('information_key', updatedItem);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 12, right: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor2,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                          '${AppLocalizations.of(context)!.getTranslate('done')}',
-                          style: AppTheme.Headline16Text),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        sugarInfoStore?.information?.weight =
+                            sugarInfoStore?.information?.weight;
+                      });
+                      informationNotifier.saveUserData(
+                          'information_key', sugarInfoStore!.information!);
+                      Navigator.pop(context);
+                      //informationNotifier.saveUserData('information_key', updatedItem);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 12, right: 15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                            '${AppLocalizations.of(context)!.getTranslate('done')}',
+                            style: AppTheme.Headline16Text),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
+              ],
+            ),
+          )
+        ],
+      );
+    });
   }
 }
 
