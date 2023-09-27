@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/controllers/information/information_item.dart';
 import 'package:blood_sugar_tracking/models/goal/goal_amount.dart';
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/views/personal_data/components/components_personal.dart';
@@ -52,6 +53,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     AppLovinFunction().initializeInterstitialAds();
     // sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
     //   Provider.of<InformationNotifier>(context, listen: true).setInformationData(sugarInfoStore!.information!);
+    sugarInfoStore?.information?.gender = ListInformation().information[0].gender;
+    sugarInfoStore?.information?.old = 26;
+    sugarInfoStore?.information?.weight = 65;
+    sugarInfoStore?.information?.tall = 170;
     Future.delayed(const Duration(microseconds: 100), () {
       setState(() {});
     });
@@ -156,7 +161,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                               sugarInfoStore?.information != null
                                   ? Text(
-                                      '${AppLocalizations.of(context)!.getTranslate('${sugarInfoStore?.information?.gender}')}',
+                                      '${sugarInfoStore?.information?.gender}',
                                       style: AppTheme.Headline20Text.copyWith(
                                           color: AppColors.AppColor4, fontWeight: FontWeight.w500),
                                     )

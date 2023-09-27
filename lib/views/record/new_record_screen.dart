@@ -927,7 +927,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 child: Container(
                   color: AppColors.AppColor2,
                   child: Scrollbar(
-                    isAlwaysShown: true,
+                    thumbVisibility: true,
                     child: ListView(
                       // physics: BouncingScrollPhysics(),
                       children: widget.listConditions!.map((Conditions condition) {
