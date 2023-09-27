@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/controllers/information/information_item.dart';
 import 'package:blood_sugar_tracking/models/goal/goal_amount.dart';
 import 'package:blood_sugar_tracking/models/information/information_provider.dart';
 import 'package:blood_sugar_tracking/views/personal_data/components/components_personal.dart';
@@ -156,7 +157,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           height: 15,
                         ),
                         Text(
-                          '${provider.informations.gender}',
+                          '${ListInformation().information[0].gender}',
                           style: AppTheme.Headline20Text.copyWith(
                               color: AppColors.AppColor4,
                               fontWeight: FontWeight.w500),
