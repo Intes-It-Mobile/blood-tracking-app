@@ -40,7 +40,7 @@ class _AverageInfoSlideBarItemWidgetState
     return Container(
       // height: MediaQuery.of(context).size.height * 0.12,
       // width: MediaQuery.of(context).size.width * 0.39,
-      margin: const EdgeInsets.only(right: 10, top: 20),
+      margin: const EdgeInsets.only(right: 10, top: 0),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),

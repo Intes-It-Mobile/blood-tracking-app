@@ -7,9 +7,9 @@ class Information {
 
 
   Information({
-    this.gender,
-    this.old = 25,
-    this.weight = 50,
+    this.gender = 'Male',
+    this.old = 26,
+    this.weight = 65,
     this.tall = 170,
     this.name,
 

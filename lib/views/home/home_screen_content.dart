@@ -32,6 +32,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   SugarInfoStore? sugarInfoStore;
   bool? isFirst = false;
   List<SugarRecord>? listRecords = [];
+
   @override
   void didChangeDependencies() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
@@ -57,118 +58,122 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Observer(builder: (_) {
-      return Column(
+      return Stack(
         children: [
-          Stack(
+          Column(
             children: [
-              Container(
-                color: Colors.transparent,
-                height: MediaQuery.of(context).size.height * 0.30555,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: screenWidth,
-                      height: screenHeight * 0.227844,
-                      color: AppColors.AppColor2,
-                      padding: const EdgeInsets.only(top: 20),
-                      // child: const TopWidgetHomeContent(),
+              Stack(
+                children: [
+                  Container(
+                    color: AppColors.AppColor2,
+                    height: screenHeight * 0.19,
+                     padding: const EdgeInsets.only(top: 10),
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: Colors.transparent,
+                            height:
+                                MediaQuery.of(context).size.height * 0.20 / 2,
+                            child: const TopWidgetHomeContent()),
+                      ],
                     ),
-                    Positioned(
-                      left: 0.0,
-                      right: 0.0,
-                      bottom: 20,
-                      child: sugarInfoStore!.recentNumber != null
-                          ? const AverageInfoSlideBarWidget()
-                          : Container(),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  primary: true,
+                  physics: const BouncingScrollPhysics(),
+                  child: Observer(builder: (_) {
+                    return Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.18 / 2,
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${AppLocalizations.of(context)!.getTranslate('chart')}",
+                                style: AppTheme.TextIntroline16Text.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.AppColor2),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 1,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
+                                  child: sugarInfoStore!
+                                                  .listRecordArrangedByTime! !=
+                                              null &&
+                                          sugarInfoStore!
+                                              .listRecordArrangedByTime!
+                                              .isNotEmpty
+                                      ? Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              10, 10, 10, 0),
+                                          child: Observer(builder: (_) {
+                                            return ScrollableChart(
+                                              listRecords: sugarInfoStore!
+                                                  .listRecordArrangedByTime!,
+                                            );
+                                          }),
+                                        )
+                                      : Image.asset(Assets.empty_chart)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        RecordInfoSlideBarWidget(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        ButtonWidget(
+                          mainAxisSizeMin: true,
+                          btnText: "new_record",
+                          btnColor: AppColors.AppColor4,
+                          suffixIconPath: Assets.iconEditBtn,
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.new_record);
+                          },
+                        ),
+                        // const AdsBanner()
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     showDiaLogUpdateVersion(context);
+                        //   },
+                        //   child: Container(
+                        //     width: 20,
+                        //     height: 20,
+                        //     color: Colors.amber,
+                        //   ),
+                        // )
+                      ],
+                    );
+                  }),
                 ),
               ),
-              Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: const TopWidgetHomeContent())
             ],
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              primary: true,
-              physics: const BouncingScrollPhysics(),
-              child: Observer(builder: (_) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.getTranslate('chart')}",
-                            style: AppTheme.TextIntroline16Text.copyWith(
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.AppColor2),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: sugarInfoStore!
-                                              .listRecordArrangedByTime! !=
-                                          null &&
-                                      sugarInfoStore!
-                                          .listRecordArrangedByTime!.isNotEmpty
-                                  ? Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                      child: Observer(builder: (_) {
-                                        return ScrollableChart(
-                                          listRecords: sugarInfoStore!
-                                              .listRecordArrangedByTime!,
-                                        );
-                                      }),
-                                    )
-                                  : Image.asset(Assets.empty_chart)),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    RecordInfoSlideBarWidget(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    ButtonWidget(
-                      mainAxisSizeMin: true,
-                      btnText: "new_record",
-                      btnColor: AppColors.AppColor4,
-                      suffixIconPath: Assets.iconEditBtn,
-                      onTap: () {
-                        Navigator.of(context).pushNamed(Routes.new_record);
-                      },
-                    ),
-                    // const AdsBanner() 
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     showDiaLogUpdateVersion(context);
-                    //   },
-                    //   child: Container(
-                    //     width: 20,
-                    //     height: 20,
-                    //     color: Colors.amber,
-                    //   ),
-                    // )
-                  ],
-                );
-              }),
-            ),
+          Positioned(
+            top:  MediaQuery.of(context).size.height * 0.20 * 0.68,
+            left: 0,
+            right: 0,
+            child: sugarInfoStore!.recentNumber != null
+                ? const AverageInfoSlideBarWidget()
+                : Container(),
           ),
         ],
       );

@@ -33,7 +33,7 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 7, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Column(
         children: [
           Row(
@@ -93,7 +93,6 @@ class _TopWidgetHomeContentState extends State<TopWidgetHomeContent> {
                                   BorderRadius.all(Radius.circular(5))),
                           padding: const EdgeInsets.all(6),
                           child: SvgPicture.asset(
-
                             Assets.iconAlarm,
                             height: 20,
                      
