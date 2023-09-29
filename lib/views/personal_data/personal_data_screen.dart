@@ -398,13 +398,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "${AppLocalizations.of(context)!.getTranslate('height')}",
-                                    style: AppTheme.appBodyTextStyle.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "${AppLocalizations.of(context)!.getTranslate('height')}",
+                                  //   style: AppTheme.appBodyTextStyle.copyWith(
+                                  //     fontWeight: FontWeight.w500,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  // ),
                                   const Spacer(),
                                   SvgPicture.asset(
                                     Assets.iconEdit,
@@ -415,11 +415,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               const SizedBox(
                                 height: 15,
                               ),
-                              sugarInfoStore?.information != null
-                                  ? Row(
+                              Row(
                                       children: [
                                         Text(
-                                          '${sugarInfoStore?.information?.tall.toString()}',
+                                          '',
                                           style: AppTheme.Headline20Text.copyWith(
                                               color: Colors.white, fontWeight: FontWeight.w500),
                                         ),
@@ -433,7 +432,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                         )
                                       ],
                                     )
-                                  : const Text('error')
+                                 
                             ],
                           ),
                         ),

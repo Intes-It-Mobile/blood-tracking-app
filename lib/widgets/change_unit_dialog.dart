@@ -117,6 +117,7 @@ class _ChageUnitDialogState extends State<ChageUnitDialog> {
                 ],
               ),
               const Spacer(),
+              SizedBox(height: 20,),
               InkWell(
                 splashColor: Colors.white,
                 onTap: () {

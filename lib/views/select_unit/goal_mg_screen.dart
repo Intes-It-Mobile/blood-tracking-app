@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
@@ -8,6 +9,8 @@ import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
 import '../../models/information/information_provider.dart';
 import '../../routes.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class GoalmgScreen extends StatefulWidget {
@@ -44,43 +47,51 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
       body: Stack(
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Text(
-                  "${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}",
-                  style: AppTheme.unit24Text,
-                ),
-              ),
-              Container(
-                height: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 80,
-                      child: WheelChooser.integer(
-                        onValueChanged: (value) {
-                          sugarInfoStore!.goalAmount!.amount = value * 1.0;
-                        },
-                        maxValue: 630,
-                        minValue: 18,
-                        initValue: currentValue,
-                        selectTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22),
-                        unSelectTextStyle: TextStyle(color: Colors.grey),
+                    Center(
+                      child: Text(
+                        "${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}",
+                        style: AppTheme.unit24Text,
                       ),
                     ),
-                    Text(
-                      '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
-                      style: AppTheme.unit20Text,
-                    )
+                    Container(
+                      height: 300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 80,
+                            child: WheelChooser.integer(
+                              onValueChanged: (value) {
+                                sugarInfoStore!.goalAmount!.amount =
+                                    value * 1.0;
+                              },
+                              maxValue: 630,
+                              minValue: 18,
+                              initValue: currentValue,
+                              selectTextStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 22),
+                              unSelectTextStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          Text(
+                            '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
+                            style: AppTheme.unit20Text,
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
+              
             ],
           ),
           Positioned(
@@ -92,8 +103,9 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
                     .saveIsSwapedToMol(sugarInfoStore!.tempChooseUnitMol!);
                 sugarInfoStore!
                     .setSwapStatusToMol(sugarInfoStore!.tempChooseUnitMol!);
-                      sugarInfoStore!.setSwapStatusToMol(false);
-                       sugarInfoStore!.setGoalAmount( sugarInfoStore!.goalAmount!.amount);
+                sugarInfoStore!.setSwapStatusToMol(false);
+                sugarInfoStore!
+                    .setGoalAmount(sugarInfoStore!.goalAmount!.amount);
                 sugarInfoStore!.saveGoalAmountToSharedPreferences();
                 Navigator.of(context).pushNamed(Routes.intro);
               },

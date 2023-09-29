@@ -132,7 +132,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
       int index = entry.key;
       String title = entry.value;
 
-      if ((index + 1) % 3 == 0) {
+      if ((index + 1) % 2 == 0) {
         return Container(
           child: Column(
             children: [
@@ -140,12 +140,12 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
               Container(
                 width: double.infinity,
                 color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.15,
                 child: Center(
                   child: Padding(
                       padding: const EdgeInsets.all(8),
                       child: AdsNative(
-                        templateType: TemplateType.medium,
+                        templateType: TemplateType.small,
                         unitId: AdHelper.nativeInAppAdUnitId,
                       )),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
@@ -9,6 +10,8 @@ import '../../controllers/stores/sugar_info_store.dart';
 import '../../models/information/information.dart';
 import '../../models/information/information_provider.dart';
 import '../../routes.dart';
+import '../../utils/ads_helper.dart';
+import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 
 class GoalmmolScreen extends StatefulWidget {
@@ -53,76 +56,90 @@ class _GoalmmolScreenState extends State<GoalmmolScreen> {
       body: Stack(
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Text(
-                  "${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}",
-                  style: AppTheme.unit24Text,
-                ),
-              ),
-              Observer(builder: (_) {
-                return Text(
-                  "${AppLocalizations.of(context)!.getTranslate(sugarInfoStore!.errorGoalText!)}",
-                  style: AppTheme.errorText,
-                );
-              }),
-              Container(
-                height: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 200,
-                      width: 80,
-                      child: WheelChooser.integer(
-                        onValueChanged: (value) {
-                          sugarInfoStore!.goalFirstMolValue = value;
-                          sugarInfoStore!.setGoalMolAmount();
-                        },
-                        maxValue: 35,
-                        minValue: 1,
-                        initValue: currentFirstValue,
-                        selectTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22),
-                        unSelectTextStyle: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    Container(
+                    Center(
                       child: Text(
-                        ",",
-                        style: AppTheme.BtnText.copyWith(
-                            color: Colors.black, fontSize: 30),
+                        "${AppLocalizations.of(context)!.getTranslate('declare_your_goal')}",
+                        style: AppTheme.unit24Text,
                       ),
                     ),
+                    Observer(builder: (_) {
+                      return Text(
+                        "${AppLocalizations.of(context)!.getTranslate(sugarInfoStore!.errorGoalText!)}",
+                        style: AppTheme.errorText,
+                      );
+                    }),
                     Container(
-                      height: 200,
-                      width: 80,
-                      child: WheelChooser.integer(
-                        onValueChanged: (value) {
-                          sugarInfoStore!.goalSecondMolValue = value;
-                          sugarInfoStore!.setGoalMolAmount();
-                        },
-                        maxValue: 9,
-                        minValue: 0,
-                        initValue: currentSecondValue,
-                        selectTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22),
-                        unSelectTextStyle: TextStyle(color: Colors.grey),
+                      height: 300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 80,
+                            child: WheelChooser.integer(
+                              onValueChanged: (value) {
+                                sugarInfoStore!.goalFirstMolValue = value;
+                                sugarInfoStore!.setGoalMolAmount();
+                              },
+                              maxValue: 35,
+                              minValue: 1,
+                              initValue: currentFirstValue,
+                              selectTextStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 22),
+                              unSelectTextStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              ",",
+                              style: AppTheme.BtnText.copyWith(
+                                  color: Colors.black, fontSize: 30),
+                            ),
+                          ),
+                          Container(
+                            height: 200,
+                            width: 80,
+                            child: WheelChooser.integer(
+                              onValueChanged: (value) {
+                                sugarInfoStore!.goalSecondMolValue = value;
+                                sugarInfoStore!.setGoalMolAmount();
+                              },
+                              maxValue: 9,
+                              minValue: 0,
+                              initValue: currentSecondValue,
+                              selectTextStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 22),
+                              unSelectTextStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          Text(
+                            '${AppLocalizations.of(context)!.getTranslate('mmol/L')}',
+                            style: AppTheme.unit20Text,
+                          )
+                        ],
                       ),
                     ),
-                    Text(
-                      '${AppLocalizations.of(context)!.getTranslate('mmol/L')}',
-                      style: AppTheme.unit20Text,
-                    )
                   ],
                 ),
               ),
+              Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AdsNative(
+                      templateType: TemplateType.medium,
+                      unitId: AdHelper.nativeInAppAdUnitId,
+                    )),
+              )
             ],
           ),
           Positioned(
