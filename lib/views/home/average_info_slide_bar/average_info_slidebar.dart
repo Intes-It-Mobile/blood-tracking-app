@@ -29,7 +29,7 @@ class _AverageInfoSlideBarWidgetState extends State<AverageInfoSlideBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.symmetric(vertical: 15,),
-      margin: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         primary: true,

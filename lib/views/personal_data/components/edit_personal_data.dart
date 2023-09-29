@@ -25,9 +25,9 @@ class _EditPersonalDataState extends State<EditPersonalData> {
   @override
   void initState() {
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: false);
-      if(sugarInfoStore?.information?.gender == "male"){
+      if(sugarInfoStore?.information?.gender == "Male"){
         selectedIndex = 0;
-      }else if(sugarInfoStore?.information?.gender == "female"){
+      }else if(sugarInfoStore?.information?.gender == "Female"){
         selectedIndex = 1;
       }
     super.initState();
@@ -52,7 +52,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
           height: 15,
         ),
         SizedBox(
-          height: 120,
+          height: 115,
           child: ListView.builder(
             itemCount: ListInformation().information.length,
             itemBuilder: (context, int index) {
@@ -80,7 +80,7 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                       borderRadius: BorderRadius.circular(22)),
                   child: Center(
                     child: Text(
-                      "${AppLocalizations.of(context)!.getTranslate('${ListInformation().information[index].gender}')}",
+                      "${ListInformation().information[index].gender}",
                       style: AppTheme.Headline20Text.copyWith(
                         fontWeight: FontWeight.w600,
                         color: index == selectedIndex
@@ -126,11 +126,11 @@ class _EditPersonalDataState extends State<EditPersonalData> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      sugarInfoStore?.information?.gender =
+                      informationNotifier.informations.gender =
                           ListInformation().information[value].gender;
                     });
                     informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
+                        'information_key', informationNotifier.informations);
                     Navigator.pop(context);
                     //informationNotifier.saveUserData('information_key', updatedItem);
                   },
@@ -180,107 +180,111 @@ class _EditPersonalAgeState extends State<EditPersonalAge> {
     InformationNotifier informationNotifier =
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
+
     if (isFirst == true) {
-      currentValue = sugarInfoStore!.information!.old!;
+      currentValue = informationNotifier.informations.old!;
       setState(() {
         isFirst = false;
       });
     }
-    return Column(
-      children: [
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          '${AppLocalizations.of(context)!.getTranslate('how_old_are_you')}',
-          style: AppTheme.edit20Text,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          height: 180,
-          child: WheelChooser.integer(
-            // controller: controllerWC,
-            onValueChanged: (value) {
-              currentValue = value;
-              setState(() {
-               // int age = controllerWC.initialItem;
-               // age = value;
-                sugarInfoStore?.information?.old = value;
-               // print("tuổi: ${age}");
-                print(
-                    "dasdasddas: ${sugarInfoStore?.information?.old?.toInt()}");
-              });
-            },
-            maxValue: 115,
-            minValue: 1,
-            initValue: currentValue,
-            step: 1,
-            selectTextStyle: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w800, fontSize: 22),
-            unSelectTextStyle: TextStyle(color: Colors.grey),
+    return Consumer<InformationNotifier>(builder: (context, provider, _){
+      return Column(
+        children: [
+          const SizedBox(
+            height: 5,
           ),
-        ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 15, right: 12),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFCFF3FF),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        '${AppLocalizations.of(context)!.getTranslate('cancel')}',
-                        style: AppTheme.Headline16Text.copyWith(
-                            color: AppColors.AppColor2),
+          Text(
+            '${AppLocalizations.of(context)!.getTranslate('how_old_are_you')}',
+            style: AppTheme.edit20Text,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            height: 180,
+            child: WheelChooser.integer(
+              // controller: controllerWC,
+              onValueChanged: (value) {
+                currentValue = value;
+                setState(() {
+                  // int age = controllerWC.initialItem;
+                  // age = value;
+                  informationNotifier.informations.old = value;
+                  // print("tuổi: ${age}");
+                  print(
+                      "dasdasddas: ${sugarInfoStore?.information?.old?.toInt()}");
+                });
+              },
+              maxValue: 115,
+              minValue: 1,
+              initValue: currentValue,
+              step: 1,
+              selectTextStyle: TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.w800, fontSize: 22),
+              unSelectTextStyle: TextStyle(color: Colors.grey),
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 15, right: 12),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFCFF3FF),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          '${AppLocalizations.of(context)!.getTranslate('cancel')}',
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      sugarInfoStore?.information?.old =
-                          sugarInfoStore?.information?.old;
-                    });
-                    informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
-                    Navigator.pop(context);
-                    //informationNotifier.saveUserData('information_key', updatedItem);
-                  },
-                  child: Container(
-                    height: 45,
-                    margin: const EdgeInsets.only(left: 12, right: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.AppColor2,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                          '${AppLocalizations.of(context)!.getTranslate('done')}',
-                          style: AppTheme.Headline16Text),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        informationNotifier.informations.old =
+                            informationNotifier.informations.old;
+                      });
+                      informationNotifier.saveUserData(
+                          'information_key', informationNotifier.informations);
+
+                      Navigator.pop(context);
+                      //informationNotifier.saveUserData('information_key', updatedItem);
+                    },
+                    child: Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 12, right: 15),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor2,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                            '${AppLocalizations.of(context)!.getTranslate('done')}',
+                            style: AppTheme.Headline16Text),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
+              ],
+            ),
+          )
+        ],
+      );
+    });
   }
 }
 
@@ -309,7 +313,7 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     if (isFirst == true) {
-      currentValue = sugarInfoStore!.information!.weight!;
+      currentValue = informationNotifier.informations.weight!;
       setState(() {
         isFirst = false;
       });
@@ -340,7 +344,7 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
                     currentValue = value;
                     setState(() {
                      // int age = controllerWC.initialItem;
-                      sugarInfoStore?.information?.weight = value;
+                      informationNotifier.informations.weight = value;
                     });
                   },
                   maxValue: 115,
@@ -396,11 +400,11 @@ class _EditPersonalWeightState extends State<EditPersonalWeight> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      sugarInfoStore?.information?.weight =
-                          sugarInfoStore?.information?.weight;
+                      informationNotifier.informations.weight =
+                          informationNotifier.informations.weight;
                     });
                     informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
+                        'information_key', informationNotifier.informations);
                     Navigator.pop(context);
                     //informationNotifier.saveUserData('information_key', updatedItem);
                   },
@@ -450,7 +454,7 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
         Provider.of<InformationNotifier>(context);
     sugarInfoStore = Provider.of<SugarInfoStore>(context, listen: true);
     if (isFirst == true) {
-      currentValue = sugarInfoStore!.information!.tall!;
+      currentValue = informationNotifier.informations.tall!;
       setState(() {
         isFirst = false;
       });
@@ -482,7 +486,7 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
                     setState(() {
                     //  int age = controllerWC.initialItem;
                     //  age = value;
-                      sugarInfoStore?.information?.tall = value;
+                      informationNotifier.informations.tall = value;
                    //   print("tuổi: ${age}");
                       print(
                           "dasdasddas: ${sugarInfoStore?.information?.tall?.toInt()}");
@@ -543,11 +547,11 @@ class _EditPersonalHeightState extends State<EditPersonalHeight> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      sugarInfoStore?.information?.tall =
-                          sugarInfoStore?.information?.tall;
+                      informationNotifier.informations.tall =
+                          informationNotifier.informations.tall;
                     });
                     informationNotifier.saveUserData(
-                        'information_key', sugarInfoStore!.information!);
+                        'information_key', informationNotifier.informations);
                     Navigator.pop(context);
                     //informationNotifier.saveUserData('information_key', updatedItem);
                   },
