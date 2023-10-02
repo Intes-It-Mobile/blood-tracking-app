@@ -213,7 +213,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             {
               Alarm.ringStream.stream.listen((_) {
                 isRingingAlarm = true;
-
                 FlushbarManager()
                     .showFlushbar(GlobalContext.navigatorKey.currentContext!);
                 print("Ringing main");
@@ -322,9 +321,9 @@ class RouteObserver extends NavigatorObserver {
     _history.add(route);
   }
 
-  @override
+  @override 
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    _history.remove(route);
+    _history.remove(route);  
   }
 }

@@ -38,7 +38,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
   int value = 0;
   String? langCode;
   AppLanguage appLanguage = AppLanguage();
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -73,7 +74,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             InkWell(
-onTap: () async {
+              onTap: () async {
                 if (context != null) {
                   Navigator.of(context).pop();
                   Loading.show(GlobalContext.navigatorKey.currentContext!);
@@ -110,7 +111,9 @@ onTap: () async {
               child: Container(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white),
                   child: Center(
                     child: SvgPicture.asset(Assets.icSelect),
                   )),
@@ -141,20 +144,24 @@ onTap: () async {
                       });
                     },
                     child: Container(
-                      height: 44,
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.26,
-                          right: MediaQuery.of(context).size.width * 0.26,
-                          top: 8),
+                      // height: 44,
+                      // margin: EdgeInsets.only(
+                      //     left: MediaQuery.of(context).size.width * 0.26,
+                      //     right: MediaQuery.of(context).size.width * 0.26,
+                      //     top: 8),
                       decoration: BoxDecoration(
-                        color: index == _selectedIndex ? AppColors.AppColor2 : Colors.white,
+                        color: index == _selectedIndex
+                            ? AppColors.AppColor2
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(22),
                       ),
                       child: Center(
                         child: Text(
                           languages[index],
                           style: AppTheme.Headline20Text.copyWith(
-                            color: index == _selectedIndex ? Colors.white : AppColors.AppColor2,
+                            color: index == _selectedIndex
+                                ? Colors.white
+                                : AppColors.AppColor2,
                           ),
                         ),
                       ),
@@ -164,12 +171,6 @@ onTap: () async {
               ),
             ),
           ),
-          // const Expanded(
-          //   flex: 1,
-          //   child: Center(
-          //       // child: MRECAds(),
-          //       ),
-          // ),
           Center(
             child: Padding(
                 padding: const EdgeInsets.all(8),

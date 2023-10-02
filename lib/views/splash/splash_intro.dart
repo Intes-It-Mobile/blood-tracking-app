@@ -191,7 +191,7 @@ class _IntroScreenState extends State<IntroScreen> {
               child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: AdsNative(
-                    templateType: TemplateType.medium,
+                    templateType: TemplateType.small,
                     unitId: AdHelper.nativeIntroAdUnitId,
                   )),
             ),
@@ -214,6 +214,7 @@ class _IntroScreenState extends State<IntroScreen> {
               indexPage == 4
                   ? Image.asset(
                       image,
+                      fit: BoxFit.fitHeight,
                     )
                   : SizedBox(),
             ],

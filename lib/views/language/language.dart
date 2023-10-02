@@ -38,7 +38,10 @@ class _LanguagePageState extends State<LanguagePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(right: 10,),
+                padding: EdgeInsets.only(
+                  right: 10,
+                  top: 40,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.max,
@@ -56,16 +59,19 @@ class _LanguagePageState extends State<LanguagePage> {
                   ],
                 ),
               ),
-              Container(
+              Expanded(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
                       "${AppLocalizations.of(context)!.getTranslate('choose_your_language')}",
                       style: AppTheme.unit24Text,
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.40,
-                      width: double.infinity,
+                      // width: double.infinity,
                       child: ListView.builder(
                           primary: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -83,7 +89,7 @@ class _LanguagePageState extends State<LanguagePage> {
                                 });
                               },
                               child: Container(
-                                height: 45,
+                                height: 40,
                                 margin: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width *
                                         0.16,
@@ -122,7 +128,6 @@ class _LanguagePageState extends State<LanguagePage> {
               ),
             ],
           ),
-          
         ],
       ),
     );

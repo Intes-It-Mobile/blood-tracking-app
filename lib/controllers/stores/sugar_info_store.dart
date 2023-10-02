@@ -451,13 +451,13 @@ abstract class _SugarInfoStoreBase with Store {
     print('popup');
 
     // AppLovinFunction().showInterstitialAds();
-    displayInterAds();
 
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.home,
       (route) => false,
     );
+    displayInterAds();
     if (listRecordArrangedByTime!.length == 1) {
       sugarRecordGoal = listRecordArrangedByTime!.first;
       saveSugarRecordGoal(sugarRecordGoal!);
@@ -469,15 +469,13 @@ abstract class _SugarInfoStoreBase with Store {
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
 
-  void displayInterAds() {
-    ShowInterstitialAdsController showInterstitialAdsController =
-        ShowInterstitialAdsController();
-    showInterstitialAdsController.loadAd();
-    Loading.show(GlobalContext.navigatorKey.currentContext!);
-    Future.delayed(Duration(milliseconds: 1000), () {
-      Loading.hide(GlobalContext.navigatorKey.currentContext!);
-      showInterstitialAdsController.showAlert();
-    });
+  void displayInterAds(){
+      ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+      showInterstitialAdsController.loadAd();
+      Future.delayed(Duration(milliseconds: 1000),(){
+showInterstitialAdsController.showAlert();
+      });
+
   }
 
   String findStatusForValueAndConditionId(
