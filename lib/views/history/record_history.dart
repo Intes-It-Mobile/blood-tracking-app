@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
 import '../../utils/ads_handle.dart';
@@ -25,7 +26,8 @@ class RecordHistory extends StatefulWidget {
 
 class _RecordHistoryState extends State<RecordHistory> {
   SugarInfoStore? sugarInfoStore;
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -72,7 +74,8 @@ class _RecordHistoryState extends State<RecordHistory> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('record_history')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow
+                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -86,12 +89,9 @@ class _RecordHistoryState extends State<RecordHistory> {
           width: MediaQuery.of(context).size.width,
           // margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
           margin: EdgeInsets.fromLTRB(15, 16, 15, 16),
-          child: sugarInfoStore!.listRecord != null && sugarInfoStore!.listRecord!.isNotEmpty
-              ? GridView.count(
-                  childAspectRatio: 1.8,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 12,
-                  crossAxisCount: 2,
+          child: sugarInfoStore!.listRecord != null &&
+                  sugarInfoStore!.listRecord!.isNotEmpty
+              ? Column(
                   children: buildHistoryRecord(),
                 )
               : Container(
@@ -101,10 +101,12 @@ class _RecordHistoryState extends State<RecordHistory> {
                     children: [
                       Image.asset(Assets.history_mpt, width: 146, height: 146),
                       SizedBox(height: 30),
-                      Text("${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
+                      Text(
+                          "${AppLocalizations.of(context)!.getTranslate('you_have_not_record')}",
                           textAlign: TextAlign.center,
-                          style:
-                              AppTheme.TextIntroline16Text.copyWith(fontWeight: FontWeight.w700, color: Colors.black)),
+                          style: AppTheme.TextIntroline16Text.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black)),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8),
@@ -125,15 +127,74 @@ class _RecordHistoryState extends State<RecordHistory> {
     );
   }
 
-  List<Widget> buildHistoryRecord() {
-    return sugarInfoStore!.listRecord!.map((e) {
-      return RecordInfoSliderItemWidget(
-        id: e.id,
-        status: e.status,
-        dayTime: e.dayTime,
-        hourTime: e.hourTime,
-        sugarAmount: e.sugarAmount,
+List<Widget> buildHistoryRecord() {
+  final List<Widget> widgetsList =
+      sugarInfoStore!.listRecord!.asMap().entries.fold(
+    <Widget>[],
+    (List<Widget> acc, MapEntry<int, SugarRecord> entry) {
+      final int index = entry.key;
+      final SugarRecord recordInfo = entry.value;
+
+      acc.add(
+        RecordInfoSliderItemWidget(
+          margin: true,
+          id: recordInfo.id,
+          status: recordInfo.status,
+          dayTime: recordInfo.dayTime,
+          hourTime: recordInfo.hourTime,
+          sugarAmount: recordInfo.sugarAmount,
+        ),
       );
-    }).toList();
+
+      return acc;
+    },
+  );
+
+  // Sử dụng hàm buildCustomList để tạo danh sách theo yêu cầu
+  return buildCustomList(widgetsList);
+}
+List<Widget> buildCustomList(List<Widget> widgetList) {
+  final List<Widget> resultList = [];
+
+  for (int i = 0; i < widgetList.length; i += 2) {
+    final rowWidgets = <Widget>[];
+    rowWidgets.add(widgetList[i]);
+
+    if (i + 1 < widgetList.length) {
+      rowWidgets.add(SizedBox(width: 25)); // Thêm margin giữa các phần tử
+      rowWidgets.add(widgetList[i + 1]);
+    }
+
+    resultList.add(
+      Padding(
+        padding: EdgeInsets.only(left: 15), // Thêm margin cạnh trái màn hình 15px
+        child: Row(
+          children: rowWidgets,
+        ),
+      ),
+    );
+
+    // Kiểm tra nếu không còn cặp phần tử nào và không phải hàng cuối cùng
+    if (i + 2 < widgetList.length) {
+      resultList.add(
+        Container(
+                width: double.infinity,
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.small,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                ),
+              ),
+      );
+    }
   }
+
+  return resultList;
+}
+
 }

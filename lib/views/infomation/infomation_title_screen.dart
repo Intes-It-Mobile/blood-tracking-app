@@ -8,12 +8,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../constants/config_ads_id.dart';
+import '../../main.dart';
 import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_handle.dart';
 import '../../utils/ads_helper.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/loading_ad_dialog.dart';
 import 'info_btn_widget.dart';
 
 class InfomationTitleScreen extends StatefulWidget {
@@ -26,7 +28,8 @@ class InfomationTitleScreen extends StatefulWidget {
 class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   String? title;
   List<String>? listChildTitle = [];
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -49,7 +52,12 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
   getListChildTitle(String value) {
     switch (value) {
       case "info_title_1":
-        listChildTitle = ["bls_do", "bls_low_what", "bls_high_what", "bls_monitor"];
+        listChildTitle = [
+          "bls_do",
+          "bls_low_what",
+          "bls_high_what",
+          "bls_monitor"
+        ];
         break;
       case "info_title_2":
         listChildTitle = [
@@ -77,10 +85,18 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
         title: Row(
           children: [
             InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-                // AppLovinFunction().showInterstitialAds();
-                showInterstitialAdsController.showAlert();
+              onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  print("show loading");
+                  Future.delayed(Duration(seconds: 1), () {
+                    print("2s loading");
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(right: 12),

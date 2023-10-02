@@ -96,7 +96,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
           Column(
             children: [
               Container(
-                height: screenHeight * 0.87,
+                height: screenHeight * 0.8,
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [

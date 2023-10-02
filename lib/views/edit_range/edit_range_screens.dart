@@ -120,7 +120,6 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
           children: [
             Container(
               padding: const EdgeInsets.all(8),
-              height: MediaQuery.of(context).size.height * 0.086,
               width: double.infinity,
               color: AppColors.AppColor4,
               child: Text(

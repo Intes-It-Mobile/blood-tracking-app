@@ -1,3 +1,4 @@
+import 'package:blood_sugar_tracking/views/record/new_record_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   String? errorText = "";
   bool? canTap = true;
   TextEditingController _controller = TextEditingController();
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -74,20 +76,30 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
       if (isFirst == true) {
         recordId = arguments['record_id'];
         sugarInfoStore!.setEditingRecord(recordId);
-        if (sugarInfoStore != null && sugarInfoStore!.editingRecord != null && editRecordStore != null) {
+        if (sugarInfoStore != null &&
+            sugarInfoStore!.editingRecord != null &&
+            editRecordStore != null) {
           editRecordStore!.isSwapedToMol = sugarInfoStore!.isSwapedToMol;
-          editRecordStore!.getRootSugarInfo(sugarInfoStore!.listRootConditions!);
+          editRecordStore!
+              .getRootSugarInfo(sugarInfoStore!.listRootConditions!);
           editRecordStore!.recordId = sugarInfoStore!.editingRecord!.id;
-          editRecordStore!.conditionId = sugarInfoStore!.editingRecord!.conditionId;
-          editRecordStore!.editingDayTime = DateFormat('yyyy/MM/dd').parse(sugarInfoStore!.editingRecord!.dayTime!);
-          editRecordStore!.editingHourTime = DateFormat('HH:mm').parse(sugarInfoStore!.editingRecord!.hourTime!);
-          editRecordStore!.editingSugarAmount = sugarInfoStore!.editingRecord!.sugarAmount;
+          editRecordStore!.conditionId =
+              sugarInfoStore!.editingRecord!.conditionId;
+          editRecordStore!.editingDayTime = DateFormat('yyyy/MM/dd')
+              .parse(sugarInfoStore!.editingRecord!.dayTime!);
+          editRecordStore!.editingHourTime = DateFormat('HH:mm')
+              .parse(sugarInfoStore!.editingRecord!.hourTime!);
+          editRecordStore!.editingSugarAmount =
+              sugarInfoStore!.editingRecord!.sugarAmount;
           editRecordStore!.setEditedDayTime(editRecordStore!.editingDayTime!);
           editRecordStore!.setEditedHourTime(editRecordStore!.editingHourTime!);
-          editRecordStore!.setEditChooseCondition(editRecordStore!.conditionId!);
-          editRecordStore!.setEditInputSugarAmount(editRecordStore!.editingSugarAmount!);
+          editRecordStore!
+              .setEditChooseCondition(editRecordStore!.conditionId!);
+          editRecordStore!
+              .setEditInputSugarAmount(editRecordStore!.editingSugarAmount!);
           _controller.text = '${editRecordStore!.editingSugarAmount}';
-          editRecordStore!.sugarAmountEditControllerEdit.text = '${editRecordStore!.editingSugarAmount}';
+          editRecordStore!.sugarAmountEditControllerEdit.text =
+              '${editRecordStore!.editingSugarAmount}';
         }
         setState(() {
           isFirst = false;
@@ -119,7 +131,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     DateTime day = editRecordStore!.editingDayTime!;
     DatePicker.showDatePicker(
       maxDateTime: DateTime.now(),
-      initialDateTime: DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
+      initialDateTime:
+          DateTime(day.year, day.month, day.day, hour.hour, hour.minute),
       dateFormat: "HH:mm",
       context,
       onConfirm: (DateTime hour, List<int> index) {
@@ -160,7 +173,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
             st,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         );
 
@@ -182,7 +196,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
             st,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         );
 
@@ -191,7 +206,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
         custom(content.substring(0, 2)),
         Text(
           ':',
-          style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
         custom(content.substring(3, 5)),
       ],
@@ -216,7 +232,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
-                      print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
+                      print(sugarInfoStore!
+                          .rootSugarInfo!.conditions!.first.name);
                       // AppLovinFunction().showInterstitialAds();
                       showInterstitialAdsController.showAlert();
                     },
@@ -234,7 +251,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('edit_record')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow
+                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -276,7 +294,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         child: Text(
                           "${AppLocalizations.of(context)!.getTranslate('date_and_time')}",
-                          style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor4),
                         ),
                       ),
                       Container(
@@ -290,9 +309,12 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
-                                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
                                       child: customTextDate(
-                                          DateFormat('yyyy/MM/dd').format(editRecordStore!.editingDayTime!)),
+                                          DateFormat('yyyy/MM/dd').format(
+                                              editRecordStore!
+                                                  .editingDayTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -305,9 +327,11 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           color: AppColors.AppColor3,
-                                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                                      child:
-                                          customTextHour(DateFormat('HH:mm').format(editRecordStore!.editingHourTime!)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                      child: customTextHour(DateFormat('HH:mm')
+                                          .format(editRecordStore!
+                                              .editingHourTime!)),
                                     ),
                                   )
                                 : Container(),
@@ -321,13 +345,15 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
                               "${AppLocalizations.of(context)!.getTranslate('condition')}",
-                              style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                              style: AppTheme.Headline16Text.copyWith(
+                                  color: AppColors.AppColor4),
                             ),
                           ),
                           sugarInfoStore!.listRootConditions != null
                               ? DropDownWidget(
                                   editRecordStore: editRecordStore,
-                                  listConditions: sugarInfoStore!.listRootConditions,
+                                  listConditions:
+                                      sugarInfoStore!.listRootConditions,
                                 )
                               : Container(),
                         ],
@@ -339,7 +365,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
                               "${AppLocalizations.of(context)!.getTranslate('sugar_amount')}",
-                              style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                              style: AppTheme.Headline16Text.copyWith(
+                                  color: AppColors.AppColor4),
                             ),
                           ),
                           Container(
@@ -361,7 +388,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                       ),
                                       color: AppColors.mainBgColor),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(child: Observer(builder: (_) {
                                         return StatusWidget(
@@ -382,40 +410,64 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Container(
                                               width: 165,
                                               child: TextField(
-                                                cursorColor: AppColors.AppColor2,
-                                                decoration: const InputDecoration(
-                                                  focusedBorder: UnderlineInputBorder(
-                                                      borderSide: BorderSide(color: AppColors.AppColor2)),
-                                                  enabledBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: AppColors.AppColor2), //<-- SEE HERE
+                                                cursorColor:
+                                                    AppColors.AppColor2,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: AppColors
+                                                                  .AppColor2)),
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: AppColors
+                                                            .AppColor2), //<-- SEE HERE
                                                   ),
                                                 ),
                                                 inputFormatters: [
-                                                  // Allow Decimal Number With Precision of 2 Only
-                                                  FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}\.?\d{0,1}')),
+                                                  FilteringTextInputFormatter
+                                                      .allow(RegExp(
+                                                          r'^\d{0,3}([.,]?\d{0,1})?')),
                                                 ],
-                                                controller: editRecordStore!.sugarAmountEditControllerEdit,
+                                                controller: editRecordStore!
+                                                    .sugarAmountEditControllerEdit,
                                                 focusNode: focusNode,
                                                 onEditingComplete: () {},
                                                 onChanged: (value) {
-                                                  editRecordStore!.setEditInputSugarAmount(double.parse(value));
-                                                  editRecordStore!.checkValidateEditRecord(double.parse(value));
+                                                  editRecordStore!
+                                                      .setEditInputSugarAmount(
+                                                          double.parse(replaceCommaWithDot(value)));
+                                                  editRecordStore!
+                                                      .checkValidateEditRecord(
+                                                          double.parse(replaceCommaWithDot(value)));
                                                 },
                                                 textAlign: TextAlign.center,
                                                 onSubmitted: (value) {
-                                                  editRecordStore!.setEditInputSugarAmount(double.tryParse(value)!);
-                                                  editRecordStore!.checkValidateEditRecord(double.tryParse(value)!);
-                                                  FocusScope.of(context).unfocus();
+                                                  editRecordStore!
+                                                      .setEditInputSugarAmount(
+                                                          double.tryParse(
+                                                              replaceCommaWithDot(value))!);
+                                                  editRecordStore!
+                                                      .checkValidateEditRecord(
+                                                          double.tryParse(
+                                                              replaceCommaWithDot(value))!);
+                                                  FocusScope.of(context)
+                                                      .unfocus();
                                                 },
-                                                keyboardType:
-                                                   TextInputType.numberWithOptions(decimal: true),
+                                                keyboardType: TextInputType
+                                                    .numberWithOptions(
+                                                        decimal: true),
                                                 style: AppTheme.sugarInputText,
                                               ),
                                             ),
@@ -424,7 +476,9 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                                             ),
                                             Text(
                                               "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
-                                              style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+                                              style: AppTheme.appBodyTextStyle
+                                                  .copyWith(
+                                                      color: Colors.black),
                                             ),
                                           ],
                                         ),
@@ -451,22 +505,31 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                           }),
                           Center(
                             child: ButtonWidget(
-                              enable:
-                                  editRecordStore!.errorText == null || editRecordStore!.errorText == "" ? true : false,
+                              enable: editRecordStore!.errorText == null ||
+                                      editRecordStore!.errorText == ""
+                                  ? true
+                                  : false,
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               mainAxisSizeMin: true,
                               onTap: () {
                                 editRecordStore!.checkValidateEditRecord(0);
-                                if (editRecordStore!.errorText == null || editRecordStore!.errorText == "") {
+                                if (editRecordStore!.errorText == null ||
+                                    editRecordStore!.errorText == "") {
                                   sugarInfoStore!.checkDuplicateInEdit(
                                       SugarRecord(
-                                          conditionName: editRecordStore!.editChooseCondition!.name,
-                                          conditionId: editRecordStore!.editChooseCondition!.id,
-                                          dayTime: editRecordStore!.editingDayTimeStr!,
-                                          hourTime: editRecordStore!.editingHourTimeStr!,
+                                          conditionName: editRecordStore!
+                                              .editChooseCondition!.name,
+                                          conditionId: editRecordStore!
+                                              .editChooseCondition!.id,
+                                          dayTime: editRecordStore!
+                                              .editingDayTimeStr!,
+                                          hourTime: editRecordStore!
+                                              .editingHourTimeStr!,
                                           id: recordId,
-                                          status: editRecordStore!.currentEditStatus,
-                                          sugarAmount: editRecordStore!.editingSugarAmount),
+                                          status: editRecordStore!
+                                              .currentEditStatus,
+                                          sugarAmount: editRecordStore!
+                                              .editingSugarAmount),
                                       context,
                                       recordId!);
                                 } else {
@@ -505,7 +568,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               insetPadding: const EdgeInsets.symmetric(horizontal: 8),
               elevation: 0,
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
               content: Container(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -514,7 +578,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 42),
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('delete_record_alert')}",
-                        style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                        style: AppTheme.Headline16Text.copyWith(
+                            fontWeight: FontWeight.w500, color: Colors.black),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -532,13 +597,17 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               );
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
                               decoration: const BoxDecoration(
-                                  color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  color: AppColors.AppColor3,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
                               child: Center(
                                 child: Text(
                                   "${AppLocalizations.of(context)!.getTranslate('delete')}",
-                                  style: AppTheme.appBodyTextStyle.copyWith(fontSize: 14, color: AppColors.AppColor2),
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.AppColor2),
                                 ),
                               ),
                             ),
@@ -551,15 +620,20 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               Navigator.of(context).pop(false);
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
                               // width: 144,
                               // height: 36,
                               decoration: BoxDecoration(
-                                  color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  color: AppColors.AppColor2,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
                               child: Center(
-                                child: Text("${AppLocalizations.of(context)!.getTranslate('keep')}",
-                                    style:
-                                        AppTheme.appBodyTextStyle.copyWith(fontSize: 14, color: AppColors.mainBgColor)),
+                                child: Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('keep')}",
+                                    style: AppTheme.appBodyTextStyle.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.mainBgColor)),
                               ),
                             ),
                           ),
@@ -579,7 +653,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               insetPadding: const EdgeInsets.symmetric(horizontal: 8),
               elevation: 0,
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
               content: Container(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -588,7 +663,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 42),
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('save_edit_dialog_content')}",
-                        style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                        style: AppTheme.Headline16Text.copyWith(
+                            fontWeight: FontWeight.w500, color: Colors.black),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -601,13 +677,17 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               Navigator.of(context).pop();
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
                               decoration: const BoxDecoration(
-                                  color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  color: AppColors.AppColor3,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
                               child: Center(
                                 child: Text(
                                   "${AppLocalizations.of(context)!.getTranslate('keep')}",
-                                  style: AppTheme.appBodyTextStyle.copyWith(fontSize: 14, color: AppColors.AppColor2),
+                                  style: AppTheme.appBodyTextStyle.copyWith(
+                                      fontSize: 14, color: AppColors.AppColor2),
                                 ),
                               ),
                             ),
@@ -620,17 +700,24 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               if (canTap == true) {
                                 canTap = false;
                                 editRecordStore!.checkValidateEditRecord(0);
-                                if (editRecordStore!.errorText == null || editRecordStore!.errorText == "") {
+                                if (editRecordStore!.errorText == null ||
+                                    editRecordStore!.errorText == "") {
                                   Future.delayed(Duration(milliseconds: 0), () {
                                     sugarInfoStore!.checkDuplicateInEdit(
                                         SugarRecord(
-                                            conditionName: editRecordStore!.editChooseCondition!.name,
-                                            conditionId: editRecordStore!.editChooseCondition!.id,
-                                            dayTime: editRecordStore!.editingDayTimeStr!,
-                                            hourTime: editRecordStore!.editingHourTimeStr!,
+                                            conditionName: editRecordStore!
+                                                .editChooseCondition!.name,
+                                            conditionId: editRecordStore!
+                                                .editChooseCondition!.id,
+                                            dayTime: editRecordStore!
+                                                .editingDayTimeStr!,
+                                            hourTime: editRecordStore!
+                                                .editingHourTimeStr!,
                                             id: recordId,
-                                            status: editRecordStore!.currentEditStatus,
-                                            sugarAmount: editRecordStore!.editingSugarAmount),
+                                            status: editRecordStore!
+                                                .currentEditStatus,
+                                            sugarAmount: editRecordStore!
+                                                .editingSugarAmount),
                                         context,
                                         recordId!);
 
@@ -640,15 +727,20 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                               }
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
                               // width: 144,
                               // height: 36,
                               decoration: BoxDecoration(
-                                  color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                  color: AppColors.AppColor2,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
                               child: Center(
-                                child: Text("${AppLocalizations.of(context)!.getTranslate('change_btn')}",
-                                    style:
-                                        AppTheme.appBodyTextStyle.copyWith(fontSize: 14, color: AppColors.mainBgColor)),
+                                child: Text(
+                                    "${AppLocalizations.of(context)!.getTranslate('change_btn')}",
+                                    style: AppTheme.appBodyTextStyle.copyWith(
+                                        fontSize: 14,
+                                        color: AppColors.mainBgColor)),
                               ),
                             ),
                           ),
@@ -716,13 +808,19 @@ class _StatusWidgetState extends State<StatusWidget> {
 
   String? getAmountValue(int? level) {
     if (sugarInfoStore!.isSwapedToMol == false) {
-      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue == 630) {
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
         return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
       } else {
         return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
       }
     } else {
-      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level!).maxValue == 35) {
+      if (widget.editRecordStore!.editChooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
         return ">= ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)}";
       } else {
         return "${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).minValue!)} ~ ${cutString(widget.editRecordStore!.editChooseCondition!.sugarAmount!.elementAt(level).maxValue!)}";
@@ -859,8 +957,9 @@ class _StatusWidgetState extends State<StatusWidget> {
         }),
         Observer(builder: (_) {
           return Text(getLevelText(widget.editRecordStore!.editStatusLevel!),
-              style: AppTheme.appBodyTextStyle
-                  .copyWith(color: getLevelTextColor(widget.editRecordStore!.editStatusLevel!)));
+              style: AppTheme.appBodyTextStyle.copyWith(
+                  color: getLevelTextColor(
+                      widget.editRecordStore!.editStatusLevel!)));
         }),
         Expanded(
           child: Observer(builder: (_) {
@@ -869,11 +968,13 @@ class _StatusWidgetState extends State<StatusWidget> {
                 child: widget.editRecordStore!.editStatusLevel == 1
                     ? Text(
                         "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
-                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+                        style: AppTheme.appBodyTextStyle
+                            .copyWith(color: Colors.black),
                       )
                     : Text(
                         "${getAmountValue(widget.editRecordStore!.editStatusLevel!)}",
-                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+                        style: AppTheme.appBodyTextStyle
+                            .copyWith(color: Colors.black),
                       ),
               );
             });
@@ -888,7 +989,8 @@ class DropDownWidget extends StatefulWidget {
   List<Conditions>? listConditions;
   EditRecordStore? editRecordStore;
 
-  DropDownWidget({super.key, required this.listConditions, this.editRecordStore});
+  DropDownWidget(
+      {super.key, required this.listConditions, this.editRecordStore});
 
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();
@@ -940,23 +1042,28 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-            decoration:
-                const BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+            decoration: const BoxDecoration(
+                color: AppColors.AppColor3,
+                borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "${getTitle(selectedTitle)}",
-                  style: AppTheme.appBodyTextStyle
-                      .copyWith(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 16),
+                  style: AppTheme.appBodyTextStyle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
                 ),
                 showDropdown
-                    ? SvgPicture.asset(Assets.iconDropdownDownArrow, color: AppColors.AppColor2)
-                    : SvgPicture.asset(Assets.iconDropdownUpArrow, color: AppColors.AppColor2),
+                    ? SvgPicture.asset(Assets.iconDropdownDownArrow,
+                        color: AppColors.AppColor2)
+                    : SvgPicture.asset(Assets.iconDropdownUpArrow,
+                        color: AppColors.AppColor2),
               ],
             ),
           ),
@@ -980,16 +1087,18 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                     thumbVisibility: true,
                     child: ListView(
                       // physics: BouncingScrollPhysics(),
-                      children: widget.listConditions!.map((Conditions condition) {
+                      children:
+                          widget.listConditions!.map((Conditions condition) {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
                               selectedTitle = condition.name;
                               selectedId = condition.id;
                               showDropdown = false;
-                              widget.editRecordStore!.setEditChooseCondition(selectedId!);
                               widget.editRecordStore!
-                                  .setEditInputSugarAmount(widget!.editRecordStore!.editingSugarAmount!);
+                                  .setEditChooseCondition(selectedId!);
+                              widget.editRecordStore!.setEditInputSugarAmount(
+                                  widget!.editRecordStore!.editingSugarAmount!);
                             });
                           },
                           child: Container(
@@ -998,8 +1107,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               value: selectedTitle,
                               child: Text(
                                 "${getTitle(condition.name)}",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                                style: AppTheme.appBodyTextStyle.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

@@ -91,7 +91,14 @@ class _GoalmgScreenState extends State<GoalmgScreen> {
                   ],
                 ),
               ),
-              
+              Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AdsNative(
+                        templateType: TemplateType.medium,
+                        unitId: AdHelper.nativeInAppAdUnitId,
+                      )),
+                )
             ],
           ),
           Positioned(

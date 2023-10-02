@@ -115,6 +115,7 @@ abstract class _SugarInfoStoreBase with Store {
     //         e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
     //     .first
     // .status;
+    
     setCurrentAmount(inputAmount);
     setCurrentStatus(inputAmount);
     if (currentStatus != null) {

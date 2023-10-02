@@ -42,7 +42,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   String? type;
   DateTime? selectedDate;
   int? id = (DateTime.now()).millisecondsSinceEpoch;
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   TextEditingController? _controller;
 
@@ -94,7 +95,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
                   "${AppLocalizations.of(context)!.getTranslate('add_new_record')}",
-                  style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                  style: AppTheme.Headline16Text.copyWith(
+                      fontWeight: FontWeight.w500, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -104,7 +106,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        showDialog<String>(context: context, builder: (BuildContext context) => SucessDialog());
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => SucessDialog());
                         Future.delayed(Duration(milliseconds: 1500), () {
                           sugarInfoStore!.replaceRecord(context);
                         });
@@ -112,11 +116,13 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 9),
                         decoration: BoxDecoration(
-                            color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                            color: AppColors.AppColor3,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
                             "${AppLocalizations.of(context)!.getTranslate('replace')}",
-                            style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                            style: AppTheme.TextIntroline16Text.copyWith(
+                                color: AppColors.AppColor2),
                           ),
                         ),
                       ),
@@ -132,7 +138,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         // margin: EdgeInsets.only(left: 23),
                         padding: EdgeInsets.symmetric(vertical: 9),
                         decoration: BoxDecoration(
-                            color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                            color: AppColors.AppColor2,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
                             "${AppLocalizations.of(context)!.getTranslate('keep')}",
@@ -196,7 +203,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       });
     }
   }
-    @override
+
+  @override
   void dispose() {
     showInterstitialAdsController.dispose();
     super.dispose();
@@ -211,7 +219,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
             st,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         );
 
@@ -233,7 +242,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
             st,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+            style: AppTheme.appBodyTextStyle.copyWith(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         );
 
@@ -242,7 +252,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         custom(content.substring(0, 2)),
         Text(
           ':',
-          style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
+          style: AppTheme.appBodyTextStyle.copyWith(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
         custom(content.substring(3, 5)),
       ],
@@ -266,7 +277,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       // AppLovinFunction().showInterstitialAds();
                       showInterstitialAdsController.showAlert();
                       Navigator.of(context).pop();
-                      print(sugarInfoStore!.rootSugarInfo!.conditions!.first.name);
+                      print(sugarInfoStore!
+                          .rootSugarInfo!.conditions!.first.name);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 12),
@@ -282,7 +294,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('new_record')}",
                       style: AppTheme.Headline20Text,
-                      overflow: TextOverflow.ellipsis, // Hiển thị dấu chấm ba khi có tràn
+                      overflow: TextOverflow
+                          .ellipsis, // Hiển thị dấu chấm ba khi có tràn
                       maxLines: 2,
                     ),
                   ),
@@ -307,7 +320,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     margin: EdgeInsets.symmetric(vertical: 8),
                     child: Text(
                       "${AppLocalizations.of(context)!.getTranslate('date_and_time')}",
-                      style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                      style: AppTheme.Headline16Text.copyWith(
+                          color: AppColors.AppColor4),
                     ),
                   ),
                   Row(
@@ -318,10 +332,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: customTextDate(sugarInfoStore!.choosedDayTimeStr != null
-                              ? sugarInfoStore!.choosedDayTimeStr!
-                              : DateFormat('yyyy/MM/dd').format(DateTime.now())),
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextDate(
+                              sugarInfoStore!.choosedDayTimeStr != null
+                                  ? sugarInfoStore!.choosedDayTimeStr!
+                                  : DateFormat('yyyy/MM/dd')
+                                      .format(DateTime.now())),
                         ),
                       ),
                       const Spacer(),
@@ -333,10 +351,13 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           // padding: const EdgeInsets.symmetric(
                           //     horizontal: 13, vertical: 9),
                           decoration: const BoxDecoration(
-                              color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: customTextHour(sugarInfoStore!.choosedDayHourStr != null
-                              ? sugarInfoStore!.choosedDayHourStr!
-                              : DateFormat('HH:mm').format(DateTime.now())),
+                              color: AppColors.AppColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: customTextHour(
+                              sugarInfoStore!.choosedDayHourStr != null
+                                  ? sugarInfoStore!.choosedDayHourStr!
+                                  : DateFormat('HH:mm').format(DateTime.now())),
                         ),
                       ),
                     ],
@@ -348,12 +369,14 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         child: Text(
                           "${AppLocalizations.of(context)!.getTranslate('condition')}",
-                          style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor4),
                         ),
                       ),
                       sugarInfoStore!.listRootConditions != null
                           ? DropDownWidget(
-                              listConditions: sugarInfoStore!.listRootConditions,
+                              listConditions:
+                                  sugarInfoStore!.listRootConditions,
                             )
                           : Container(),
                     ],
@@ -365,7 +388,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         child: Text(
                           "${AppLocalizations.of(context)!.getTranslate('sugar_amount')}",
-                          style: AppTheme.Headline16Text.copyWith(color: AppColors.AppColor4),
+                          style: AppTheme.Headline16Text.copyWith(
+                              color: AppColors.AppColor4),
                         ),
                       ),
                       Container(
@@ -415,43 +439,63 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                     margin: EdgeInsets.only(bottom: 5),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Container(
                                           width: 165,
                                           child: TextField(
                                             cursorColor: AppColors.AppColor2,
                                             decoration: InputDecoration(
-                                              focusedBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(color: AppColors.AppColor2)),
-                                              enabledBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: AppColors.AppColor2), //<-- SEE HERE
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: AppColors
+                                                              .AppColor2)),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppColors
+                                                        .AppColor2), //<-- SEE HERE
                                               ),
                                             ),
                                             inputFormatters: [
-                                              // Allow Decimal Number With Precision of 2 Only
-                                              FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}\.?\d{0,1}')),
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(
+                                                      r'^\d{0,3}([.,]?\d{0,1})?')),
                                             ],
-                                            controller: sugarInfoStore!.sugarAmountController,
+                                            controller: sugarInfoStore!
+                                                .sugarAmountController,
                                             focusNode: focusNode,
                                             onEditingComplete: () {
-                                              sugarInfoStore!.validateSugarAmount();
+                                              sugarInfoStore!
+                                                  .validateSugarAmount();
                                               addZeroToDecimal();
                                             },
                                             onChanged: (value) {
-                                              sugarInfoStore!.setInputSugarAmount(double.parse(value));
-                                              sugarInfoStore!.checkValidateNewRecord(context);
+                                              sugarInfoStore!
+                                                  .setInputSugarAmount(
+                                                      double.parse(replaceCommaWithDot(value)));
+                                              sugarInfoStore!
+                                                  .checkValidateNewRecord(
+                                                      context);
                                             },
                                             textAlign: TextAlign.center,
                                             onSubmitted: (value) {
                                               FocusScope.of(context).unfocus();
-                                              sugarInfoStore!.setInputSugarAmount(double.tryParse(value)!);
-                                              sugarInfoStore!.checkValidateNewRecord(context);
+                                              sugarInfoStore!
+                                                  .setInputSugarAmount(
+                                                      double.tryParse(replaceCommaWithDot(value))!);
+                                              sugarInfoStore!
+                                                  .checkValidateNewRecord(
+                                                      context);
                                               print(value);
                                               addZeroToDecimal();
                                               // Navigator.of(context).pop();
                                             },
-                                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                            keyboardType:
+                                                TextInputType.numberWithOptions(
+                                                    decimal: true),
                                             style: AppTheme.sugarInputText,
                                           ),
                                         ),
@@ -464,7 +508,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                           },
                                           child: Text(
                                             "${sugarInfoStore!.isSwapedToMol == true ? AppLocalizations.of(context)!.getTranslate('mmol/L') : AppLocalizations.of(context)!.getTranslate('mg/dL')}",
-                                            style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+                                            style: AppTheme.appBodyTextStyle
+                                                .copyWith(color: Colors.black),
                                           ),
                                         ),
                                       ],
@@ -486,7 +531,10 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       ),
                       Center(
                         child: ButtonWidget(
-                          enable: sugarInfoStore!.errorText == null || sugarInfoStore!.errorText == "" ? true : false,
+                          enable: sugarInfoStore!.errorText == null ||
+                                  sugarInfoStore!.errorText == ""
+                              ? true
+                              : false,
                           margin: EdgeInsets.symmetric(vertical: 8),
                           mainAxisSizeMin: true,
                           onTap: () {
@@ -495,16 +543,22 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               sugarInfoStore!.isSaving = true;
                               sugarInfoStore!.checkValidateNewRecord(context);
                               Future.delayed(Duration(milliseconds: 200), () {
-                                if (sugarInfoStore!.errorText == null || sugarInfoStore!.errorText == "") {
+                                if (sugarInfoStore!.errorText == null ||
+                                    sugarInfoStore!.errorText == "") {
                                   sugarInfoStore!.checkDuplicate();
-                                  Future.delayed(Duration(milliseconds: 300), () {
-                                    if (sugarInfoStore!.hasExistedRecord == true) {
+                                  Future.delayed(Duration(milliseconds: 300),
+                                      () {
+                                    if (sugarInfoStore!.hasExistedRecord ==
+                                        true) {
                                       showQuestionAdd();
                                     } else {
                                       showDialog<String>(
-                                          context: context, builder: (BuildContext context) => SucessDialog());
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              SucessDialog());
                                       Future.delayed(Duration(seconds: 1), () {
-                                        sugarInfoStore!.saveNewRecord(id!, context);
+                                        sugarInfoStore!
+                                            .saveNewRecord(id!, context);
                                       });
                                     }
                                   });
@@ -539,12 +593,15 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     );
   }
 }
-
+String replaceCommaWithDot(String value) {
+  return value.replaceAll(',', '.');
+}
 Future<String?> showDiaLogUnit(BuildContext context) {
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(builder: (context, setModalState) {
@@ -557,7 +614,8 @@ Future<String?> showDiaLogUnit(BuildContext context) {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.getTranslate('change_unit')}',
-                style: AppTheme.hintText.copyWith(color: AppColors.AppColor4, fontWeight: FontWeight.w600),
+                style: AppTheme.hintText.copyWith(
+                    color: AppColors.AppColor4, fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 15,
@@ -567,7 +625,9 @@ Future<String?> showDiaLogUnit(BuildContext context) {
                   Expanded(
                     child: Container(
                       height: 35,
-                      decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(
+                          color: AppColors.AppColor3,
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
                           '${AppLocalizations.of(context)!.getTranslate('mg/dL')}',
@@ -657,13 +717,19 @@ class _StatusWidgetState extends State<StatusWidget> {
 
   String? getAmountValue(int? level) {
     if (sugarInfoStore!.isSwapedToMol! == false) {
-      if (sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue == 630) {
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          630) {
         return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
       } else {
         return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
       }
     } else {
-      if (sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue == 35) {
+      if (sugarInfoStore!.chooseCondition!.sugarAmount!
+              .elementAt(level!)
+              .maxValue ==
+          35) {
         return ">= ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)}";
       } else {
         return "${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).minValue!)} ~ ${cutString(sugarInfoStore!.chooseCondition!.sugarAmount!.elementAt(level!).maxValue!)}";
@@ -676,22 +742,26 @@ class _StatusWidgetState extends State<StatusWidget> {
       case 0:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('low')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
         );
       case 1:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('normal')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
         );
       case 2:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('pre_diabetes')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
         );
       case 3:
         return Text(
           "${AppLocalizations.of(context)!.getTranslate('diabetes')}",
-          style: AppTheme.appBodyTextStyle.copyWith(color: getLevelTextColor(level)),
+          style: AppTheme.appBodyTextStyle
+              .copyWith(color: getLevelTextColor(level)),
         );
 
       default:
@@ -891,15 +961,19 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-            decoration: BoxDecoration(color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+            decoration: BoxDecoration(
+                color: AppColors.AppColor3,
+                borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "${getTitle(selectedTitle)}",
-                  style: AppTheme.appBodyTextStyle
-                      .copyWith(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 16),
+                  style: AppTheme.appBodyTextStyle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 16),
                 ),
                 const SizedBox(
                   width: 100,
@@ -930,7 +1004,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                     thumbVisibility: true,
                     child: ListView(
                       // physics: BouncingScrollPhysics(),
-                      children: widget.listConditions!.map((Conditions condition) {
+                      children:
+                          widget.listConditions!.map((Conditions condition) {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -938,7 +1013,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               selectedId = condition.id;
                               showDropdown = false;
                               sugarInfoStore!.setChooseCondition(selectedId!);
-                              sugarInfoStore!.setInputSugarAmount(sugarInfoStore!.currentSugarAmount!);
+                              sugarInfoStore!.setInputSugarAmount(
+                                  sugarInfoStore!.currentSugarAmount!);
                               // Future.delayed(const Duration(milliseconds: 200),
                               //     () {
                               //   sugarInfoStore!.setInputSugarAmount(
@@ -952,8 +1028,10 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                               value: selectedTitle,
                               child: Text(
                                 "${getTitle(condition.name)}",
-                                style: AppTheme.appBodyTextStyle
-                                    .copyWith(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                                style: AppTheme.appBodyTextStyle.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -1017,8 +1095,10 @@ class _MyDateTimePickerState extends State<MyDateTimePicker> {
 
 class _DecimalLimitInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.contains('.') && newValue.text.substring(newValue.text.indexOf('.') + 1).length > 1) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.contains('.') &&
+        newValue.text.substring(newValue.text.indexOf('.') + 1).length > 1) {
       // Nếu có dấu chấm và có hơn 1 ký tự sau dấu chấm, hạn chế lại chỉ 1 ký tự
       return TextEditingValue(
         text: oldValue.text,

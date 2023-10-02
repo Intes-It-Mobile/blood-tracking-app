@@ -260,5 +260,7 @@
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
+	<key>GADNativeAdValidatorEnabled</key>
+	<false/>
 </dict>
 </plist>

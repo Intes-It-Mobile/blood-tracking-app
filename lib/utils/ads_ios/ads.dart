@@ -139,6 +139,7 @@ class ShowInterstitialAdsController {
     //Todo: off inter
     if (interstitialAd != null) {
       // appsflyerSdk.logEvent('af_inters_displayed', {});
+      
       interstitialAd?.show();
       isShowAOA = false;
     }

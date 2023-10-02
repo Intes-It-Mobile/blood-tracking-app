@@ -18,6 +18,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
   String? dayTime = "";
   String? hourTime = "";
   double? sugarAmount = 0.0;
+  bool?  margin;
   int? id = 0;
 
   RecordInfoSliderItemWidget(
@@ -26,6 +27,7 @@ class RecordInfoSliderItemWidget extends StatefulWidget {
       this.dayTime,
       this.hourTime,
       this.sugarAmount,
+      this.margin,
       this.id});
 
   @override
@@ -101,6 +103,7 @@ class _RecordInfoSliderItemWidgetState
                   arguments: {"record_id": widget.id});
             },
             child: Container(
+              margin: widget.margin==true? EdgeInsets.only(bottom: 8,top: 7):EdgeInsets.only(top:0),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               width: (MediaQuery.of(context).size.width - 42) / 2,
               decoration: BoxDecoration(
