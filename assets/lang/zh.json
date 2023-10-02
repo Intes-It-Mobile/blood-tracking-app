@@ -165,5 +165,7 @@
   "blood_tlt_excel_mol": "血糖（毫摩尔/升）",
   "blood_tlt_excel_mg": "血糖（毫克/分升）",
   "type": "类型",
-  "update_vrs_text": "此应用程序已发布新版本，您想更新最新版本吗？"
+  "update_vrs_text": "此应用程序已发布新版本，您想更新最新版本吗？",
+  "loading_ads": "加载广告"
+
 }

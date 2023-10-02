@@ -15,6 +15,7 @@ import '../../constants/colors.dart';
 import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/edit_record_store.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../main.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../routes.dart';
 import '../../utils/ads/applovin_function.dart';
@@ -23,6 +24,7 @@ import '../../utils/ads_helper.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
+import '../../widgets/loading_ad_dialog.dart';
 import '../../widgets/sucess_dialog.dart';
 
 class EditRecordScreen extends StatefulWidget {
@@ -230,13 +232,18 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      print(sugarInfoStore!
-                          .rootSugarInfo!.conditions!.first.name);
-                      // AppLovinFunction().showInterstitialAds();
-                      showInterstitialAdsController.showAlert();
-                    },
+                  onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
+              },
+                    
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(

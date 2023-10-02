@@ -11,12 +11,14 @@ import 'package:provider/provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../main.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import 'package:flutter/services.dart' as rootBundle;
 
+import '../../widgets/loading_ad_dialog.dart';
 import 'edit_range_dialog.dart';
 
 class EditRangeScreens extends StatefulWidget {
@@ -75,12 +77,17 @@ class _EditRangeScreensState extends State<EditRangeScreens> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                         showInterstitialAdsController.showAlert();
-                        // AppLovinFunction().showInterstitialAds();
-                        ShowInterstitialAdsController().showAlert();
-                      },
+                     onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
+              },
                       child: Container(
                         margin: const EdgeInsets.only(right: 12),
                         child: SvgPicture.asset(

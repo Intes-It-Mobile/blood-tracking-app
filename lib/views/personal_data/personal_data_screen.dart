@@ -13,10 +13,12 @@ import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../main.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_helper.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/loading_ad_dialog.dart';
 
 class PersonalDataScreen extends StatefulWidget {
   // Information? information;
@@ -66,11 +68,17 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      // AppLovinFunction().showInterstitialAds();
-                      showInterstitialAdsController.showAlert();
-                    },
+                   onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
+              },
                     child: Container(
                       margin: const EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(

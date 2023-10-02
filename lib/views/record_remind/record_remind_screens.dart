@@ -9,12 +9,14 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
+import '../../main.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads_helper.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/flushbar.dart';
+import '../../widgets/loading_ad_dialog.dart';
 import '../../widgets/tile.dart';
 import '../edit_alarm/edit_alarm.dart';
 
@@ -123,11 +125,17 @@ class _AlarmScreenState extends State<AlarmScreen> {
             Row(
               children: [
                 InkWell(
-                  onTap: () {
-                    // AppLovinFunction().showInterstitialAds();
+                  onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
                     showInterstitialAdsController.showAlert();
-                    Navigator.of(context).pop();
-                  },
+                  });
+                }
+              },
                   child: Container(
                     margin: const EdgeInsets.only(right: 12),
                     child: SvgPicture.asset(

@@ -35,9 +35,11 @@ import 'dart:io' show Platform;
 late AppsflyerSdk appsflyerSdk;
 bool isInitialized = false;
 bool isShowInterAndReward = false;
-GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 final RouteObserver routeObserver = RouteObserver();
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   // Alarm.ringStream.stream.listen((_) {
@@ -53,7 +55,8 @@ void main() async {
 
   flutterLocalNotificationsPlugin.getActiveNotifications();
 
-  var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+  var initializationSettingsAndroid =
+      const AndroidInitializationSettings('@mipmap/ic_launcher');
 
   // final initializationSettingsIOS = IOSInitializationSettings(
   //   requestSoundPermission: true,
@@ -113,7 +116,8 @@ void main() async {
 }
 
 class GlobalContext {
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   // Cập nhật GlobalKey khi ứng dụng khởi động
   static void init(BuildContext? context) {
@@ -130,25 +134,31 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-
+@override
+State<MyApp> createState() => _MyAppState();
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   late AppLifecycleState app;
   late AppLifecycleState? appState;
   bool? isRingingAlarm = false;
+  bool? isFirstTimeOpen = true;
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     AppLovinFunction().initializeInterstitialAds();
     appOpenAdManager.loadAd();
+    if (isShowAOA && isFirstTimeOpen == true) {
+      Future.delayed(Duration(seconds: 3), () {
+        appOpenAdManager!.showAdIfAvailable();
+        setState(() {
+          isFirstTimeOpen = false;
+        });
+      });
+    }
     // TODO: implement initState
     super.initState();
   }
-
-
 
   @override
   void didChangeDependencies() {
@@ -167,8 +177,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // This widget is the root of your application.
 
- 
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -178,7 +186,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? getPreviousRouteName() {
     if (routeObserver.history.length >= 2) {
       // Lấy routeName của màn hình trước đó
-      final previousRoute = routeObserver.history[routeObserver.history.length - 2];
+      final previousRoute =
+          routeObserver.history[routeObserver.history.length - 2];
       return previousRoute.settings.name;
     }
     return null; // Nếu không có màn hình trước đó
@@ -205,7 +214,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Alarm.ringStream.stream.listen((_) {
                 isRingingAlarm = true;
 
-                FlushbarManager().showFlushbar(GlobalContext.navigatorKey.currentContext!);
+                FlushbarManager()
+                    .showFlushbar(GlobalContext.navigatorKey.currentContext!);
                 print("Ringing main");
               })
             }
@@ -250,10 +260,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Locale('zh', 'CN'),
               Locale('es', 'SP'),
             ],
-            localeResolutionCallback: (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
-                deviceLocale != null && ['en', 'vi', 'fr', 'zh', 'es'].contains(deviceLocale.languageCode)
-                    ? deviceLocale
-                    : supportedLocales.first,
+            localeResolutionCallback:
+                (Locale? deviceLocale, Iterable<Locale> supportedLocales) =>
+                    deviceLocale != null &&
+                            ['en', 'vi', 'fr', 'zh', 'es']
+                                .contains(deviceLocale.languageCode)
+                        ? deviceLocale
+                        : supportedLocales.first,
             theme: ThemeData(
               primaryColor: AppColors.AppColor2,
               colorScheme: const ColorScheme(
@@ -285,7 +298,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
-void logAdRevenue(String eventName, String adFormat, double revenueAmount, String currencyCode) async {
+void logAdRevenue(String eventName, String adFormat, double revenueAmount,
+    String currencyCode) async {
   final Map<String, dynamic> eventValues = {
     "ad_platform": 'AdMob',
     "ad_unit_name": eventName,
@@ -296,6 +310,7 @@ void logAdRevenue(String eventName, String adFormat, double revenueAmount, Strin
   await appsflyerSdk.logEvent('ad_impression', eventValues);
   // await analytics.logEvent(name: 'ad_impression', parameters: eventValues);
 }
+
 class RouteObserver extends NavigatorObserver {
   List<Route<dynamic>> _history = [];
 

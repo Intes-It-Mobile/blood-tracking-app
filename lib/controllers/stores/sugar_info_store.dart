@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/colors.dart';
+import '../../main.dart';
 import '../../models/goal/goal_amount.dart';
 import '../../models/information/information.dart';
 import '../../models/information/information_provider.dart';
@@ -23,6 +24,7 @@ import '../../utils/locale/appLocalizations.dart';
 import '../../widgets/goal_dialog/goal_far_dialog.dart';
 import '../../widgets/goal_dialog/goal_nearly_dialog.dart';
 import '../../widgets/goal_dialog/goal_reached_dialog.dart';
+import '../../widgets/loading_ad_dialog.dart';
 import '../../widgets/share_local.dart';
 part 'sugar_info_store.g.dart';
 
@@ -72,8 +74,11 @@ abstract class _SugarInfoStoreBase with Store {
       listRootConditions = fromSharepref!.conditions;
       setValueToListFilter(listRootConditions);
     }
+
     if (isSwapedToMol == true) {
       if (isFirstTime != false) {
+
+
         listRootConditions = fromSharepref!.conditions;
         for (var condition in listRootConditions!) {
           if (condition.sugarAmount != null) {
@@ -115,7 +120,7 @@ abstract class _SugarInfoStoreBase with Store {
     //         e.minValue! * 1.0 <= inputAmount && inputAmount < e.maxValue! * 1.0)
     //     .first
     // .status;
-    
+
     setCurrentAmount(inputAmount);
     setCurrentStatus(inputAmount);
     if (currentStatus != null) {
@@ -446,7 +451,7 @@ abstract class _SugarInfoStoreBase with Store {
     print('popup');
 
     // AppLovinFunction().showInterstitialAds();
-        displayInterAds();
+    displayInterAds();
 
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -463,13 +468,16 @@ abstract class _SugarInfoStoreBase with Store {
     }
     checkAndReplaceRecord(listRecordArrangedByTime!, sugarRecordGoal!);
   }
-  void displayInterAds(){
-      ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
-      showInterstitialAdsController.loadAd();
-      Future.delayed(Duration(milliseconds: 1000),(){
-showInterstitialAdsController.showAlert();
-      });
 
+  void displayInterAds() {
+    ShowInterstitialAdsController showInterstitialAdsController =
+        ShowInterstitialAdsController();
+    showInterstitialAdsController.loadAd();
+    Loading.show(GlobalContext.navigatorKey.currentContext!);
+    Future.delayed(Duration(milliseconds: 1000), () {
+      Loading.hide(GlobalContext.navigatorKey.currentContext!);
+      showInterstitialAdsController.showAlert();
+    });
   }
 
   String findStatusForValueAndConditionId(

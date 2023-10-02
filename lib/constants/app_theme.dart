@@ -178,4 +178,12 @@ class AppTheme {
     fontSize: TextSizeConfig.getAdjustedFontSize(20),
     fontFamily: FontFamily.IBMPlexSans,
   );
+  static final loadingAdsText = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    decoration: TextDecoration.none,
+    // height: 0.95,
+    fontSize: TextSizeConfig.getAdjustedFontSize(18),
+    fontFamily: FontFamily.IBMPlexSans,
+  );
 }

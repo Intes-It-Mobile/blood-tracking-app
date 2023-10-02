@@ -35,6 +35,17 @@ class AdHelper {
       throw UnsupportedError("no Platform");
     }
   }
+  static String get appSwitchAdUnitId {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-9819920607806935/6049705628';
+      // return 'ca-app-pub-3940256099942544/3419835294';
+    } else if (Platform.isIOS) {
+      // return 'ca-app-pub-9819920607806935/1615787898';
+      /*test*/ return 'ca-app-pub-3940256099942544/5662855259';
+    } else {
+      throw UnsupportedError("no Platform");
+    }
+  }
 
   static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
@@ -123,9 +134,9 @@ class MyMethodChannel {
 
 /// Listens for app foreground events and shows app open ads.
 class AppLifecycleReactor {
-  final AppOpenAdManager appOpenAdManager;
+  final SwitchAdManager switchAdManager;
 
-  AppLifecycleReactor({required this.appOpenAdManager});
+  AppLifecycleReactor({required this.switchAdManager});
 
   void listenToAppStateChanges() {
     AppStateEventNotifier.startListening();
@@ -140,7 +151,7 @@ class AppLifecycleReactor {
     print('New AppState state: $appState');
     if (appState == AppState.foreground) {
       if (isShowAOA) {
-        appOpenAdManager.showAdIfAvailable();
+        switchAdManager.showAdIfAvailable();
       }
     }
   }

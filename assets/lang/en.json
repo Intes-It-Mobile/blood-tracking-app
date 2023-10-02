@@ -166,5 +166,6 @@
   "blood_tlt_excel_mol": "Blood Sugar (mmol/L)",
   "blood_tlt_excel_mg": "Blood Sugar (mg/dL)",
   "type": "Type",
-  "update_vrs_text": "This app has been released a new version, do you want to update the newest version?"
+  "update_vrs_text": "This app has been released a new version, do you want to update the newest version?",
+  "loading_ads": "Loading ads"
 }

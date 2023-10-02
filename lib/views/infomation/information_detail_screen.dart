@@ -10,10 +10,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/app_theme.dart';
 import '../../constants/assets.dart';
 import '../../constants/colors.dart';
+import '../../main.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/banner_ads.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/loading_ad_dialog.dart';
 
 class DetailInformationScreen extends StatefulWidget {
   DetailInformationScreen({
@@ -61,11 +63,17 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      // AppLovinFunction().showInterstitialAds();
-                      showInterstitialAdsController.showAlert();
-                    },
+                    onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
+              },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(

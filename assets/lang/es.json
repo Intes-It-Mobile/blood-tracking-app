@@ -168,7 +168,9 @@
 	"blood_tlt_excel_mol": "Azúcar en sangre (mmol/L)",
 	"blood_tlt_excel_mg": "Azúcar en sangre (mg/dL)",
 	"type": "Tipo",
-  "update_vrs_text": "Esta aplicación ha lanzado una nueva versión, ¿desea actualizar la versión más reciente?"
+  "update_vrs_text": "Esta aplicación ha lanzado una nueva versión, ¿desea actualizar la versión más reciente?",
+  "loading_ads": "Cargando anuncios"
+
 
 
 }

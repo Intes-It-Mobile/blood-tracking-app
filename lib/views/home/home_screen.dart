@@ -35,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool hasAds = true;
   AppOpenAdManager appOpenAdManager = AppOpenAdManager();
+  SwitchAdManager switchAdManager = SwitchAdManager();
+  
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -46,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       isShowAOA =true;
 
     appOpenAdManager.loadAd();
-    _appLifecycleReactor = AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+    switchAdManager.loadAd();
+    _appLifecycleReactor = AppLifecycleReactor(switchAdManager: switchAdManager);
     _appLifecycleReactor.listenToAppStateChanges();
     super.initState();
   }

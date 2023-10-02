@@ -89,9 +89,7 @@ class _InfomationTitleScreenState extends State<InfomationTitleScreen> {
                 if (context != null) {
                   Navigator.of(context).pop();
                   Loading.show(GlobalContext.navigatorKey.currentContext!);
-                  print("show loading");
                   Future.delayed(Duration(seconds: 1), () {
-                    print("2s loading");
                     // Navigator.of(context).pop();
                     Loading.hide(GlobalContext.navigatorKey.currentContext!);
                     showInterstitialAdsController.showAlert();

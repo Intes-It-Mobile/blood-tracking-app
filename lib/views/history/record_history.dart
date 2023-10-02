@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants/config_ads_id.dart';
 import '../../controllers/stores/sugar_info_store.dart';
+import '../../main.dart';
 import '../../models/sugar_info/sugar_info.dart';
 import '../../utils/ads/applovin_function.dart';
 import '../../utils/ads/mrec_ads.dart';
@@ -15,6 +16,7 @@ import '../../utils/ads_handle.dart';
 import '../../utils/ads_helper.dart';
 import '../../utils/ads_ios/ads.dart';
 import '../../utils/locale/appLocalizations.dart';
+import '../../widgets/loading_ad_dialog.dart';
 import '../home/record_info_slide_bar/record_info_slide_bar_item.dart';
 
 class RecordHistory extends StatefulWidget {
@@ -55,11 +57,17 @@ class _RecordHistoryState extends State<RecordHistory> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      showInterstitialAdsController.showAlert();
-                      // AppLovinFunction().showInterstitialAds();
-                    },
+                   onTap: () async {
+                if (context != null) {
+                  Navigator.of(context).pop();
+                  Loading.show(GlobalContext.navigatorKey.currentContext!);
+                  Future.delayed(Duration(seconds: 1), () {
+                    // Navigator.of(context).pop();
+                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
+                    showInterstitialAdsController.showAlert();
+                  });
+                }
+              },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(

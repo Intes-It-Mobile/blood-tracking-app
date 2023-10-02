@@ -238,5 +238,7 @@
     "blood_tlt_excel_mol": "Đường trong máu (mmol/L)",
     "blood_tlt_excel_mg": "Đường trong máu (mg/dL)",
     "type": "Loại",
-    "update_vrs_text": "Ứng dụng này đã được phát hành phiên bản mới, bạn có muốn cập nhật phiên bản mới nhất không?"
+    "update_vrs_text": "Ứng dụng này đã được phát hành phiên bản mới, bạn có muốn cập nhật phiên bản mới nhất không?",
+    "loading_ads": "Đang tải quảng cáo"
+
 }
