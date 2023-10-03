@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 margin: EdgeInsets.only(
                     bottom: hasAds
-                        ? 70.0
+                        ? 50.0
                         : Platform.isAndroid
                             ? 30
                             : 0),
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
                 bottom: 0,
                 child: hasAds
-                    ? Container(width: screenWidth, height: 75, color: AppColors.AppColor2, child: const AdsBanner(),
+                    ? Container(width: screenWidth, height: 50, color: AppColors.AppColor2, child: const AdsBanner(),
 )                   : Container(
                         width: screenWidth,
                         height: 39,
