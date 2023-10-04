@@ -57,17 +57,19 @@ class _RecordHistoryState extends State<RecordHistory> {
               Row(
                 children: [
                   InkWell(
-                   onTap: () async {
-                if (context != null) {
-                  Navigator.of(context).pop();
-                  Loading.show(GlobalContext.navigatorKey.currentContext!);
-                  Future.delayed(Duration(seconds: 1), () {
-                    // Navigator.of(context).pop();
-                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
-                    showInterstitialAdsController.showAlert();
-                  });
-                }
-              },
+                    onTap: () async {
+                      if (context != null) {
+                        Navigator.of(context).pop();
+                        Loading.show(
+                            GlobalContext.navigatorKey.currentContext!);
+                        Future.delayed(Duration(seconds: 1), () {
+                          // Navigator.of(context).pop();
+                          Loading.hide(
+                              GlobalContext.navigatorKey.currentContext!);
+                          showInterstitialAdsController.showAlert();
+                        });
+                      }
+                    },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
@@ -135,74 +137,87 @@ class _RecordHistoryState extends State<RecordHistory> {
     );
   }
 
-List<Widget> buildHistoryRecord() {
-  final List<Widget> widgetsList =
-      sugarInfoStore!.listRecord!.asMap().entries.fold(
-    <Widget>[],
-    (List<Widget> acc, MapEntry<int, SugarRecord> entry) {
-      final int index = entry.key;
-      final SugarRecord recordInfo = entry.value;
+  List<Widget> buildHistoryRecord() {
+    final List<Widget> widgetsList =
+        sugarInfoStore!.listRecord!.asMap().entries.fold(
+      <Widget>[],
+      (List<Widget> acc, MapEntry<int, SugarRecord> entry) {
+        final int index = entry.key;
+        final SugarRecord recordInfo = entry.value;
 
-      acc.add(
-        RecordInfoSliderItemWidget(
-          margin: true,
-          id: recordInfo.id,
-          status: recordInfo.status,
-          dayTime: recordInfo.dayTime,
-          hourTime: recordInfo.hourTime,
-          sugarAmount: recordInfo.sugarAmount,
-        ),
-      );
+        acc.add(
+          RecordInfoSliderItemWidget(
+            margin: true,
+            id: recordInfo.id,
+            status: recordInfo.status,
+            dayTime: recordInfo.dayTime,
+            hourTime: recordInfo.hourTime,
+            sugarAmount: recordInfo.sugarAmount,
+          ),
+        );
 
-      return acc;
-    },
-  );
-
-  // Sử dụng hàm buildCustomList để tạo danh sách theo yêu cầu
-  return buildCustomList(widgetsList);
-}
-List<Widget> buildCustomList(List<Widget> widgetList) {
-  final List<Widget> resultList = [];
-
-  for (int i = 0; i < widgetList.length; i += 2) {
-    final rowWidgets = <Widget>[];
-    rowWidgets.add(widgetList[i]);
-
-    if (i + 1 < widgetList.length) {
-      rowWidgets.add(SizedBox(width: 25)); // Thêm margin giữa các phần tử
-      rowWidgets.add(widgetList[i + 1]);
-    }
-
-    resultList.add(
-      Padding(
-        padding: EdgeInsets.only(left: 15), // Thêm margin cạnh trái màn hình 15px
-        child: Row(
-          children: rowWidgets,
-        ),
-      ),
+        return acc;
+      },
     );
 
-    // Kiểm tra nếu không còn cặp phần tử nào và không phải hàng cuối cùng
-    if (i + 2 < widgetList.length) {
-      resultList.add(
-        Container(
-                width: double.infinity,
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Center(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: AdsNative(
-                        templateType: TemplateType.small,
-                        unitId: AdHelper.nativeInAppAdUnitId,
-                      )),
-                ),
-              ),
-      );
-    }
+    // Sử dụng hàm buildCustomList để tạo danh sách theo yêu cầu
+    return buildCustomList(widgetsList);
   }
 
-  return resultList;
-}
+  List<Widget> buildCustomList(List<Widget> widgetList) {
+    final List<Widget> resultList = [];
 
+    for (int i = 0; i < widgetList.length; i += 2) {
+      final rowWidgets = <Widget>[];
+      rowWidgets.add(widgetList[i]);
+
+      if (i + 1 < widgetList.length) {
+        rowWidgets.add(SizedBox(width: 25)); // Thêm margin giữa các phần tử
+        rowWidgets.add(widgetList[i + 1]);
+      }
+
+      resultList.add(
+        Padding(
+          padding:
+              EdgeInsets.only(left: 15), // Thêm margin cạnh trái màn hình 15px
+          child: Row(
+            children: rowWidgets,
+          ),
+        ),
+      );
+      if (widgetList.length > 2) {
+        // Kiểm tra nếu không còn cặp phần tử nào và không phải hàng cuối cùng
+        if (i + 2 < widgetList.length) {
+          resultList.add(
+            Container(
+              width: double.infinity,
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AdsNative(
+                      templateType: TemplateType.small,
+                      unitId: AdHelper.nativeInAppAdUnitId,
+                    )),
+              ),
+            ),
+          );
+        }
+      } else {
+        resultList.add(
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: AdsNative(
+                  templateType: TemplateType.medium,
+                  unitId: AdHelper.nativeInAppAdUnitId,
+                )),
+          ),
+        );
+      }
+    }
+
+    return resultList;
+  }
 }

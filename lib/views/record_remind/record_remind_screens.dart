@@ -126,16 +126,17 @@ class _AlarmScreenState extends State<AlarmScreen> {
               children: [
                 InkWell(
                   onTap: () async {
-                if (context != null) {
-                  Navigator.of(context).pop();
-                  Loading.show(GlobalContext.navigatorKey.currentContext!);
-                  Future.delayed(Duration(seconds: 1), () {
-                    // Navigator.of(context).pop();
-                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
-                    showInterstitialAdsController.showAlert();
-                  });
-                }
-              },
+                    if (context != null) {
+                      Navigator.of(context).pop();
+                      Loading.show(GlobalContext.navigatorKey.currentContext!);
+                      Future.delayed(Duration(seconds: 1), () {
+                        // Navigator.of(context).pop();
+                        Loading.hide(
+                            GlobalContext.navigatorKey.currentContext!);
+                        showInterstitialAdsController.showAlert();
+                      });
+                    }
+                  },
                   child: Container(
                     margin: const EdgeInsets.only(right: 12),
                     child: SvgPicture.asset(
@@ -244,35 +245,64 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                   // },
                                 ),
                               ),
-                              (index+1) % 2 == 0
-                                  ? Container(
-                                      width: double.infinity,
-                                      color: Colors.white,
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                              alarms.length > 1
+                                  ? (index + 1) % 2 == 0
+                                      ? Container(
+                                          width: double.infinity,
+                                          color: Colors.white,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.15,
-                                      child: Center(
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: AdsNative(
-                                              templateType: TemplateType.small,
-                                              unitId:
-                                                  AdHelper.nativeInAppAdUnitId,
-                                            )),
-                                      ),
-                                    )
-                                  : SizedBox()
+                                          child: Center(
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: AdsNative(
+                                                  templateType:
+                                                      TemplateType.small,
+                                                  unitId: AdHelper
+                                                      .nativeInAppAdUnitId,
+                                                )),
+                                          ),
+                                        )
+                                      : SizedBox()
+                                  : Center(
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: AdsNative(
+                                            templateType: TemplateType.medium,
+                                            unitId:
+                                                AdHelper.nativeInAppAdUnitId,
+                                          )),
+                                    ),
                             ],
                           );
                         },
                       )
-                    : Center(
-                        child: Text(
-                          "${AppLocalizations.of(context)!.getTranslate('no_alarms_set')}",
-                          style: AppTheme.Headline20Text.copyWith(
-                              color: Colors
-                                  .black), // Hiển thị dấu chấm ba khi có tràn
-                        ),
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              "${AppLocalizations.of(context)!.getTranslate('no_alarms_set')}",
+                              style: AppTheme.Headline20Text.copyWith(
+                                  color: Colors
+                                      .black), // Hiển thị dấu chấm ba khi có tràn
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: AdsNative(
+                                  templateType: TemplateType.medium,
+                                  unitId: AdHelper.nativeInAppAdUnitId,
+                                )),
+                          ),
+                        ],
                       ),
               ),
               ButtonWidget(
