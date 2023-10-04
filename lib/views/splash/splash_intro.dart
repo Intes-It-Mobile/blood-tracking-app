@@ -83,81 +83,104 @@ class _IntroScreenState extends State<IntroScreen> {
                   child: Positioned(
                     bottom: MediaQuery.of(context).size.height * 0.38,
                     right: 0,
+                    left: 0,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 0, right: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      // color: Colors.amber,
+                      margin: EdgeInsets.only(bottom: 0, right: 16, left: 16),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Expanded(
+                              child: indexPage != null
+                                  ? Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${AppLocalizations.of(context)!.getTranslate("${getIntroText(indexPage)}")}",
+                                        style: AppTheme.Intro20Text,
+                                      ),
+                                    )
+                                  : Container()),
                           Container(
-                            margin: EdgeInsets.only(bottom: 28),
-                            alignment: Alignment.bottomRight,
-                            // color: AppColors.AppColor3,
-                            child: SmoothPageIndicator(
-                              controller: _pageController,
-                              count: 3,
-                              effect: SlideEffect(
-                                  radius: 2,
-                                  paintStyle: PaintingStyle.fill,
-                                  strokeWidth: 1,
-                                  activeDotColor: Color(0xFF00FFFF),
-                                  dotColor: AppColors.AppColor3,
-                                  dotHeight: 8,
-                                  dotWidth: 18),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  if (indexPage == 2) {
-                                    shareLocal.putBools("isFirst", true);
-                                    if (sugarInfoStore!.isSwapedToMol == true) {
-                                      sugarInfoStore!
-                                          .divisionListRootCondition();
-                                      sugarInfoStore!.saveIsSwapedToMol(
-                                          sugarInfoStore!.isSwapedToMol!);
-                                    }
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      Routes.home,
-                                      (route) => false,
-                                    );
-                                  }
-                                  _pageController.nextPage(
-                                    duration: const Duration(milliseconds: 100),
-                                    curve: Curves.bounceIn,
-                                  );
-                                },
-                                child: Container(
-                                  width: 120,
-                                  height: 36,
-                                  margin: EdgeInsets.only(left: 17),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 2, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          AppColors.AppColor4,
-                                          AppColors.AppColor2,
-                                        ]),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(
-                                    indexPage == 2
-                                        ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
-                                        : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        AppTheme.TextIntroline16Text.copyWith(
-                                            fontWeight: FontWeight.w500),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 28),
+                                  alignment: Alignment.bottomRight,
+                                  // color: AppColors.AppColor3,
+                                  child: SmoothPageIndicator(
+                                    controller: _pageController,
+                                    count: 3,
+                                    effect: SlideEffect(
+                                        radius: 2,
+                                        paintStyle: PaintingStyle.fill,
+                                        strokeWidth: 1,
+                                        activeDotColor: Color(0xFF00FFFF),
+                                        dotColor: AppColors.AppColor3,
+                                        dotHeight: 8,
+                                        dotWidth: 18),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (indexPage == 2) {
+                                          shareLocal.putBools("isFirst", true);
+                                          if (sugarInfoStore!.isSwapedToMol ==
+                                              true) {
+                                            sugarInfoStore!
+                                                .divisionListRootCondition();
+                                            sugarInfoStore!.saveIsSwapedToMol(
+                                                sugarInfoStore!.isSwapedToMol!);
+                                          }
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            Routes.home,
+                                            (route) => false,
+                                          );
+                                        }
+                                        _pageController.nextPage(
+                                          duration:
+                                              const Duration(milliseconds: 100),
+                                          curve: Curves.bounceIn,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 120,
+                                        height: 36,
+                                        margin: EdgeInsets.only(left: 17),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 2, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                AppColors.AppColor4,
+                                                AppColors.AppColor2,
+                                              ]),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Text(
+                                          indexPage == 2
+                                              ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
+                                              : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
+                                          textAlign: TextAlign.center,
+                                          style: AppTheme.TextIntroline16Text
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -165,13 +188,13 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                 ),
                 Positioned(
-                  bottom:  MediaQuery.of(context).size.height*0.02,
+                  bottom: MediaQuery.of(context).size.height * 0.02,
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                           // color: Colors.amber,
-                          height: MediaQuery.of(context).size.height*0.34,
+                          height: MediaQuery.of(context).size.height * 0.34,
                           width: MediaQuery.of(context).size.width,
                           padding: const EdgeInsets.all(8),
                           child: AdsNative(
@@ -189,12 +212,27 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
+  String getIntroText(int pageIndex) {
+    switch (pageIndex) {
+      case 0:
+        return "intro1";
+      case 1:
+        return "intro2";
+      case 2:
+        return "intro3";
+
+      default:
+        return "intro1";
+    }
+  }
+
   buildPage(String image, String textIntro) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.fitWidth)),
+          image:
+              DecorationImage(image: AssetImage(image), fit: BoxFit.fitWidth)),
       child: Stack(
         children: [
           // Column(
@@ -208,15 +246,15 @@ class _IntroScreenState extends State<IntroScreen> {
           //         : SizedBox(),
           //   ],
           // ),
-          Container(
-              padding: EdgeInsets.only(left: 18),
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.38),
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                "${AppLocalizations.of(context)!.getTranslate(textIntro)}",
-                style: AppTheme.Intro20Text,
-              )),
+          // Container(
+          //     padding: EdgeInsets.only(left: 18),
+          //     margin: EdgeInsets.only(
+          //         bottom: MediaQuery.of(context).size.height * 0.38),
+          //     alignment: Alignment.bottomLeft,
+          //     child: Text(
+          //       "${AppLocalizations.of(context)!.getTranslate(textIntro)}",
+          //       style: AppTheme.Intro20Text,
+          //     )),
         ],
       ),
     );
