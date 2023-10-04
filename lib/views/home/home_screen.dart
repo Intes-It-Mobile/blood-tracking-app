@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool hasAds = true;
   AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   SwitchAdManager switchAdManager = SwitchAdManager();
-  
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -45,11 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-      isShowAOA =true;
+    isShowAOA = true;
 
     appOpenAdManager.loadAd();
     switchAdManager.loadAd();
-    _appLifecycleReactor = AppLifecycleReactor(switchAdManager: switchAdManager);
+    _appLifecycleReactor =
+        AppLifecycleReactor(switchAdManager: switchAdManager);
     _appLifecycleReactor.listenToAppStateChanges();
     super.initState();
   }
@@ -79,21 +80,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.transparent,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // Màu của bóng và độ trong suốt
+                      color: Colors.black
+                          .withOpacity(0.2), // Màu của bóng và độ trong suốt
                       // spreadRadius: 5, // Độ lan rộng của bóng
                       blurRadius: 10, // Độ mờ của bóng
                       offset: Offset(0, 1), // Độ dịch chuyển của bóng
                     ),
                   ],
                 ),
-                margin: EdgeInsets.only(
-                    bottom: hasAds
-                        ? 50.0
-                        : Platform.isAndroid
-                            ? 30
-                            : 0),
+                // margin: EdgeInsets.only(
+                //     bottom: hasAds
+                //         ? 50.0
+                //         : Platform.isAndroid
+                //             ? 30
+                //             : 0),
                 child: BottomAppBarCum(
-                  color: Colors.transparent,
+                  color: Colors.red,
                   surfaceTintColor: Colors.transparent,
                   padding: EdgeInsets.zero,
                   child: Container(
@@ -108,7 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Assets.iconBloodSugar,
                               'A',
                               0,
-                              AppLocalizations.of(context)!.getTranslate('blood_sugar_txt'),
+                              AppLocalizations.of(context)!
+                                  .getTranslate('blood_sugar_txt'),
                             ),
                             // _buildNavItem(
                             //     Assets.iconHeartRate,
@@ -117,11 +120,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             //     AppLocalizations.of(context)!
                             //         .getTranslate('heart_rate_txt')),
                             _buildNavItem(
-                                Assets.iconInfoNav, 'C', 1, AppLocalizations.of(context)!.getTranslate('infor')),
-                            _buildNavItem(Assets.iconSettingsNav, 'C', 2,
-                                AppLocalizations.of(context)!.getTranslate('setting_nav')),
+                                Assets.iconInfoNav,
+                                'C',
+                                1,
+                                AppLocalizations.of(context)!
+                                    .getTranslate('infor')),
+                            _buildNavItem(
+                                Assets.iconSettingsNav,
+                                'C',
+                                2,
+                                AppLocalizations.of(context)!
+                                    .getTranslate('setting_nav')),
                           ],
                         ),
+                        Container(
+                          width: screenWidth,
+                          height: 50,
+                          color: AppColors.AppColor2,
+                          child: const AdsBanner(),
+                        )
                         // Container(width: double.infinity,height: 50,color: Colors.blue,)
                       ],
                     ),
@@ -129,15 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Positioned(
-                bottom: 0,
-                child: hasAds
-                    ? Container(width: screenWidth, height: 50, color: AppColors.AppColor2, child: const AdsBanner(),
-)                   : Container(
-                        width: screenWidth,
-                        height: 39,
-                        color: AppColors.AppColor2,
-                      ))
           ],
         ),
       ),
@@ -191,7 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("${text}",
                       maxLines: 2,
                       textAlign: TextAlign.center,
-                      style: AppTheme.appBodyTextStyle.copyWith(color: textColor)
+                      style:
+                          AppTheme.appBodyTextStyle.copyWith(color: textColor)
                       // TextStyle(
                       //     color: textColor, fontWeight: FontWeight.w600),
                       )
@@ -227,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   insetPadding: EdgeInsets.symmetric(horizontal: 16),
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
                   content: Container(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -236,7 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 42),
                           child: Text(
                             "${AppLocalizations.of(context)!.getTranslate('wanna_exit')}",
-                            style: AppTheme.Headline16Text.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                            style: AppTheme.Headline16Text.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -249,11 +261,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor3, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor3,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('exit')}",
-                                      style: AppTheme.TextIntroline16Text.copyWith(color: AppColors.AppColor2),
+                                      style:
+                                          AppTheme.TextIntroline16Text.copyWith(
+                                              color: AppColors.AppColor2),
                                     ),
                                   ),
                                 ),
@@ -267,7 +283,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // margin: EdgeInsets.only(left: 23),
                                   padding: EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                      color: AppColors.AppColor2, borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      color: AppColors.AppColor2,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: Center(
                                     child: Text(
                                       "${AppLocalizations.of(context)!.getTranslate('stay')}",
@@ -280,13 +298,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         Center(
-                child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: AdsNative(
-                      templateType: TemplateType.medium,
-                      unitId: AdHelper.nativeInAppAdUnitId,
-                    )),
-              ),
+                          child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: AdsNative(
+                                templateType: TemplateType.medium,
+                                unitId: AdHelper.nativeInAppAdUnitId,
+                              )),
+                        ),
                       ],
                     ),
                   ),

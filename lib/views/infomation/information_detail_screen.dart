@@ -29,7 +29,8 @@ class DetailInformationScreen extends StatefulWidget {
 
 class _DetailInformationScreenState extends State<DetailInformationScreen> {
   String? type;
-  ShowInterstitialAdsController showInterstitialAdsController = ShowInterstitialAdsController();
+  ShowInterstitialAdsController showInterstitialAdsController =
+      ShowInterstitialAdsController();
 
   @override
   void initState() {
@@ -64,16 +65,18 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
                 children: [
                   InkWell(
                     onTap: () async {
-                if (context != null) {
-                  Navigator.of(context).pop();
-                  Loading.show(GlobalContext.navigatorKey.currentContext!);
-                  Future.delayed(Duration(seconds: 1), () {
-                    // Navigator.of(context).pop();
-                    Loading.hide(GlobalContext.navigatorKey.currentContext!);
-                    showInterstitialAdsController.showAlert();
-                  });
-                }
-              },
+                      if (context != null) {
+                        Navigator.of(context).pop();
+                        Loading.show(
+                            GlobalContext.navigatorKey.currentContext!);
+                        Future.delayed(Duration(seconds: 1), () {
+                          // Navigator.of(context).pop();
+                          Loading.hide(
+                              GlobalContext.navigatorKey.currentContext!);
+                          showInterstitialAdsController.showAlert();
+                        });
+                      }
+                    },
                     child: Container(
                       margin: EdgeInsets.only(right: 12),
                       child: SvgPicture.asset(
@@ -152,8 +155,10 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
             ],
           ),
           Positioned(
-            bottom: 0,
-            child: Container(child: Align(alignment: Alignment.bottomCenter , child: AdsBanner())))
+              bottom: 0,
+              child: Container(
+                  child: Align(
+                      alignment: Alignment.bottomCenter, child: AdsBanner())))
         ],
       ),
     );
