@@ -61,84 +61,72 @@ class _HomeScreenState extends State<HomeScreen> {
     return Material(
       color: Colors.transparent,
       child: Container(
-        child: Stack(
-          children: [
-            Scaffold(
-              // extendBodyBehindAppBar: true,
-              resizeToAvoidBottomInset: true,
-              appBar: CustomAppBar(),
-              backgroundColor: Colors.white,
-              body: WillPopScope(
-                onWillPop: _onWillPop,
-                child: Container(
-                  // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: _buildPageContent(),
+        child: Scaffold(
+          // extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: true,
+          appBar: CustomAppBar(),
+          backgroundColor: Colors.white,
+          body: WillPopScope(
+            onWillPop: _onWillPop,
+            child: Container(
+              // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: _buildPageContent(),
+            ),
+          ),
+          bottomNavigationBar: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
                 ),
-              ),
-              bottomNavigationBar: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: BottomAppBarCustom(
-                      color: Colors.transparent,
-                      surfaceTintColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  _buildNavItem(
-                                    Assets.iconBloodSugar,
-                                    'A',
-                                    0,
-                                    AppLocalizations.of(context)!
-                                        .getTranslate('blood_sugar_txt'),
-                                  ),
-                                  // _buildNavItem(
-                                  //     Assets.iconHeartRate,
-                                  //     'B',
-                                  //     1,
-                                  //     AppLocalizations.of(context)!
-                                  //         .getTranslate('heart_rate_txt')),
-                                  _buildNavItem(
-                                      Assets.iconInfoNav,
-                                      'C',
-                                      1,
-                                      AppLocalizations.of(context)!
-                                          .getTranslate('infor')),
-                                  _buildNavItem(
-                                      Assets.iconSettingsNav,
-                                      'C',
-                                      2,
-                                      AppLocalizations.of(context)!
-                                          .getTranslate('setting_nav')),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildNavItem(
+                            Assets.iconBloodSugar,
+                            'A',
+                            0,
+                            AppLocalizations.of(context)!
+                                .getTranslate('blood_sugar_txt'),
+                          ),
+                          _buildNavItem(
+                              Assets.iconInfoNav,
+                              'C',
+                              1,
+                              AppLocalizations.of(context)!
+                                  .getTranslate('infor')),
+                          _buildNavItem(
+                              Assets.iconSettingsNav,
+                              'C',
+                              2,
+                              AppLocalizations.of(context)!
+                                  .getTranslate('setting_nav')),
+                        ],
                       ),
                     ),
-                  ),
-                  Container(
-                    width: screenWidth,
-                    height: 50,
-                    color: AppColors.AppColor2,
-                    child: const AdsBanner(),
-                  )
-                ],
+                    Container(
+                      width: screenWidth,
+                      height: 50,
+                      color: AppColors.AppColor2,
+                      child: const AdsBanner(),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+              // Container(
+              //   width: screenWidth,
+              //   height: 50,
+              //   color: AppColors.AppColor2,
+              //   child: const AdsBanner(),
+              // )
+            ],
+          ),
         ),
       ),
     );
@@ -183,6 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
             child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
                     icon,
