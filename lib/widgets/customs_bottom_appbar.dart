@@ -48,7 +48,7 @@ import 'package:flutter/widgets.dart';
 ///  * [NotchedShape] which calculates the notch for a notched [BottomAppBar].
 ///  * [FloatingActionButton] which the [BottomAppBar] makes a notch for.
 ///  * [AppBar] for a toolbar that is shown at the top of the screen.
-class BottomAppBarCum extends StatefulWidget {
+class BottomAppBarCustom extends StatefulWidget {
   /// Creates a bottom application bar.
   ///
   /// The [clipBehavior] argument defaults to [Clip.none] and must not be null.
@@ -57,7 +57,7 @@ class BottomAppBarCum extends StatefulWidget {
   /// If [color], [elevation], or [shape] are null, their [BottomAppBarTheme] values will be used.
   /// If the corresponding [BottomAppBarTheme] property is null, then the default
   /// specified in the property's documentation will be used.
-  const BottomAppBarCum({
+  const BottomAppBarCustom({
     super.key,
     this.color,
     this.elevation,
@@ -151,10 +151,10 @@ class BottomAppBarCum extends StatefulWidget {
   final double? height;
 
   @override
-  State createState() => _BottomAppBarCumState();
+  State createState() => _BottomAppBarCustomState();
 }
 
-class _BottomAppBarCumState extends State<BottomAppBarCum> {
+class _BottomAppBarCustomState extends State<BottomAppBarCustom> {
   late ValueListenable<ScaffoldGeometry> geometryListenable;
   final GlobalKey materialKey = GlobalKey();
 

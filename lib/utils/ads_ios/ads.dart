@@ -70,7 +70,7 @@ class _AdsBannerState extends State<AdsBanner> {
     return isBannerAdReady
         ? SizedBox(
             width: _bannerAd.size.width.toDouble(),
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: AdWidget(ad: _bannerAd),
           )
         : SizedBox(height: MediaQuery.of(context).size.height * 0.08);

@@ -144,11 +144,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       });
                     },
                     child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 4),
                       // height: 44,
-                      // margin: EdgeInsets.only(
-                      //     left: MediaQuery.of(context).size.width * 0.26,
-                      //     right: MediaQuery.of(context).size.width * 0.26,
-                      //     top: 8),
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.26,
+                          right: MediaQuery.of(context).size.width * 0.26,
+                          top: 8),
                       decoration: BoxDecoration(
                         color: index == _selectedIndex
                             ? AppColors.AppColor2
