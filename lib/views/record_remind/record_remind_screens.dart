@@ -231,7 +231,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                             ? assetAudio
                                             : assetAudioSilent,
                                         fadeDuration: 3.0,
-                                        stopOnNotificationOpen: true,
+                                        stopOnNotificationOpen: false,
                                         enableNotificationOnKill: true,
                                       ));
                                     }

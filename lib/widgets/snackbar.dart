@@ -17,8 +17,10 @@ class SnackBarWidget extends StatefulWidget {
 String getPreviousRouteName(BuildContext context) {
   if (routeObserver.history.length >= 2) {
     // Lấy routeName của màn hình trước đó
-    final previousRoute = routeObserver.history[routeObserver.history.length - 2];
-    if (previousRoute.settings.name! != "/record_remind") {
+    final previousRoute =
+        routeObserver.history[routeObserver.history.length - 2];
+    if (previousRoute.settings.name! != "/record_remind" &&
+        previousRoute.settings.name! != "/home") {
       Navigator.of(context).pushNamed(Routes.record_remind);
       print("previos: ${previousRoute.settings.name!} ");
     }
@@ -53,12 +55,14 @@ class _SnackBarWidgetState extends State<SnackBarWidget> {
                     children: [
                       Text(
                         "Remind",
-                        style: AppTheme.appBodyTextStyle.copyWith(color: Colors.black),
+                        style: AppTheme.appBodyTextStyle
+                            .copyWith(color: Colors.black),
                       ),
                       SizedBox(
                         height: 8,
                       ),
-                      Text("Enter a record", style: AppTheme.timeText.copyWith(color: Colors.grey))
+                      Text("Enter a record",
+                          style: AppTheme.timeText.copyWith(color: Colors.grey))
                     ],
                   ),
                 ],
@@ -78,7 +82,9 @@ class _SnackBarWidgetState extends State<SnackBarWidget> {
           ],
         ),
       ),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
     );
   }
 }

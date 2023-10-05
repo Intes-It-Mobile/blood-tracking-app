@@ -31,7 +31,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
   late bool vibrate;
   late bool showNotification;
   late String assetAudio;
-  late String assetAudioSilent= 'assets/silent.mp3';
+  late String assetAudioSilent = 'assets/silent.mp3';
   late bool showAudio;
   String assetAudioOff = '.';
   @override
@@ -50,7 +50,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       loopAudio = true;
       vibrate = true;
       showNotification = true;
-      showAudio =true;
+      showAudio = true;
       assetAudio = 'assets/marimba.mp3';
       assetAudioSilent = 'assets/silent.mp3';
     } else {
@@ -65,7 +65,9 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
           widget.alarmSettings!.notificationTitle!.isNotEmpty &&
           widget.alarmSettings!.notificationBody != null &&
           widget.alarmSettings!.notificationBody!.isNotEmpty;
-      assetAudio =showAudio== true? widget.alarmSettings!.assetAudioPath: assetAudioSilent;
+      assetAudio = showAudio == true
+          ? widget.alarmSettings!.assetAudioPath
+          : assetAudioSilent;
     }
   }
 
@@ -108,14 +110,16 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate: vibrate,
       notificationTitle: loopAudio ? 'Enter a record' : null,
       notificationBody: loopAudio ? 'Time: ${savedDateString(dateTime)}' : null,
-      assetAudioPath: showAudio==true?(showNotification
-          ? assetAudio
-          : Platform.isIOS
-              ? 'assets/silent.mp3'
-              : '.'):'assets/silent.mp3',
+      assetAudioPath: showAudio == true
+          ? (showNotification
+              ? assetAudio
+              : Platform.isIOS
+                  ? 'assets/silent.mp3'
+                  : '.')
+          : 'assets/silent.mp3',
       soundAudio: showAudio,
       fadeDuration: 3.0,
-      stopOnNotificationOpen: true,
+      stopOnNotificationOpen: false,
       enableNotificationOnKill: true,
     );
     return alarmSettings;
@@ -316,7 +320,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                               ),
                             ),
                           ),
-                  ), 
+                  ),
                 ),
               ),
             ],
@@ -326,4 +330,3 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
     );
   }
 }
-                              
