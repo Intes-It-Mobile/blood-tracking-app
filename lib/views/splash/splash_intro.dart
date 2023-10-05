@@ -89,97 +89,100 @@ class _IntroScreenState extends State<IntroScreen> {
                       margin: EdgeInsets.only(bottom: 0, right: 16, left: 16),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Expanded(
                               child: indexPage != null
                                   ? Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Text(
                                         "${AppLocalizations.of(context)!.getTranslate("${getIntroText(indexPage)}")}",
-                                        style: AppTheme.Intro20Text,
+                                        style: AppTheme.loadingAdsText,
                                       ),
                                     )
                                   : Container()),
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 28),
-                                  alignment: Alignment.bottomRight,
-                                  // color: AppColors.AppColor3,
-                                  child: SmoothPageIndicator(
-                                    controller: _pageController,
-                                    count: 3,
-                                    effect: SlideEffect(
-                                        radius: 2,
-                                        paintStyle: PaintingStyle.fill,
-                                        strokeWidth: 1,
-                                        activeDotColor: Color(0xFF00FFFF),
-                                        dotColor: AppColors.AppColor3,
-                                        dotHeight: 8,
-                                        dotWidth: 18),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 28),
+                                    alignment: Alignment.bottomRight,
+                                    // color: AppColors.AppColor3,
+                                    child: SmoothPageIndicator(
+                                      controller: _pageController,
+                                      count: 3,
+                                      effect: SlideEffect(
+                                          radius: 2,
+                                          paintStyle: PaintingStyle.fill,
+                                          strokeWidth: 1,
+                                          activeDotColor: Color(0xFF00FFFF),
+                                          dotColor: AppColors.AppColor3,
+                                          dotHeight: 8,
+                                          dotWidth: 18),
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        if (indexPage == 2) {
-                                          shareLocal.putBools("isFirst", true);
-                                          if (sugarInfoStore!.isSwapedToMol ==
-                                              true) {
-                                            sugarInfoStore!
-                                                .divisionListRootCondition();
-                                            sugarInfoStore!.saveIsSwapedToMol(
-                                                sugarInfoStore!.isSwapedToMol!);
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          if (indexPage == 2) {
+                                            shareLocal.putBools("isFirst", true);
+                                            if (sugarInfoStore!.isSwapedToMol ==
+                                                true) {
+                                              sugarInfoStore!
+                                                  .divisionListRootCondition();
+                                              sugarInfoStore!.saveIsSwapedToMol(
+                                                  sugarInfoStore!.isSwapedToMol!);
+                                            }
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              Routes.home,
+                                              (route) => false,
+                                            );
                                           }
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            Routes.home,
-                                            (route) => false,
+                                          _pageController.nextPage(
+                                            duration:
+                                                const Duration(milliseconds: 100),
+                                            curve: Curves.bounceIn,
                                           );
-                                        }
-                                        _pageController.nextPage(
-                                          duration:
-                                              const Duration(milliseconds: 100),
-                                          curve: Curves.bounceIn,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 120,
-                                        height: 36,
-                                        margin: EdgeInsets.only(left: 17),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 2, vertical: 6),
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                                AppColors.AppColor4,
-                                                AppColors.AppColor2,
-                                              ]),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Text(
-                                          indexPage == 2
-                                              ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
-                                              : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
-                                          textAlign: TextAlign.center,
-                                          style: AppTheme.TextIntroline16Text
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w500),
+                                        },
+                                        child: Container(
+                                          width: 120,
+                                          height: 36,
+                                          margin: EdgeInsets.only(left: 17),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2, vertical: 6),
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  AppColors.AppColor4,
+                                                  AppColors.AppColor2,
+                                                ]),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Text(
+                                            indexPage == 2
+                                                ? "${AppLocalizations.of(context)!.getTranslate('homepage')}"
+                                                : "${AppLocalizations.of(context)!.getTranslate('next_step')}",
+                                            textAlign: TextAlign.center,
+                                            style: AppTheme.TextIntroline16Text
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w500),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

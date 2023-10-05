@@ -47,13 +47,14 @@ class _LanguagePageState extends State<LanguagePage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     InkWell(
+                      splashColor: Colors.transparent,
                       onTap: () {
                         Navigator.of(context).pushNamed(Routes.select_unit);
                       },
                       child: Text(
                         "${AppLocalizations.of(context)!.getTranslate('next')}",
                         style: AppTheme.Headline20Text.copyWith(
-                            color: AppColors.AppColor4),
+                            color: Colors.transparent),
                       ),
                     ),
                   ],
@@ -127,6 +128,20 @@ class _LanguagePageState extends State<LanguagePage> {
                     )),
               ),
             ],
+          ),
+          Positioned(
+            right: 20,
+            top: MediaQuery.of(context).size.height * 0.067,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(Routes.select_unit);
+              },
+              child: Text(
+                "${AppLocalizations.of(context)!.getTranslate('next')}",
+                style: AppTheme.Headline20Text.copyWith(
+                    color: AppColors.AppColor4),
+              ),
+            ),
           ),
         ],
       ),

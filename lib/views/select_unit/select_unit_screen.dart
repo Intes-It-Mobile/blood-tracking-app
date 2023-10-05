@@ -128,8 +128,8 @@ class _SelectUnitState extends State<SelectUnit> {
             ),
           ),
           Positioned(
-            right: 18,
-            top: MediaQuery.of(context).viewPadding.top + 7,
+            right: 20,
+            top: MediaQuery.of(context).size.height * 0.067,
             child: InkWell(
               onTap: () {
                 // sugarInfoStore!.saveIsSwapedToMol(isMol!);

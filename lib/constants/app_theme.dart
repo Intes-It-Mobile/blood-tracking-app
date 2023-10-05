@@ -175,7 +175,7 @@ class AppTheme {
     fontWeight: FontWeight.w700,
     decoration: TextDecoration.none,
     // height: 0.95,
-    fontSize: TextSizeConfig.getAdjustedFontSize(20),
+    fontSize: TextSizeConfig.getAdjustedFontSize(19),
     fontFamily: FontFamily.IBMPlexSans,
   );
   static final loadingAdsText = TextStyle(
