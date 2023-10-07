@@ -119,7 +119,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
           : 'assets/silent.mp3',
       soundAudio: showAudio,
       fadeDuration: 3.0,
-      stopOnNotificationOpen: false,
+      stopOnNotificationOpen: true,
       enableNotificationOnKill: true,
     );
     return alarmSettings;

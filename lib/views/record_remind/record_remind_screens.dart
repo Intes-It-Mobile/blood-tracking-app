@@ -173,7 +173,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         itemBuilder: (context, index) {
                           var alarmTime = DateFormat('HH:mm')
                               .format(alarms[index].dateTime);
-                          print("aaaaaa: ${alarmTime}");
+                          print("alarm time: ${alarmTime}");
 
                           print("looAudio: ${alarms[index].loopAudio}");
                           // print("loopAudio: ${loopAudio}");
@@ -231,7 +231,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                             ? assetAudio
                                             : assetAudioSilent,
                                         fadeDuration: 3.0,
-                                        stopOnNotificationOpen: false,
+                                        stopOnNotificationOpen: true,
                                         enableNotificationOnKill: true,
                                       ));
                                     }

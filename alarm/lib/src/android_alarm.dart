@@ -254,5 +254,5 @@ class AndroidAlarm {
     } catch (e) {
       throw AlarmException('NotificationOnKillService error: $e');
     }
-  }
+  } 
 }
