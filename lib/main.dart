@@ -201,22 +201,66 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   if (state == AppLifecycleState.resumed) {
   //     print('Ứng dụng đang ở chế độ foreground');
   //   }
-  //   debugPrint('app state:${state.toString()}');
+  //   debugPrint('app state:${state.toString()}') ;
   //   super.didChangeAppLifecycleState(state);
   // }
+
+  // late List<dynamic> listAlarms;
+  List<AlarmSettings>? listAlarms;
+  AlarmSettings? closestAlarms;
 
   @override
   Widget build(BuildContext context) {
     GlobalContext.init(context);
+    void findClosestAlarm(List<AlarmSettings>? listAlarms) {
+      if (listAlarms == null || listAlarms.isEmpty) {
+        return null;
+      }
+
+      DateTime now = DateTime.now();
+      AlarmSettings? closestAlarm;
+
+      for (AlarmSettings alarm in listAlarms) {
+        if (alarm.dateTime.isBefore(now) &&
+            (closestAlarm == null ||
+                alarm.dateTime.isAfter(closestAlarm.dateTime))) {
+          closestAlarm = alarm;
+        }
+      }
+      if (closestAlarm != null) {
+        closestAlarms = closestAlarm;
+      }
+    }
+
     Future.delayed(Duration(seconds: 2)).then((value) => {
+          // listAlarms = Alarm.getAlarms(),
           if (Platform.isIOS)
             {
               Alarm.ringStream.stream.listen((_) {
+                listAlarms = Alarm.getAlarms();
+                findClosestAlarm(listAlarms);
                 isRingingAlarm = true;
-                FlushbarManager()
-                    .showFlushbar(GlobalContext.navigatorKey.currentContext!);
-                print("Ringing main");
-              })
+                if (closestAlarms != null) {
+                  FlushbarManager().showFlushbar(
+                      GlobalContext.navigatorKey.currentContext!,
+                      closestAlarms!.dateTime);
+                  print("Ringing main");
+                }
+              }),
+            }
+          else
+            {
+              Alarm.ringStream.stream.listen((_) {
+                listAlarms = Alarm.getAlarms();
+                isRingingAlarm = true;
+                findClosestAlarm(listAlarms);
+                print("Ringing main:$closestAlarms ");
+                if (closestAlarms != null) {
+                  FlushbarManager().showFlushbar(
+                      GlobalContext.navigatorKey.currentContext!,
+                      closestAlarms!.dateTime);
+                }
+              }),
             }
         });
 
@@ -321,9 +365,9 @@ class RouteObserver extends NavigatorObserver {
     _history.add(route);
   }
 
-  @override 
+  @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    _history.remove(route);  
+    _history.remove(route);
   }
 }

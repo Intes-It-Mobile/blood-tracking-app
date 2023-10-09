@@ -8,7 +8,8 @@ import '../constants/assets.dart';
 import '../main.dart';
 
 class SnackBarWidget extends StatefulWidget {
-  const SnackBarWidget({super.key});
+  String? dateTime ="";
+   SnackBarWidget({super.key,this.dateTime});
 
   @override
   State<SnackBarWidget> createState() => _SnackBarWidgetState();
@@ -62,6 +63,11 @@ class _SnackBarWidgetState extends State<SnackBarWidget> {
                         height: 8,
                       ),
                       Text("Enter a record",
+                          style: AppTheme.timeText.copyWith(color: Colors.grey)),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text("${widget.dateTime}",
                           style: AppTheme.timeText.copyWith(color: Colors.grey))
                     ],
                   ),

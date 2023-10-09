@@ -174,7 +174,7 @@ class AndroidAlarm {
       await AudioPlayer.clearAssetCache();
       send.send('Asset cache reset. Please try again.');
       throw AlarmException(
-        "Alarm with id $id and asset path '${data['assetAudioPath']}' error: $e",
+        "Alarm with id $id and asset path '${data[' ']}' error: $e",
       );
     }
 

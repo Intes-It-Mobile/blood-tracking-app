@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:blood_sugar_tracking/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../main.dart';
 
@@ -12,8 +13,13 @@ class FlushbarManager {
   }
 
   FlushbarManager._internal();
+  String formatDateTime(DateTime dateTime) {
+    String value;
+    value = DateFormat('HH:mm dd/MM/yyyy').format(dateTime);
+    return value;
+  }
 
-  void showFlushbar(BuildContext context) {
+  void showFlushbar(BuildContext context, DateTime datetime) {
     Flushbar(
       boxShadows: [
         BoxShadow(
@@ -27,7 +33,7 @@ class FlushbarManager {
       margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.FLOATING,
-      messageText: SnackBarWidget(),
+      messageText: SnackBarWidget(dateTime: formatDateTime(datetime)),
       backgroundColor: Colors.white,
       duration: Duration(seconds: 3),
     )..show(context);

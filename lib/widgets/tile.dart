@@ -107,7 +107,7 @@ class _ExampleAlarmTileState extends State<ExampleAlarmTile> {
                         height: 10,
                       ),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.centerRight, 
                         child: StatefulBuilder(
                           builder: (context, setModalState) {
                             return CupertinoSwitch(
