@@ -232,12 +232,30 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       }
     }
 
+    void autoOffAlarm(List<AlarmSettings>? listAlarms) {
+      DateTime now = DateTime.now();
+
+      // Duyệt qua danh sách và cập nhật các đối tượng thỏa mãn điều kiện
+      for (int i = 0; i < listAlarms!.length; i++) {
+        if (listAlarms[i].loopAudio &&
+            listAlarms[i]
+                .dateTime
+                .isBefore(now.subtract(Duration(seconds: 30)))) {
+          // Thỏa mãn cả hai điều kiện, cập nhật loopAudio thành false
+          listAlarms[i].loopAudio = false;
+          Alarm.stop(listAlarms[i].id);
+          print("stop alarms: ${listAlarms[i].id} ");
+        }
+      }
+    }
+
     Future.delayed(Duration(seconds: 2)).then((value) => {
           // listAlarms = Alarm.getAlarms(),
           if (Platform.isIOS)
             {
               Alarm.ringStream.stream.listen((_) {
                 listAlarms = Alarm.getAlarms();
+
                 findClosestAlarm(listAlarms);
                 isRingingAlarm = true;
                 if (closestAlarms != null) {
@@ -245,6 +263,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                       GlobalContext.navigatorKey.currentContext!,
                       closestAlarms!.dateTime);
                   print("Ringing main");
+                }
+                if (listAlarms!.isNotEmpty && listAlarms != null) {
+                  autoOffAlarm(listAlarms);
                 }
               }),
             }
@@ -259,6 +280,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   FlushbarManager().showFlushbar(
                       GlobalContext.navigatorKey.currentContext!,
                       closestAlarms!.dateTime);
+                }
+                if (listAlarms!.isNotEmpty && listAlarms != null) {
+                  autoOffAlarm(listAlarms);
                 }
               }),
             }
