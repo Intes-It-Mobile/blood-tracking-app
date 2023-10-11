@@ -39,6 +39,18 @@ class _AlarmScreenState extends State<AlarmScreen> {
 
   @override
   void didChangeDependencies() {
+    void loadAlarms() {
+      setState(() {
+        alarms = Alarm.getAlarms();
+        // Alarm.ringStream.stream.listen((_) {
+        //   print("Ringing");
+        // });
+
+        alarms.sort((a, b) => (savedDateString(a.dateTime))
+            .compareTo(savedDateString(b.dateTime)));
+      });
+    }
+
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -268,14 +280,14 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                         )
                                       : SizedBox()
                                   : Center(
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: AdsNative(
-                                            templateType: TemplateType.medium,
-                                            unitId:
-                                                AdHelper.nativeInAppAdUnitId,
-                                          )),
-                                    ),
+                                      // child: Padding(
+                                      //     padding: const EdgeInsets.all(8),
+                                      //     child: AdsNative(
+                                      //       templateType: TemplateType.medium,
+                                      //       unitId:
+                                      //           AdHelper.nativeInAppAdUnitId,
+                                      //     )),
+                                      ),
                             ],
                           );
                         },
@@ -294,14 +306,14 @@ class _AlarmScreenState extends State<AlarmScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          Center(
-                            child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: AdsNative(
-                                  templateType: TemplateType.medium,
-                                  unitId: AdHelper.nativeInAppAdUnitId,
-                                )),
-                          ),
+                          // Center(
+                          //   child: Padding(
+                          //       padding: const EdgeInsets.all(8),
+                          //       child: AdsNative(
+                          //         templateType: TemplateType.medium,
+                          //         unitId: AdHelper.nativeInAppAdUnitId,
+                          //       )),
+                          // ),
                         ],
                       ),
               ),

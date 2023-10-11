@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:alarm/service/notification.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
@@ -22,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/utils.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -241,10 +244,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             listAlarms[i]
                 .dateTime
                 .isBefore(now.subtract(Duration(seconds: 30)))) {
-          // Thỏa mãn cả hai điều kiện, cập nhật loopAudio thành false
-          listAlarms[i].loopAudio = false;
-          Alarm.stop(listAlarms[i].id);
           print("stop alarms: ${listAlarms[i].id} ");
+          // Thỏa mãn cả hai điều kiện, cập nhật loopAudio thành false
+          Alarm.stop(listAlarms[i].id);
+          Alarm.set(
+              alarmSettings: AlarmSettings(
+            id: listAlarms[i].id,
+            dateTime: listAlarms[i].dateTime,
+            loopAudio: false,
+            soundAudio: false,
+            vibrate: !listAlarms[i].vibrate,
+            notificationTitle: listAlarms[i].notificationTitle,
+            notificationBody: listAlarms[i].notificationBody,
+            assetAudioPath: listAlarms[i].assetAudioPath,
+            fadeDuration: 3.0,
+            stopOnNotificationOpen: true,
+            enableNotificationOnKill: true,
+          ));
         }
       }
     }
