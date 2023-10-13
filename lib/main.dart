@@ -1,4 +1,3 @@
-
 import 'package:alarm/service/notification.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
@@ -225,7 +224,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       for (AlarmSettings alarm in listAlarms) {
         if (alarm.dateTime.isBefore(now) &&
             (closestAlarm == null ||
-                alarm.dateTime.isAfter(closestAlarm.dateTime))) {
+                alarm.dateTime.isAfter(closestAlarm.dateTime) &&
+                    alarm.loopAudio == true)) {
           closestAlarm = alarm;
         }
       }
@@ -300,7 +300,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   autoOffAlarm(listAlarms);
                 }
               }),
-            }  
+            }
         });
 
     TextSizeConfig.init(context);
