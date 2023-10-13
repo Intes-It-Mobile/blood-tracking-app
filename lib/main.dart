@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 
 import 'package:alarm/service/notification.dart';
 import 'package:applovin_max/applovin_max.dart';
@@ -301,7 +300,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   autoOffAlarm(listAlarms);
                 }
               }),
-            }
+            }  
         });
 
     TextSizeConfig.init(context);
